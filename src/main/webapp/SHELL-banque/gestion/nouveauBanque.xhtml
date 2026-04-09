@@ -1,0 +1,107 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      lang="fr">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Shell-Banque</title>
+</head>
+
+<h:body style="background-color:#CECECE;">
+
+<div style="text-align:center;">
+
+    <!-- Headers -->
+    <ui:include src="/SHELL-banque/Header.xhtml"/>
+    <ui:include src="/SHELL-banque/Headerbanque.xhtml"/>
+
+    <p:growl id="msgs" showDetail="true"/>
+
+    <p:panel id="basic"
+             style="min-height:900px;margin:0 50px;background-image:url('#{request.contextPath}/2.png');">
+
+        <fieldset style="margin-bottom:20px;background-color:#eeeec6;">
+            <legend>
+                <b>
+                    <h:outputText value="Ajouter Banque"
+                                  style="font-size:14px;color:white;background-image:linear-gradient(#FAF281, red);"/>
+                </b>
+            </legend>
+
+            <div style="text-align:center;">
+
+                <h:form>
+
+                    <table>
+
+                        <!-- Nom -->
+                        <tr>
+                            <td width="20%">
+                                <b><h:outputText value="Nom :" style="font-size:12px"/></b>
+                            </td>
+                            <td>
+                                <h:inputText id="nom" tabindex="1" size="30"
+                                             value="#{BanqueBean.nom}" style="font-size:14px"
+                                             styleClass="inpdes" required="true"
+                                             requiredMessage="Entrer nom client"/>
+                                <p:messages for="nom" closable="true" autoUpdate="true"/>
+                            </td>
+                        </tr>
+
+                        <!-- Agence -->
+                        <tr>
+                            <td width="20%">
+                                <b><h:outputText value="Agence :" style="font-size:12px"/></b>
+                            </td>
+                            <td>
+                                <h:inputText id="agence" tabindex="2" size="30"
+                                             value="#{BanqueBean.agence}" style="font-size:14px"/>
+                                <p:messages for="agence" closable="true" autoUpdate="true"/>
+                            </td>
+                        </tr>
+
+                        <!-- Adresse -->
+                        <tr>
+                            <td>
+                                <b><h:outputText value="Adresse :" style="font-size:12px"/></b>
+                            </td>
+                            <td>
+                                <h:inputText id="adresse" tabindex="3" size="30"
+                                             value="#{BanqueBean.adresse}" style="font-size:14px"/>
+                            </td>
+                        </tr>
+
+                        <!-- Ajouter button -->
+                        <tr>
+                            <td colspan="2" style="text-align:center;">
+                                <p:commandButton value="Ajouter" ajax="false"
+                                                 style="width:150px;font-size:12px;height:30px;
+                                                        color:white;background-image:linear-gradient(#FAF281, red);"
+                                                 action="#{BanqueBean.saveBanque}"/>
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </h:form>
+
+                <script>
+                    function init() {
+                        $('.inpdes').focus();
+                    }
+                </script>
+
+            </div>
+
+        </fieldset>
+
+    </p:panel>
+
+</div>
+
+</h:body>
+</html>

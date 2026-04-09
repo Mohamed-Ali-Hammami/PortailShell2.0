@@ -1,0 +1,139 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellpaie/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellpaie/Headerpaie.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+					<h:form>
+					<table><tr><td>  
+						
+								<p:selectOneMenu  value="#{PaieBean.typeCat}"  
+						        style="width:200px;font-size:12px " id="status" filter="true" filterMatchMode="contains"
+						        >
+							    <f:selectItem itemLabel="Veuillez choisir un element"  />
+							     <f:selectItems value="#{PaieBean.typeCats}"   />	
+							     <f:ajax listener="#{PaieBean.getcatbytypcat}" render="cat"/>						 
+						    </p:selectOneMenu></td>
+						    
+						    <td>
+						    
+						    <p:selectOneMenu  value="#{PaieBean.cat}"  
+						        style="width:200px;font-size:12px " id="cat" filter="true" filterMatchMode="contains"
+						        >
+							    <f:selectItem itemLabel="Veuillez choisir un element"  />
+							     <f:selectItems value="#{PaieBean.listCategoris}"   />	
+							     <f:ajax listener="#{PaieBean.getcatbytypcat2}" render="cat2"/>						 
+						    </p:selectOneMenu>
+						    </td></tr></table>
+						    <p:outputPanel id="cat2">
+                       <!--  <ui:repeat var="c" value="#{PaieBean.listCategorie2}" >  -->
+                            
+<div class="ui-g ui-fluid">
+     
+    
+     <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+            
+            <p:inputText placeholder="C#{PaieBean.cat}E1" />        
+        </div>
+    </div>
+ 
+    <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+            <p:inputText placeholder="C#{PaieBean.cat}E15" />
+             
+        </div>
+    </div>
+ 
+    <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+           
+            <p:inputText id="prix" placeholder="0.000" value="#{PaieBean.prixheure}" required="true" requiredMessage="entrer prix heure">
+            <p:message for="prix"/>
+            </p:inputText>
+             <p:commandButton ajax="false" icon="fa fa-check" styleClass="green-button" action="#{PaieBean.validerModification}" value="Valider">
+            <!-- <f:setPropertyActionListener value="#{c}" target="#{PaieBean.selectedCat}"/> -->
+            
+             </p:commandButton> 
+                
+        </div>
+    </div>
+</div>
+ 
+                          <!-- </ui:repeat> --></p:outputPanel>
+                          
+                          
+  <style type="text/css">
+    .white-button.ui-button.ui-state-default {
+        background-color: #ffffff;
+        color: #222222;
+        border-color: #d6d6d6;
+    }
+ 
+    .white-button.ui-button.ui-state-default:enabled:hover, 
+    .white-button.ui-button.ui-state-default:focus {
+        background-color: #f2f2f2;
+        border-color: #ccc;
+        color: #373a3c;
+    }
+ 
+    .green-button.ui-button.ui-state-default {
+        background-color: #5cb85c;
+        border-color: #5cb85c;
+        color: #fff;
+    }
+ 
+    .green-button.ui-button.ui-state-default:enabled:hover, 
+    .green-button.ui-button.ui-state-default:focus {
+        background-color: #4cae4c;
+        border-color: #5cb85c;
+    }
+ 
+    .red-button.ui-button.ui-state-default {
+        background-color: #d9534f;
+        border-color: #d9534f;
+        color: #fff;
+    }
+ 
+    .red-button.ui-button.ui-state-default:enabled:hover, 
+    .red-button.ui-button.ui-state-default:focus {
+        background-color: #d43f3a;
+        border-color: #d9534f;
+    }
+ 
+</style>                        
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                           
+					</h:form>
+				</p:panel>
+				</p:panel>
+				</h:body>
+				</html>

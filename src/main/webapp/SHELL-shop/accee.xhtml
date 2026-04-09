@@ -1,0 +1,207 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"
+		charset="UTF-8"></meta>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<title>Shell-Sejoumi</title>
+
+</h:head>
+<h:body>
+
+
+	<h:form>
+		<p:growl id="messages" />
+		<h:panelGroup rendered="#{LoginBean.user.isAdmin()==true">
+		<p:menubar
+			style="height:30px; margin-left: 50px;margin-right: 50px ;background-image:linear-gradient( #FAF281, #FAF292);"
+			autoDisplay="true">
+			<p:menuitem icon="ui-icon-home" action=" " style="font-size:12px" />
+			
+			<p:submenu label="Tiers" style="font-size:12px">				 
+				<p:menuitem value="Fournisseur" action="#{FournisseurBean.getAllfournisseur}" />				 
+				<p:menuitem value="Vendeurs" action="#{loginMgmtBean.getallUser}" />
+				<p:menuitem value="Autorisation" action=" " />				
+			</p:submenu>
+			
+			<p:submenu label="Achat" style="font-size:12px">				 
+				<p:menuitem value="Saisie Achat" action="#{AchatBean.nouveauachat}" />
+				<!-- <p:menuitem value="Avoir" action="#{AvoirBean.nouveauavoir}" /> -->
+				<p:menuitem value="Factures/Fournisseurs" action="#{AchatBean.getAllfournisseur}" />
+				<p:menuitem value="Reglement facture" action="#{AchatBean.reglementFacture}" />
+				<p:menuitem value="Etat des facture" action="#{AchatBean.etatFactureachat}" />	
+			</p:submenu>
+			
+			<p:submenu label="Vente" style="font-size:12px">
+				<p:menuitem value="Saisie" action="#{VenteBean.nouveauvente}" />
+				<p:menuitem value="Generation" action="#{VenteBean.generationDesVentes}" />
+				<p:menuitem value="Impression des Ventes" action="#{VenteBean.impressionVente}" />
+				<p:menuitem value="Impression Tickets" action="#{VenteBean.impressionTicket}" />
+				<p:menuitem value="Regeneration des ventes" action="#{VenteBean.regenerationDesVentes}" />
+			</p:submenu>
+			
+			<p:submenu label="Stock" style="font-size:12px">
+				<p:menuitem value="MAJ Article" action="#{VenteBean.majarticle}" />
+				<p:menuitem value="Recherche Article" action="#{VenteBean.getAllarticle}" />
+				<p:menuitem value="MAJ Famille" action="#{FamilleBean.getAllFamillearticle}" />
+				<p:menuitem value="Impression Inventaires"  action="#{VenteBean.impressioninventaire}"/>
+				<p:menuitem value="Mouvement Article" action="#{FamilleBean.mouvementArticle}" />
+				<p:menuitem value="Liste des articles par Famille" action="#{FamilleBean.getlistarticleParfamille}" />
+				<p:menuitem value="Remise a zero du stock" action="#{VenteBean.remiseazeoStock}" />
+				<p:submenu label="Annulation ticket" style="font-size:12px">
+				<p:menuitem value="Annulation du ticket" action="#{TicketBean.AnnulationTicket}" />
+				<p:menuitem value="Liste Annulation" action="#{TicketBean.listeAnnulation}" />
+				</p:submenu>
+				<p:menuitem value="Transfert Depot Magasin" action="#{TransfertBean.nouveautransfer}" />
+				<p:menuitem value="Maj stock" action="#{VenteBean.majstock}" />
+				<p:menuitem value="Etat Transfert" action="#{TransfertBean.etatTransfert}" />				 
+			</p:submenu> 
+			
+			<p:submenu label="Etat" style="font-size:12px">
+				<p:menuitem value="Article en Alerte de stock" action="#{EtatBean.articleEnAlerteDeStock}" />
+				<p:menuitem value="Etat de Profit" action="#{EtatBean.etatdeprofil}" />
+				<p:menuitem value="Etat Fiscal" action="#{EtatBean.etatFiscal}" />
+				<p:menuitem value="Etat   Articles Non Vendus" action="#{EtatBean.articleNonVendu}" />
+				<p:menuitem value="Etat   Articles Non Vendus shop" action="#{EtatBean.articleNonVenduShop}" />
+				<p:menuitem value="Etat   Articles  Vendus" action="#{EtatBean.articleVendu}" />
+				<p:menuitem value="Etat  des ventes par famille " action="#{EtatBean.etatVenteParFamille}" />
+				<p:menuitem value="Courbes Evolutive des ventes" action=" " />
+				<p:menuitem value="Impression Facture Achat et Avoir" action="#{EtatBean.FactureAchatEtAvoir}" />
+				<p:menuitem value="Facturation de Ticket" action="#{EtatBean.FacturationDesTickets}" />
+				<p:menuitem value="Etat des ventes par vendeurs" action="#{EtatBean.EtatVentesParVenduers}" />
+				<p:menuitem value="Etat des Articles" action="#{EtatBean.etatdesArticles}" />
+		 
+			</p:submenu>
+            <f:facet name="options">
+				<p:commandLink id="nonAjax" action="#{loginMgmtBean.logout}"
+					ajax="false">
+					<p:graphicImage url="/images/logout.png" />
+					<h:outputText value="#{msg['logout.user']}"
+						style="color:#db0b32;font-size:12px;" />
+				</p:commandLink>
+			</f:facet>
+		</p:menubar>
+		 
+		<br/>
+		<p:outputPanel style="margin-left: 50px;margin-right: 50px ;">
+		 <p:toolbar>		 
+		 <f:facet name="left">
+		 <p:commandButton value="Vente Shop" action="#{VenteBean.nouveauvente}"  style="background-image:linear-gradient( #FAF281, red);width:100px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		  <p:commandButton value="Lavage"  style="background-image:linear-gradient( #FAF281, red);width:100px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		   <p:commandButton value="Generation Vente" action="#{VenteBean.generationDesVentes}" style="background-image:linear-gradient( #FAF281, red);width:130px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		    <p:commandButton value="Impression Caisse" action="#{VenteBean.impressionVente}"  style="background-image:linear-gradient( #FAF281, red);width:140px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		    <p:commandButton value="Cloture Caisse" action="#{VenteBean.clotureCaisse}"  style="background-image:linear-gradient( #FAF281, red);width:140px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		    <p:commandButton value="Impression Tickets" action="#{VenteBean.impressionTicket}" style="background-image:linear-gradient( #FAF281, red);width:140px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		    <p:commandButton value="Liste Tickets" action="#{TicketBean.listticket}" style="background-image:linear-gradient( #FAF281, red);width:100px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		 </f:facet>
+		 </p:toolbar>		 
+		</p:outputPanel>
+		 
+		</h:panelGroup>
+		
+		<!-- acces to caissier -->
+		
+			<h:panelGroup rendered="#{LoginBean.user.isCaissier()==true">
+		 
+		<br/>
+		<p:outputPanel style="margin-left: 50px;margin-right: 50px ;">
+		 <p:toolbar>		 
+		 <f:facet name="left">
+		 <p:commandButton value="Vente Shop" action="#{VenteBean.nouveauvente}"  style="background-image:linear-gradient( #FAF281, red);width:100px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		  <p:commandButton value="Impression Tickets" action="#{VenteBean.impressionTicket}" style="background-image:linear-gradient( #FAF281, red);width:140px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		 </f:facet>
+		 </p:toolbar>		 
+		</p:outputPanel>
+		 
+		</h:panelGroup>
+		
+		
+			<h:panelGroup rendered="#{LoginBean.user.isResponsableshop()==true">
+		<p:menubar
+			style="height:30px; margin-left: 50px;margin-right: 50px ;background-image:linear-gradient( #FAF281, #FAF292);"
+			autoDisplay="true">
+			<p:menuitem icon="ui-icon-home" action=" " style="font-size:12px" />
+			
+			<p:submenu label="Tiers" style="font-size:12px">				 
+				<p:menuitem value="Fournisseur" action="#{FournisseurBean.getAllfournisseur}" />				 
+				<p:menuitem value="Vendeurs" action="#{loginMgmtBean.getallUser}" />					 			
+			</p:submenu>
+			
+			<p:submenu label="Achat" style="font-size:12px">				 
+				<p:menuitem value="Saisie Achat" action="#{AchatBean.nouveauachat}" />
+				<!-- <p:menuitem value="Avoir" action="#{AvoirBean.nouveauavoir}" /> -->
+				<p:menuitem value="Factures/Fournisseurs" action="#{AchatBean.getAllfournisseur}" />
+				<p:menuitem value="Reglement facture" action="#{AchatBean.reglementFacture}" />
+				<p:menuitem value="Etat des facture" action="#{AchatBean.etatFactureachat}" />	
+			</p:submenu>
+			
+			<p:submenu label="Vente" style="font-size:12px">
+				<p:menuitem value="Saisie" action="#{VenteBean.nouveauvente}" />
+				<p:menuitem value="Generation" action="#{VenteBean.generationDesVentes}" />
+				<p:menuitem value="Impression des Ventes" action="#{VenteBean.impressionVente}" />
+				<p:menuitem value="Impression Tickets" action="#{VenteBean.impressionTicket}" />
+				<p:menuitem value="Regeneration des ventes" action="#{VenteBean.regenerationDesVentes}" />
+			</p:submenu>
+			
+			<p:submenu label="Stock" style="font-size:12px">
+				<p:menuitem value="MAJ Article" action="#{VenteBean.majarticle}" />
+				<p:menuitem value="Recherche Article" action="#{VenteBean.getAllarticle}" />
+				<p:menuitem value="MAJ Famille" action="#{FamilleBean.getAllFamillearticle}" />
+				<p:menuitem value="Impression Inventaires"  action="#{VenteBean.impressioninventaire}"/>
+				<p:menuitem value="Mouvement Article" action="#{FamilleBean.mouvementArticle}" />
+				<p:menuitem value="Liste des articles par Famille" action="#{FamilleBean.getlistarticleParfamille}" />
+				 
+				<p:submenu  label="Annulation ticket" style="font-size:12px">
+				<p:menuitem value="Annulation du ticket" action="#{TicketBean.AnnulationTicket}" />
+				<p:menuitem value="Liste Annulation" action="#{TicketBean.listeAnnulation}" />
+				</p:submenu>
+				<p:menuitem value="Transfert Depot Magasin" action="#{TransfertBean.nouveautransfer}" />
+				<p:menuitem value="Maj stock" action="#{VenteBean.majstock}" />
+				<p:menuitem value="Etat Transfert" action="#{TransfertBean.etatTransfert}" />				 
+			</p:submenu> 
+			
+			<p:submenu label="Etat" style="font-size:12px">
+				<p:menuitem value="Article en Alerte de stock" action="#{EtatBean.articleEnAlerteDeStock}" />
+				 
+				<p:menuitem value="Etat   Articles Non Vendus" action="#{EtatBean.articleNonVendu}" />
+				<p:menuitem value="Etat   Articles Non Vendus shop" action="#{EtatBean.articleNonVenduShop}" />
+				<p:menuitem value="Etat   Articles  Vendus" action="#{EtatBean.articleVendu}" />
+				<p:menuitem value="Etat  des ventes par famille " action="#{EtatBean.etatVenteParFamille}" />
+				 
+			 
+			 
+				<p:menuitem value="Etat des Articles" action="#{EtatBean.etatdesArticles}" />
+		 
+			</p:submenu>
+            <f:facet name="options">
+				<p:commandLink id="nonAjax" action="#{loginMgmtBean.logout}"
+					ajax="false">
+					<p:graphicImage url="/images/logout.png" />
+					<h:outputText value="#{msg['logout.user']}"
+						style="color:#db0b32;font-size:12px;" />
+				</p:commandLink>
+			</f:facet>
+		</p:menubar>
+		 
+		<br/>
+		<p:outputPanel style="margin-left: 50px;margin-right: 50px ;">
+		 <p:toolbar>		 
+		 <f:facet name="left">
+		 <p:commandButton value="Vente Shop" action="#{VenteBean.nouveauvente}"  style="background-image:linear-gradient( #FAF281, red);width:100px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		  <p:commandButton value="Lavage"  style="background-image:linear-gradient( #FAF281, red);width:100px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		   <p:commandButton value="Generation Vente" action="#{VenteBean.generationDesVentes}" style="background-image:linear-gradient( #FAF281, red);width:130px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		    <p:commandButton value="Impression Caisse" action="#{VenteBean.impressionVente}"  style="background-image:linear-gradient( #FAF281, red);width:140px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		    <p:commandButton value="Cloture Caisse" action="#{VenteBean.clotureCaisse}"  style="background-image:linear-gradient( #FAF281, red);width:140px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		    <p:commandButton value="Impression Tickets" action="#{VenteBean.impressionTicket}" style="background-image:linear-gradient( #FAF281, red);width:140px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		    <p:commandButton value="Liste Tickets" action="#{TicketBean.listticket}" style="background-image:linear-gradient( #FAF281, red);width:100px;height:50px;font-size:12px;font-color:#fcfafa"/>
+		 </f:facet>
+		 </p:toolbar>		 
+		</p:outputPanel>
+		 
+		</h:panelGroup>
+	</h:form>
+</h:body>
+</html>

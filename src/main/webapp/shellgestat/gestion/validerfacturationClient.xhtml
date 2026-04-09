@@ -1,0 +1,423 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+
+			<div align="center">
+
+				<h:form id="form">
+
+					<h:panelGroup id="imprimers"
+						rendered="#{ClientgestatBean.efactureaction=='FacturationParMouvement'}">
+						<p:panel
+							style="margin-left: 50px;margin-right: 50px ;min-height:20px;text-align:center">
+							<b><h:outputText value="Fature client"
+									style="font-size:16px ;color:#000000; " /> </b>
+						</p:panel>
+						<h:panelGrid columns="3">
+							<h:outputText value="#{ClientgestatBean.codeclient}" />
+							<h:outputText value="NOM CLIENT" />
+							<h:outputText value="#{ClientgestatBean.nom}" />
+						</h:panelGrid>
+						<br />
+						<h:panelGrid columns="4">
+
+							<h:outputText value="Periode du:" />
+							<h:outputText value="#{ClientgestatBean.dates1}" />
+							<h:outputText value="Au:" />
+							<h:outputText value="#{ClientgestatBean.dates2}" />
+						</h:panelGrid>
+						<br />
+
+						<h:panelGrid columns="2">
+							<p:dataTable id="emp" var="f" selectionMode="multiple"
+								value="#{ClientgestatBean.listfacture}" rowKey="#{f.id}"
+								selection="#{ClientgestatBean.selectedsfacture}">
+
+								 
+								<p:ajax event="rowSelect" update="emp :form:montant"
+									listener="#{ClientgestatBean.onrowSelect}" process="@this"
+									partialSubmit="true" />
+                                
+								 
+								<p:column headerText="Date">
+									<h:outputText value="#{f.dates}" />
+								</p:column>
+								<p:column headerText="Montant Credit">
+									<h:outputText value="#{f.credit.montants}" />
+								</p:column>
+
+								<p:column headerText="Montant Credit Anterieur">
+									<h:outputText value="#{f.creditant.montant}"
+										rendered="#{f.creditant !=null}" />
+								</p:column>
+
+								<p:column headerText="Bon N°">
+									<h:outputText value="#{f.credit.numbon}" />
+								</p:column>
+
+								<p:column headerText="N° Tel">
+									<h:outputText value="#{f.credit.tels}" />
+								</p:column>
+
+								<p:columnGroup type="footer">
+									<p:row>
+
+										 	<p:column/>
+										<p:column  id="total" footerText="#{ClientgestatBean.totals}" />
+										<p:column id="totals"
+											footerText="#{ClientgestatBean.totalants}" />
+									</p:row>
+								</p:columnGroup>
+							</p:dataTable>
+
+							<h:panelGroup id="montant">
+								<p:messages id="msgs" showDetail="true" />
+
+
+
+
+								<b><h:outputText value="Total Credit" /></b>
+								<br />
+								<p:inputText value="#{ClientgestatBean.total2}" id="montants"
+									size="6" />
+								<br />
+								<br />
+
+
+								<b><h:outputText value="Total Credit Anterieur" /></b>
+								<br />
+								<p:inputText value="#{ClientgestatBean.totalants2}"
+									id="montants2" size="6" />
+								<br />
+								<br />
+
+
+
+
+
+							</h:panelGroup>
+
+						</h:panelGrid>
+
+					</h:panelGroup>
+					<p:commandButton value="Imprimer"
+						rendered="#{ClientgestatBean.efactureaction=='FacturationParMouvement'}"
+						style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px">
+						<p:printer target="imprimers" />
+					</p:commandButton>
+
+					<p:commandButton value="Imprimer"
+						rendered="#{ClientgestatBean.efactureaction=='FacturationParMontantGlobal'}"
+						style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px">
+						<p:printer target="imprimers2" />
+					</p:commandButton>
+
+					<p:commandButton value="Retour"
+						action="#{ClientgestatBean.facturation}"
+						style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px">
+
+					</p:commandButton>
+
+					<h:panelGroup id="imprimers2"
+						rendered="#{ClientgestatBean.efactureaction=='FacturationParMontantGlobal'}">
+
+
+						<table>
+							<tr>
+								<td><p:panel style="width:400px;">
+										<div align="left">
+											<b><h:outputText value="STATION SHELL SEDJOUMI "
+													style="font-size:20px " /></b><br /> <b><h:outputText
+													value="SIDI HASSINE " style="font-size:20px " /></b><br /> <b><h:outputText
+													value="TVA : 805781/Q/P/C/000 " style="font-size:20px " /></b>
+										</div>
+									</p:panel></td>
+								<td><p:graphicImage url="/images/images.png"
+										style="width:200" /></td>
+								<td><p:panel style="width:400px;">
+										<div align="left">
+											<b><h:outputText value="TEL : 71 590 360 / 92 519 806 "
+													style="font-size:20px " /></b><br /> <b><h:outputText
+													value="FAX : 71 934 700" style="font-size:20px " /></b><br />
+
+										</div>
+									</p:panel></td>
+							</tr>
+						</table>
+						<br />
+						<br />
+
+						<br />
+						<br />
+						<div align="center">
+							<table style="width: 60%; text-align: center">
+								<tr>
+									<td style="text-align: left;"><h:outputText
+											value="Facture Client N°" style="font-size:20px " /></td>
+									<td />
+									<td style="text-align: left;"><h:outputText
+											value=" #{ClientgestatBean.facture.codes}"
+											style="font-size:20px " /></td>
+								</tr>
+							</table>
+						</div>
+						<br />
+
+						<table>
+							<tr>
+
+								<td style="text-align: left;"><h:outputText value="Client"
+										style="font-size:18px " /></td>
+								<td style="text-align: left;"><h:outputText
+										value="#{ClientgestatBean.nom}" style="font-size:18px " /></td>
+								<td width="500 px" />
+								<td style="text-align: right:;"><h:outputText
+										value="Periode DU" style="font-size:18px " /></td>
+								<td style="text-align: right:;"><h:outputText
+										value="#{ClientgestatBean.dates1}" style="font-size:18px " /></td>
+
+								<td style="text-align: right:;"><h:outputText value="AU"
+										style="font-size:18px " /></td>
+								<td style="text-align: right:;"><h:outputText
+										value="#{ClientgestatBean.dates2}" style="font-size:18px " /></td>
+
+
+							</tr>
+
+
+						</table>
+						<br />
+						<div align="center">
+
+
+							<table style="width: 100%; text-align: center;" border="1">
+								<tr style="background-color: #FAED94;">
+
+									<td><b> <h:outputText value="LIBELLE "
+												style="font-size:20px " />
+									</b></td>
+									<td><b><h:outputText value="QUANTITE "
+												style="font-size:20px " /> </b></td>
+									<td><b> <h:outputText value="P.U HT "
+												style="font-size:20px " />
+									</b></td>
+
+									<td><b><h:outputText value="MONTANT HT "
+												style="font-size:20px " /> </b></td>
+									<td><b><h:outputText value="TVA "
+												style="font-size:20px " /></b></td>
+
+								</tr>
+
+
+								<ui:repeat var="lc"
+									value="#{ClientgestatBean.listelignefacture}" varStatus="x">
+
+									<tr>
+
+
+
+
+										<td style="border-color: #ffffff; text-align: left"><p:panel
+												style=";border-color: #ffffff;height: 700px">
+												<ui:repeat var="lc"
+													value="#{ClientgestatBean.listelignefacture}">
+													<h:outputText value="#{lc.produit.nom}"
+														rendered="#{lc.produit!=null}" style="font-size:20px"
+														styleClass="25px" />
+
+													<h:outputText value="Transport #{lc.transports}"
+														rendered="#{lc.produit==null}" style="font-size:20px"
+														styleClass="25px" />
+													<br />
+												</ui:repeat>
+											</p:panel></td>
+
+
+										<td style="border-color: #ffffff; text-align: center"><p:panel
+												style=";border-color: #ffffff;height: 700px">
+
+												<ui:repeat var="lc"
+													value="#{ClientgestatBean.listelignefacture}">
+													<b><h:outputText value="#{lc.quantites}"
+															style="font-size:20px;" /></b>
+													<br />
+												</ui:repeat>
+
+
+											</p:panel></td>
+
+										<td style="border-color: #ffffff; text-align: center"><p:panel
+												style=";border-color: #ffffff;height: 700px">
+
+												<ui:repeat var="lc"
+													value="#{ClientgestatBean.listelignefacture}">
+													<b><h:outputText value="#{lc.prixs}"
+															rendered="#{lc.produit !=null}" style="font-size:20px;" /></b>
+
+													<b><h:outputText value="#{lc.mantanthts}"
+															rendered="#{lc.produit ==null}" style="font-size:20px;" /></b>
+													<br />
+												</ui:repeat>
+
+											</p:panel></td>
+
+
+										<td style="border-color: #ffffff; text-align: center"><p:panel
+												style=";border-color: #ffffff;height: 700px">
+
+												<ui:repeat var="lc"
+													value="#{ClientgestatBean.listelignefacture}">
+													<b><h:outputText value="#{lc.mantanthts}"
+															style="font-size:20px;" /></b>
+													<br />
+												</ui:repeat>
+
+											</p:panel></td>
+
+
+										<td style="border-color: #ffffff; text-align: center"><p:panel
+												style=";border-color: #ffffff;height: 700px">
+
+												<ui:repeat var="lc"
+													value="#{ClientgestatBean.listelignefacture}">
+													<b><h:outputText value="#{lc.produit.tva}"
+															rendered="#{lc.produit !=null}" style="font-size:20px;" /></b>
+
+													<b><h:outputText value="#{lc.tva}"
+															rendered="#{lc.produit ==null}" style="font-size:20px;" /></b>
+													<br />
+												</ui:repeat>
+
+											</p:panel></td>
+									</tr>
+
+
+								</ui:repeat>
+							</table>
+							<br />
+							<table style="width: 100%; text-align: center;" border="1">
+								<tr style="background-color: #FAED94;">
+									<td><h:outputText
+											value="Nombre de ligne: #{ClientgestatBean.listelignefacture.size()}" /></td>
+								</tr>
+							</table>
+						</div>
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+
+						<div align="center">
+							<table>
+
+								<tr>
+
+									<td width="50%"><h:outputText
+											value="ARÊTÉE LA PRÉSENTE FACTURE À LA SOMME DE   :"
+											style="font-size:20px" /><b> <h:outputText
+												value="#{ClientgestatBean.facture.sommes}"
+												style="font-size:20px" /></b></td>
+									<td>
+										<table border="1">
+											<tr>
+												<td width="165px" align="center">
+													<div align="right">
+														<b><h:outputText value="Total HT:   "
+																style="font-size:20px" /></b>
+													</div>
+												</td>
+												<td width="165px">
+													<div align="right">
+														<b><h:outputText style="font-size:20px"
+																value="#{ClientgestatBean.facture.totalhts} DT" /></b>
+													</div>
+												</td>
+											</tr>
+
+
+											<tr>
+												<td width="165px">
+													<div align="right">
+														<b><h:outputText value="Total TVA:   "
+																style="font-size:20px" /></b>
+													</div>
+												</td>
+												<td width="165px">
+													<div align="right">
+														<b><h:outputText style="font-size:20px"
+																value="0.000 DT" /></b>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td width="165px">
+													<div align="right">
+														<b><h:outputText value="Timbres:   "
+																style="font-size:20px" /></b>
+													</div>
+												</td>
+												<td width="165px">
+													<div align="right">
+														<b><h:outputText style="font-size:20px"
+																value="#{ClientgestatBean.facture.timbress} DT" /></b>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td width="165px">
+													<div align="right">
+														<b><h:outputText value="Total TTC:   "
+																style="font-size:20px" /></b>
+													</div>
+												</td>
+												<td width="165px">
+													<div align="right">
+														<b><h:outputText style="font-size:20px"
+																value="#{ClientgestatBean.facture.totalttcs} DT" /></b>
+													</div>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</h:panelGroup>
+				</h:form>
+			</div>
+
+
+
+
+
+		</p:panel>
+	</p:panel>
+</h:body>
+</html>

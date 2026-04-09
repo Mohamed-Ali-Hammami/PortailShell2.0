@@ -1,0 +1,29 @@
+.body {
+    width: 100%;
+    margin: auto;
+    min-width: 600px;
+    max-width: 2000px;
+}
+
+.order-table {   
+    border-collapse: collapse;
+}
+
+.order-table-header {
+    text-align: center;
+    background: #E5E5E5;
+    border-bottom: 1px solid #BBBBBB;
+    padding: 16px;
+}
+
+.order-table-odd-row {  
+    text-align: center;
+    background: #FFFFFF; /* fixed */
+    border-top: 1px solid #BBBBBB;
+}
+
+.order-table-even-row {
+    text-align: center;
+    background: #F9F9F9;
+    border-top: 1px solid #BBBBBB;
+}

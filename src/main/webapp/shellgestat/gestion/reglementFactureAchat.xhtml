@@ -1,0 +1,163 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+			<h:form>
+
+				<div align="center">
+					<b> <h:outputText value="Payement Facture"
+							style="font-size:14px " /></b>
+				</div>
+				<br />
+				<div align="center">
+					<table>
+						<tr>
+
+							<td><h:outputText value="Code Fournisseur"
+									style="font-size:12px " /></td>
+							<td><p:selectOneMenu value="#{AchatcarburantBean.nomfournissuer}"
+									style="width:200px;font-size:12px " filter="true"
+									filterMatchMode="contains">
+									<f:selectItem itemLabel="selectionner fournisseur" />
+									<f:selectItems value="#{AchatcarburantBean.listfournisseur}" var="f"
+										itemValue="#{f.nom}" itemLabel="#{f.nom}" />
+									<f:ajax listener="#{AchatcarburantBean.getFournisseurbyname}" render="nom facture" />
+								</p:selectOneMenu></td>
+							<td><h:outputText value="Nom" style="font-size:12px " />
+							<h:inputText value="#{AchatcarburantBean.nomfournissuer}"
+									id="nom" style="font-size:12px " /></td>
+ 
+					</tr>
+						
+
+
+
+
+						<tr>
+							<td><b> <h:outputText value="Numero Facture"
+										style="font-size:12px ;color:#2e8b57" /></b></td>
+
+							<td><h:inputText value="#{AchatcarburantBean.numFacture}"
+									id="num" size="20" /></td>
+
+						 
+                            <td><p:selectOneMenu value="#{AchatcarburantBean.numFacture}"
+								style="width:200px;font-size:12px " filter="true"
+								filterMatchMode="contains" id="facture"> 
+								<f:selectItem itemLabel="selectionner facture" />
+								<f:selectItems value="#{AchatcarburantBean.listfactureachat}" var="f"
+									itemValue="#{f.code}" itemLabel="#{f.code}" />
+								<f:ajax  render="num ttc" 
+									listener="#{AchatcarburantBean.getfactureachatbynom}" />
+							</p:selectOneMenu></td> 
+                            
+
+						 
+							<td><b> <h:outputText value="Montant"
+										style="font-size:12px ;color:#2e8b57"  /></b></td>
+
+							<td><h:inputText value="#{AchatcarburantBean.factureAchat.totalttcs}" id="ttc"
+									size="20" /></td>
+                                
+                                
+
+						</tr>
+					</table>
+					<br />
+					<br />
+			 
+				 
+						
+						<table>
+						<tr>
+							<td><b> <h:outputText value="Type Payement"
+										style="font-size:12px ;color:#2e8b57"  /></b></td>
+							<td><h:selectOneRadio id="etat_payement"
+									style="font-size:12px ;" value="#{AchatcarburantBean.typepayement}"
+									 >
+									<f:selectItem itemLabel="espece" itemValue="espece" />
+									<f:selectItem itemLabel="cheque" itemValue="cheque" />
+									<f:ajax render="cheque" />
+									 
+								</h:selectOneRadio></td>
+						</tr>
+
+                           </table>
+						 
+						 	<h:panelGroup id="cheque">
+								<table>
+
+									<tr>
+										<td><b><h:outputText value="Banque"
+													rendered="#{AchatcarburantBean.typepayement=='cheque'}"
+													style="font-size:12px ;color:#2e8b57"   /> </b></td>
+
+										<td><h:inputText
+												rendered="#{AchatcarburantBean.typepayement=='cheque'}"
+												value="#{AchatcarburantBean.banque}"
+												style="width:215px;font-size:12px ">
+
+											</h:inputText></td>
+									</tr>
+
+									<tr>
+										<td><b> <h:outputText value="Numero Cheque"
+													rendered="#{AchatcarburantBean.typepayement=='cheque'}"
+													style="font-size:12px ;color:#2e8b57" /></b></td>
+
+										<td><h:inputText value="#{AchatcarburantBean.numcheque}"
+											 
+												size="20" rendered="#{AchatcarburantBean.typepayement=='cheque'}">
+
+											</h:inputText></td>
+
+									</tr>
+									<tr>
+										<td><b> <h:outputText value="Echeance"
+													rendered="#{AchatcarburantBean.typepayement=='cheque'}"
+													style="font-size:12px ;color:#2e8b57" /></b></td>
+
+										<td><p:calendar value="#{AchatcarburantBean.echeance}" size="20"
+												rendered="#{AchatcarburantBean.typepayement=='cheque'}">
+
+											</p:calendar></td>
+
+									</tr>
+								</table>
+
+							</h:panelGroup>
+						 
+				 
+					<br />
+					<br />
+					<p:commandButton value="Valider"
+						style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+						action="#{AchatcarburantBean.validerreglement}" />
+				</div>
+		 
+
+			</h:form>
+		 </p:panel>
+		 </p:panel>
+		 </h:body>
+		 </html>

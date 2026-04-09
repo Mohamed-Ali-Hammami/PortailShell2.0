@@ -1,0 +1,186 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+	 
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-transport/Headertr.xhtml" />
+		</ui:insert>
+		<h:form>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">		
+				 
+
+				
+				<p:focus context="basic2"/>
+					<div align="left">
+						<b> <h:outputText value="Liste des factures"
+								style="color:#2e8b57;font-size:12px" />
+
+
+						</b>
+						<table>
+						 <tr>
+						 <td><h:outputText value="Date dÃƒÂ©but" style="font-size:12px " /></td>
+						  <td><p:calendar value="#{FactureBean.date}" style="font-size:12px " /></td>
+						  <td><h:outputText value="Date fin" style="font-size:12px " /></td>
+						    <td><p:calendar value="#{FactureBean.date2}" style="font-size:12px " >
+						    
+						    </p:calendar>
+						    </td>
+						 </tr>
+							<tr>
+								<td><h:outputText value="Client" style="font-size:12px " /></td>
+								<td><p:selectOneMenu value="#{FactureBean.nom}"
+										style="width:200px;font-size:12px " id="client" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemLabel="selectionner client" />
+										<f:selectItems value="#{FactureBean.listeClients}" var="c" itemValue="#{c.nom}" itemLabel="#{c.nom}"/>
+                                          
+									</p:selectOneMenu></td>
+
+                                <td>
+                               <p:commandButton value="Recherche" ajax="false"
+										action="#{FactureBean.getfacturebyClientandtypepayement}"
+										style="width:150px;font-size:12px;height:30;color:#0000ff;background-color:#abc8e2;" /> 
+                                </td>
+                                
+							 
+							</tr>
+						</table>
+						
+
+
+
+					</div>
+					<p:separator />
+					<p:outputPanel id="imprimer" style="width:99%">
+					<div align="center">
+						 
+							
+							
+							 <p:dataTable id="Facture" var="facture"  
+								value="#{FactureBean.listfacture}" widgetVar="factureTable"
+								style="margin-bottom:5px" selectionMode="single"
+								filteredValue="#{FactureBean.filterfactures}"								 
+								rowKey="#{facture.numero}" selection="#{FactureBean.selectedfacture}"
+								emptyMessage="aucun facture" paginator="true" paginatorAlwaysVisible="true"
+								rows="10" paginatorPosition="bottom" resizableColumns="true"
+								liveResize="true">
+								
+								
+							 
+
+
+
+							<p:column style="width:80px" filterBy="#{facture.codes}"  
+								filterMatchMode="contains"
+								filterStyle="font-size:14px;color:red">
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Numero" />
+								</f:facet>
+								 
+									 
+										<h:outputText style="font-size:12px ;"
+											value="#{facture.codes}" />
+									 
+									 
+							</p:column>
+
+							<p:column sortBy="#{facture.dates}" style="width:80px">
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Date" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{facture.dates}" />
+							</p:column>
+
+
+							<p:column style="width:120px">
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Client" />
+								</f:facet>
+								<h:outputText style="font-size:12px ;"
+									value="#{facture.bl.client.nom}" />
+							</p:column>
+
+							<p:column style="width:80px">
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Montant" />
+								</f:facet>
+								<h:outputText style="font-size:12px ;"
+									value="#{facture.totalttcs}" />
+							</p:column>
+
+
+							<p:column style="width:32px;text-align:center">
+								<f:facet name="header">
+									<h:outputText style="font-size:9px;color:#483d8b"
+										value="visualier" />
+								</f:facet>
+								<p:commandLink action="#{FactureBean.visualise}"
+									title="visualiser" process="Facture">
+									<p:graphicImage url="/images/icone-actualiser.png" style="width:40px" />
+									<f:setPropertyActionListener value="#{facture}"
+										target="#{FactureBean.selectedfacture}" />
+								</p:commandLink>
+							</p:column>
+							<p:column style="width:40px;text-align:center"
+								rendered="#{facture.status!='Payee'}">
+								<f:facet name="header">
+									<h:outputText style="font-size:9px;color:#483d8b"
+										value="supprimer" />
+								</f:facet><!-- rendered="#{loginMgmtBean.user.isAdmin()==true}" -->
+								<div align="center">
+									<p:commandLink action="#{FactureBean.supprimer}" 
+										onclick="PF('suppressionDialog').show();" process="Facture">
+										<p:graphicImage url="/images/delete.png" />
+										<f:setPropertyActionListener
+											target="#{FactureBean.selectedfacture}" value="#{facture}" />
+
+										<p:confirm header="Confirmation"
+											message="Voulez-vous vraiment supprimer la facture?"
+											icon="ui-icon-alert" />
+									</p:commandLink>
+								</div>
+							</p:column>
+
+
+						</p:dataTable>
+						<div align="center">
+							<p:confirmDialog global="true" showEffect="fade"    
+								hideEffect="fade" style="width:150px"
+								widgetVar="suppressionDialog">
+								<div align="center">
+									<p:commandButton value="oui" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Non" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</div>
+							</p:confirmDialog>
+						</div>
+
+
+					</div>
+					</p:outputPanel>
+				
+			 
+			 </p:panel>
+			 </h:form>
+			 </p:panel>
+			 </h:body>
+			 </html>

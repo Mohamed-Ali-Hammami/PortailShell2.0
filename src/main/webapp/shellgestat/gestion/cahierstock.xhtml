@@ -1,0 +1,177 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+ <style type="text/css">
+.table {
+border :1px solid black;
+ 
+border-collapse:collapse;
+ width:100%;
+ 
+ }
+.td { 
+ 
+ border :2px solid black;
+ text-align :center;
+   
+}
+.grid{
+    border: 0px black solid;
+    
+ 
+ }
+ .ui-datatable {
+  border :1px solid black;
+ }
+ .ui-datatable tbody tr {
+ border :1px solid black;
+ }
+ 
+ .ui-datatable tbody th {
+ border :1px solid black;
+ }
+ 
+    .ui-dataGrid-no-border>.ui-datagrid-content{
+				    border:none;  
+                       }
+                    .ui-datatable {
+                   border :1px solid black;
+                   }
+</style>
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:1000px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+
+
+			<h:form id="f">
+				<div align="center">
+					
+					
+					<p:commandButton value="Verificateur de stock" ajax="false" action="#{ProduitgestatBean.verfificateurcahierStock}"
+						style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px">
+						
+					</p:commandButton>
+					
+					<p:commandButton value="Initialiser Stock" ajax="false" action="#{ProduitgestatBean.initialiserStock}"
+						style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px">
+						
+					</p:commandButton>
+					
+					<p:commandButton value="Charger Cahier" ajax="false" action="#{ProduitgestatBean.getcahierstock}"
+						style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px">
+						
+					</p:commandButton>
+            <p:commandButton value="Imprimer"  
+						style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px">
+						<p:printer target="imprimer" />
+					</p:commandButton>
+				</div>
+				<br/>
+			 	<p:outputPanel id="imprimer">
+		  <h:panelGroup  rendered="#{ProduitgestatBean.listcredits.size() !=0}">
+				 <p:dataGrid var="c" value="#{ProduitgestatBean.listProduit}" columns="3"  styleClass="ui-dataGrid-no-border"
+            id="produits"  style="width:100%" > 
+				  
+				 <br/>
+				<table  border="0"   >
+				<tr>
+				<td  >
+				<b> <h:outputText value="#{c.nom}" style="font-size:12px "/> </b></td>
+				 <td  />
+				<td  > <b><h:outputText value="#{c.codeshop}" style="font-size:12px "/> </b></td>
+				 </tr><tr><td />
+			
+				 	<td  >	 
+				 <b><h:outputText value="#{c.quantitetr}" style="font-size:12px ;text-decoration: underline"/></b>	</td>
+				 <td  />
+				 </tr>			 
+				   </table>
+		 
+				
+				<p:dataTable  var="c" value="#{ProduitgestatBean.listcredits}"   >
+		
+		<p:column    >
+		<f:facet name="header" >
+						<h:outputText style="font-size:12px ;color:#483d8b" value=" " /> 
+						</f:facet>
+						
+		<p style="height:20px;width:2px">		<h:outputText value="#{c}" style="font-size:9px"  />		 </p>
+		</p:column>
+		<p:column  style="height:20%"    >
+		<f:facet name="header" >
+							<h:outputText style="font-size:12px ;color:#483d8b" value="Ent" />
+						</f:facet>
+				<h:outputText style="font-size:12px ;color:#483d8b" value=" " />			
+					 
+		</p:column>
+		
+		<p:column style="height:20%"  >
+		<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="Vnt" />
+						</f:facet>
+					<h:outputText style="font-size:12px ;color:#483d8b" value=" " />	
+					 
+		</p:column>
+		
+		<p:column style="height:20%"  >
+		<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="STK" />
+						</f:facet>
+						
+					<h:outputText style="font-size:12px ;color:#483d8b" value=" " />	 
+		</p:column>
+			
+		</p:dataTable>
+				 <p:separator style="width:100%;"/>
+				 <p style="page-break-before:always">
+                         </p>
+				 
+				 
+				  
+				</p:dataGrid>
+				<br/> <p style="page-break-before:always">
+                         </p>
+				 
+				<table border="1" style="width:100%">
+					<tr  >
+						 
+						<td><h:outputText value="DATE" /></td>
+						<td><h:outputText value="NOM ET PRENOM" /></td>
+						<td><h:outputText value="SIGNATURE" /></td>
+						 
+					</tr>
+					<ui:repeat var="c" value="#{ProduitgestatBean.listcredits}" >
+					<tr height='27'>
+						<td><h:outputText value="#{c}" /></td>
+						<td><h:outputText value=" " /></td>
+						<td><h:outputText value=" " /></td>
+						 
+						</tr>
+					</ui:repeat>
+				</table>
+				</h:panelGroup>
+				 </p:outputPanel>
+					 
+			
+			</h:form>
+		 </p:panel>
+		 </p:panel>
+		 </h:body>
+		 </html>

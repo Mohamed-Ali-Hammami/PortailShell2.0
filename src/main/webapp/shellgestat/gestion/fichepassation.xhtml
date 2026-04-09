@@ -1,0 +1,76 @@
+ <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+
+			<h:form id="f">
+
+				<div align="center">
+					<b><h:outputText value="Gestion de Credit Passation" /></b><br />
+					<h:panelGrid columns="2">
+					<h:outputLabel value="Numero "/>  
+					<h:inputText value="#{CreditPassationBean.selectioncreditpasstion.numBon}"></h:inputText>
+					
+					
+					<h:outputLabel value="Montant "/>  
+					<h:inputText value="#{CreditPassationBean.selectioncreditpasstion.montant}"></h:inputText>
+					
+					
+						
+					<h:outputLabel value="Client "/>  
+					  <p:selectOneMenu
+											value="#{CreditPassationBean.nom}"  
+											style="width:200px;font-size:12px "   id="dep"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="selectionner Client" />
+											<f:selectItems value="#{CreditPassationBean.listclientpassation}" var="n" itemLabel="#{n.nom}"  itemValue="#{n.nom}"/>
+                                      <f:ajax listener="#{CreditPassationBean.getclientpasationByname}" render="tel nom avance"/>
+										</p:selectOneMenu>
+										
+										
+						
+					<h:outputLabel value="Nom Client " />  
+					<h:inputText value="#{CreditPassationBean.nom}" id="nom"/>					
+					
+					<h:outputLabel value="Avance " />  
+					<h:inputText value="#{CreditPassationBean.avance}" id="avance"/>
+					
+					<h:outputLabel value="Num tel Client " />  
+					<h:inputText value="#{CreditPassationBean.tel}" id="tel"/>					
+					
+					<h:outputLabel value="Suivant  " /> 
+					<p:commandButton value="Suivant" action="#{CreditPassationBean.suivant}" ajax="false"/>
+					
+					<h:outputLabel value="Annuler " /> 
+					<p:commandButton value="Annuler" action="#{CreditPassationBean.accesPassation}"/>
+					
+					</h:panelGrid>
+					
+					
+					</div>
+					</h:form>
+					</p:panel>
+					</p:panel>
+					</h:body>
+					</html>
+				

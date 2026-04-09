@@ -1,0 +1,136 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"
+		charset="UTF-8"></meta>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<title>SHELL SIJOUMI</title>
+
+</h:head>
+<h:body>
+
+	<div align="left">
+		 
+	</div>
+	<h:form>
+		<p:growl id="messages" />
+
+		 	<p:menubar
+			style="height:30px; margin-left: 50px;margin-right: 50px ;background-image:linear-gradient( #FAF281, #FAF292);"
+			autoDisplay="true">
+			<p:menuitem icon="ui-icon-home" url="#{request.contextPath}/shellpaie/index.xhtml"
+				style="font-size:10px" />
+			<p:menuitem value="    Employers  " url="#{request.contextPath}/shellpaie/gestion_paie/listemplyee.xhtml"
+				style="font-size:10px" />
+					  
+			<p:menuitem value="   | Avances  " rendered="#{LoginBean.user.isResponsableshops()==true || LoginBean.user.isAdmin()==true}"
+				url="#{request.contextPath}/shellpaie/gestion_paie/gestion_des_avances.xhtml" style="font-size:10px" />
+			 
+   
+
+		
+			<p:submenu label="    | Paie  " style="font-size:10px" rendered="#{LoginBean.user.isResponsableshops()==true || LoginBean.user.isAdmin()==true}">	
+				<p:menuitem value="| Pointage  "
+				url="#{request.contextPath}/shellpaie/gestion_paie/pointage.xhtml" style="font-size:10px" />
+			<p:menuitem value=" Employer declare  "
+				url="#{request.contextPath}/shellpaie/gestion_paie/paie.xhtml" style="font-size:10px" />
+				
+			<p:menuitem value=" Employer Non declare  "
+				url="#{request.contextPath}/shellpaie/gestion_paie/paieNondeclaree.xhtml" style="font-size:10px" />
+				  
+				
+		<p:menuitem value=" Employer   par rendement   "
+				url="#{request.contextPath}/shellpaie/gestion_paie/paieNondeclareeRendement.xhtml" style="font-size:10px" />
+				  <p:menuitem value="| Fiche de paie  "
+				url="#{request.contextPath}/shellpaie/gestion_paie/fiche_de_paie.xhtml" style="font-size:10px" />
+				</p:submenu>
+		   
+				
+		   <p:menuitem value="| Gestion  " rendered="#{LoginBean.user.isAdmin()==true ||LoginBean.user.isResponsableshops()==true  }"
+				url="#{request.contextPath}/shellpaie/gestion_paie/gestion_des_elements_de_la_paie.xhtml" style="font-size:10px" />
+				
+		  <p:menuitem value="| Recapitulatif par mois  "
+				url="#{request.contextPath}/shellpaie/gestion_paie/edition.xhtml" style="font-size:10px" />
+				
+		 <p:menuitem value="| Historique des employers  "
+				url="#{request.contextPath}/shellpaie/gestion_paie/historique_employee.xhtml" style="font-size:10px" />
+			<p:submenu label="    | Journal salarier  " style="font-size:10px"  rendered="#{LoginBean.user.isResponsableshops()==true || LoginBean.user.isAdmin()==true}">	
+		 <p:menuitem value="Salarier declare  "
+				url="#{request.contextPath}/shellpaie/gestion_paie/journal.xhtml" style="font-size:10px" />
+				
+		<p:menuitem value="   salarier non declare  "
+				url="#{request.contextPath}/shellpaie/gestion_paie/journalNondeclaree.xhtml" style="font-size:10px" />
+				
+				
+		<p:menuitem value=" salarier  par rendement"
+				url="#{request.contextPath}/shellpaie/gestion_paie/journalNondeclaree2.xhtml" style="font-size:10px" />
+				<p:menuitem value="   Recapitulatif  "
+				url="#{request.contextPath}/shellpaie/gestion_paie/journaltotal.xhtml" style="font-size:10px" />
+				
+		<p:menuitem value="   Etat annuel "
+				url="#{request.contextPath}/shellpaie/gestion_paie/etatannuel.xhtml" style="font-size:10px" />
+			<p:menuitem value="   Ordre de virement  "
+				url="#{request.contextPath}/shellpaie/gestion_paie/ordre_virement.xhtml" style="font-size:10px" />
+		</p:submenu>
+		<p:menuitem value="      | Administration  "
+					url="#{request.contextPath}/shellpaie/gestion_paie/ajouter_element_de_la_paie.xhtml"  style="font-size:10px" />
+		 			
+					
+	    <p:submenu label="    |  Gestion des conges  " style="font-size:10px"  rendered="#{LoginBean.user.isResponsableshops()==true || LoginBean.user.isAdmin()==true}">	
+		 		
+		<p:menuitem value="   Pointage "
+				url="#{request.contextPath}/shellpaie/gestion_paie/pointageconge.xhtml" style="font-size:10px" />
+				<p:menuitem value="   etat des conges   "
+				url="#{request.contextPath}/shellpaie/gestion_paie/etatconge.xhtml" style="font-size:10px" />
+		
+			<p:menuitem value="   Journal  "
+				url="#{request.contextPath}/shellpaie/gestion_paie/journalconge.xhtml" style="font-size:10px" />
+		</p:submenu>
+		
+		 <p:submenu label="    |  primes de fin d'annees  " style="font-size:10px"  rendered="#{LoginBean.user.isResponsableshops()==true || LoginBean.user.isAdmin()==true}">	
+		 		<p:menuitem value=" Etat de presence"
+				url="#{request.contextPath}/shellpaie/gestion_paie/EtatPresence.xhtml" style="font-size:10px" />
+		 		<p:menuitem value="   Note global"
+				url="#{request.contextPath}/shellpaie/gestion_paie/note_annuaire.xhtml" style="font-size:10px" />
+				
+		<p:menuitem value="   Note Par employee"
+				url="#{request.contextPath}/shellpaie/gestion_paie/note_employee.xhtml" style="font-size:10px" />
+				
+				
+				
+				<p:menuitem value="   etat des primes   " ajax="false"
+				url="#{request.contextPath}/shellpaie/gestion_paie/etatprime.xhtml" style="font-size:10px" />
+		
+			<p:menuitem value="   Journal  "
+				url="#{request.contextPath}/shellpaie/gestion_paie/journalprime.xhtml" style="font-size:10px" />
+		</p:submenu>
+		
+		<p:submenu label="    |  Rappel  " style="font-size:10px"  rendered="#{LoginBean.user.isResponsableshops()==true || LoginBean.user.isAdmin()==true}">	
+		 		
+		 
+				<p:menuitem value="   etat des rappel   "
+				url="#{request.contextPath}/shellpaie/gestion_paie/rappel.xhtml" style="font-size:10px" />
+		
+			<p:menuitem value="   Journal  "
+				url="#{request.contextPath}/shellpaie/gestion_paie/journalrappel.xhtml" style="font-size:10px" />
+		</p:submenu>
+	
+			  <f:facet name="options">
+				<p:commandLink id="nonAjax" action="#{LoginBean.logout}"
+					ajax="false">
+					<p:graphicImage url="/images/logout.png" />
+					<h:outputText value="#{msg['logout.user']}"
+						style="color:#db0b32;font-size:12px;" />
+				</p:commandLink>
+			</f:facet>
+			 
+		</p:menubar>
+	</h:form>
+
+
+
+</h:body>
+</html>

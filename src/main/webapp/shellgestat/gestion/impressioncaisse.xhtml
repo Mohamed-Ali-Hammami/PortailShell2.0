@@ -1,0 +1,629 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+			<br />
+
+			<h:form>
+				<div align="center">
+					<h:panelGrid columns="2">
+						<p:commandButton title="imprimer" value="imprimer">
+
+							<p:printer target="imprimer"></p:printer>
+						</p:commandButton>
+
+
+					</h:panelGrid>
+					<br />
+					<table>
+						<tr>
+							<td><h:outputText value="Date  Début:"
+									style="font-size:12px " /></td>
+							<td><p:calendar id="popup" value="#{SituationBean.date1}"
+									 navigator="true"
+  pattern="dd/MM/yyyy" buttonTabindex="-1" type="tel"
+  mask="99/99/?9999" placeholder="__/__/____" >
+									<p:ajax event="dateSelect" />
+								</p:calendar></td>
+
+						</tr>
+
+					</table>
+					<h:panelGrid columns="2"> 
+				<p:selectOneRadio value="#{SituationBean.poste}"
+							style="width:200px;font-size:12px" required="true"
+							requiredMessage="choisir la poste">
+
+							<f:selectItems value="#{SituationBean.postes}" />
+							<f:ajax listener="#{SituationBean.getsituationjournaliere2}"
+								event="change" render="imprimer" />
+						</p:selectOneRadio>
+					</h:panelGrid>
+
+
+				</div>
+
+				<p:outputPanel style="width:99%" id="imprimer">
+					<div align="center">
+
+
+
+						<b><h:outputText value="IMPRESSION CAISSE CARBURANTS"
+								style="font-size:14px" /> </b>
+
+						<table>
+
+							<tr>
+								<td><h:outputText value="DU " style="font-size:14px" /> <p:spacer
+										width="30px" /> <h:outputText
+										value="  #{SituationBean.dates1}" style="font-size:14px" /></td>
+								<td><p:spacer width="30px" />   <p:spacer width="30px" /> <h:outputText
+										value=" #{SituationBean.poste}" style="font-size:14px" /></td>
+
+
+							</tr>
+							<tr>
+								<td><h:outputText value="OUVRIER1:" /></td>
+
+								<td><h:outputText value="#{SituationBean.caisse.pompiste1}"
+										style="font-size:14px" /></td>
+
+								<td><h:outputText value="OUVRIER2:" /> <h:outputText
+										value=" #{SituationBean.caisse.pompiste2}"
+										style="font-size:14px" /></td>
+							</tr>
+
+
+
+						</table>
+
+
+						<p:dataTable value="#{SituationBean.ligneindex}" var="c"
+							style="border: 0px #000000 solid; ">
+							<p:column style="border: 1px #000000 solid;width:21%;  ">
+								<f:facet name="header">
+									<h:outputText value="Pompe" style="font-size:13px" />
+								</f:facet>
+								<h:outputText value="#{c.pompe.libelle}" style="font-size:12px" />
+							</p:column>
+
+							<p:column style="border: 1px #000000 solid;width:20%; ">
+								<f:facet name="header">
+									<h:outputText value="index Fermeture" style="font-size:14px" />
+								</f:facet>
+								<h:outputText value="#{c.indexfermutures}"
+									style="font-size:14px" />
+							</p:column>
+
+							<p:column style="border: 1px #000000 solid;width:17%; ">
+								<f:facet name="header">
+									<h:outputText value="index Ouverture" style="font-size:12px" />
+								</f:facet>
+								<h:outputText value="#{c.indexouvertures}"
+									style="font-size:12px" />
+							</p:column>
+
+							<p:column style="border: 1px #000000 solid; ">
+								<f:facet name="header">
+									<h:outputText value="Quantite" style="font-size:12px" />
+								</f:facet>
+								<b><h:outputText value="#{c.quantites}" style="font-size:14px" /></b>
+							</p:column>
+
+							<p:column style="border: 1px #000000 solid; ">
+								<f:facet name="header">
+									<h:outputText value="Prix de Vente" style="font-size:12px" />
+								</f:facet>
+								<h:outputText value="#{c.pompe.articlecarburant.prixventes}"
+									style="font-size:12px" />
+							</p:column>
+
+							<p:column style="border: 1px #000000 solid; ">
+								<f:facet name="header">
+									<h:outputText value="Montant" style="font-size:12px" />
+								</f:facet>
+								<b><h:outputText value="#{c.mantants}"
+										style="font-size:14px" /></b>
+
+							</p:column>
+							<p:columnGroup type="footer" style="border: 1px #000000 solid; ">
+								<p:row>
+									<p:column colspan="3"
+										style="text-align:right;border: 1px #000000 solid;"
+										footerText="Totaux"></p:column>
+									<p:column footerText="#{SituationBean.totalLitrages}"
+										style="border: 1px #000000 solid;"></p:column>
+									<p:column colspan="2"
+										footerText="#{SituationBean.totalventecarburants}"
+										style="text-align:right;border: 1px #000000 solid;"></p:column>
+								</p:row>
+							</p:columnGroup>
+						</p:dataTable>
+						<br />
+
+
+						<h:panelGroup rendered="#{SituationBean.listdepense.size()!=0}">
+
+
+							<b><h:outputText value="DEPENSES" style="font-size:18px " /></b>
+							<p:dataTable value="#{SituationBean.listdepense}" var="d"
+								style="width:70%; border: 0px #000000 solid; ">
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="NOm" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.libelle} " style="font-size:14px" />
+
+								</p:column>
+
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Montant" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.montants} " style="font-size:14px" />
+
+								</p:column>
+							</p:dataTable>
+
+
+
+						</h:panelGroup>
+
+						<h:panelGroup rendered="#{SituationBean.listAvances.size()!=0}">
+							<H1>
+								<b><h:outputText value="Etat accomptes ouvriers"
+										style="font-size:18px " /></b>
+							</H1>
+
+							<p:dataTable value="#{SituationBean.listAvances}" var="d"
+								style="width:70%; border: 0px #000000 solid; ">
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Code" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.employee.code} "
+										style="font-size:14px" />
+
+								</p:column>
+
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Nom" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.employee.nom} " style="font-size:14px" />
+
+								</p:column>
+
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Manque/avance" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.montant_avances} "
+										style="font-size:14px" />
+
+								</p:column>
+							</p:dataTable>
+
+
+
+
+						</h:panelGroup>
+						<h:panelGroup
+							rendered="#{SituationBean.listCreditclient.size()>0}">
+							<H1>
+								<b><h:outputText value="CREDIT CLIENTS"
+										style="font-size:18px " /></b>
+							</H1>
+							<p:dataTable value="#{SituationBean.listCreditclient}" var="d"
+								style="width:70%; border: 0px #000000 solid; ">
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Code" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.client.code} " style="font-size:14px" />
+
+								</p:column>
+
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Client" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.client.nom} " style="font-size:14px" />
+
+								</p:column>
+
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Montant" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.montants} " style="font-size:14px" />
+
+								</p:column>
+
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Numero Bon" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.numbon} " style="font-size:14px" />
+
+								</p:column>
+							</p:dataTable>
+						</h:panelGroup>
+
+						<h:panelGroup
+							rendered="#{SituationBean.listCreditanterieur.size()>0}">
+							<H1>
+								<b><h:outputText value="ETAT REGLEMENT CLIENT"
+										style="font-size:18px " /></b>
+							</H1>
+
+							<p:dataTable value="#{SituationBean.listCreditanterieur}" var="d"
+								style="width:70%; border: 0px #000000 solid; ">
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Code" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.client.code} " style="font-size:14px" />
+
+								</p:column>
+
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Client" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.client.nom} " style="font-size:14px" />
+
+								</p:column>
+
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Montant" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.montants} " style="font-size:14px" />
+
+								</p:column>
+
+							</p:dataTable>
+
+						</h:panelGroup>
+						<h:panelGroup
+							rendered="#{SituationBean.listachatcaisse.size()!=0}">
+
+							<H1>
+								<b><h:outputText value="ACHATS" style="font-size:18px " /></b>
+							</H1>
+							<br />
+
+							<p:dataTable value="#{SituationBean.listachatcaisse}" var="d"
+								style="width:70%; border: 0px #000000 solid; ">
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Nom" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.libelle} " style="font-size:14px" />
+
+								</p:column>
+
+
+
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Montant" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.montants} " style="font-size:14px" />
+
+								</p:column>
+
+							</p:dataTable>
+
+
+						</h:panelGroup>
+
+
+
+
+
+						<h:panelGroup rendered="#{SituationBean.listcheque.size()>0}">
+
+
+							<H1>
+								<b><h:outputText value="ETAT DES CHEQUES"
+										style="font-size:18px " /></b>
+							</H1>
+
+							<p:dataTable value="#{SituationBean.listcheque}" var="d"
+								style="width:70%; border: 0px #000000 solid; ">
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Num cheque" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.numero} " style="font-size:14px" />
+
+								</p:column>
+
+
+
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Banque" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.banque} " style="font-size:14px" />
+
+								</p:column>
+
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Montant" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.montants} " style="font-size:14px" />
+
+								</p:column>
+
+							</p:dataTable>
+
+						</h:panelGroup>
+
+
+
+						<h:panelGroup rendered="#{SituationBean.listretour.size()>0}">
+							<H1>
+								<b><h:outputText value="RETOUR CUVE" style="font-size:18px " /></b>
+							</H1>
+
+
+
+
+							<p:dataTable value="#{SituationBean.listretour}" var="d"
+								style="width:70%; border: 0px #000000 solid; ">
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Libelle" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.pompe.libelle} "
+										style="font-size:14px" />
+
+								</p:column>
+
+
+
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Quantite" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.quantite} " style="font-size:14px" />
+
+								</p:column>
+
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Vente" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.pompe.articlecarburant.prixventes} "
+										style="font-size:14px" />
+
+								</p:column>
+
+								<p:column style="border: 1px #000000 solid; ">
+									<f:facet name="header">
+										<h:outputText value="Montant" style="font-size:14px" />
+									</f:facet>
+
+									<h:outputText value="#{d.montants} " style="font-size:14px" />
+
+								</p:column>
+
+							</p:dataTable>
+
+						</h:panelGroup>
+
+
+						<H1>
+							<b><h:outputText value="RECAPITULATION STUATION"
+									style="font-size:18px " /></b><br />
+							<table border="0" style="width: 100%" class="table">
+								<tr>
+								
+									<td class="td"><h:outputText value="Total Ventes Carburants"
+											style="font-size:14px" /></td>
+									<td class="td"><h:outputText
+											value="#{SituationBean.caisse.totalventeCarburants}"
+											style="font-size:14px" /></td>
+
+									<td class="td"><h:outputText value="Total Credits"
+											style="font-size:14px" /></td>
+									<td class="td"><h:outputText
+											value="#{SituationBean.caisse.totalCredits}"
+											style="font-size:14px" /></td>
+
+								</tr>
+								<tr>
+                                 <td class="td"/><td class="td"/>
+									<td class="td"> <h:outputText value="Total Cheques"
+											style="font-size:14px" /></td>
+									<td class="td"><h:outputText
+											value="#{SituationBean.caisse.totalCheques}"
+											style="font-size:14px" /></td>
+
+
+									<td  ><h:outputText value="Total Esp Comptable"
+											style="font-size:14px" /></td>
+									<td  ><b><h:outputText
+											value="#{SituationBean.caisse.totalespececomptables}"
+											style="font-size:16px;color:black" /></b></td>
+
+								</tr>
+
+								<tr>
+								<td class="td"/><td class="td"/>
+
+									<td class="td"><h:outputText value="Total Depenses"
+											style="font-size:14px" /></td>
+									<td class="td"><h:outputText
+											value="#{SituationBean.caisse.totalDepenses}"
+											style="font-size:14px" /></td>
+
+
+									<td><h:outputText value="Total Esp Collecte"
+											style="font-size:14px" /></td>
+									<td><b><h:outputText
+											value="#{SituationBean.caisse.totalespeces}"
+											style="font-size:16px;color:black" /></b></td>
+
+								</tr>
+								<tr>
+								<td class="td"/><td class="td"/>
+									<td class="td"><h:outputText value="Retour Cuve"
+											style="font-size:14px" /></td>
+									<td class="td"><h:outputText
+											value="#{SituationBean.caisse.retourCuves}"
+											style="font-size:14px" /></td>
+
+
+									<td><h:outputText value="Observation"
+											style="font-size:14px" /></td>
+									<td  ><b><h:outputText
+												value="#{SituationBean.caisse.observations}"
+												style="font-size:16px;color:black" /></b></td>
+
+
+								</tr>
+
+								<tr>
+									<td class="td"><h:outputText value="Total Reglement Client"
+											style="font-size:14px" /></td>
+									<td class="td"><h:outputText
+											value="#{SituationBean.caisse.totalCreditAnterieurs}"
+											style="font-size:14px" /></td>
+
+									<td class="td"><h:outputText value="C banquaire"
+											style="font-size:14px" /></td>
+									<td class="td"><h:outputText
+											value="#{SituationBean.caisse.carteBanquaires}"
+											style="font-size:14px" /></td>
+
+
+								</tr>
+								<tr>
+
+
+									<td class="td"><h:outputText value="TOT Achats"
+											style="font-size:14px" /></td>
+									<td class="td"><h:outputText
+											value="#{SituationBean.caisse.totalachats}"
+											style="font-size:14px" /></td>
+									
+
+
+									<td class="td"><h:outputText value="TOT accomptes"
+											style="font-size:14px" /></td>
+									<td class="td"><h:outputText
+											value="#{SituationBean.caisse.totalManques}"
+											style="font-size:14px" /></td>
+
+								</tr>
+								<tr>
+									
+									<td class="td"><h:outputText value="C shell" style="font-size:14px" /></td>
+									<td class="td"><h:outputText
+											value="#{SituationBean.caisse.carteShells}"
+											style="font-size:14px" /></td>
+                                  <td class="td"><h:outputText value="Total Caisse"
+											style="font-size:14px" /></td>
+									<td class="td"><b><h:outputText
+											value="#{SituationBean.caisse.totalcaisses}"
+											style="font-size:16px" /></b></td>
+								</tr>
+
+
+
+
+							</table>
+						</H1>
+
+<style type="text/css">
+.td {
+border-bottom:2px solid black;	 
+}
+
+.table {
+	 border-spacing:0px;
+}
+</style>
+						<br />
+					</div>
+				</p:outputPanel>
+
+				<!-- 
+						<h:outputText value="Vente Par Famille "
+							style=" font-style: italic;font-size: large;" />
+						<br />
+						<table class="table" border="1">
+							<tr>
+								<td><h:outputText value="Code " style="font-size:14px" /></td>
+								<td><h:outputText value="Nom" style="font-size:14px" /></td>
+								<td><h:outputText value="Quantite" style="font-size:14px" /></td>
+								<td><h:outputText value="Montant" style="font-size:14px" /></td>
+							</tr>
+							  
+						<tr>
+							<td><h:outputText value="#{SituationBean.listAchat.dates}"
+									style="font-size:14px" /></td>
+							<td><h:outputText value="#{SituationBean.listAchat.carburants}"
+									style="font-size:14px" /></td>
+							<td><h:outputText value="#{SituationBean.listAchat.shop}"
+									style="font-size:14px" /></td>
+							<td><h:outputText value="" style="font-size:14px" /></td>
+							<td><h:outputText value="#{SituationBean.listAchat.total}"
+									style="font-size:14px" /></td>
+
+						</tr> 
+						</table>-->
+
+				
+
+			</h:form>
+
+		</p:panel>
+	</p:panel>
+</h:body>
+</html>

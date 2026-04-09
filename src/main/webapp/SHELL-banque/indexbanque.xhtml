@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Shell-Banque</title>
+</h:head>
+
+<h:body style="background-color:#CECECE">
+
+	<div align="center">
+		<ui:insert name="menu">
+			<ui:include src="Headerbanque.xhtml" />
+		</ui:insert>
+		<p:growl id="msgs" showDetail="true" />
+		<p:panel id="basic"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px ;background-image: url(../2.png)">
+			
+			<h:form>
+				<div align="right">
+					<table>
+						<tr>
+							<td><p:commandButton value="Nouveau Banque"
+									action="#{BanqueBean.nouveauBanque}" ajax="false"
+									style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);" /></td>
+
+							  
+						</tr>
+					</table>
+				</div>
+			
+
+			  <div align="center">
+			  <p:selectOneMenu value="#{BanqueBean.nom}"
+								style="width:200px;font-size:20px " filter="true"
+								filterMatchMode="contains" >
+								<f:selectItem itemLabel="selectionner banque" />
+								<f:selectItems value="#{LoginBean.listBanque}" var="f"
+									itemValue="#{f.nom}" itemLabel="#{f.nom}"  />
+								 
+							
+							</p:selectOneMenu>
+							
+							<br/>
+							<br/>
+							
+							<p:commandButton value="Valider" action="#{BanqueBean.valider}" 
+							style="width:150px;font-size:12px;height:30;color:#0000ff;background-color:#abc8e2;"/>
+			  </div>
+			  
+			  	</h:form>
+            
+		</p:panel>
+		</div>
+ 
+</h:body>
+</html>

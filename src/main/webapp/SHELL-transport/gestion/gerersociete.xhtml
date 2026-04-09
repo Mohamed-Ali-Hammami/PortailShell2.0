@@ -1,0 +1,153 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+<p:tab title="SHELL SIJOUMI">
+<div align="center"> 
+	<h:form id="form4">	
+						 
+						<!-- <fieldset style="margin-bottom: 20px; background-color: #eeeec6;">
+							<legend>
+								<b><h:outputText style="font-size:12px ;color:#2e8b57"
+										value="Société " name="outTxtcin" /> </b>
+							</legend>
+							<br />
+							
+							<p:growl showDetail="true" id="msgs"/>		
+								<table>
+								<tr>
+										<td width="20%"><h:outputText value="Societe"
+												style="font-size:12px " /></td>
+										<td><h:inputText style="font-size:12px "
+												value="#{ParametrageBean.libelle}" /></td>
+									</tr>
+									 
+									<tr>
+										<td><h:outputText value="Numero"
+												style="font-size:12px " /></td>
+										<td><h:inputText style="font-size:12px "
+												value="#{ParametrageBean.numero}" /></td>
+												
+												<td><h:outputText value="Rue"
+												style="font-size:12px " /></td>
+										<td><h:inputText style="font-size:12px "
+												value="#{ParametrageBean.rue}" /></td>
+												
+												<td><h:outputText value="Ville"
+												style="font-size:12px " /></td>
+										<td><h:inputText style="font-size:12px "
+												value="#{ParametrageBean.adresse}" /></td>
+
+									</tr>
+
+									<tr>
+										<td><h:outputText value="M.Fiscale" style="font-size:12px " /></td>
+										<td><h:inputText value="#{ParametrageBean.matricuefiscale}"
+												style="font-size:12px " /></td>
+									</tr>
+									
+									
+									<tr>
+										<td><h:outputText value="Telephone" style="font-size:12px " /></td>
+										<td><h:inputText value="#{ParametrageBean.tel1}"
+												style="font-size:12px " /></td>
+												 
+									</tr>
+									 <tr>
+										<td />
+										<td><p:commandButton value="Ajouter" ajax="false"
+												style="width:150px;font-size:12px;height:30;color:#0000ff;background-color:#abc8e2;"
+												action="#{ParametrageBean.savesociete}" /></td>
+									</tr>
+
+								</table>
+								<p:messages id="msg" closable="true" showDetail="true" />
+							
+						</fieldset>
+						<br />
+						<p:dataTable id="ss" var="societe" style="background:#a2b5bf"
+							value="#{ParametrageBean.listsocietes}" widgetVar="ArticleTable"
+							emptyMessage="aucun utilisateur dans la liste" paginator="true"
+							rows="6" paginatorPosition="bottom" selectionMode="single" editable="true"
+							selection="#{ParametrageBean.selectedsociete}" rowKey="#{societe.id}">
+                             <p:ajax event="rowEdit" listener="#{ParametrageBean.onRowEdit3}"  />
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b" value="Libellé" />
+								</f:facet>
+								
+								
+								<p:cellEditor>
+								<f:facet name="output"><h:outputText style="font-size:12px " value="#{societe.libelle}" />
+									</f:facet>
+								<f:facet name="input"><p:inputText  id="libelleiput" value="#{societe.libelle}" style="width:96%"/>	</f:facet>
+								 </p:cellEditor>
+							</p:column>
+
+							<p:column  >
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="adresse" />
+								</f:facet> 
+                                <p:cellEditor>
+								<f:facet name="output">
+								<h:outputText style="font-size:12px " value="#{societe.address.num}" /> <br/>
+								<h:outputText style="font-size:12px " value="#{societe.address.rue}" /> <br/>
+								<h:outputText style="font-size:12px " value="#{societe.address.ville}" /> <br/>
+									</f:facet>
+								<f:facet name="input">
+								<p:inputText  id="adresseiput1" value="#{societe.address.num}" style="width:96%"/><br/>	
+								<p:inputText  id="adresseiput2" value="#{societe.address.rue}" style="width:96%"/><br/>	
+								<p:inputText  id="adresseiput3" value="#{societe.address.ville}" style="width:96%"/> 
+								</f:facet>
+								 </p:cellEditor>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="M.fiscale" />
+								</f:facet> 
+									
+									 <p:cellEditor>
+								<f:facet name="output">	<h:outputText style="font-size:12px "
+									value="#{societe.matricuefiscale}" />
+									</f:facet>
+								<f:facet name="input"><p:inputText  id="matfiput" value="#{societe.matricuefiscale}" style="width:96%"/>	</f:facet>
+								 </p:cellEditor>
+							</p:column> 
+							
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Téléphone" />
+								</f:facet>
+								
+									<p:cellEditor>
+								<f:facet name="output">	<h:outputText style="font-size:12px "
+									value="#{societe.tel1}" />
+									
+									</f:facet>
+								<f:facet name="input"><p:inputText  id="teliput" value="#{societe.tel1}" style="width:96%"/>	</f:facet>
+								 </p:cellEditor>
+							</p:column> 
+
+							 
+
+							 <p:column style="width:40px"  >
+							<f:facet name="header">
+									<h:outputText style="font-size:9px;color:#483d8b"
+										value="modifier" />
+								</f:facet>
+							<p:rowEditor/>
+							</p:column>
+						</p:dataTable> -->
+ </h:form>
+								
+								 
+					</div>
+</p:tab>
+</html>

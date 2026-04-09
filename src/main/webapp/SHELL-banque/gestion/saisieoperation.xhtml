@@ -1,0 +1,88 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      lang="fr">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Shell-Banque</title>
+</head>
+
+<h:body style="background-color:#CECECE;">
+
+<div style="text-align:center;">
+
+    <!-- Headers -->
+    <ui:include src="/SHELL-banque/Header.xhtml"/>
+    <ui:include src="/SHELL-banque/Headerbanque.xhtml"/>
+
+    <p:panel id="basic"
+             style="min-height:900px;margin:0 50px;background-image:url('../2.png');">
+
+        <h:form id="operations" prependId="false">
+
+            <fieldset style="margin-bottom:20px;background-color:#eeeec6;">
+
+                <h:panelGrid columns="2">
+
+                    <h:outputText value="Description:" style="font-size:14px;color:#483d8b"/>
+                    <h:inputText value="#{BanqueBean.description}"/>
+
+                    <h:outputText value="Montant:" style="font-size:14px;color:#483d8b"/>
+                    <h:inputText value="#{BanqueBean.montant}"/>
+
+                    <h:outputText value="Type Règlement:" style="font-size:14px;color:#483d8b"/>
+                    <p:selectOneMenu value="#{BanqueBean.reglement}" id="reglement" required="true"
+                                     requiredMessage="Entrer le type du règlement" filter="true"
+                                     filterMatchMode="contains"
+                                     style="width:200px;font-size:12px">
+                        <f:selectItem itemLabel="Sélectionner règlement"/>
+                        <f:selectItems value="#{BanqueBean.reglements}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputText value="Numéro Chèque:" style="font-size:14px;color:#483d8b"/>
+                    <h:inputText value="#{BanqueBean.reference}"/>
+
+                    <h:outputText value="Type Opération:" style="font-size:14px;color:#483d8b"/>
+                    <p:selectOneMenu value="#{BanqueBean.type}" id="type2" required="true"
+                                     requiredMessage="Entrer le type d'opération" filter="true"
+                                     filterMatchMode="contains"
+                                     style="width:200px;font-size:12px">
+                        <f:selectItem itemLabel="Sélectionner type"/>
+                        <f:selectItems value="#{BanqueBean.types}"/>
+                    </p:selectOneMenu>
+
+                </h:panelGrid>
+
+                <br/><br/>
+
+                <p:commandButton value="Valider"
+                                 style="width:150px;font-size:12px;height:30px;color:white;
+                                        background-image:linear-gradient(#FAF281, red);"
+                                 styleClass="bespece"
+                                 action="#{BanqueBean.saveoperation}" ajax="false"/>
+
+            </fieldset>
+
+            <script>
+                function validerespece(input) {
+                    $(document).keypress(function(event) {
+                        var keycode = event.keyCode ? event.keyCode : event.which;
+                        if (keycode === 13 && input.value !== "") {
+                            $('.butontpe').click();
+                        }
+                    });
+                }
+            </script>
+
+        </h:form>
+
+    </p:panel>
+
+</div>
+
+</h:body>
+</html>

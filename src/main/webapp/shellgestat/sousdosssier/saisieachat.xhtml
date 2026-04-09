@@ -1,0 +1,164 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"
+		charset="UTF-8"></meta>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<title>Shell-Sejoumi</title>
+
+</h:head>
+<h:body>
+ 
+		<div align="center">			 
+			<fieldset style="margin-bottom: 20px; background-color: #eeeec6;">
+				<legend>
+					<b> 
+					<h:outputText value="SAISIE ACHATS" />
+				</b>
+				  
+				</legend>			 
+				  
+				  <p:focus for="achats:lib"/>
+						<p:remoteCommand name="refreshFooterachat" update="achats:ttcachat" />
+					<p:dataTable id="achats" var="d"  scrollable="true" scrollHeight="180"
+						value="#{CaisseBeans.listachatcaisse}" editable="true" editMode="cell"
+						widgetVar="articleAchat"     rowIndexVar="rowId"
+						emptyMessage="aucune ligne dans la base">
+
+
+						<p:ajax event="cellEdit" listener="#{CaisseBeans.onCellEdit4}"
+							partialSubmit="true" partialSubmitFilter="true" />
+
+
+						<p:column style="width:150px;">
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Libelle" />
+							</f:facet>
+							 
+								
+								<h:inputText value="#{d.libelle}" id="lib" styleClass="achat" style="background-color:transparent;border:none;"   onkeyup="nextsah3(this)">
+								 
+								</h:inputText>
+									 
+								 
+						</p:column> 
+ 
+                     
+ 
+                       <p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="Montant" />
+						</f:facet>
+						 
+							
+							<!-- 	<h:inputText value="#{d.montant}" style="background-color:transparent;border:none;"   onkeyup="nextsah2(this)">									 
+									 <p:ajax  listener="#{CaisseBeans.updatemontantachat}"
+										process="@this"  oncomplete="refreshFooterachat();"
+										 partialSubmit="true" />
+									 
+							 </h:inputText> -->
+							 
+							 <h:panelGroup id="ach">
+					 <h:inputText value="#{d.montants}"
+							valueChangeListener="#{CaisseBeans.updatemontantachat1}"
+							rendered="#{d.montant !=0}"  
+							onkeyup="nextsah2(this);"  
+							style="background-color:transparent;border:none;">
+							<p:ajax update="ach" event="change" process="@this" oncomplete="refreshFooterachat();"
+								partialSubmit="true">
+							</p:ajax>
+							<f:attribute name="test" value="#{rowId}" />
+						</h:inputText>
+						<h:inputText value="#{d.montant}"  
+							onkeyup="nextsah2(this);"    
+							rendered="#{d.montant==0}"
+							style="background-color:transparent;border:none;">
+							<p:ajax update="ach" listener="#{CaisseBeans.updatemontantachat}"
+								process="@this" partialSubmit="true" oncomplete="refreshFooterachat();">
+							</p:ajax>
+						 
+						</h:inputText>    
+						</h:panelGroup>
+					</p:column>
+					 
+					
+                      <f:facet name="footer">
+					   TOTAL  :<h:outputText id="ttcachat" value="#{CaisseBeans.totals}" 
+							  size="8" />
+					   </f:facet>
+                            
+					</p:dataTable>
+					 
+					  	
+				<script>
+				function initachat() {
+					var index = 0;
+			         $('.achat').eq(index).focus();
+				}
+					function nextahs(input) {
+						$(input).closest('td').next('td').find(
+								'input[type=text]').focus();
+					}
+
+					function nextsah2(input) {
+						$(document)
+						.keypress(
+								function(event) {
+									var keycode = (event.keyCode ? event.keyCode
+											: event.which);
+									if (keycode == '13') {
+					 $(input).closest('tr').next('tr').find('input[type=text]').first().focus();
+						 
+									}
+
+								});
+			} 
+					function nextsah3(input) {
+						
+						$(document)
+						.keypress(
+								function(event) {
+									var keycode = (event.keyCode ? event.keyCode
+											: event.which);
+									if (keycode == '13') {
+						$(input).closest('td').next('td').find(
+								'input[type=text]').focus();
+						$(input).closest('td').next('td').find(
+						'input[type=text]').select();
+						return false;
+									}
+
+								});
+			} 
+
+					function nextsah4(input) {
+						$(input).closest('tr').next('tr').find(
+								'input[type=text]').focus();
+						// $(input).closest('td').next('td').find('input[type=text]').focus();
+					}
+				</script>
+			 
+
+				<p:commandButton value="Valider Achat" update="totalachats totalcaisses"
+					style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);"
+					ajax="false" action="#{CaisseBeans.saveachat}" />
+					
+					 
+
+			</fieldset>
+
+
+
+
+		</div>
+ 
+ 
+</h:body>
+</html>
+ 

@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Shell Banque Login</title>
+</h:head>
+
+<h:body style="background-color:#CECECE;">
+
+    <p:panel style="min-height:900px; margin:20px;">
+        
+        <!-- Render header only for admin, supervisor, or shop manager -->
+        <h:panelGroup rendered="#{LoginBean.user.isAdmin() or LoginBean.user.isResponsableshops() or LoginBean.user.isSuperviseur()}">
+            <ui:insert name="menu">
+                <ui:include src="/shellgestat/Header.xhtml"/>
+            </ui:insert>
+        </h:panelGroup>
+        
+        <!-- Main login panel -->
+        <p:panel closable="true"
+                 style="min-height:900px; margin:50px; background-image:url(../2.png); background-size:cover;">
+            
+            <ui:insert name="menu">
+                <ui:include src="/SHELL-banque/unsecure/login.xhtml"/>
+            </ui:insert>
+            
+        </p:panel>
+        
+    </p:panel>
+
+</h:body>
+</html>

@@ -1,0 +1,167 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"
+		charset="UTF-8"></meta>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<title>Shell-Sejoumi</title>
+
+</h:head>
+<h:body>
+
+	<div align="center">
+		<fieldset style="margin-bottom: 20px; background-color: #eeeec6;">
+			<legend>
+				<b> <h:outputText value="Retour Cuve" />
+				</b>
+
+			</legend>
+
+
+			<p:remoteCommand name="refreshFootercuve" update="cuves:ttccuve" />
+
+			<p:dataTable id="cuves" var="d" value="#{CaisseBeans.retourcuves}"
+				rowIndexVar="rowId" editable="true" editMode="cell"
+				scrollable="true" scrollHeight="180" widgetVar="articleTablecuves"
+				emptyMessage="aucune ligne dans la base">
+
+
+				<p:ajax event="cellEdit" listener="#{CaisseBeans.onCellEdit8}"
+					partialSubmit="true" partialSubmitFilter="true" />
+
+
+				<p:column style="width:150px;">
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b" value="Pompe" />
+					</f:facet>
+
+					<b><h:outputText style="font-size:12px ;"
+							value="#{d.pompe.libelle}" id="libellep" /></b>
+
+
+
+				</p:column>
+
+
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b"
+							value="Quantite" />
+					</f:facet>
+
+
+					<h:inputText value="#{d.quantite}" id="quantite"
+						styleClass="retour"
+						valueChangeListener="#{CaisseBeans.handleChangeret}"
+						onkeyup="nextsret(this)"
+						style="background-color:transparent;border:none;">
+						<p:ajax process="@this" update="montantss"
+							oncomplete="refreshFootercuve();" partialSubmit="true"
+							event="change" />
+							 <p:ajax event="focus"   listener="#{CaisseBeans.getCodefocus}"  process="@this" partialSubmit="true" />
+						<f:attribute name="test" value="#{rowId}" />
+					</h:inputText>
+				</p:column>
+				<p:column style="width:150px;">
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b"
+							value="Prix Vente" />
+					</f:facet>
+
+
+					<b><h:outputText style="font-size:12px ;"
+							value="#{d.pompe.articlecarburant.prixventes}" id="prixventes" /></b>
+
+
+
+				</p:column>
+
+				<p:column style="width:150px;">
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b"
+							value="Montant" />
+					</f:facet>
+
+
+					<b><h:outputText style="font-size:12px ;" value="#{d.montants}"
+							id="montantss" /></b>
+
+				</p:column>
+
+				<p:column style="width:150px;">
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b" value="Stock" />
+					</f:facet>
+
+
+					<b><h:outputText style="font-size:12px ;"
+							value="#{d.pompe.articlecarburant.quantites}" id="stock" /></b>
+
+				</p:column>
+
+				<f:facet name="footer">
+					   TOTAL  :<h:outputText id="ttccuve" value="#{CaisseBeans.totals}"
+						size="8" />
+				</f:facet>
+
+			</p:dataTable>
+
+
+
+			<script>
+			function initretour() {
+				var index = 0;
+		         $('.retour').eq(index).focus();
+			}
+				function nextsret2(input) {
+				 	$(input).closest('tr').next('tr').find('input[type=text]') .focus();
+					
+				}
+
+				function nextsret(input) {
+					$(document).keypress(
+							function(event) {
+								var keycode = (event.keyCode ? event.keyCode
+										: event.which);
+								if (keycode == '13') {
+									if (input.value != "") {
+										 
+									//$(input).closest('tr').next('tr').find( 'input[type=text]').focus();
+									 $(input).closest('tr') .next() .find('input[type=text]').eq(0) .focus().select();
+
+										return false;
+									} else {
+										$(input).closest('tr').next('tr').find(
+												'input[type=text]').focus();
+										$(input).closest('tr').next('tr').find(
+												'input[type=text]').select();
+
+										return false;
+									}
+								}
+
+							});
+				}
+			</script>
+
+			<p:commandButton value="Valider" update="retourcuvess totalcaisses"
+				style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);"
+				ajax="false" action="#{CaisseBeans.saveretourcuve}" />
+
+
+
+		</fieldset>
+
+
+
+
+	</div>
+
+
+</h:body>
+</html>

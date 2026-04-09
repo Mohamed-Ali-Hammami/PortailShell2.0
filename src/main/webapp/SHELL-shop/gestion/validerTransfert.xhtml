@@ -1,0 +1,97 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body   style="width:98%;margin:auto;" >
+ <p:panel style="width:100%;margin:auto;min-height:900px;">	
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Headershop.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+			  <div align="center">
+			  <p:commandButton title="imprimer" value="imprimer">
+									 	<p:printer target="imprimer"/>	 
+								</p:commandButton>
+								<br/><br/>
+								
+								   
+			 
+								 <p:outputPanel id="imprimer">
+								 <div align="center">
+			 <b><h:outputText value="TRANSFERT" style="font-size:20px;"  /></b><br/>
+			 
+			 <b> <h:outputText value="DATE:" style="font-size:18px;"  /></b> <br/>
+			  <h:outputText value="#{VenteBean.transfert.dates} " style="font-size:18px;"  />
+			  <h:outputText value="à #{VenteBean.transfert.heure}" style="font-size:18px;"  /><br/>
+			  
+			  <b><h:outputText value="#{VenteBean.transfert.utilisateur.login}" style="font-size:20px;"  /></b><br/>
+			  <br/> 
+			  </div>
+			  
+			   
+			  <br/>
+			 
+			  <p:dataGrid value="#{VenteBean.listLignetransfert}" var="p" columns="2"  
+			   styleClass="grid">
+			 
+			               <h:panelGrid columns="2" rendered="#{p.quantite !=0}">
+
+                                <p:panel style="text-align:center;width:180px;height:20px ;  border: 0.5px #000000 solid;">
+                                
+                                
+                                <b><h:outputText style="font-size:12px ;color:#000000"
+										value="#{p.produit.nom}"  /></b>	 
+                                </p:panel>     
+									
+									
+                                <p:panel style="text-align:center;width:30px;height:20px ;border: 0.5px #000000 solid;">
+                               
+                                <b><h:outputText style="font-size:12px ;color:#000000"
+										value="#{p.quantites}"  /></b> 
+                                 
+                                </p:panel>     
+									</h:panelGrid>
+							 
+			  
+			 
+			 
+			 
+			  </p:dataGrid>
+			 </p:outputPanel>
+			 </div> 
+            			<style type="text/css">
+.value {
+	width: 1000px;
+}
+
+ .grid{
+    border: 0px #000000 solid;
+    
+ 
+ }
+ 
+  .dialog2{
+    position: fixed;
+    top: 30% !important;
+ left:40% !important;
+ }
+</style>
+		</p:panel>
+		</p:panel>
+		
+		
+		 
+		
+		
+		</h:body>
+		</html>

@@ -1,0 +1,179 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+ <script>
+function imprimer(divName) {
+	/*var imageData = jQuery('#f\\:chart1').jqplotToImageStr({});
+	var imageElem = jQuery('<img/>').attr('src', imageData);
+	jQuery('#sectionAimprimer').append(imageElem); 
+	
+	 var imageData2 = jQuery('#f\\:chart2').jqplotToImageStr({});
+	var imageElem2 = jQuery('<img/>').attr('src', imageData2);
+	jQuery('#sectionAimprimer').append(imageElem2); 
+      var printContents = document.getElementById(divName).innerHTML;    
+     var originalContents = document.body.innerHTML;      
+   document.body.innerHTML = printContents;     
+   window.print();     
+   document.body.innerHTML = originalContents;*/
+	
+   }   
+ 
+</script>
+
+<h:body  style="width:98%;margin:auto;" >
+ <p:panel style="width:100%;margin:auto;min-height:900px;">
+	 <ui:insert name="menu">
+			<ui:include src="/SHELL-lavage/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-lavage/Headerlavage.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+                  <p:layout style="min-width:400px;min-height:600px;">
+			<h:form id="f">
+				<p:layoutUnit position="west" resizable="true"    size="200"
+						minSize="280" maxSize="400">
+						<div align="left">
+							<p:outputLabel value="Laveur" style="font-size:16px" /><br/>
+							
+							<h:graphicImage width="70px;" value="data:image/jpg;base64,#{ServiceLavageBean.selectedRendement.employee.photos}"    style="max-width: 120px; max-height: 130px;" />
+							
+						 	<br />
+							
+							
+							
+						</div>
+						
+						<h:panelGrid columns="2">
+						<p:commandButton  value="Valider" action="#{ServiceLavageBean.saveUpdate}" ajax="false"
+						style="width:100px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"/>
+							 
+							 <p:commandButton  value="Retour" action="#{ServiceLavageBean.getLavageEcours}" ajax="false"
+						style="width:100px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"/>
+					 
+						
+						</h:panelGrid>
+					</p:layoutUnit>
+					<p:layoutUnit position="center"  >
+						<div align="left">
+						
+						<p:panel id="toggleable" header="Information Client/Vehicule" toggleable="true" closable="true" toggleSpeed="500" closeSpeed="500" widgetVar="panel" style="margin-bottom:20px">
+ 
+        <p:ajax event="close" listener="#{ServiceLavageBean.onClose}"   />
+        <p:ajax event="toggle" listener="#{ServiceLavageBean.onToggle}"  />
+ 
+         <h:panelGrid columns="4"  >            
+              <h:outputText value="Client:" /><h:inputText value="#{ServiceLavageBean.client}" />
+              <h:outputText value="Tél:" /><h:inputText value="#{ServiceLavageBean.tel}" />
+              <h:outputText value="Matricule:" /><h:inputText value="#{ServiceLavageBean.matricule}" />
+                <h:outputText value="N°Licence:" /><h:inputText value="#{ServiceLavageBean.licence}" />
+                  <h:outputText value="Model:" /><h:inputText value="#{ServiceLavageBean.model}" />
+                      <h:outputText value="Marque:" /><h:inputText value="#{ServiceLavageBean.marque}" />
+                           <h:outputText value="Service:" />
+                           <p:selectOneMenu id="service" filter="true"  filterMatchMode="contains"
+								value="#{ServiceLavageBean.service}" style="width:50px">
+								<f:selectItems value="#{ServiceLavageBean.listProduit}" var="f"
+									itemLabel="#{f.nom}" itemValue="#{f.nom}" />
+									<f:selectItem  itemValue="Selectionner Services"  itemLabel="Selectionner Services" 
+									 />								 
+							</p:selectOneMenu>
+							
+							   <h:outputText value="Laveur:" />
+                           <p:selectOneMenu id="laveur" filter="true" 
+								value="#{ServiceLavageBean.laveur}" style="width:100px">
+								<f:selectItems value="#{ServiceLavageBean.listEmployee}" var="f"
+									itemLabel="#{f.nom}" itemValue="#{f.nom}" />
+									<f:selectItem  itemValue="Selectionner Laveur"  itemLabel="Selectionner laveur" 
+									 />								 
+							</p:selectOneMenu>
+						 <h:outputText value="Heure entré" /><h:inputText value="#{ServiceLavageBean.heure_entree}" />	
+						 <h:outputText value="Heure sortie" /><h:inputText value="#{ServiceLavageBean.heure_sortie}" readonly="true"/>	
+						  <h:outputText value="Etat" /> 
+						  
+						  <p:selectOneMenu id="statuss"
+								value="#{ServiceLavageBean.statuss}" style="width:100px">
+								<f:selectItems value="#{ServiceLavageBean.statusss}"  />
+								 
+							</p:selectOneMenu>
+                           
+            </h:panelGrid>
+ 
+       
+    </p:panel>
+   
+ 
+                     <h:panelGrid columns="4" cellpadding="20" >
+                     
+                       <h:graphicImage widgetVar="rotateAndResizeWidget" onclick="PF('avant').show();" value="data:image/jpg;base64,#{ServiceLavageBean.selectedRendement.detail}" style="max-width: 480px; max-height: 480px; border: groove;   padding-right: 1px;"  />
+                        <h:graphicImage onclick="PF('ariere').show();" value="data:image/jpg;base64,#{ServiceLavageBean.selectedRendement.ariere}" style="max-width: 480px; max-height: 480px; border: groove;   padding-right: 1px;" />
+                           <h:graphicImage onclick="PF('droit').show();"  value="data:image/jpg;base64,#{ServiceLavageBean.selectedRendement.droit}" style="max-width: 480px; max-height: 480px;border: groove;   padding-right: 1px;" />
+                             <h:graphicImage onclick="PF('gauche').show();"  value="data:image/jpg;base64,#{ServiceLavageBean.selectedRendement.gauche}" style="max-width: 480px; max-height: 480px;border: groove;   padding-right: 1px;" />  
+                     
+                     </h:panelGrid>
+             		<p:dialog header="Photos avant" responsive="true" closable="true" widgetVar="avant" styleClass="dialog"
+					draggable="true" modal="true" id="avant" height="500"
+					width="700" position="top center">
+					 <div align="center">
+                         <h:graphicImage  
+                          value="data:image/jpg;base64,#{ServiceLavageBean.selectedRendement.detail}" 
+                          style="width: 680px; height: 680px; border: groove;   padding-right: 1px;"  />
+			          </div>			
+				</p:dialog> 
+				
+				<p:dialog header="Photos deriere" responsive="true" closable="true" widgetVar="ariere" styleClass="dialog"
+					draggable="true" modal="true" id="ariere" height="500"
+					width="700" position="top center">
+					 <div align="center">
+                         <h:graphicImage  
+                          value="data:image/jpg;base64,#{ServiceLavageBean.selectedRendement.ariere}" 
+                          style="width: 680px; height: 680px; border: groove;   padding-right: 1px;"  />
+			          </div>			
+				</p:dialog>  
+				
+				<p:dialog header="Photos Gauche" responsive="true" closable="true" widgetVar="gauche" styleClass="dialog"
+					draggable="true" modal="true" id="gauche" height="500"
+					width="700" position="top center">
+					 <div align="center">
+                         <h:graphicImage  
+                          value="data:image/jpg;base64,#{ServiceLavageBean.selectedRendement.gauche}" 
+                          style="width: 680px; height: 680px; border: groove;   padding-right: 1px;"  />
+			          </div>			
+				</p:dialog>    
+				
+				<p:dialog header="Photos Droit" responsive="true"  closable="true" widgetVar="droit" styleClass="dialog"
+					draggable="true" modal="true" id="droit" height="500"
+					width="700" position="top center">
+					 <div align="center">
+                         <h:graphicImage  
+                          value="data:image/jpg;base64,#{ServiceLavageBean.selectedRendement.droit}" 
+                          style="width: 680px; height: 680px; border: groove;   padding-right: 1px;"  />
+			          </div>			
+				</p:dialog>      
+                     
+					</div>
+					</p:layoutUnit>
+					
+            </h:form>	
+            </p:layout> 
+</p:panel>
+</p:panel>
+</h:body>
+</html>
+
+<!-- -
+<p:selectManyMenu id="famille"
+								value="#{ServiceLavageBean.selectedfamilles}" style="width:400px">
+								<f:selectItems value="#{ServiceLavageBean.listfamile}" var="f"
+									itemLabel="#{f.nom}" itemValue="#{f.nom}" />
+									<f:selectItem  itemValue="TOUTES LES FAMILLES"  itemLabel="TOUTES LES FAMILLES" 
+									 />
+								<f:ajax listener="#{ServiceLavageBean.getproduitbyfamille}"
+									render="article imprimer" />
+							</p:selectManyMenu>
+ -->

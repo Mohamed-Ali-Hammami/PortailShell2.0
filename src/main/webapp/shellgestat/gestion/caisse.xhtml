@@ -1,0 +1,291 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+	 
+			<p:panel id="basic2" closable="true"
+				style="min-height:500px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+                <h:form id="fcar" onsubmit="return true;" >
+				<div align="center">
+					<h1>
+						<h:outputLabel value="Recapitulation Carburant"
+							style=" border-color: #5cb85c;font-color : green" />
+					</h1>
+					 
+					<h:panelGrid columns="2">
+				Date
+				 
+        <p:calendar id="popup" value="#{CaisseBeans.date}" locale="fr"   
+							 >
+
+							<p:ajax event="dateSelect" listener="#{CaisseBeans.getdates}" update="poste"/>
+						</p:calendar>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+				<p:selectOneRadio value="#{CaisseBeans.poste}" id="poste" 
+							style="width:200px;font-size:12px"  >
+
+							<f:selectItems value="#{CaisseBeans.postes}" />
+							<f:ajax listener="#{CaisseBeans.getCaissebydate}" event="change"
+								render="affiche fcar:ps fcar:dcs" />
+						</p:selectOneRadio>
+					</h:panelGrid> 
+					 
+
+				</div>
+
+
+
+
+				<div align="center">
+				
+				
+				
+					<p:outputPanel id="affiche">
+				
+	<div align="center">
+
+		<fieldset style="margin-bottom: 20px; background-color: #eeeec6;">
+			<legend>
+				<b> <h:outputText value="VENTE CARBURANTS" />
+				</b>
+
+			</legend>
+
+			<h:panelGrid columns="9">
+				<H3>
+					<h:outputLabel value="Date" />
+				</H3>
+				<p:calendar value="#{CaisseBeans.caisse.date}" id="dcs" locale="fr" showOn="none" readonly="true" />
+				<H3>
+					<h:outputLabel value="POSTE" />
+				</H3>
+				<h:outputText value="#{CaisseBeans.caisse.poste}" id="ps"/>
+
+				<H3>
+					<h:outputLabel value="Nom Ouv 1" />
+				</H3>
+				<p:inputText id="ppp3" value="#{CaisseBeans.caisse.pompiste1}">
+					<f:ajax listener="#{CaisseBeans.updatenom1}" />
+				</p:inputText>
+
+				<H3>
+					<h:outputLabel value="Nom Ouv 2" />
+				</H3>
+				<p:inputText id="p4" value="#{CaisseBeans.caisse.pompiste2}">
+					<f:ajax listener="#{CaisseBeans.updatenom2}" />
+				</p:inputText>
+
+				<p:selectOneMenu value="#{CaisseBeans.nom}" 
+					style="width:200px;font-size:12px " id="emplouees" filter="true"
+					filterMatchMode="contains">
+
+					<f:selectItem itemLabel="Veuillez choisir un employer" />
+					<f:selectItems value="#{CaisseBeans.listeEmployee}"
+						itemValue="#{e.nom}" var="e" itemLabel="#{e.nom}" />
+					<p:ajax listener="#{CaisseBeans.getEmployeeByNom}" update="ppp3 p4" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+            <p:focus for="carburants:indexfermutures22"/>
+            
+            
+			<p:remoteCommand name="refreshFooterEL"
+				update="carburants:el1 carburants:el2 carburants:el3 carburants:el4 carburants:el5 carburants:totallitrage carburants:totalventecarburants" />
+			
+			
+			
+			<p:dataTable id="carburants" var="c" editable="true"  scrollable="true" scrollHeight="180"
+				style="width:80%" value="#{CaisseBeans.ligneindex}" editMode="cell"  rowIndexVar="rowId"
+				rowKey="#{c.id}" emptyMessage="aucune ligne dans la base">
+
+
+		 
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b" value="Pompe" />
+					</f:facet>
+
+					<b><h:outputText style="font-size:12px ;"
+							value="#{c.pompe.libelle}" id="libpompe" /></b>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b"
+							value="Index Fer" />
+					</f:facet>
+ 
+							
+					<h:inputText value="#{c.indexfermuture}" id="indexfermutures22" styleClass="inpdescar" 
+					valueChangeListener="#{CaisseBeans.handleChangeindex2}" 
+					onkeyup="nextsindex(this)" style="background-color:transparent;border:none;" >
+						 <p:ajax  
+							  process="@this"
+							update="carburants " oncomplete="refreshFooterEL();initcar2();"
+							partialSubmit="true" event="change" />  
+							<f:attribute name="test" value="#{rowId}"  />
+							</h:inputText>
+				</p:column>
+
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b"
+							value="Index ouvert" />
+					</f:facet>
+					 
+							<h:outputText style="font-size:12px ;" value="#{c.indexouverture}">
+<!-- 
+								<p:ajax event="change"
+									listener="#{CaisseBeans.updatemontantindex}" process="@this"
+									update=" qtes montantindex"
+									  partialSubmit="true" /> -->
+									
+							</h:outputText>
+						 
+
+				</p:column>
+
+
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b"
+							value="Quantite" />
+					</f:facet>
+
+
+
+
+					<b><h:outputText value="#{c.quantites}" id="qtes"  style="font-size:12px ;"/></b>
+
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b"
+							value="Prix Vente" />
+					</f:facet>
+
+					<b><h:outputText style="font-size:12px ;"
+							value="#{c.pompe.articlecarburant.prixventes}"
+							id="prixventepompe" /></b>
+				</p:column>
+
+				<p:column style="width:150px;">
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b"
+							value="Montant" />
+					</f:facet>
+
+					<b><h:outputText style="font-size:12px ;" value="#{c.mantants}"
+							id="montantindex" /></b>
+				</p:column>
+
+		 
+
+
+
+				<f:facet name="footer">
+					   EL1  :<h:inputText id="el1" value="#{CaisseBeans.ELs1}"
+						size="12" />
+
+					<p:spacer width="5" />
+						 
+						EL2  :<h:inputText id="el2" value="#{CaisseBeans.ELs2}" size="12" />
+					<p:spacer width="5" />
+						
+						EL3  :<h:inputText id="el3" value="#{CaisseBeans.ELs3}" size="12" />
+					<p:spacer width="5" />
+						
+						 
+						EL4  :<h:inputText id="el4" value="#{CaisseBeans.ELs4}" size="12" />
+						<p:spacer width="5" />
+						
+						 
+						EL5  :<h:inputText id="el5" value="#{CaisseBeans.ELs5}" size="12" />
+					<br />
+						 Total Litrage
+						<h:inputText id="totallitrage"
+						value="#{CaisseBeans.totalLitrages}" size="12" />
+					<p:spacer width="5" />
+						 
+						Total Vente Carburants
+						<h:inputText id="totalventecarburants"
+						value="#{CaisseBeans.totalventecarburants}" size="12" />
+
+
+				</f:facet>
+
+			</p:dataTable>
+
+
+
+
+			<br /> <br />
+			<p:commandButton value="Valider"  ajax="false"
+				style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);"
+				 action="#{CaisseBeans.validerindex}" />
+			
+
+			
+
+<script>
+				 
+function initcar2() {
+	var index = 30;
+	$('.inpdescar').eq(index).focus();
+	$('.inpdescar').eq(index).select();
+} 
+			
+			
+function nextsindex(input) {
+					$(document)
+							.keypress(
+									function(event) {
+										var keycode = (event.keyCode ? event.keyCode
+												: event.which);
+										if (keycode == '13') {
+											 
+												//$(input).closest('td').next('td').find('input[type=text]').focus();	 
+												$(input).closest('tr').next('tr').find('input[type=text]').focus();
+												$(input).closest('tr').next('tr').find('input[type=text]').select();
+											 
+                                            return false;
+										}
+
+									});
+				}
+			</script>
+			<!-- update="totalcaisses"  -->
+
+		</fieldset>
+
+
+
+
+	</div>
+	</p:outputPanel>
+ 
+
+				 </div>
+				 </h:form>
+				 </p:panel>
+				
+	</p:panel>
+</h:body>
+</html>

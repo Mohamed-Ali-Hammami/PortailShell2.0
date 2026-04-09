@@ -1,0 +1,104 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body  style="width:98%;margin:auto;" >
+ <p:panel style="width:100%;margin:auto;min-height:900px;">
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Headershop.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+			<h:form id="f">
+
+				<div align="left">
+				<h:panelGrid columns="2">
+					<p:commandButton title="imprimer" value="imprimer">
+						<p:printer target="imprimer" />
+					</p:commandButton>
+					
+					<p:commandButton   value="Valider" action="#{EtatBean.calculeretatfiscal}"/>
+					</h:panelGrid>
+					
+					<h:panelGrid columns="4">
+						 <b><h:outputText value="Date Debut"  style="font-size:12px"/> </b>
+						 <p:calendar value="#{EtatBean.date1}" id="d1"/>
+					     <b><h:outputText value="Date Fin"  style="font-size:12px"/> </b>
+					     
+					      <p:calendar value="#{EtatBean.date2}" id="d2"/>
+					</h:panelGrid>
+                      
+				</div>
+				<p:outputPanel id="imprimer">
+					<div align="center">
+
+						<h:outputText value="Profit Fiscal par Famille" />
+					<br />
+						<h:panelGrid columns="2">
+						<h:outputText value="Du #{EtatBean.dates1} " />
+						<h:outputText value="Au #{EtatBean.dates2} " />
+						</h:panelGrid><br /><br />
+						<p:dataTable id="article" var="p" value="#{EtatBean.listProduit}"
+							widgetVar="ArticleTable"
+							emptyMessage="aucun produit dans le stock">
+                             
+                             <p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b" value="Code" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{p.code}" id="code" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b" value="Nom" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{p.nom}" id="nom" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b" value="Quantite" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{p.quantitestocknom}" id="quantitestock" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b" value="Qtemin" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{p.qtemin}" id="qtemin" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b" value="famille" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{p.famille.nom}" id="famille" />
+							</p:column>
+							 <p:row>
+                <p:column colspan="2" style="text-align:right" footerText="Totals:" />
+                 <p:column  colspan="2" footerText="#{EtatBean.totaCA}" id="qte"/>
+                <p:column colspan="2"  footerText="#{EtatBean.totalProfilBrut}" id="ttc"/>
+ 
+               
+            </p:row> 
+							
+						</p:dataTable>
+						
+					
+					</div>
+
+				</p:outputPanel>
+			</h:form>
+		 </p:panel>
+		 </p:panel>
+		 </h:body>
+		 </html>

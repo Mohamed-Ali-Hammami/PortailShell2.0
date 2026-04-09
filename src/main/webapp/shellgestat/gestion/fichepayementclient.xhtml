@@ -1,0 +1,68 @@
+ <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+
+			<h:form id="f">
+
+				<div align="center">
+					<b><h:outputText value="Payement d'un Credit Passation" /></b><br />
+					<h:panelGrid columns="2">
+					<h:outputLabel value="Numero " rendered="#{CreditPassationBean.selectioncreditpasstion !=null}"/>  
+					<h:inputText value="#{CreditPassationBean.selectioncreditpasstion.numBon}" rendered="#{CreditPassationBean.selectioncreditpasstion !=null}"></h:inputText>
+					
+					
+					<h:outputLabel value="Montant "/>  
+					<h:inputText value="#{CreditPassationBean.montant}"></h:inputText>
+					
+					
+						
+					<h:outputLabel value="Credit Anterieur"/>  
+					  <p:selectOneMenu
+											value="#{CreditPassationBean.avance}"  
+											style="width:200px;font-size:12px "   id="dep"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="selectionner Credit anterieur" />
+											<f:selectItems value="#{CreditPassationBean.listCreditan}" var="n" itemLabel="#{n.montant}"  itemValue="#{n.montant}"/>
+                                       
+										</p:selectOneMenu>
+										
+										
+					 	 
+					
+					<h:outputLabel value="Valider  " /> 
+					<p:commandButton value="Valider" action="#{CreditPassationBean.validerpayer}" ajax="false"/>
+					
+					<h:outputLabel value="Annuler " /> 
+					<p:commandButton value="Annuler" action="#{CreditPassationBean.accesPassation}"/>
+					
+					</h:panelGrid>
+					
+					
+					</div>
+					</h:form>
+					</p:panel>
+					</p:panel>
+					</h:body>
+					</html>
+				

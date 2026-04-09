@@ -1,0 +1,15 @@
+.inputs{padding:8px;display:none;border:none;border-bottom:1px solid #ccc;width:100%}
+.borders{border:1px solid #ccc!important}
+
+td {
+  border: 1px solid #ddd;
+  padding: 1em;
+}
+
+input:focus {
+  background:yellow
+}
+
+table:focus {
+  background:yellow
+}

@@ -1,0 +1,111 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"
+		charset="UTF-8"></meta>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<title>Shell-Sejoumi</title>
+	<script type="text/javascript">
+		function noBack() {
+			window.history.forward()
+		}
+		noBack();
+		window.onload = noBack;
+		window.onpageshow = function(evt) {
+			if (evt.persisted)
+				noBack()
+		}
+		window.onunload = function() {
+			void (0)
+		}
+	</script>
+</h:head>
+<h:body>
+
+
+	<h:form>
+		<p:growl id="messages" />
+
+		<p:menubar
+		style="height:30px; margin-left: 50px;margin-right: 50px ;background-image:linear-gradient( #FAF281, #FAF292);"
+			autoDisplay="true">
+			<p:menuitem icon="ui-icon-home" action="#{LavageBean.getAllMArque}"
+				style="font-size:12px" />
+
+
+			<p:menuitem value="MARQUE / MODÈLE" style="font-size:12px" ajax="false"
+				action="#{LavageBean.getAllMArque}" />
+				
+				<p:menuitem value="ARTICLE / HUILE" style="font-size:12px" ajax="false"
+				action="#{LavageBean.affecterHuileToModel}" />
+ 
+			  <p:menuitem value="Historiques des services"
+					url="#{request.contextPath}/SHELL-lavage/historiqueServices.xhtml" style="font-size:12px"
+					styleClass="ui-priority-primary"  />
+					
+					
+					 <p:menuitem value="Historiques Du Jour"
+					url="#{request.contextPath}/SHELL-lavage/historiqueDujour.xhtml" style="font-size:12px"
+					styleClass="ui-priority-primary"  />
+					
+					  <p:menuitem value="Rapport journalier"
+					url="#{request.contextPath}/SHELL-lavage/rapport.xhtml" style="font-size:12px"
+					styleClass="ui-priority-primary"  />
+					  	 
+					  	 
+					  	 
+					  <p:menuitem value="Client"
+					disabled="true" style="font-size:12px"
+					styleClass="ui-priority-primary"  />
+					  	 
+					  	   <p:submenu label="    |Rapport " style="font-size:10px"   >	
+					  	   <p:menuitem value="Rapport Lavage" ajax="false"
+					action="#{RendementBean.rapportLavage}" style="font-size:12px"
+					styleClass="ui-priority-primary"  />
+					
+					 <p:menuitem value="Rapport Vidange" ajax="false"
+					action="#{RendementBean.rapportVidange}" style="font-size:12px"
+					styleClass="ui-priority-primary"  />
+					
+					
+					  	 
+				</p:submenu>	  	 
+		 
+		 
+			 
+			<!--
+			
+						
+			<p:menuitem value="Cheques antidatés"
+					action="#{LavageBean.getchequeAntidatee}" style="font-size:12px"
+					styleClass="ui-priority-primary"  />
+
+				<p:menuitem value="Cheque en Circulations"
+					action="#{LavageBean.getchequeCierculations}" style="font-size:12px" />
+
+
+			
+			
+			
+			 <p:menuitem value="Editions" style="font-size:12px"
+				action="#{ParametrageBean.listparamettre}" update="messages" /> -->
+				
+				<f:facet name="options">
+				<p:commandLink id="nonAjax" action="#{LoginBean.logout}"
+					ajax="false">
+					<p:graphicImage url="/images/logout.png" />
+					<h:outputText value="#{msg['logout.user']}"
+						style="color:#db0b32;font-size:12px;" />
+				</p:commandLink>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+
+
+
+</h:body>
+</html>

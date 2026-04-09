@@ -1,0 +1,122 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body  style="width:98%;margin:auto;" >
+
+
+	<p:panel style="width:100%;margin:auto;min-height:900px;">	<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Headershop.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+			<h:form id="f">
+				<div align="center">
+
+					<h:panelGrid columns="4">
+						<h:outputText value="N° Ticket" style="font-size:16px" />
+						<h:inputText value="#{TicketBean.numticket}" id="p"
+							required="true" requiredMessage="entrer numero ticket">
+							<f:ajax listener="#{TicketBean.getTicketbynum}"
+								render="ticket popup" />
+						</h:inputText>
+						<h:outputText value="Date" style="font-size:16px" />
+						<p:calendar value="#{TicketBean.date}" id="popup">
+
+						</p:calendar>
+
+					</h:panelGrid>
+
+
+					<br /> <br />
+
+
+					<div align="center">
+
+						<p:dataTable id="ticket" value="#{TicketBean.listelignevente}"
+							var="p">
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Code" />
+								</f:facet>
+
+
+								<h:outputText style="font-size:12px ;" value="#{p.produit.code}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="LIBELLE" />
+								</f:facet>
+
+
+								<h:outputText style="font-size:12px ;" value="#{p.produit.nom}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="QUANTITE" />
+								</f:facet>
+
+
+								<h:outputText style="font-size:12px ;" value="#{p.quantite}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Prix.U" />
+								</f:facet>
+
+
+								<h:outputText style="font-size:12px ;"
+									value="#{p.produit.prixventes}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Montant" />
+								</f:facet>
+
+
+								<h:outputText style="font-size:12px ;" value="#{p.totalttc}" />
+							</p:column>
+
+
+
+
+						</p:dataTable>
+						<br />
+						<h:panelGrid columns="2">
+							<h:outputText value="Montant: " />
+							<h:inputText value="#{TicketBean.ticket.total_ventes}" id="ttc" />
+						</h:panelGrid>
+
+						<br />
+						<br />
+						<p:commandButton value="Valider"
+							style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+							action="#{TicketBean.validerAnnulation}" />
+					</div>
+					<br />
+
+
+
+				</div>
+			</h:form>
+		</p:panel>
+	</p:panel>
+</h:body>
+</html>

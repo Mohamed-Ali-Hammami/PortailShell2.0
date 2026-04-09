@@ -1,0 +1,102 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body onload="init()" style="width:98%;margin:auto;" >
+
+
+	<p:panel style="width:100%;margin:auto;min-height:900px;">
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Headershop.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+			<h:form id="ff">
+			
+				<p:commandButton title="imprimer" value="valider">
+							 
+							<p:printer target="imprimer"/>
+						 
+					</p:commandButton>
+					<p:outputPanel id="imprimer"> 
+			
+			<div align="center">
+                   <b>     <h:outputText value="Fiche Reglement Fournisseur " style="font-size:18px ; "/></b><br/> <br/>
+                <table style="width: 50%">
+                <tr>
+                 
+                <td> <b> <h:outputText value="Fournisseur" style="font-size:14px ; "/></b></td>
+                 <td> <h:outputText value="#{AchatshopBean.achat.fournisseur.nom}" /> </td>
+                 </tr>
+                   <tr>
+                 
+                <td> 
+               <b>   <h:outputText value="Numero de Facture" style="font-size:14px ; " /></b></td>
+             <td>     <h:outputText value="#{AchatshopBean.factureAchat.code}" /></td>
+             </tr>
+              <tr>
+                 
+                <td> 
+                  
+                 <b> <h:outputText value="La Somme De" style="font-size:14px ; "/></b></td>
+                <td>  <h:outputText value="#{AchatshopBean.factureAchat.totalttcs}" /></td>
+                  
+                      </tr>
+                  
+              <tr>
+                 
+                <td>         <b>  <h:outputText value="Numero Cheque" style="font-size:14px ; "/></b></td>
+              <td>    <h:outputText value="#{AchatshopBean.numcheque}" /></td>
+              </tr>
+               
+               
+                    <tr>
+                 
+                <td>         <b>  <h:outputText value="Banque" style="font-size:14px ; "/></b></td>
+              <td>    <h:outputText value="#{AchatshopBean.banque}" /></td>
+              </tr>
+               
+                  
+                </table>
+                  <br/>
+                  <br/>
+                     
+                  <b><h:outputText value="Signature" /></b>
+                  <h:outputText value="------------------------------" />
+                  
+                  <br/>
+                  <br/>
+                </div>
+				  </p:outputPanel>
+				
+			 
+				<style type="text/css">
+.dialog {
+	position: fixed;
+	top: 20% !important;
+	left: 20% !important;
+}
+
+.dialog2 {
+	position: fixed;
+	top: 30% !important;
+	left: 40% !important;
+}
+</style>
+
+				
+				</h:form>
+				</p:panel>
+				</p:panel>
+				</h:body>
+				</html>

@@ -1,0 +1,217 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body  style="width:98%;margin:auto;" >
+ <p:panel style="width:100%;margin:auto;min-height:900px;">
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Headershop.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+			<h:form id="form">
+				<p:messages id="msgs" />
+
+				<p:dataTable id="article" var="p" editable="true"
+					value="#{VenteBean.listProduit}" widgetVar="ArticleTable"
+					filteredValue="#{VenteBean.filterproduits}"
+					selection="#{VenteBean.selectedProduit}" rowKey="#{p.id}"
+					emptyMessage="aucun produit dans le stock" paginator="true"
+					rows="10" paginatorPosition="bottom">
+					<p:ajax event="rowEdit" listener="#{VenteBean.onRowEdit}"
+						update=":form:msgs" />
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px color:#483d8b" value="Code" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{p.id}" />
+					</p:column>
+
+					<p:column filterBy="#{p.nom}" sortBy="#{p.nom}"
+						filterStyle="font-size:14px;color:blue" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText style="font-size:12px color:#483d8b" value="Nom" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<b><h:outputText style="font-size:12px ;" value="#{p.nom}"
+										id="des" /></b>
+
+							</f:facet>
+
+							<f:facet name="input">
+								<h:inputText id="codeInput" value="#{p.nom}" style="width:96%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px color:#483d8b"
+								value="Qte DEPOT" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<b><h:outputText style="font-size:12px ;"
+										value="#{p.quantitedepot}" /></b>
+
+							</f:facet>
+
+							<f:facet name="input">
+								<h:inputText value="#{p.quantitedepot}" style="width:96%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px color:#483d8b"
+								value="Qte SHOP" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<b><h:outputText style="font-size:12px ;"
+										value="#{p.quantitestock}" /></b>
+
+							</f:facet>
+
+							<f:facet name="input">
+								<h:inputText value="#{p.quantitestock}" style="width:96%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+                   <p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px color:#483d8b" value="Achat" />
+						</f:facet> 
+						<p:cellEditor>
+							<f:facet name="output">
+								<b><h:outputText style="font-size:12px ;"
+										value="#{p.prixachats}" /></b>
+
+							</f:facet>
+
+							<f:facet name="input">
+								<h:inputText value="#{p.achat}" style="width:96%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					 <p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px color:#483d8b" value="Tva" />
+						</f:facet> 
+						<p:cellEditor>
+							<f:facet name="output">
+								<b><h:outputText style="font-size:12px ;"
+										value="#{p.tva}" /></b>
+
+							</f:facet>
+
+							<f:facet name="input">
+								<h:inputText value="#{p.tva}" style="width:96%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					 <p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px color:#483d8b" value="Marge" />
+						</f:facet> 
+						<p:cellEditor>
+							<f:facet name="output">
+								<b><h:outputText style="font-size:12px ;"
+										value="#{p.marges}" /></b>
+
+							</f:facet>
+
+							<f:facet name="input">
+								<h:inputText value="#{p.marge}" style="width:96%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px color:#483d8b" value="Vente" />
+						</f:facet>
+
+
+
+
+						<p:cellEditor>
+							<f:facet name="output">
+								<b><h:outputText style="font-size:12px ;"
+										value="#{p.prixventes}" /></b>
+
+							</f:facet>
+
+							<f:facet name="input">
+								<h:inputText value="#{p.vente}" style="width:96%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					
+							 <p:column >
+								<f:facet name="header">
+									<h:outputText style="font-size:12px color:#483d8b" value="Qtemin" />
+								</f:facet>
+								
+									 
+									
+									<p:cellEditor>
+							<f:facet name="output">
+								<b><h:outputText style="font-size:12px ;"
+										value="#{p.qtemin}" /></b>
+
+							</f:facet>
+
+							<f:facet name="input">
+								<h:inputText value="#{p.qtemin}" style="width:96%" />
+							</f:facet>
+						</p:cellEditor>
+						</p:column>
+						<p:column >
+								<f:facet name="header">
+									<h:outputText style="font-size:12px color:#483d8b" value="code famille" />
+								</f:facet>
+								
+									 
+									
+									<p:cellEditor>
+							<f:facet name="output">
+								<b><h:outputText style="font-size:12px ;"
+										value="#{p.famille.nom}" /></b>
+
+							</f:facet>
+
+							<f:facet name="input">
+								<h:inputText value="#{p.famille.code}" style="width:96%" />
+							</f:facet>
+						</p:cellEditor>
+							</p:column>  
+					<p:column style="width:40px">
+						<f:facet name="header">
+							<h:outputText style="font-size:9px;color:#483d8b"
+								value="modifier" />
+						</f:facet>
+						<p:rowEditor />
+					</p:column>
+				</p:dataTable>
+
+			</h:form>
+
+		</p:panel>
+		</p:panel>
+		</h:body>
+		</html>

@@ -1,0 +1,194 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"
+		charset="UTF-8"></meta>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<title>Shell-Sejoumi</title>
+
+</h:head>
+<h:body>
+
+	<div align="center">
+
+		<fieldset style="margin-bottom: 20px; background-color: #eeeec6;">
+			<legend>
+				<b> <h:outputText value="Saisie credit client" />
+				</b>
+
+			</legend>
+
+
+			<p:dataTable id="clients" var="client" style="background:#a2b5bf"
+				value="#{ClientBean.listclient}" editable="true"
+				widgetVar="cellClients" filteredValue="#{ClientBean.filterclients}"
+				emptyMessage="aucun client dans la liste" selectionMode="single"
+				selection="#{ClientBean.client2}" rowKey="#{client.code}">
+
+				<p:ajax event="rowEdit" listener="#{ClientBean.onRowEdit}"
+					update=":form:msgs" />
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b" value="Code" />
+					</f:facet>
+
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText style="font-size:12px " value="#{client.code}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{client.code}" style="width:96%" />
+						</f:facet>
+
+					</p:cellEditor>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b" value="Nom" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText style="font-size:12px " value="#{client.nom}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="codeInput" value="#{client.nom}"
+								style="width:96%" />
+						</f:facet>
+
+					</p:cellEditor>
+
+
+
+				</p:column>
+
+
+
+
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b" value="Prenom" />
+					</f:facet>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText style="font-size:12px " value="#{client.prenom}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{client.prenom}" style="width:96%" />
+						</f:facet>
+
+					</p:cellEditor>
+
+
+
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b" value="Tel" />
+					</f:facet>
+
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText style="font-size:12px " value="#{client.tel}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{client.tel}" style="width:96%" />
+						</f:facet>
+
+					</p:cellEditor>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b" value="CA" />
+					</f:facet>
+
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText style="font-size:12px "
+								value="#{client.chiffreaffaire}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{client.chiffreaffaire}" style="width:96%" />
+						</f:facet>
+
+					</p:cellEditor>
+				</p:column>
+
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b" value="Reste" />
+					</f:facet>
+
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText style="font-size:12px " value="#{client.reste}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{client.reste}" style="width:96%" />
+						</f:facet>
+
+					</p:cellEditor>
+				</p:column>
+
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b"
+							value="Plafond" />
+					</f:facet>
+
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText style="font-size:12px " value="#{client.plafond}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{client.plafond}" style="width:96%" />
+						</f:facet>
+
+					</p:cellEditor>
+				</p:column>
+
+
+
+				<p:column style="width:40px;text-align:center">
+					<f:facet name="header">
+						<h:outputText style="font-size:9px;color:#483d8b"
+							value="supprimer" />
+					</f:facet>
+					<div align="center">
+						<p:commandLink action="#{ClientBean.deleteclient}"
+							onclick="PF('suppressionDialog').show();">
+							<p:graphicImage url="/images/delete.png" />
+
+							<f:setPropertyActionListener target="#{ClientBean.client2}"
+								value="#{client}" />
+
+							<p:confirm header="Confirmation"
+								message="Voulez-vous vraiment supprimer le client ?"
+								icon="ui-icon-alert" />
+						</p:commandLink>
+					</div>
+				</p:column>
+
+
+				<p:column style="width:40px">
+					<f:facet name="header">
+						<h:outputText style="font-size:9px;color:#483d8b" value="modifier" />
+					</f:facet>
+					<p:rowEditor />
+				</p:column>
+
+			</p:dataTable>
+
+		</fieldset>
+	</div>
+</h:body>
+</html>

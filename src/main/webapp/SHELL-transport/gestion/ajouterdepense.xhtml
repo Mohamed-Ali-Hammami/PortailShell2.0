@@ -1,0 +1,104 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		 
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-transport/Headertr.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+			 
+				<div align="center">
+						  <br />
+						<fieldset style="margin-bottom: 20px;background-color:#eeeec6;">
+							<legend>
+								<b><h:outputText style="font-size:12px ;color:#2e8b57"
+										value="Ajouter depense" name="outTxtcin" /> </b>
+							</legend>
+							<br />
+							<h:form>
+								<table>
+								
+								    <tr>
+		                    <td><h:outputText value="Vehicule" style="font-size:12px "/></td>
+		                   <td>
+		               <p:selectOneMenu  value="#{FamilledepensetransportBean.matricule}"  
+						style="width:200px;font-size:12px " id="client" filter="true" filterMatchMode="contains">
+							 <f:selectItem itemLabel="selectionner vehicule"  />
+							<f:selectItems value="#{FamilledepensetransportBean.listesvhecules}"   />
+							 
+						    </p:selectOneMenu>
+		
+		                     </td>
+		                         </tr>
+									<tr>
+									<td><b><h:outputText value="type depense :"
+												style="font-size:12px " /></b></td>
+									<td>  <p:selectOneMenu
+											value="#{FamilledepensetransportBean.libelle}" requiredMessage="entrer libelle"
+											style="width:200px;font-size:12px " required="true" id="dep"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="selectionner typedep" />
+											<f:selectItems value="#{FamilledepensetransportBean.listesdepenses}" />
+
+										</p:selectOneMenu> <p:messages for="dep" closable="true" autoUpdate="true" /></td>
+										
+										<td><h:inputText style="font-size:12px " id="des" size="30"
+												value="#{FamilledepensetransportBean.libelle}"  /></td>
+									
+								</tr>
+								
+								
+									<tr>
+										<td width="111"><b><h:outputText
+													style="font-size:12px " value="Montant:" /></b></td>
+										<td width="111"><h:inputText style="font-size:12px " id="montant" size="22"
+												value="#{FamilledepensetransportBean.montant}"  >
+												 
+												</h:inputText>
+												</td>
+									</tr>
+									
+									<tr>
+										<td width="111"><b><h:outputText
+													style="font-size:12px " value="Date:" /></b></td>
+										<td width="111"><p:calendar style="font-size:12px " id="date" size="22" required="true" requiredMessage="entrer la date"
+												value="#{FamilledepensetransportBean.date}" pattern="dd-MM-yyyy" mask="true"/>
+												 
+												 <p:messages id="mesgs" for="date"/>
+												</td>
+									</tr>
+									 
+									
+
+								</table> 
+								
+								 
+								 <table><tr> <td><p:spacer width="40px"/><p:spacer width="50px"/><p:spacer width="40px"/>
+								 <p:spacer width="60px"/> 
+										 <p:commandButton value="Ajouter depense"
+												style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);" 
+                                                  ajax="false"
+												action="#{FamilledepensetransportBean.savedepense}" /> 
+												
+												</td></tr></table>
+							</h:form>
+						</fieldset>
+					</div>
+				 
+		</p:panel>
+		</p:panel>
+		</h:body>
+		</html>

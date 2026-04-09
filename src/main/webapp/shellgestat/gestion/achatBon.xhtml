@@ -1,0 +1,268 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+			<h:form id="f">
+              
+				<table>
+					<tr>
+						<td><h:outputText value="Code Client"
+								style="font-size:20px " /></td>
+						<td><p:selectOneMenu value="#{BonClientBean.nomclient}"
+								style="width:200px;font-size:20px " filter="true"
+								filterMatchMode="contains" >
+								<f:selectItem itemLabel="selectionner fournisseur" />
+								<f:selectItems value="#{BonClientBean.listfournisseur}" var="f"
+									itemValue="#{f.nom}" itemLabel="#{f.nom}"  />
+								<f:ajax render="nom facture"
+									listener="#{BonClientBean.getFournisseurbyname}" />
+							</p:selectOneMenu></td>
+
+
+						<td><h:outputText value="Nom Fournisseur"
+								style="font-size:20px " /></td>
+						<td><h:inputText value="#{BonClientBean.nomfournissuer}" id="nom"
+								style="font-size:20px " /></td>
+						 
+					</tr>
+					<tr>
+						<td><h:outputText value="Numero Facture"
+								style="font-size:20px ;text-decoration: underline" /></td>
+						<td><h:inputText value="#{BonClientBean.numFacture}" id="facture"
+								style="font-size:20px " /></td>
+						 
+						<td><h:outputText value="Du"
+								style="font-size:20px;text-decoration: underline " /></td>
+						<td><p:calendar value="#{BonClientBean.date}"
+								style="font-size:20px " id="popup" pattern="dd-MM-yyyy"
+								mask="true" /></td>
+
+					</tr>
+				</table>
+                 
+				
+				 
+				 
+				
+				<br />
+				<br />
+
+ 
+				<p:remoteCommand name="refreshFooter"
+					update="emp:ttc emp:qte emp:ttc2" />
+			 
+				<p:dataTable id="emp" var="p" editable="true"
+					value="#{BonClientBean.listproduit}" editMode="cell"
+					widgetVar="articleTable" rowKey="#{p.id}"
+					emptyMessage="aucune ligne dans la base">
+
+
+					<p:ajax event="cellEdit" listener="#{BonClientBean.onCellEdit}"
+						partialSubmit="true" partialSubmitFilter="true" />
+
+
+                        
+
+					<p:column>
+
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="LIBELLE" />
+						</f:facet>
+
+						 
+							<b><h:outputText style="font-size:12px ;" value="#{p.nom}"
+									id="des" /></b>
+
+						 
+
+
+
+					</p:column>
+
+
+
+
+ 
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="QUANTITE" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<b><h:outputText style="font-size:12px ;"
+										value="#{p.quantites}" id="qte2" /></b>
+
+							</f:facet>
+							<f:facet name="input">
+
+
+
+
+								<h:inputText value="#{p.quantites}">
+									<p:ajax event="change" listener="#{BonClientBean.updatemontant}"
+										process="@this" oncomplete="refreshFooter();"
+										update="qte2 montant" partialSubmit="true" />
+								</h:inputText>
+
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="Quantite en Stock" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{p.quantitestock}"
+							id="quantitestock" />
+					</p:column>
+ 
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="Qte Minimum" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{p.qtemin}"
+							id="qtemin" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="Achat" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{p.prixachats}"
+							id="prix" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="Vente" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{p.prixventes}"
+							id="prixv" />
+					</p:column>
+
+
+
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="Montant" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{p.montants}"
+							id="montant" />
+					</p:column>
+ 
+
+					<f:facet name="footer">
+					TOTAL Achats :
+					<h:outputText id="qte" value="#{BonClientBean.totalachats}" />
+                                TOTAL Marge:
+                           <h:outputText id="ttc"
+							value="#{BonClientBean.totalmarges}" />
+							
+							TOTAL VENTES:
+                           <h:outputText id="ttc2"
+							value="#{BonClientBean.totalttcs}" />
+
+
+					</f:facet>
+ 
+				</p:dataTable>
+
+
+
+				<div align="center">
+					<br />
+					<p:outputPanel>
+						<b> <h:outputText value="Type Payement"
+								style="font-size:12px ;color:#000000" /></b>
+						<br />
+
+						<h:selectOneRadio id="etat_payement" style="font-size:12px ;"
+							value="#{BonClientBean.typepayement}">
+							<f:selectItem itemLabel="espece" itemValue="espece" />
+							<f:selectItem itemLabel="cheque" itemValue="cheque" />
+							<f:ajax render="cheque" />
+						</h:selectOneRadio>
+						<br />
+						<h:panelGroup id="cheque">
+							<table>
+
+								<tr>
+									<td><b><h:outputText value="Banque"
+												rendered="#{BonClientBean.typepayement=='cheque'}"
+												style="font-size:12px ;color:#000000" /> </b></td>
+
+									<td><h:inputText
+											rendered="#{BonClientBean.typepayement=='cheque'}"
+											value="#{BonClientBean.banque}"
+											style="width:215px;font-size:12px ">
+
+										</h:inputText></td>
+								</tr>
+								<tr>
+									<td><b> <h:outputText value="Numero Cheque"
+												rendered="#{BonClientBean.typepayement=='cheque'}"
+												style="font-size:12px ;color:#000000" /></b></td>
+
+									<td><h:inputText value="#{BonClientBean.numcheque}"
+											rendered="#{BonClientBean.typepayement=='cheque'}">
+
+										</h:inputText></td>
+
+								</tr>
+
+								<tr>
+									<td><b> <h:outputText value="Echeance"
+												rendered="#{BonClientBean.typepayement=='cheque'}"
+												style="font-size:12px ;color:#000000" /></b></td>
+
+									<td><p:calendar value="#{BonClientBean.echeance}" size="20"
+											rendered="#{BonClientBean.typepayement=='cheque'}">
+
+										</p:calendar></td>
+
+								</tr>
+
+							</table>
+						</h:panelGroup>
+					</p:outputPanel>
+
+					<p:commandButton value="Valider" ajax="false" accesskey=""
+						style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+						action="#{BonClientBean.saveAchat}" />
+				</div>
+				 
+ 
+				  
+			</h:form>
+		 </p:panel>
+		 </p:panel>
+		 </h:body>
+		 </html>

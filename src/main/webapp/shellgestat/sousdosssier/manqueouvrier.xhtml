@@ -1,0 +1,235 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"
+		charset="UTF-8"></meta>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<title>Shell-Sejoumi</title>
+
+</h:head>
+<h:body>
+
+	<div align="center">
+
+		<fieldset style="margin-bottom: 20px; background-color: #eeeec6;">
+			<legend>
+				<b> <h:outputText value="MODIFICATION ACC/MANQUES" />
+				</b>
+
+			</legend>
+	 
+			  <p:remoteCommand name="refreshFooter1" update="avancess:ttcmanques" />	 		 
+			
+			 <p:commandLink onclick="PF('carDialog1').show();" process="@this"
+					update="dataTable2">
+					<p:graphicImage url="/images/bubble.png" style="width:50px" />
+				</p:commandLink>
+				
+				
+				<p:dialog widgetVar="carDialog1" styleClass="dialog"  
+					header="Liste des Ouvriers" closeOnEscape="true" closable="true"
+					draggable="true"
+					style="margin-top: 0px;
+                     margin-right: 20px; margin-bottom: 15px; margin-left: 5px;"
+					  height="300" width="800">
+					<ui:insert name="menu">
+						<ui:include src="listouvrier.xhtml" />
+					</ui:insert>
+				</p:dialog>
+			 
+			
+		 <h:panelGroup id="avances">
+			<p:dataTable   var="a" value="#{CaisseBeans.listAvances}"  editable="true"  rowIndexVar="rowId"
+				editMode="cell" id="avancess"
+				widgetVar="avanceTable" 
+				emptyMessage="aucune ligne dans la base" scrollable="true" scrollHeight="280">
+
+			 
+				 
+				
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b" value="Code" />
+					</f:facet>
+					 
+						 
+							
+						<h:inputText value="#{a.employee.code}"
+						valueChangeListener="#{CaisseBeans.handleChangeemployee}"
+						rendered="#{a.employee!=null}" id="idavance2" onkeyup="nextsavance(this);"
+						style="background-color:transparent;border:none;">
+						<p:ajax update="avancess" event="change" process="@this"
+							partialSubmit="true">
+
+						</p:ajax>
+						<f:attribute name="test" value="#{rowId}" />
+					</h:inputText>
+					<h:inputText value="#{CaisseBeans.id}" id="idavance" styleClass="manque"
+						onkeyup="nextsavance(this);" rendered="#{a.employee==null}"
+						style="background-color:transparent;border:none;">
+						<p:ajax update="emp" vent="change"
+							listener="#{CaisseBeans.updatenomemployee}" process="@this"
+							partialSubmit="true">
+
+						</p:ajax>
+						<f:attribute name="test" value="#{rowId}" />
+					</h:inputText> 
+						 
+
+				</p:column>
+                     
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b" value="nom" />
+					</f:facet>
+					 <h:outputText style="font-size:12px ;color:#483d8b"  
+						value="#{a.employee.nom}" id="emp" styleClass="50" />  
+						
+					
+				</p:column>
+
+
+
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b"
+							value="Montant" />
+					</f:facet>
+					 
+						<!-- 	<h:inputText value="#{a.montant_avance}" onkeyup="nextsavance2(this)"
+						style="background-color:transparent;border:none;">
+
+								<p:ajax event="change"
+									listener="#{CaisseBeans.updatemontantmanque}" process="@this"
+								  oncomplete="refreshFooter1();"
+									partialSubmit="true" />
+
+							</h:inputText>
+						 -->
+                   
+							 <h:panelGroup id="mq">
+					 <h:inputText value="#{a.montant_avances}"
+							valueChangeListener="#{CaisseBeans.updatemontantaccompte}"
+							rendered="#{a.montant_avance !=0}"  
+							onkeyup="nextsavance2(this);"  
+							style="background-color:transparent;border:none;">
+							<p:ajax update="mq" event="change" process="@this" oncomplete="refreshFooter1();"
+								partialSubmit="true">
+							</p:ajax>
+							<f:attribute name="test" value="#{rowId}" />
+						</h:inputText>
+						<h:inputText value="#{a.montant_avance}" 
+							onkeyup="nextsavance2(this);"    
+							rendered="#{a.montant_avance==0}"
+							style="background-color:transparent;border:none;">
+							<p:ajax update="mq" listener="#{CaisseBeans.updatemontantmanque}"
+								process="@this" partialSubmit="true" oncomplete="refreshFooter1();">
+							</p:ajax>
+						 
+						</h:inputText>    
+						</h:panelGroup>
+						 
+				</p:column>
+				
+				 
+
+                  
+				<f:facet name="footer">
+					   TOTAL  :<h:outputText id="ttcmanques"
+						value="#{CaisseBeans.totals}" size="8" />
+				</f:facet>
+
+			</p:dataTable> 
+			  
+			
+			<h:panelGrid columns="2">
+
+	 
+
+			<p:commandButton value="Valider" update="totalManques totalcaisses"
+				style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);"
+				ajax="false" action="#{CaisseBeans.savedeavnce}" />
+				
+					<b><h:outputText value="Pour supprimer un manque ouvrier il faut mettre le montant a zero " style="font-size:20px ;color:#483d8b"/></b>
+				
+				</h:panelGrid>
+				</h:panelGroup>
+
+<script>
+
+function initmanque() {
+	var index = 0;
+     $('.manque').eq(index).focus();
+}
+				function nextsavance(input) {
+					$(document).keypress(
+							function(event) {
+								var keycode = (event.keyCode ? event.keyCode
+										: event.which);
+								if (keycode == '13') {
+									if (input.value != "") {
+										//$(input).closest('td').next('td').find('input[type=text]').focus();	 
+										$(input).closest('td').nextAll().eq(1)
+												.find('input').focus()
+
+										$(input).closest('td').nextAll().eq(1)
+												.find('input').select();
+										return false;
+									}
+									 
+
+								}
+
+							});
+				}
+
+				function nextsavance2(input) {
+					$(document)
+							.keypress(
+									function(event) {
+										var keycode = (event.keyCode ? event.keyCode
+												: event.which);
+										if (keycode == '13') {
+											$(input).closest('tr').next('tr')
+													.find('input[type=text]')
+													.first().focus();
+											return false;
+
+										}
+
+									});
+				}
+
+				function nextsavance3(input) {
+
+					$(document).keypress(
+							function(event) {
+								var keycode = (event.keyCode ? event.keyCode
+										: event.which);
+								if (keycode == '13') {
+									$(input).closest('td').next('td').find(
+											'input[type=text]').focus();
+									$(input).closest('td').next('td').find(
+											'input[type=text]').select();
+
+								}
+
+							});
+				}
+			</script>
+
+		</fieldset>
+
+
+
+
+	</div>
+
+
+</h:body>
+</html>

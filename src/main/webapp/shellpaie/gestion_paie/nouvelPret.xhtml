@@ -1,0 +1,75 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellpaie/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellpaie/Headerpaie.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+				<h:form>
+					<div align="center">
+						<table>
+							<tr>
+								<td ><p:commandButton value="Retour"
+										style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+										action="#{PretBean.getAllpret}" /></td>
+
+								<td><p:commandButton value="Valider"
+										style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+										action="#{PretBean.nouvauxPrets}" /></td>
+							</tr>
+						</table>
+					</div>
+					<br/><br/>
+					 <p:messages closable="true" autoUpdate="true" />
+						 
+							<h:panelGrid columns="1" cellpadding="5">
+								 
+								<h:outputText value="Employer : " style="font-size:12px" /> 
+								<p:selectOneMenu  value="#{PretBean.nom}"  
+						        style="width:200px;font-size:12px " id="emp" turefilter="true" filterMatchMode="contains">
+						        <p:ajax listener="#{PretBean.getEmployeeByNom}" />
+							    <f:selectItem itemLabel="Veuillez choisir un employer"  />
+							     <f:selectItems value="#{PretBean.listeEmployee}"   />							 
+						         </p:selectOneMenu>
+						         
+								<h:outputText value="Montant du prêt   : " style="font-size:12px" /> 
+								 <h:inputText style="font-size:12px" value="#{PretBean.montant_pret}" id="montant"  required="true" requiredMessage="entrer montant " />
+								 <p:messages for="montant"
+												closable="true" autoUpdate="true" />
+								 <h:outputText value="TAUX  : " style="font-size:12px" /> 
+								 <h:inputText style="font-size:12px" value="#{PretBean.taux}" />					         
+								  
+								
+								<h:outputText value="Nombre	de mois : " style="font-size:12px" /> 
+								<h:inputText style="font-size:12px" value="#{PretBean.nbmois}" id="mois"  required="true" requiredMessage="entrer nb de mois "/>
+								 <p:messages for="mois"
+												closable="true" autoUpdate="true" />
+								<h:outputText value=" Date de début : " style="font-size:12px" /> 
+								<p:calendar value="#{PretBean.date_debut}"  id="date"  required="date" requiredMessage="entrer la date"/>
+								 <p:messages for="date"
+												closable="true" autoUpdate="true" />
+									
+							</h:panelGrid>
+						 
+								
+								
+								
+								 
+	</h:form>
+				</p:panel>

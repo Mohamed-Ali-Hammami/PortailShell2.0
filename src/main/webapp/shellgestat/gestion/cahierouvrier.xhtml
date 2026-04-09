@@ -1,0 +1,150 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+            
+            
+
+			<h:form id="f">
+			<div align="center">
+			 <p:commandButton value="Valider" ajax="false"
+					style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px">
+					<p:printer target="imprimer" />
+				</p:commandButton>
+			<br/><br/><br/>
+			</div>
+			<p:outputPanel id="imprimer" >		
+			 <style type="text/css">
+				    .ui-dataGrid-no-border>.ui-datagrid-content{
+				    border:none;  
+                       }
+                       
+                       
+                    .ui-datatable {
+                   border :1px solid black;
+                   }
+                   .ui-datatable tbody tr {
+                  border :1px solid black;
+                   }
+ 
+                         .ui-datatable tbody th {
+                         border :1px solid black;
+                        }
+                        .ui-datatable* {
+                        border:0px ! important;  
+                        }
+                   </style>	 
+			<p:dataGrid var="c" value="#{EmployeeBean.listEmp2}" columns="5"   rowIndexVar="l"
+            id="produits"  style="width:100%; " styleClass="ui-dataGrid-no-border" > 
+          
+            
+                          
+           <p:dataTable var="b" value="#{EmployeeBean.listcredits}" >
+               	<p:column  width="18%" rendered="#{ l mod 5 ==0}"  >
+									 
+
+									<p style="height:21"><h:outputText style="font-size:12px " value="#{b}"  rendered="#{ l mod 5 ==0}" /></p>
+									 
+								</p:column>
+								
+						<p:column  width="0%" rendered="#{ l mod 5 !=0}" style="border:none #important"  >
+									 
+
+									<p style="height:21"><h:outputText style="font-size:12px " value=" "  rendered="#{ l mod 5 ==0}" /></p>
+									 
+								</p:column>		 
+								
+									 
+        <p:column>
+		<f:facet name="header" ><p style="height:45">
+						<b><h:outputText value="#{c.nom}" style="font-size:14px;font-color:black" /></b>
+					 <br/>
+					 <b> <h:outputText value="#{c.code}" style="font-size:14px"  /></b></p>
+					</f:facet>
+					 	 <p style="height: 21"></p>
+		<h:outputText value=" " style="font-size:9px" />	 
+				
+		</p:column>
+           </p:dataTable>
+            	  <p style="page-break-before:always">
+                         </p>
+                         
+				</p:dataGrid>
+				   
+				<!-- 
+				 <div align="center">
+					<b> <h:outputText value="#{c.code}" style="font-size:10px"  /></b>
+					 </div>
+						</f:facet>
+						
+		<p style=" width:5px">	<h:outputText value="#{c}" style="font-size:9px" rendered="#{l mod 5 ==0}"/> 
+		<h:outputText value=" " style="font-size:9px" />		 </p>
+				
+				 <table border="1" style="width:100%;border: 1px #111111 solid; ">
+					 <tr style="border: 0px #111111 solid; ">
+					 <td height="29px;" style="border: 0px #111111 solid; " > <b><h:outputText value="#{c.nom}" style="font-size:10px" /></b>
+					 <br/>
+					 <div align="center">
+					<b> <h:outputText value="#{c.code}" style="font-size:10px"  /></b>
+					 </div>
+					 </td>
+					 </tr>
+					   <ui:repeat var="c" value="#{EmployeeBean.listcredits}" >
+					<tr height='29' style="border: 0px #111111 solid; ">
+						<td width='5' style="border: 1px #111111 solid; "> <h:outputText value="#{c}" style="font-size:9px" rendered="#{l mod 5 ==0}"/> <h:outputText value=" " style="font-size:9px" /></td> 
+						</tr>
+						
+                        
+					</ui:repeat> 
+					  <tr height='12'>
+						<td width='5'> <h:outputText value=" " style="font-size:9px"  /> <h:outputText value=" " style="font-size:9px" /></td> 
+						</tr> 
+					 
+				</table> 
+				
+				 -->
+				</p:outputPanel>
+				
+				<style type="text/css">
+.table {
+ 
+border-collapse:collapse;
+vertical-align:middle;
+ border-width:0px; 
+ border-style:solid; 
+ border-color:#white;
+ 
+ }
+.td { 
+ 
+ border-style:solid; 
+ border-collapse:collapse;
+vertical-align:middle;
+  border-color:black; 
+  
+}
+</style>
+			</h:form>
+		 </p:panel>
+		 </p:panel>
+		 </h:body>
+		 </html>

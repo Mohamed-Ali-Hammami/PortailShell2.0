@@ -1,0 +1,193 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+			<br />
+			 
+			<h:form>
+
+				<div align="center">
+					<h:panelGrid columns="2">
+						<p:commandButton title="imprimer">
+							 
+							  <p:printer target="imprimer"></p:printer> 
+						</p:commandButton>
+					</h:panelGrid>
+					<table>
+						<tr>
+							<td><h:outputText value="Date de début:"
+									style="font-size:12px " /></td>
+							<td><p:calendar id="popup" value="#{EtatBean.date1}"   pattern="dd/MM/yyyy" buttonTabindex="-1"  
+  mask="99/99/?9999" placeholder="__/__/____" 
+									 >
+                                 	<p:ajax event="dateSelect"  />
+								</p:calendar></td>
+
+							<td><h:outputText value="Date de fin:"
+									style="font-size:12px " /></td>
+							<td><p:calendar id="popup2" value="#{EtatBean.date2}"   pattern="dd/MM/yyyy" buttonTabindex="-1"  
+  mask="99/99/?9999" placeholder="__/__/____" 
+									   >
+                                   	<p:ajax event="dateSelect"  />
+								</p:calendar></td>
+						</tr>
+
+
+
+
+						<tr>
+							<td />
+							<td><p:commandButton value="Valider" ajax="false"
+									action="#{EtatBean.calculeretatdeprofil}"
+									style="width:150px;font-size:12px;height:30;color:#0000ff;background-color:#abc8e2;" /></td>
+						</tr>
+					</table>
+
+				</div>
+				
+				<p:outputPanel id="imprimer" style="width:99%">
+				<h:outputText value="ETAT  DE PROFIL "  style=" font-style: italic;font-size: large;"/>
+				 <br/>
+				 <h:outputText value="DU #{EtatBean.dates1} AU  #{EtatBean.dates2} "  style=" font-style: italic;font-size: large;"/>
+				<br/> <br/><br/><br/>
+				  
+								<p:dataTable id="fd" var="fd"
+									value="#{EtatBean.listetatprofil}" widgetVar="articleTable"
+									 
+									rowKey="#{fd.id}" style="margin-bottom:10px"
+									emptyMessage="aucun cheque dans la base"  >
+									
+									<p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Nom" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{fd.article.nom}" />
+									</p:column>
+									<p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Quantite" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{fd.quantite}" />
+									</p:column>
+
+								 <p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Val vente" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{fd.totalvente}" />
+									</p:column>
+									
+									 <p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Marge" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{fd.marge}" />
+									</p:column>
+									
+									 <p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="%" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{fd.pourcent}" />
+									</p:column>
+									
+									 
+								 
+                                        
+        <p:columnGroup type="footer">
+            <p:row>
+                <p:column   style="text-align:right" footerText="Total" />
+                <p:column   style="text-align:right" footerText="#{EtatBean.totalquantite}" />
+                <p:column footerText="#{EtatBean.totalvente}" />
+                 <p:column footerText="#{EtatBean.totalmarge}" />
+ 
+                 
+            </p:row>
+        </p:columnGroup>
+								 
+									</p:dataTable> 
+									
+									<br/>
+									<div align="center" >
+									<table border="0" style="width:90%">
+									<tr>
+									<td>
+									 <h:outputText style="font-size:16px " value="Total Vente SHOP" /> </td>
+									<td><h:outputText style="font-size:14px" value="#{EtatBean.totalventeshop}" /></td>
+									
+									<td> <h:outputText style="font-size:16px " value="Marge" /></td>
+									<td><h:outputText style="font-size:14px" value="#{EtatBean.totalmargeshop}" /></td>
+									</tr><tr>
+									<td> <h:outputText style="font-size:16px " value="Marge Brut Magazin" /></td>
+									<td><h:outputText style="font-size:14px" value="#{EtatBean.margebrutmagazin}" /></td>
+									</tr>
+									
+									<tr>
+									<td>
+									 <h:outputText style="font-size:16px " value="Total Depenses" /> </td>
+									<td><h:outputText style="font-size:14px" value="#{EtatBean.totaldepense}" /></td>
+									
+									<!-- <td> <h:outputText style="font-size:16px " value="%" /></td>
+									<td><h:outputText style="font-size:14px" value="#{EtatBean.totalmargeshop}" /></td>
+									 -->
+									 
+									 <td> <h:outputText style="font-size:16px " value="TOTAL CREDIT EN CIRCULATION" /></td>
+									<td><h:outputText style="font-size:14px" value="#{EtatBean.totalcredit}" /></td>
+									 </tr>
+									
+									<tr>
+									<td>
+									 <h:outputText style="font-size:16px " value="% DE PROFIL CARBURANT" /> </td>
+									<td><h:outputText style="font-size:14px" value="#{EtatBean.pourcetprofilcar}" /></td>
+									
+									<td> <h:outputText style="font-size:16px " value="% DE PROFIL MAGAZIN" /></td>
+									<td><h:outputText style="font-size:14px" value="#{EtatBean.pourcentprofilmagazin}" /></td>
+									</tr>
+									
+									
+									<tr>
+									<td>
+									 <h:outputText style="font-size:16px " value="% DE PROFIL BRUT" /> </td>
+									<td><h:outputText style="font-size:14px" value="#{EtatBean.pourcentprofilbrut}" /></td>
+									 
+									</tr>
+									</table>
+									</div>
+				</p:outputPanel>
+					 
+			</h:form>
+
+		 </p:panel>
+		 </p:panel>
+		 </h:body>
+		 </html>

@@ -1,0 +1,122 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellpaie/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellpaie/Headerpaie.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+			<h:form>
+				<div align="center">
+					<table>
+						<tr>
+							<td><p:commandButton value="Supprimer" id="s"
+									style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+									action="#{PaisBeans.supprimerpaie2}" /></td>
+							<td><p:commandButton value="Valider" id="v"
+									rendered="#{PaisBeans.test=='notok'}"
+									style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+									action="#{PaisBeans.validerPaie2}" /></td>
+						</tr>
+					</table>
+				</div>
+				<br />
+				<br />
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputText value="Annee : " style="font-weight: bold" />
+					<p:selectOneMenu value="#{PaisBeans.annees}"
+						style="width:200px;font-size:12px " id="annee" filter="true"
+						filterMatchMode="contains">
+						<f:ajax listener="#{PaisBeans.getMoisByAnnees}" render="mois" />
+						<f:selectItem itemLabel="Veuillez choisir annee" />
+						<f:selectItems value="#{PaisBeans.listannee}" />
+					</p:selectOneMenu>
+					<!-- event="onchange" -->
+					<h:outputText value="Mois : " style="font-weight: bold" />
+					<p:selectOneMenu value="#{PaisBeans.mois}"
+						style="width:200px;font-size:12px " id="mois" filter="true"
+						filterMatchMode="contains">
+
+						<f:selectItem itemLabel="Veuillez choisir un mois" />
+						<f:selectItems value="#{PaisBeans.listMois}" />
+						<f:ajax listener="#{PaisBeans.getPaiBymoiAndAnnees}"
+							render="paie v" />
+					</p:selectOneMenu>
+
+
+				</h:panelGrid>
+
+				<h:panelGroup id="paie">
+					<div align="left">
+						<h:panelGrid columns="2">
+							<h:outputText value="Mois  : " style="font-size:12px" />
+							<h:outputText value="#{PaisBeans.mois}" style="font-size:12px" />
+						</h:panelGrid>
+
+						<table border="1" style="width: 100%">
+							<tr style="background-color: #FA9581;">
+								<td style=""><h:outputText value=" Matricule"
+										style="font-size:12px" /></td>
+								<td><h:outputText value=" Nom" style="font-size:12px" /></td>
+								<td><h:outputText value=" Nb jour" style="font-size:12px" /></td>
+								<td><h:outputText value=" Salaire Net"
+										style="font-size:12px" /></td>
+								<td><h:outputText value=" Acompte" style="font-size:12px" /></td>
+								<td><h:outputText value=" Reste" style="font-size:12px" /></td>
+							</tr>
+							<ui:repeat var="p" value="#{PaisBeans.listPaie}">
+								<tr>
+
+									<td style="border: thin solid #F2EFEE;"><h:outputText
+											value="#{p.employee.matricule}" style="font-size:12px" /></td>
+
+
+									<td style="border: thin solid #F2EFEE;"><h:outputText
+											value="#{p.employee.nom}" style="font-size:12px" /></td>
+									<td style="border: thin solid #F2EFEE;"><h:outputText
+											value="#{p.formulaire_Paie.nb_heure} jours"
+											style="font-size:12px" /></td>
+									<td style="border: thin solid #F2EFEE;"><h:outputText
+											value="#{p.formulaire_Paie.salairedebases}"
+											style="font-size:12px" /></td>
+
+
+									<td style="border: thin solid #F2EFEE;"><h:outputText
+											value="#{p.formulaire_Paie.avances}" style="font-size:12px" /></td>
+
+									<td style="border: thin solid #F2EFEE;"><h:outputText
+											value="#{p.formulaire_Paie.net_apayers}"
+											style="font-size:12px" /></td>
+
+
+								</tr>
+							</ui:repeat>
+						</table>
+
+
+						<br /> <br /> <br /> <br />
+
+
+					</div>
+				</h:panelGroup>
+
+			</h:form>
+		</p:panel>
+	</p:panel>
+</h:body>
+</html>

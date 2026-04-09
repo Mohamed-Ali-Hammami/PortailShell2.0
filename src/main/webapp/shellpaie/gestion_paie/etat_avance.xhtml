@@ -1,0 +1,117 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellpaie/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellpaie/Headerpaie.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+					<h:form>
+						 , 
+						<br />
+						<br />
+						<h:panelGrid columns="2" cellpadding="5">
+							<h:outputText value="Annee : " style="font-weight: bold" />
+							<p:selectOneMenu value="#{PaisBeans.annees}" 
+								style="width:200px;font-size:12px " id="annee" filter="true"
+								filterMatchMode="contains">
+								<f:ajax listener="#{PaisBeans.getMoisByAnnees}" render="mois"  />
+								<f:selectItem itemLabel="Veuillez choisir annee"  />
+								<f:selectItems value="#{PaisBeans.listannee}" />
+							</p:selectOneMenu>
+                             <!-- event="onchange" -->
+							<h:outputText value="Mois : " style="font-weight: bold" />
+							<p:selectOneMenu value="#{PaisBeans.mois}" 
+								style="width:200px;font-size:12px " id="mois" filter="true"
+								filterMatchMode="contains">
+								
+								<f:selectItem itemLabel="Veuillez choisir un mois"  />
+								<f:selectItems value="#{PaisBeans.listMois}"  />
+								 <f:ajax listener="#{PaisBeans.etat2}"   />
+							</p:selectOneMenu>
+
+                         
+						</h:panelGrid>
+						<br/><br/><br/><br/>
+						<div align="center">
+                          <p:dataTable id="emp" var="avance" editable="true"
+								  value="#{PaisBeans.listAvenc}"
+								widgetVar="articleTable" selectionMode="single"
+								selection="#{PaisBeans.selectedAvenc}"
+								filteredValue="#{PaisBeans.filtredAvenc}"
+								rowKey="#{avance.id}" style="margin-bottom:10px"
+								emptyMessage="aucune avance en cours" paginator="true"
+								rows="100" paginatorPosition="bottom" resizableColumns="true"
+								liveResize="true">
+								 
+								<p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="CODE" />
+									</f:facet>
+									<h:outputText style="font-size:12px "
+										value="#{avance.id}" />
+								</p:column>
+
+								 <p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="employer" />
+									</f:facet>
+									<h:outputText style="font-size:12px "
+										value="#{avance.employee.nom}" />
+								</p:column>
+								
+								 <p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="MONTANT" />
+									</f:facet>
+									<h:outputText style="font-size:12px "
+										value="#{avance.montant_avance}" />
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="MOIS" />
+									</f:facet>
+									<h:outputText style="font-size:12px "
+										value="#{avance.mois}" />
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="ANNEE" />
+									</f:facet>
+									<h:outputText style="font-size:12px "
+										value="#{avance.annee}" />
+								</p:column>
+								<p:column style="width:32px;text-align: center">
+             <p:commandButton    icon="ui-icon-search" title="View" action="#{PaisBeans.Visualiser}">
+                <f:setPropertyActionListener value="#{avance}" target="#{PaisBeans.selectedAvance}" />
+            </p:commandButton>
+        </p:column> 
+							</p:dataTable>
+                         </div>
+				 </h:form>
+				 </p:panel>
+				 </p:panel>
+				 </h:body>
+				 </html>

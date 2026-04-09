@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation=" http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-3.2.xsd"
+   > 
+   
+   <!-- Enable method level Spring Security by annotations  -->
+    <security:global-method-security pre-post-annotations="enabled" />     
+    
+  <security:http auto-config="true" use-expressions="true" access-denied-page="/unsecure/accessDenied.xhtml">
+<security:session-management invalid-session-url="/unsecure/login.xhtml" session-fixation-protection="migrateSession">
+<security:concurrency-control expired-url="/unsecure/login.xhtml" max-sessions="300" error-if-maximum-exceeded="true" />
+ </security:session-management>
+     <security:intercept-url pattern="/javax.faces.resource/**" access="permitAll" />
+     <security:intercept-url pattern="/images/**" access="permitAll" />
+     <security:intercept-url pattern="/resources/**" access="permitAll" />
+     <security:intercept-url pattern="/unsecure/**" access="permitAll" />
+     <security:intercept-url pattern="/SHELL-shop/unsecure/**" access="permitAll" />
+     <security:intercept-url pattern="/SHELL-banque/unsecure/**" access="permitAll" />
+     <security:intercept-url pattern="/shellpaie/unsecure/**" access="permitAll" />
+     <security:intercept-url pattern="/SHELL-lavage/unsecure/**" access="permitAll" />
+     <security:intercept-url pattern="/shellgestat/**" access="isAuthenticated()" />
+     <security:intercept-url pattern="/SHELL-shop/**" access="isAuthenticated()" />
+     <security:intercept-url pattern="/SHELL-transport/**" access="isAuthenticated()" />
+     <security:intercept-url pattern="/SHELL-banque/**" access="isAuthenticated()" />
+     <security:intercept-url pattern="/shellpaie/**" access="isAuthenticated()" />
+     <security:intercept-url pattern="/SHELL-lavage/**" access="isAuthenticated()" />
+     <security:intercept-url pattern="/**" access="permitAll" />
+
+         <security:form-login login-page="/unsecure/login.xhtml" authentication-failure-url="/unsecure/login.xhtml" always-use-default-target="false"/>
+           <!-- Define logout properties for Spring Security -->
+            <security:logout invalidate-session="true" delete-cookies="JSESSIONID" logout-success-url="/unsecure/login.xhtml"></security:logout>  
+   
+        <!-- Page level Spring Security : Permit access to resources in /shellgestat/unsecure/**  --> 
+             
+           
+        <!-- Page level Spring Security : Enable Primefaces -->
+      
+       </security:http>   
+    <!-- Set customUserDetailsService class as the authentication Manager for Spring Security-->
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider user-service-ref="customUserDetailsService">
+            <security:password-encoder hash="plaintext"></security:password-encoder>
+        </security:authentication-provider>
+    </security:authentication-manager> 
+     <!-- Inject authentication Manager to our LoginBean -->
+    <beans:bean id="loginBean" name="loginBean" class="com.tn.shell.ui.gestat.LoginBean" scope="prototype">
+        <beans:property name="authenticationManager" ref="authenticationManager"></beans:property>
+    </beans:bean>
+</beans:beans>

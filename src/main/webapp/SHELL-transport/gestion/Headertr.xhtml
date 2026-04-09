@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:include src="/Header.xhtml" />
+
+	<h:form>
+		<p:growl id="messages" />
+
+		<p:menubar
+			style="height:30px; margin-left: 50px;margin-right: 50px ;"
+			autoDisplay="true">
+			<p:menuitem icon="ui-icon-home"
+				url="#{request.contextPath}/SHELL-transport/gestion/index.xhtml"
+				style="font-size:12px" />
+
+			<p:menuitem value="Chauffeur" style="font-size:12px"
+				url="#{request.contextPath}/SHELL-transport/gestion/listechauffeur.xhtml" />
+
+			<p:menuitem value="Client" style="font-size:12px"
+				url="#{request.contextPath}/SHELL-transport/gestion/listeclient.xhtml" />
+
+			<p:menuitem value="Depense" style="font-size:12px"
+				url="#{request.contextPath}/SHELL-transport/gestion/listedepense.xhtml" />
+
+			<p:submenu label="Reception" style="font-size:12px">
+				<p:menuitem value="Facture Transport"
+					url="#{request.contextPath}/SHELL-transport/gestion/facturetransport.xhtml"
+					style="font-size:12px" styleClass="ui-priority-primary" />
+
+				<p:menuitem value="Facture Passager"
+					url="#{request.contextPath}/SHELL-transport/gestion/facturepassager.xhtml"
+					style="font-size:12px" />
+
+				<p:menuitem value="Liste Facture transport"
+					url="#{request.contextPath}/SHELL-transport/gestion/facturetransports.xhtml"
+					style="font-size:12px" />
+
+				<p:menuitem value="Liste Facture passager"
+					url="#{request.contextPath}/SHELL-transport/gestion/facturepassagers.xhtml"
+					style="font-size:12px" />
+			</p:submenu>
+
+			<p:menuitem value="Produit" style="font-size:12px"
+				url="#{request.contextPath}/SHELL-transport/gestion/listeproduit.xhtml" />
+
+			<p:menuitem value="Typedep" style="font-size:12px"
+				url="#{request.contextPath}/SHELL-transport/gestion/listetypedep.xhtml" />
+
+			<p:menuitem value="Vehicule" style="font-size:12px"
+				url="#{request.contextPath}/SHELL-transport/gestion/listevhecule.xhtml" />
+
+			<p:submenu label="Etats" style="font-size:12px">
+				<p:menuitem value="Etat des Chauffeurs"
+					url="#{request.contextPath}/SHELL-transport/gestion/etatChauffeurs.xhtml" />
+				<p:menuitem value="Etat des Vehicule"
+					url="#{request.contextPath}/SHELL-transport/gestion/etatVehicules.xhtml" />
+				<p:menuitem value="Etat des depenses"
+					url="#{request.contextPath}/SHELL-transport/gestion/etatDepenses.xhtml" />
+				<p:menuitem value="Etat des livraisons"
+					url="#{request.contextPath}/SHELL-transport/gestion/etatBl.xhtml" />
+				<p:menuitem value="Etat par Chauffeurs"
+					url="#{request.contextPath}/SHELL-transport/gestion/etatChauffeur.xhtml" />
+				<p:menuitem value="Etat par CLIENTS"
+					url="#{request.contextPath}/SHELL-transport/gestion/etatClient.xhtml" />
+				<p:menuitem value="Etat de Facturation P/Comptable"
+					url="#{request.contextPath}/SHELL-transport/gestion/etatventes.xhtml" />
+				<p:menuitem value="Rapport Camion"
+					url="#{request.contextPath}/SHELL-transport/gestion/rapportcamion.xhtml"
+					style="font-size:12px" />
+			</p:submenu>
+		</p:menubar>
+	</h:form>
+</ui:composition>

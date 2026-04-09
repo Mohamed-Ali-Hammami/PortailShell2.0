@@ -1,0 +1,151 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+
+<h:body  style="width:98%;margin:auto;" >
+ <p:panel style="width:100%;margin:auto;min-height:900px;">
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Headershop.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+			<h:form id="f">
+
+				<div align="center">
+					  
+					<h:panelGrid columns="3">
+						<h:outputText value="DATE" style="font-size:16px" />
+						<p:calendar value="#{VenteBean.date}" id="p" event="dateSelect">
+							 <p:ajax event="dateSelect" update="imprimer" /> 
+						</p:calendar>
+                        <br/>
+                        
+                      <p:selectOneRadio value="#{VenteBean.poste}"
+						style="width:200px;font-size:12px" required="true"
+						requiredMessage="choisir la poste">
+
+						<f:selectItems value="#{VenteBean.postes}" />
+					  
+					</p:selectOneRadio>
+					
+					<p:commandButton  value="Valider" action="#{VenteBean.getetatventeparDate2}" ajax="false">
+					</p:commandButton>
+						<p:commandButton title="imprimer"   value="imprimer">
+							 
+							<p:printer target="imprimer"></p:printer>
+						</p:commandButton>
+						
+							 
+							 
+						
+						
+						 
+					</h:panelGrid>
+					<br />
+					<br />
+					 
+
+					<p:outputPanel id="imprimer">
+						 
+						
+						 <div align="center">
+							<b><h:outputText
+									value="Vente Par Famille DU : #{VenteBean.dates} "
+									style="font-size:20px" />     </b>
+									
+										<b><h:outputText
+									value="  #{VenteBean.poste} "
+									style="font-size:20px" />     </b>
+
+
+						  </div> 
+						  
+						<br />
+						  
+						 
+						 
+						
+						<p:dataTable id="famille" var="f"  style="border: 1px #000000 solid; "
+										value="#{VenteBean.listfamile}"
+										emptyMessage="aucune ligne dans la base">
+										 
+											<p:column  style="border: 1px #000000 solid; ">
+												<f:facet name="header">
+													<h:outputText style="font-size:12px ;color:#483d8b"
+														value="Code" />
+												</f:facet>
+
+
+												<h:outputText style="font-size:12px ;"
+													value="#{f.code}" id="code" />
+											</p:column>
+
+											<p:column  style="border: 1px #000000 solid; ">
+												<f:facet name="header">
+													<h:outputText style="font-size:12px ;color:#483d8b"
+														value="Nom" />
+												</f:facet>
+
+
+												<h:outputText style="font-size:12px ;"
+													value="#{f.nom}" id="nom" />
+											</p:column>
+
+											<p:column  style="border: 1px #000000 solid; ">
+												<f:facet name="header">
+													<h:outputText style="font-size:12px ;color:#483d8b"
+														value="QUANTITE" />
+												</f:facet>
+
+
+												<h:outputText style="font-size:12px ;" value="#{f.quantites}"
+													id="qte2" />
+											</p:column>
+
+											<p:column  style="border: 1px #000000 solid; ">
+												<f:facet name="header">
+													<h:outputText style="font-size:12px ;color:#483d8b"
+														value="Montant" />
+												</f:facet>
+
+
+												<h:outputText style="font-size:12px ;"
+													value="#{f.montant}" id="vente" />
+											</p:column>
+
+
+										 
+					
+					   
+                       
+                       
+                        <p:columnGroup type="footer" style="border: 1px #000000 solid; "  >
+                       <p:row>
+                        <p:column colspan="2" footerText=" Totaux" style="border: 1px #000000 solid;text-align:right"></p:column>
+                       <p:column   footerText="#{VenteBean.totalquantites}" style="border: 1px #000000 solid;text-align:left"></p:column>
+                         <p:column    footerText=" #{VenteBean.totalttcs}" style="text-align:right;border: 1px #000000 solid;;text-align:left" ></p:column>
+                       </p:row>
+                       </p:columnGroup> 
+										 
+									</p:dataTable>
+						 
+
+						 
+						 
+					 
+					</p:outputPanel>
+				</div>
+			</h:form>
+		 </p:panel>
+		 </p:panel>
+		 </h:body>
+		 </html>

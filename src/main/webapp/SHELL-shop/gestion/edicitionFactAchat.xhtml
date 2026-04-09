@@ -1,0 +1,179 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body  style="width:98%;margin:auto;" >
+
+
+	<p:panel style="width:100%;margin:auto;min-height:900px;">
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Headershop.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+			 
+                  <h:form>
+                  <div align="left">
+                 
+								<p:commandButton title="imprimer" value="imprimer">
+									 	<p:printer target="imprimer"/>	 
+								</p:commandButton>
+			 <p:outputPanel id="imprimer">
+				<table   style="width:100%">
+					<tr>
+						<td style=""><b><h:outputText value="EDITION FACTURE ACHAT N°  "
+								style="font-size:14px " /></b></td>
+								
+								<td><b><h:outputText value=" #{AchatshopBean.factureAchat.code}"
+								style="font-size:14px " /></b></td>
+								 
+				 <td>
+				 
+				 <b><h:outputText value="Bon De Livraison N°  "
+								style="font-size:14px " /></b></td><td><h:outputText value="#{AchatshopBean.achat.id}"
+								style="font-size:14px " />
+				 </td>
+					 </tr>
+					 <tr>
+					 <td><b><h:outputText value="Fournisseur"
+								style="font-size:14px " /></b></td>
+								
+								 <td><b><h:outputText value="#{AchatshopBean.fourniseur.nom}"
+								style="font-size:14px " /></b></td>
+								 
+					 </tr>
+					 </table>
+					 <br/>
+					 <table>
+					 <tr style="">
+					 <td>
+					 <b><h:outputText value="DATE #{AchatshopBean.dates}"
+								style="font-size:12px " /></b>
+					 </td>
+					 </tr>
+					 
+					 </table>
+					 <br/><br/>
+					  
+					 <p:dataTable id="produit" var="p"  
+							value="#{AchatshopBean.listeLigne}"
+							emptyMessage="aucune ligne dans la base">
+							
+							 
+							<p:column width="10%" style="border: 0.5px #000000 solid;" >
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000"
+											value="Code" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.produit.codeshop}"  />
+								</p:column>
+
+								<p:column style="border: 0.5px #000000 solid;" width="30%">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000"
+											value="Nom" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000" value="#{p.produit.nom}"
+										  />
+								</p:column>
+
+								<p:column width="12%" style="border: 0.5px #000000 solid;">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000"
+											value="QUANTITE" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000" value="#{p.quantite}"
+										  />
+								</p:column>
+
+								<p:column width="15%" style="border: 0.5px #000000 solid;text-aligh:right">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000;text-aligh:right"
+											value="Prix" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.produit.prixachats}"  />
+								</p:column>
+								
+								<p:column width="8%" style="border: 0.5px #000000 solid;text-aligh:right">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000;text-aligh:right"
+											value="Tva" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.produit.tva}"  />
+								</p:column>
+								
+								<p:column width="15%" style="border: 0.5px #000000 solid;text-aligh:right">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000;text-aligh:right"
+											value="Montant" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.montants}"  />
+								</p:column>
+
+
+							 
+						 
+						 </p:dataTable>
+					<!--  <table border="1" style="width: 100%;border: 0px #ffffff solid" >
+					 <tr  style="border: 1px #000000" >
+					 <td   > <b><h:outputText value="Code"	style="font-size:12px " /></b></td>
+					  <td  > <b><h:outputText value="Nom"	style="font-size:12px " /></b></td>
+					   <td> <b><h:outputText value="Quantite"	style="font-size:12px " /></b></td>
+					    <td> <b><h:outputText value="Prix"	style="font-size:12px " /></b></td>
+					     <td> <b><h:outputText value="Tva"	style="font-size:12px " /></b></td>
+					      <td> <b><h:outputText value="Montant"	style="font-size:12px " /></b></td>
+					 </tr>
+					 <ui:repeat var="a" value="#{AchatshopBean.listeLigne}">
+					  <tr style="border: 1px #000000">
+					 <td>  <h:outputText value="#{a.produit.codeshop}"	style="font-size:12px " /></td>
+					  <td> <h:outputText value="#{a.produit.nom}"	style="font-size:12px " /></td>
+					   <td> <h:outputText value="#{a.quantite}"	style="font-size:12px " /></td>
+					    <td> <h:outputText value="#{a.produit.prixachats}"	style="font-size:12px " /></td>
+					     <td> <h:outputText value="#{a.produit.tva}"	style="font-size:12px " /></td>
+					      <td> <h:outputText value="#{a.montants}"	style="font-size:12px " /></td>
+					 </tr>
+					 </ui:repeat>
+					 </table> -->
+					 <table   style="width: 100%"> 
+					 <tr><td>
+					  <b><h:outputText value="Total HT"	style="font-size:14px " /></b></td>
+					   <td><b><h:outputText value="#{AchatshopBean.totalht}"	style="font-size:14px " /></b></td><td>
+					   
+					    <h:outputText value="Total TVA"	style="font-size:14px " /> </td><td>
+					   <b><h:outputText value="#{AchatshopBean.totaltva}"	style="font-size:14px " /></b></td><td>
+					   
+					    <h:outputText value="Total TTC"	style="font-size:14px " /></td><td>
+					  <b> <h:outputText value="#{AchatshopBean.totalttcs}"	style="font-size:14px " /></b>
+					   </td></tr></table>
+					 
+					 </p:outputPanel>
+					 </div>
+				</h:form>
+		</p:panel>
+		</p:panel>
+		</h:body>
+		</html>

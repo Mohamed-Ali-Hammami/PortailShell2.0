@@ -1,0 +1,144 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body  style="width:98%;margin:auto;" >
+ <p:panel style="width:100%;margin:auto;min-height:900px;">
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Headershop.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+			<p:layout style="min-width:400px;min-height:600px;">
+				<h:form id="form">
+					<p:layoutUnit position="west" resizable="true" size="200"
+						minSize="280" maxSize="400">
+						<div align="left">
+						
+						
+							<p:outputLabel value="Liste des Familles" style="font-size:16px" />
+							<br />
+							<p:selectManyMenu id="famille"
+								value="#{EtatshopBean.selectedfamilles}" style="width:400px">
+								<f:selectItems value="#{EtatshopBean.listfamile}" var="f"
+									itemLabel="#{f.nom}" itemValue="#{f.nom}" />
+									<f:selectItem  itemValue="TOUTES LES FAMILLES"  itemLabel="TOUTES LES FAMILLES" 
+									 />
+								 
+							</p:selectManyMenu>
+						</div>
+					</p:layoutUnit>
+					<p:layoutUnit position="center">
+						<div align="left">
+							 
+							 <h:panelGrid columns="4">
+						<b><h:outputText value="Date Debut" style="font-size:12px" />
+						</b>
+
+						<p:calendar value="#{EtatshopBean.date1}" id="d1" />
+
+						<b><h:outputText value="Date Fin" style="font-size:12px" /> </b>
+						<p:calendar value="#{EtatshopBean.date2}" id="d2" />
+					</h:panelGrid>
+								<p:commandButton value="Valider"
+									style="width:200px;height:30;color:#0000ff;background-color:#abc8e2;font-size:12px"
+								  action="#{EtatshopBean.getarticleNonVendu}" ajax="false"
+									process="@parent"
+									oncomplete="PF('ArticleTable').clearFilters();update()" />
+								<p:commandButton title="imprimer" value="imprimer">
+									 <p:printer target="imprimer"/>	  
+								</p:commandButton>
+							 
+							<br /> <br />
+							
+							<p:outputPanel id="imprimer">
+							<h:panelGroup style="display: table-header-group;">
+							<table>
+							<tr>
+					<td>	<b><h:outputText value="Liste des Articles Non Vendu Du #{EtatshopBean.dates1} Au: #{EtatshopBean.dates2}"/></b></td><td/><td width="20px"/>
+						<td width="20px"/>
+						<td>	<b>	<h:outputText value=" FAMILLE:  "/></b></td><td/><td width="20px"/>
+						<td>	<b>	<h:outputText value=" #{EtatshopBean.selectedfamilles.get(0)}"/></b></td></tr>
+							</table>
+							</h:panelGroup>
+							<p:remoteCommand name="update" update="article"/>
+							<p:dataTable id="article" var="p" 	 
+								value="#{EtatshopBean.listProduit}" widgetVar="ArticleTable"
+								 
+								 
+								emptyMessage="aucun produit dans le stock"  >
+								
+								
+                               
+								<p:column width="10%">
+									<f:facet name="header">
+										<h:outputText style="font-size:12px color:#483d8b"
+											value="Code" />
+									</f:facet>
+									<h:outputText style="font-size:10px " value="#{p.codeshop}" />
+								</p:column>
+
+								<p:column sortBy="#{p.nom}" width="30%">
+									<f:facet name="header">
+										<h:outputText style="font-size:10px color:#483d8b"
+											value="Libelle" />
+									</f:facet>
+
+									<h:outputText id="codeInput" value="#{p.nom}" style="width:96%" />
+								</p:column>
+
+							 
+
+
+							 
+								
+								<p:column   id="achat">
+									<f:facet name="header">
+										<h:outputText style="font-size:10px color:#483d8b"
+											value="Vente" />
+									</f:facet>
+
+									<h:outputText style="font-size:12px " value="#{p.prixventes}" />
+
+
+								</p:column>
+								 
+								 	 
+								 
+                                <p:columnGroup type="footer" style="border: 0px"  >
+								<p:row styleClass="table">
+								<p style="height:15px; "><b>	<p:column colspan="2" styleClass="td"
+										style="text-align:right;font-size:14px; "
+										footerText="Total"></p:column> 
+									<p:column footerText="#{EtatshopBean.listProduit.size()}"
+										style=" font-size:14px" styleClass="td"></p:column>
+										
+										 
+									 
+										</b></p>
+								</p:row>
+							</p:columnGroup>
+							
+							</p:dataTable>
+						
+						<br />
+						<br />
+					 
+						</p:outputPanel>
+						</div>
+					</p:layoutUnit>
+				</h:form>
+			</p:layout>
+
+		</p:panel>
+	</p:panel>
+</h:body>
+</html>

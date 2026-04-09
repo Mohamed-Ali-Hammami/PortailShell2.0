@@ -1,0 +1,230 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+
+<h:body  style="width:98%;margin:auto;" >
+ <p:panel style="width:100%;margin:auto;min-height:900px;">
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Headershop.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+			<p:layout style="min-width:400px;min-height:600px;">
+				<h:form id="form">
+					<p:layoutUnit position="west" resizable="true" size="200"
+						minSize="280" maxSize="400">
+						<div align="left">
+							<p:outputLabel value="Liste des Familles" style="font-size:16px" />
+							<br />
+							<p:selectManyMenu id="famille"
+								value="#{VenteBean.selectedfamilles}" style="width:400px">
+								<f:selectItems value="#{VenteBean.listfamile}" var="f"
+									itemLabel="#{f.nom}" itemValue="#{f.nom}" />
+									<f:selectItem  itemValue="TOUTES LES FAMILLES"  itemLabel="TOUTES LES FAMILLES" 
+									 />
+								<f:ajax listener="#{VenteBean.getproduitbyfamille}"
+									render="article imprimer" />
+							</p:selectManyMenu>
+						</div>
+					</p:layoutUnit>
+					<p:layoutUnit position="center">
+						<div align="left">
+							<h:panelGrid columns="3">
+								<p:selectOneRadio id="customRadio" value="#{VenteBean.stock}">
+									<f:selectItems value="#{VenteBean.stocks}" />
+									<f:ajax
+										render=":form:article:qstock :form:article:qdepot :form:article:qtotal :form:article:vente  :form:article:achat :form:article:mts  :form:article:mts2 :form:article:vtes" />
+								</p:selectOneRadio>
+								<p:commandButton value="Valider"
+									style="width:200px;height:30;color:#0000ff;background-color:#abc8e2;font-size:12px"
+								  action="#{VenteBean.inventaire}" ajax="false"
+									process="@parent"
+									oncomplete="PF('ArticleTable').clearFilters();update()" />
+								<p:commandButton title="imprimer" value="imprimer">
+									 <p:printer target="imprimer"/>	  
+								</p:commandButton>
+							</h:panelGrid>
+							<br /> <br />
+							
+							<p:outputPanel id="imprimer">
+							<h:panelGroup style="display: table-header-group;">
+							<table>
+							<tr>
+					<td>	<b><h:outputText value="Inventaire Du "/></b></td><td/><td width="20px"/>
+						<td>	<b><h:outputText value=" #{VenteBean.dates}"/></b></td><td width="20px"/>
+						<td>	<b>	<h:outputText value=" FAMILLE:  "/></b></td><td/><td width="20px"/>
+						<td>	<b>	<h:outputText value=" #{VenteBean.selectedfamilles.get(0)}"/></b></td></tr>
+							</table>
+							</h:panelGroup>
+							<p:remoteCommand name="update" update="article total"/>
+							<p:dataTable id="article" var="p" 	 
+								value="#{VenteBean.listProduit}" widgetVar="ArticleTable"
+								filteredValue="#{VenteBean.filterproduits}"
+								selection="#{VenteBean.selectedProduit}" rowKey="#{p.id}"
+								emptyMessage="aucun produit dans le stock"  >
+								
+								
+                               
+								<p:column width="7%">
+									<f:facet name="header">
+										<h:outputText style="font-size:12px color:#483d8b"
+											value="Code" />
+									</f:facet>
+									<h:outputText style="font-size:10px " value="#{p.codeshop}" />
+								</p:column>
+
+								<p:column sortBy="#{p.nom}" width="30%">
+									<f:facet name="header">
+										<h:outputText style="font-size:10px color:#483d8b"
+											value="Libelle" />
+									</f:facet>
+
+									<h:outputText id="codeInput" value="#{p.nom}" style="width:96%" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:10px color:#483d8b"
+											value="Quantite" />
+									</f:facet>
+									<h:outputText style="font-size:12px " id="qstock"
+										rendered="#{VenteBean.stock =='Shop'}"
+										value="#{p.quantitestocks}" />
+
+									<h:outputText style="font-size:12px " id="qdepot"
+										rendered="#{VenteBean.stock =='Depot'}"
+										value="#{p.quantitedepots}" />
+
+									<h:outputText style="font-size:12px " id="qtotal"
+										rendered="#{VenteBean.stock =='Les2'}"
+										value="#{p.quantitetotal}" />
+
+								</p:column>
+
+
+								<p:column  id="vente">
+									<f:facet name="header">
+										<h:outputText style="font-size:10px color:#483d8b"
+											value="Prix Achat HT" />
+									</f:facet>
+
+									<h:outputText style="font-size:12px " value="#{p.prixachats}" />
+
+
+								</p:column>
+								
+								<p:column id="mts"   >
+									<f:facet name="header">
+										<h:outputText style="font-size:10px color:#483d8b"
+											value="Montant Achat HT" />
+									</f:facet>
+
+									<h:outputText style="font-size:12px " value="#{p.montants}"  />
+								</p:column>
+								
+								<p:column   id="achat">
+									<f:facet name="header">
+										<h:outputText style="font-size:10px color:#483d8b"
+											value="Prix Vente TTC" />
+									</f:facet>
+
+									<h:outputText style="font-size:12px " value="#{p.prixventes}" />
+
+
+								</p:column>
+								 
+								<p:column id="mts2"   >
+									<f:facet name="header">
+										<h:outputText style="font-size:10px color:#483d8b"
+											value="Montant Vente TTC" />
+									</f:facet>
+
+									<h:outputText style="font-size:12px " id="vtes" value="#{p.montantvs}"  />
+								</p:column>
+								 
+                                <p:columnGroup type="footer" style="border: 0px"  >
+								<p:row styleClass="table">
+								<p style="height:15px; "><b>	<p:column colspan="2" styleClass="td"
+										style="text-align:right;font-size:14px; "
+										footerText="Totaux"></p:column> 
+									<p:column footerText="#{VenteBean.totalquantites}"
+										style=" font-size:14px" styleClass="td"></p:column>
+									 
+										</b></p>
+								</p:row>
+							</p:columnGroup>
+							
+							</p:dataTable>
+						
+						<br />
+						<br />
+						<h:panelGroup id="total">
+						<div align="center"  >
+							<table >
+								<tr>
+									<td><b><h:outputText
+												style="font-size:16px color:#483d8b" value="Total Achat HT" /></b></td>
+									<td><p:panel style="width:170px;">
+											<b><h:outputText value="#{VenteBean.totalhtachat} "
+													style="font-size:20px " id="aht" /></b>
+										</p:panel></td>
+									<td><b><h:outputText
+												style="font-size:16px color:#483d8b" value="Total Vente HT" /></b></td>
+									<td><p:panel style="width:170px;">
+											<b><h:outputText value="#{VenteBean.totalht} "
+													style="font-size:20px " id="vht" /></b>
+										</p:panel></td>
+								</tr>
+
+								<tr>
+									<td><b><h:outputText
+												style="font-size:16px color:#483d8b" value="Total TVA" /></b></td>
+									<td><p:panel style="width:170px;">
+											<b><h:outputText value="#{VenteBean.totaltvaachat} "
+													style="font-size:20px " id="atva" /></b>
+										</p:panel></td>
+									<td><b><h:outputText
+												style="font-size:16px color:#483d8b" value="Total TVA" /></b></td>
+									<td><p:panel style="width:170px;">
+											<b><h:outputText value="#{VenteBean.totaltva} "
+													style="font-size:20px " id="vtva" /></b>
+										</p:panel></td>
+								</tr>
+
+								<tr>
+									<td><b><h:outputText
+												style="font-size:16px color:#483d8b" value="Total Achat TTC" /></b>
+									</td>
+									<td><p:panel style="width:170px;">
+											<b><h:outputText value="#{VenteBean.totalttcsachat} "
+													style="font-size:20px " id="attc" /></b>
+										</p:panel></td>
+									<td><b><h:outputText
+												style="font-size:16px color:#483d8b" value="Total Vente TTC" /></b></td>
+									<td><p:panel style="width:170px;">
+											<b><h:outputText value="#{VenteBean.totalttcs} "
+													style="font-size:20px " id="vttc" /></b>
+										</p:panel></td>
+								</tr>
+							</table>
+
+						</div></h:panelGroup>
+						</p:outputPanel>
+						</div>
+					</p:layoutUnit>
+				</h:form>
+			</p:layout>
+
+		</p:panel>
+	</p:panel>
+</h:body>
+</html>

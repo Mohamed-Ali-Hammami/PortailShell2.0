@@ -1,0 +1,455 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body> 
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+			<br />
+			 
+			<h:form>
+
+				<div align="center">
+					<h:panelGrid columns="2">
+						<p:commandButton title="imprimer">
+							 
+							  <p:printer target="imprimer"></p:printer> 
+						</p:commandButton>
+					</h:panelGrid>
+					<table>
+						<tr>
+							<td><h:outputText value="Date de début:"
+									style="font-size:12px " /></td>
+							<td><p:calendar id="popup" value="#{Rapportgestat.date1}"  pattern="dd/MM/yyyy" buttonTabindex="-1"  
+  mask="99/99/?9999" placeholder="__/__/____" 
+									 >
+                                 	<p:ajax event="dateSelect"  />
+								</p:calendar></td>
+
+							<td><h:outputText value="Date de fin:"
+									style="font-size:12px " /></td>
+							<td><p:calendar id="popup2" value="#{Rapportgestat.date2}"  pattern="dd/MM/yyyy" buttonTabindex="-1"  
+  mask="99/99/?9999" placeholder="__/__/____" 
+									   >
+                                   	<p:ajax event="dateSelect"  />
+								</p:calendar></td>
+						</tr>
+
+
+
+
+						<tr>
+							<td />
+							<td><p:commandButton value="Valider" ajax="false"
+									action="#{Rapportgestat.getrapportgestat}"
+									style="width:150px;font-size:12px;height:30;color:#0000ff;background-color:#abc8e2;" /></td>
+						</tr>
+					</table>
+
+				</div>
+				
+				<p:outputPanel id="imprimer" style="width:99%">
+				<h:outputText value="RAPPORT #{Rapportgestat.mois} #{Rapportgestat.annee} "  style=" font-style: italic;font-size: large;"/>
+				 <br/>
+				 
+				<br/> <br/> 
+				
+				 <style type="text/css">
+				    .ui-dataGrid-no-border>.ui-datagrid-content{
+				    border:none;  
+                       }
+                       
+                       
+                    .ui-datatable {
+                   border :1px solid black;
+                   }
+                   .ui-datatable tbody tr {
+                  border :1px solid black;
+                   }
+ 
+                         .ui-datatable tbody th {
+                         border :1px solid black;
+                        }
+                        .ui-datatable* {
+                        border:0px ! important;  
+                        }
+                        
+                        .old{
+                        Font-Weight:Bold;
+                        }
+                   </style>	
+				  
+	  <p:dataTable var="sale" value="#{Rapportgestat.rapportpistes}" id="table" >
+       
+ 
+        <p:columnGroup type="header">
+            <p:row>
+                <p:column colspan="2" headerText="PROFIT" width="220:px"  />
+                <p:column colspan="2" headerText="DEPENSES" />
+            </p:row>
+            <p:row>
+                <p:column   headerText="ARTICLES"  />
+                <p:column  headerText="BENEFICE"  /> 
+                
+                  <p:column   headerText="Familles"  />
+                <p:column   headerText="Montant"  /> 
+            </p:row>
+            
+       
+            <p:row>
+                <p:column   headerText="CARBURANT" style=" font-size:14px " />
+                <p:column  headerText="#{Rapportgestat.rapportpiste.matgecarburant}" style=" font-size:12px "  /> 
+                
+                  <p:column   headerText="MAISON"  style=" font-size:14px " />
+                <p:column   headerText="#{Rapportgestat.rapportpiste.depmaison}"  style=" font-size:12px " /> 
+            </p:row>
+            
+            <p:row>
+                <p:column   headerText="LUBRIFIANTS" style=" font-size:14px " />
+                <p:column  headerText=" #{Rapportgestat.rapportpiste.margelubrifianr}" style=" font-size:12px "  /> 
+                
+                  <p:column   headerText="FATHI"  style=" font-size:14px " />
+                <p:column   headerText="#{Rapportgestat.rapportpiste.depfethi}"  style=" font-size:12px " /> 
+            </p:row>
+            
+            
+            <p:row>
+                <p:column   headerText="FILTRE" style=" font-size:14px " />
+                <p:column  headerText=" #{Rapportgestat.rapportpiste.margefiltre}" style=" font-size:12px "  /> 
+                
+                  <p:column   headerText="STATION+(LAVAGE+VIDANGE)"  style=" font-size:14px " />
+                <p:column   headerText="#{Rapportgestat.rapportpiste.depstation}"  style=" font-size:12px " /> 
+            </p:row>
+           
+            
+               <p:row>
+                <p:column   headerText="BOISSON" style=" font-size:14px " />
+                <p:column  headerText="#{Rapportgestat.rapportpiste.margeboisson}" style=" font-size:12px "  />   
+                <p:column   headerText="CAFE"  style=" font-size:14px " />
+                <p:column   headerText="#{Rapportgestat.rapportpiste.depcafe}"  style=" font-size:12px " /> 
+               </p:row> 
+             <p:row>
+                <p:column   headerText="CAFETERIA" style=" font-size:14px " />
+                <p:column  headerText="#{Rapportgestat.rapportpiste.margecafeteria}" style=" font-size:12px "  /> 
+                 
+                 
+                  <p:column   headerText="AIDE"  style=" font-size:14px " />
+                <p:column   headerText="#{Rapportgestat.rapportpiste.depaide}"  style=" font-size:12px " /> 
+            </p:row>
+            
+           
+            
+            <p:row>
+                <p:column   headerText="ACCESSOIRE" style=" font-size:14px " />
+                <p:column  headerText="#{Rapportgestat.rapportpiste.margeaccessoire}" style=" font-size:12px "  /> 
+                
+                 <p:column   headerText="OUVRIERS"  style=" font-size:14px " />
+                <p:column   headerText="#{Rapportgestat.rapportpiste.depouvriers}"  style=" font-size:12px " /> 
+                
+            </p:row>
+            
+            <p:row>
+                <p:column   headerText="CARTE TEL" style=" font-size:14px " />
+                <p:column  headerText="#{Rapportgestat.rapportpiste.margecartetel}" style=" font-size:12px "  /> 
+                 <p:column   headerText="Finance"  style=" font-size:14px " />
+                <p:column   headerText="#{Rapportgestat.rapportpiste.depfinances}"  style=" font-size:12px " />  
+            </p:row>
+            
+            
+           <p:row>
+                <p:column   headerText="PRODUIT ALIMENTAIRE" style=" font-size:14px " />
+                <p:column  headerText="#{Rapportgestat.rapportpiste.margeproduitalimentaire}" style=" font-size:12px "  /> 
+              
+                  <p:column   headerText="Depense Par Cheque"  style=" font-size:14px " />
+                <p:column   headerText="#{Rapportgestat.rapportpiste.depenseCheque}"  style=" font-size:12px " />  
+            </p:row>
+            
+            <!-- <p:row>
+                <p:column   headerText="TABAC" style=" font-size:14px " />
+                <p:column  headerText="#{Rapportgestat.rapportpiste.margetabac}" style=" font-size:12px "  />  
+                
+                   <p:column   headerText="Depense Nouvelle Station"  style=" font-size:14px " />
+                <p:column   headerText="#{Rapportgestat.rapportpiste.depnouvelelstation}"  style=" font-size:12px " /> 
+            </p:row>
+             -->            
+            
+              
+            
+            <p:row>
+                <p:column   headerText="GAZ" style=" font-size:14px " />
+                <p:column  headerText="#{Rapportgestat.rapportpiste.margegaz}" style=" font-size:12px "  /> 
+                
+                 <p:column   headerText="Depense Stade"  style=" font-size:14px " />
+                <p:column   headerText="#{Rapportgestat.rapportpiste.stade}"  style=" font-size:12px " />  
+            </p:row>
+             <p:row>
+                <p:column   headerText="LAVAGE" style=" font-size:14px " />
+                <p:column  headerText="#{Rapportgestat.rapportpiste.margelavage}" style=" font-size:12px "  /> 
+                  
+            </p:row>
+            
+            <p:row>
+                <p:column   headerText="VIDANGE" style=" font-size:14px " />
+                <p:column  headerText="#{Rapportgestat.rapportpiste.margevidange}" style=" font-size:12px "  /> 
+                  
+            </p:row>
+           
+           
+             
+         </p:columnGroup>
+         
+          <p:column >
+          <h:outputText value="Total"/>
+          </p:column>
+          
+           <p:column >
+          <h:outputText value="#{sale.totalbenifice}"/>
+          </p:column>
+          
+           <p:column >
+          <h:outputText value="Total"/>
+          </p:column>
+          
+           <p:column >
+          
+          <h:outputText value="#{sale.totaldepense}"/>
+          </p:column>
+             <f:facet name="footer">
+           
+           BENEFICES Net <b>  <h:outputText value="#{Rapportgestat.rapportpiste.benificenets}"/></b> 
+        </f:facet>
+      
+    </p:dataTable>
+		  			 
+								
+							<p style="page-break-before:always"/>			 
+								 
+				
+				<br/>
+				
+				<h:outputText value="ETAT des depenses de la Damille FATHI " style=" font-style: italic;font-size: large;"/>
+				 
+				<br/> <br/><br/><br/>
+				
+								<p:dataTable id="fd2" var="fd"
+									value="#{Rapportgestat.listDepenseFathi}" widgetVar="articleTable"
+									 
+									rowKey="#{fd.id}" style="margin-bottom:10px"
+									emptyMessage="aucune depense dans la base"  >
+									
+									<p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Date" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{fd.dates}" />
+									</p:column>
+									<p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Designation" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{fd.libelle}" />
+									</p:column>
+
+								 <p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Montant" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{fd.montants}" />
+									</p:column>
+									
+									
+                                        
+        
+								 
+									</p:dataTable>
+									
+									
+									<br/>
+										<p style="page-break-before:always"/>
+				
+				<h:outputText value="ETAT des depenses de la Damille Station " style=" font-style: italic;font-size: large;"/>
+				 
+				<br/> <br/><br/><br/>
+				
+								<p:dataTable id="fd3" var="fd"
+									value="#{Rapportgestat.listDepenseStation}" widgetVar="articleTable"
+									 
+									rowKey="#{fd.id}" style="margin-bottom:10px"
+									emptyMessage="aucune depense dans la base"  >
+									
+									<p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Date" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{fd.dates}" />
+									</p:column>
+									<p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Designation" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{fd.libelle}" />
+									</p:column>
+
+								 <p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Montant" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{fd.montants}" />
+									</p:column> 
+									</p:dataTable>
+									
+									
+									<br/>
+										<p style="page-break-before:always"/>
+				
+				<h:outputText value="ETAT des depenses Par cheque " style=" font-style: italic;font-size: large;"/>
+				 
+				<br/> <br/><br/><br/>
+				
+							<p:dataTable id="cheque" var="cheque"
+						value="#{Rapportgestat.listDepense}"
+						widgetVar="ArticleTable"  
+						rowKey="#{cheque.id}"
+						emptyMessage="aucun cheque dans le stock"  >
+						 
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px color:#483d8b" value="Numero" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{cheque.reference}" />
+						</p:column>
+
+						<p:column >
+							<f:facet name="header">
+								<h:outputText style="font-size:12px color:#483d8b"
+									value="Banque" />
+							</f:facet>
+
+							 
+									<h:outputText style="font-size:12px "
+										value="#{cheque.banque}" />
+								 
+						</p:column>
+						
+				 
+						<p:column  
+							 >
+							<f:facet name="header">
+								<h:outputText style="font-size:12px color:#483d8b"
+									value="Libellé" />
+							</f:facet>
+
+							 
+									<h:outputText style="font-size:12px "
+										value="#{cheque.libelle}" />
+								 
+						</p:column>
+						
+					  
+						
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px color:#483d8b"
+									value="Date" />
+							</f:facet>
+
+							 
+									<h:outputText style="font-size:12px "
+										value="#{cheque.dates}" />
+								 
+						</p:column>
+						
+						
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px color:#483d8b"
+									value="Montant" />
+							</f:facet>
+
+							 
+									<h:outputText style="font-size:12px "
+										value="#{cheque.montant}" />
+								 
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px color:#483d8b"
+									value="Famille Depense" />
+							</f:facet>
+
+							 
+									<h:outputText style="font-size:12px "
+										value="#{cheque.familledepense.libelle}" />
+								 
+						</p:column>
+						 
+                             <p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px color:#483d8b"
+									value="Reglement" />
+							</f:facet>
+
+							 
+									<h:outputText style="font-size:12px "
+										value="#{cheque.typeDepense}" />
+								 
+						</p:column>
+						 
+
+
+					 
+					</p:dataTable>
+									
+								</p:outputPanel>	 
+					 
+			<!-- 
+			
+    <div align="center">
+						 <h:outputText value="Finance"/>
+           <h:inputText value="#{Rapportgestat.parking}">
+           <f:ajax listener="#{Rapportgestat.updatepardepense}" render="table"/>
+           </h:inputText><br/>
+           
+            <h:inputText value="#{Rapportgestat.autredepense}"  >
+              <f:ajax listener="#{Rapportgestat.updateautredepense}" render="table"/>
+            </h:inputText>
+            <br/>
+           <h:inputText value="#{Rapportgestat.huile}">
+           <f:ajax listener="#{Rapportgestat.updatehuile}" render="table"/>
+           </h:inputText><br/>
+           
+            
+						</div>	
+			 -->			
+					 
+			</h:form>
+
+		 </p:panel>
+		 </p:panel>
+		 </h:body>
+		 </html>

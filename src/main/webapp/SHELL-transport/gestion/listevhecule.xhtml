@@ -1,0 +1,124 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+	 
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-transport/Headertr.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+			 
+			<h:form>
+				<div align="right"> 
+				<table>
+							<tr>	
+								 	<td><p:commandButton value="Nouveau"
+										action="#{VheculeBean.nouvauvhecule}" ajax="false"
+										style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);" /></td>
+                       
+
+							</tr>
+							</table></div>
+							</h:form>
+					<div align="center"> 
+						<h:form id="form">
+							<p:growl id="msgs" showDetail="true" />
+							<p:dataTable id="Vhecule" var="vhecule" style="background:#a2b5bf"
+								value="#{VheculeBean.listvhecule}" editable="true"
+								widgetVar="cellVhecules" filteredValue="#{VheculeBean.filtervhecules}"
+								emptyMessage="aucune vehicule dans la liste" paginator="true"
+								rows="10" paginatorPosition="bottom" selectionMode="single"
+								selection="#{VheculeBean.vhecule2}" rowKey="#{vhecule.id}">
+
+								<p:ajax event="rowEdit" listener="#{VheculeBean.onRowEdit}"
+									update=":form:msgs" />
+								 
+
+								<p:column filterBy="#{vhecule.matricule}" filterMatchMode="contains"
+									filterStyle="font-size:12px ;color:blue;" width="400px">
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Matricule" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText style="font-size:12px " value="#{vhecule.matricule}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText id="matriculeInput" value="#{vhecule.matricule}"
+												style="width:96%" />
+										</f:facet>
+
+									</p:cellEditor>
+									
+								</p:column>
+									 
+
+								
+								<p:column style="width:40px;text-align:center">
+									<f:facet name="header">
+										<h:outputText style="font-size:9px;color:#483d8b"
+											value="supprimer" />
+									</f:facet>
+									<div align="center">
+										<p:commandLink action="#{VheculeBean.deletevhecule}"
+											onclick="PF('suppressionDialog').show();">
+											<p:graphicImage url="/images/delete.png" />
+
+											<f:setPropertyActionListener target="#{VheculeBean.vhecule2}"
+												value="#{vhecule}" />
+
+											<p:confirm header="Confirmation"
+												message="Voulez-vous vraiment supprimer la vehicule ?"
+												icon="ui-icon-alert" />
+										</p:commandLink>
+									</div>
+								</p:column>
+
+
+								<p:column style="width:40px">
+									<f:facet name="header">
+										<h:outputText style="font-size:9px;color:#483d8b"
+											value="modifier" />
+									</f:facet>
+									<p:rowEditor />
+								</p:column>
+								 <p:column style="width:32px;text-align: center">
+             <p:commandButton    icon="ui-icon-search" title="View" ajax="false" action="#{VheculeBean.succes}">
+                <f:setPropertyActionListener value="#{vhecule}" target="#{VheculeBean.vhecule2}" />
+            </p:commandButton>
+        </p:column>
+							</p:dataTable>
+
+							<div align="center">
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade" style="width:150px"
+									widgetVar="suppressionDialog">
+									<div align="center">
+										<p:commandButton value="oui" type="button"
+											styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+										<p:commandButton value="Non" type="button"
+											styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+									</div>
+								</p:confirmDialog>
+							</div>
+
+						</h:form>
+					</div>
+				 
+		 </p:panel>
+		 </p:panel>
+		 </h:body>
+		 </html>

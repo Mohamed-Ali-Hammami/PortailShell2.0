@@ -1,0 +1,162 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellpaie/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellpaie/Headerpaie.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+				<h:form>
+					<div align="center">
+						<table>
+							<tr>
+								
+
+								<td><p:commandButton value="Imprimer"
+										style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+										 >
+										  <p:printer target="imprimer"/>
+										 </p:commandButton>
+										 </td>
+										 
+							<td><p:commandButton value="Retour"
+										style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+										action="#{PaieBean.retourhist}" >
+										   
+										 </p:commandButton>
+										 </td>
+							</tr>
+						</table>
+					</div>
+					<br/><br/>
+					<br/>
+					 <p:outputPanel  id="imprimer"  >
+					 <table>
+								<tr>
+									<td width="300px"><p:graphicImage
+											url="/images/shell.jpg" style="width:180px" /><br />
+
+									</td>
+
+									<td style="text-align: center"><b><h:outputText
+												value="FETHI SASSI" style="font-size:24px" /></b> <br />
+										<h:outputText value="SHELL SIJOUMIE" style="font-size:24px" /> <br />
+										  <br /></td>
+								</tr>
+							</table>
+							<p:separator/>	<br/><br/><br/>
+							<div align="center">
+							<h:outputText value="FICHE D'EMPLOYER "
+											style="font-size:18px" />
+											<br/>	<br/><br/><br/>
+							</div>
+								<table border="0" style="width: 100%">
+								<tr>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="Employer  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="#{PaieBean.historique.employee.nom}" style="font-size:12px" /></td>
+								</tr>
+								<tr>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="Matricule  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="#{PaieBean.historique.employee.matricule} " style="font-size:12px" /></td>
+								</tr>
+								 
+								<tr>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="Statut  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="#{PaieBean.historique.employee.statut}" style="font-size:12px" /></td>
+								</tr>
+								<tr>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="fonction  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="#{PaieBean.historique.employee.fonction}" style="font-size:12px" /></td>
+								</tr>
+								<tr>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="salaire journalier  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="#{PaieBean.historique.employee.salaire_journalier}" style="font-size:12px" /></td>
+								</tr>
+								<tr>
+								<td style="border: thin solid #F2EFEE;"> <b><h:outputText value="Liste des absences  : " style="font-size:14px" /></b></td>
+								</tr>
+								<h:panelGroup rendered="#{PaieBean.historique.paie!=null}">
+								<ui:repeat var="g" value="#{PaieBean.historique.paie}">
+								<h:panelGroup   rendered="#{g.formulaire_Paie.retenue_cnss==0}">
+								<tr  style="background-color:red;">
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="Annee  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="#{g.annee} " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="Mois  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="#{g.mois}" style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="Nombre d'absence  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="#{g.nb_absence}" style="font-size:12px" /></td>
+								 <td style="border: thin solid #F2EFEE;"> <h:outputText value="Nombre de présence  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="#{g.formulaire_Paie.nb_heure}" style="font-size:12px" /></td>
+								
+								</tr>
+								</h:panelGroup>
+								<h:panelGroup   rendered="#{g.formulaire_Paie.retenue_cnss!=0}">
+								<tr  style="background-color:#B6FA84;">
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="Annee  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="#{g.annee} " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="Mois  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="#{g.mois}" style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="Nombre d'absence  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="#{g.nb_absence}" style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="Nombre de présence  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="#{g.formulaire_Paie.nb_heure}" style="font-size:12px" /></td>
+								
+								</tr>
+								</h:panelGroup>
+								</ui:repeat>
+								<tr>
+								<td/><td/><td/><td/>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="Total absence  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <b><h:outputText value="#{PaieBean.historique.nbAbsence}" style="font-size:14px" /></b></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="Total presence  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <b><h:outputText value="#{PaieBean.historique.nbPresence}" style="font-size:14px" /></b></td>
+								
+								</tr>
+								</h:panelGroup>
+								<h:panelGroup rendered="#{PaieBean.historique.pointage==null}">
+								<h:outputText value="Aucune absence" style="font-size:12px" />
+								</h:panelGroup>
+								<tr>
+								<td style="border: thin solid #F2EFEE;"><b> <h:outputText value="Liste des notes  : " rendered="#{PaieBean.historique.listNote!=null}" style="font-size:14px" /></b></td>
+								</tr>
+								<h:panelGroup rendered="#{PaieBean.historique.listNote!=null}">
+								<ui:repeat var="n" value="#{PaieBean.historique.listNote}" >
+								<tr>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="Annee  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="#{n.annee} " style="font-size:12px" /></td>
+								 
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="Note  : " style="font-size:12px" /></td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="#{n.note}" style="font-size:12px" /></td>
+								</tr>
+								</ui:repeat>
+								</h:panelGroup>
+								
+								<h:panelGroup rendered="#{PaieBean.historique.listNote==null}">
+								<h:outputText value="Aucune note" style="font-size:12px" />
+								</h:panelGroup>
+								</table> 
+								 
+								   </p:outputPanel>
+								
+								 
+	</h:form>
+				 </p:panel>
+				 </p:panel>
+				 </h:body>
+				 </html>
+				 

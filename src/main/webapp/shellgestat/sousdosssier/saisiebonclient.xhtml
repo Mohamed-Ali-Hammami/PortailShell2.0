@@ -1,0 +1,130 @@
+<p:dialog header="Saise Bon Client" widgetVar="carDialog"
+					draggable="true" id="dialog" height="500" width="1000">
+					<h:panelGroup id="display">
+
+						 
+						<h:panelGrid columns="8" id="bonclients2">
+							<h:outputLabel value="Date" />
+							<p:calendar value="#{CaisseBeans.caisse.date}" />
+							<h:outputLabel value="Poste" />
+							<h:inputText value="#{CaisseBeans.poste}" />
+							<h:outputLabel value="Client" />
+							<h:inputText value="#{CaisseBeans.credit.client.nom}" />
+							<h:outputLabel value="Bon N°" />
+							<h:inputText value="#{CaisseBeans.credit.numbon}" />
+						</h:panelGrid>
+
+						<br />
+
+						<!-- 
+	 
+	 	  <p:remoteCommand name="refreshFootermontant" update="dataTable1:ttventes " /> 	  
+	 
+	  <p:dataTable widgetVar="table2" var="p"  value="#{CaisseBeans.ligneventes}"  
+                id="dataTable1" selectionMode="single"   selection="#{CaisseBeans.lignevente}"  rowKey="#{p.id}" 
+                editable="true" editMode="cell"  >
+							<p:ajax event="cellEdit" listener="#{CaisseBeans.onCellEdit7}"
+								partialSubmit="true" partialSubmitFilter="true" />
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="CODE" />
+								</f:facet>
+								<p:cellEditor>
+									<f:facet name="output">
+										<b><h:outputText style="font-size:12px ;"
+												value="#{p.produit.id}" id="p" /> </b>
+									</f:facet>
+									<f:facet name="input">
+
+										<h:inputText id="qteInput2" value="#{CaisseBeans.id}"
+											style="width:96%"  >
+											<p:ajax listener="#{CaisseBeans.updateCode}"
+												update="p  des prix " />
+										</h:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="LIBELLE" />
+								</f:facet>
+								<p:cellEditor>
+									<f:facet name="output">
+										<b><h:outputText style="font-size:12px ;"
+												value="#{p.produit.nom}" id="des" /></b>
+
+									</f:facet>
+
+									<f:facet name="input">
+										<h:selectOneMenu value="#{CaisseBeans.libelle}" filter="true"
+											filterMatchMode="contains" style="width:150px;font-size:12px">
+											<f:selectItem itemLabel="selectionner produit" />
+											<f:selectItems value="#{CaisseBeans.listproduits}" var="s"
+												itemValue="#{s.nom}" itemLabel="#{s.nom}" />
+
+
+											<p:ajax listener="#{CaisseBeans.updatenoms}"
+												update="p  des prix" event="blur" process="@this"
+												partialSubmit="true" />
+										</h:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="QUANTITE" />
+								</f:facet>
+								<p:cellEditor>
+									<f:facet name="output">
+										<b><h:outputText style="font-size:12px ;"
+												value="#{p.quantite}" id="qtes2" /></b>
+
+									</f:facet>
+									<f:facet name="input">
+										<h:inputText value="#{p.quantite}">
+											<p:ajax event="change"
+												listener="#{CaisseBeans.updatemontantboncredit}"
+												process="@this" oncomplete="refreshFootermontant();"
+												update="qtes2 montants" partialSubmit="true" />
+										</h:inputText>
+
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="P.U HT" />
+								</f:facet>
+								<h:outputText style="font-size:12px "
+									value="#{p.produit.prixventes}" id="prix" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Montant" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{p.montantht}"
+									id="montants" />
+							</p:column>
+
+
+							<f:facet name="footer">
+					   TOTAL  :<h:inputText id="ttventes" value="#{CaisseBeans.totals}"
+									size="8" />
+							</f:facet>
+						</p:dataTable>
+	 
+	  -->
+
+					</h:panelGroup>
+				</p:dialog>

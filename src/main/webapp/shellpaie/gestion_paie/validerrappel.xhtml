@@ -1,0 +1,422 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellpaie/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellpaie/Headerpaie.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+			<h:form>
+				<div align="center">
+
+					 
+						
+						<p:commandButton value="Imprimer"
+											style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px">
+											<p:printer target="imprimer" />
+										</p:commandButton>
+										
+									 
+						<h:panelGroup id="imprimer">
+						<ui:repeat var="p" value="#{RappelBean.listRappel}" >
+                         <table>
+									<tr>
+
+
+										<td style="text-align: center"><b><h:outputText
+													value="FETHI SASSI " style="font-size:18px" /></b> <h:outputText
+												value="  SHELL SIJOUMIE " style="font-size:16px" /></td>
+									</tr>
+								</table>
+
+								<div align="center">
+									<h:outputText value="BULLETIN  DE  PAIE       /CNSS:179997-62 "
+										style="font-size:18px" />
+
+								</div>
+								<div align="left">
+									<h:panelGrid columns="4">
+										 
+
+										<h:outputText value="Annee  : " style="font-size:12px" />
+										<h:outputText value="#{p.annee}" style="font-size:12px" />
+									</h:panelGrid>
+									<h:panelGrid columns="4">
+
+										<h:outputText value="Matricule : " style="font-size:12px" />
+										<h:outputText value="#{p.employee.matricule}"
+											style="font-size:12px" />
+
+
+										<h:outputText value="Nom et prénom  : " style="font-size:12px" />
+										<h:outputText value="#{p.employee.nom} "
+											style="font-size:12px" />
+
+										<h:outputText value="CIN : " style="font-size:12px" />
+										<h:outputText value="#{p.employee.cin}" style="font-size:12px" />
+
+										<h:outputText value="Matricule CNSS : " style="font-size:12px" />
+										<h:outputText value="#{p.employee.code_cnss}"
+											style="font-size:12px" />
+
+										<h:outputText value="Adresse : " style="font-size:12px" />
+										<h:outputText value="#{p.employee.adresse}"
+											style="font-size:12px" />
+
+										<h:outputText value="RIB: " style="font-size:12px"
+											rendered="#{p.employee.RIB !=''}" />
+										<h:outputText value="#{p.employee.RIB}"
+											rendered="#{p.employee.RIB !=''}" style="font-size:12px" />
+
+										<h:outputText value="Fonction: " style="font-size:12px" />
+										<h:outputText value="#{p.employee.fonction}"
+											style="font-size:12px" />
+
+
+										<h:outputText value="Catégorie: " style="font-size:12px" />
+										<h:outputText
+											value="C#{p.employee.contrat.cat.valeur}E#{p.employee.contrat.degree.valeur}"
+											style="font-size:12px" />
+
+
+
+
+										<h:outputText value="Etat civile  : " style="font-size:12px" />
+										<h:outputText value="#{p.employee.etat}"
+											style="font-size:12px" />
+
+
+										<h:outputText value="Nombre d'enfants à charge   : "
+											style="font-size:12px" />
+										<h:outputText value="#{p.employee.nb_enfant_enCharge}"
+											style="font-size:12px" />
+									</h:panelGrid>
+
+									<br /> <br />
+
+									<table border="0" style="width: 100%">
+										<tr style="background-color: #FA9581;">
+											<td style="width: 30%"><h:outputText value="     "
+													style="font-size:12px" /></td>
+											<td style="width: 30%"><h:outputText value="GAIN "
+													style="font-size:12px" /></td>
+											<td><h:outputText value="RETENUE "
+													style="font-size:12px" /></td>
+										</tr>
+
+
+
+										<tr>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="Salaire de base (#{p.formulaire_Paie.nb_heure} jours) "
+													style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="#{p.formulaire_Paie.salairedebases}"
+													style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="    " style="font-size:12px" /></td>
+										</tr>
+
+
+										<ui:repeat var="g" value="#{p.listGestion}">
+											<tr>
+												<td style="border: thin solid #F2EFEE;"><h:outputText
+														value="#{g.lignegestion.gestion.libelle}" style="font-size:12px" /></td>
+												<td style="border: thin solid #F2EFEE;"><h:outputText
+														value="#{g.valeurdeprimeaffichers}" style="font-size:12px" /></td>
+												<td style="border: thin solid #F2EFEE;"><h:outputText
+														value="    " style="font-size:12px" /></td>
+											</tr>
+										</ui:repeat>
+
+										<tr>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="Salaire brut " style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="#{p.formulaire_Paie.salaire_bruts}"
+													style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="    " style="font-size:12px" /></td>
+										</tr>
+
+
+										<tr>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="retenue CNSS" style="font-size:12px" /></td>
+
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="    " style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="#{p.formulaire_Paie.retenue_cnsss}"
+													style="font-size:12px" /></td>
+										</tr>
+
+
+										<tr>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="Salaire imposable" style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="#{p.formulaire_Paie.salaire_imposables}"
+													style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="    " style="font-weight: bold" /></td>
+										</tr>
+										 
+										 
+										<tr>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="Salaire net" style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="#{p.formulaire_Paie.salaire_nets}"
+													style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="    " style="font-size:12px" /></td>
+										</tr>
+
+									 
+
+
+
+
+										<tr>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="Net à payer" style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="#{p.formulaire_Paie.net_apayers}"
+													style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="    " style="font-size:12px" /></td>
+
+										</tr>
+									</table>
+								</div>
+
+								<div align="center">
+									<h:outputText value="Net à payer : " style="font-size:16px" />
+									<h:outputText value="#{p.formulaire_Paie.net_apayers}"
+										style="font-size:16px" />
+								</div>
+								<br />
+								<table style="width: 100%">
+									<tr>
+										<td><h:outputText value="Emargement de l'employeur "
+												style="font-size:12px" /></td>
+										<td width="30%" />
+										<td><h:outputText value="Signature de l'employer"
+												style="font-size:12px" /></td>
+									</tr>
+								</table>
+
+								<br />
+								<br />
+								<p:separator />
+								<table>
+									<tr>
+
+
+										<td style="text-align: center"><b><h:outputText
+													value="FETHI SASSI" style="font-size:18px" /></b> <h:outputText
+												value=" SHELL SIJOUMIE" style="font-size:16px" /> <br /></td>
+									</tr>
+								</table>
+
+								<div align="center">
+									<h:outputText value="BULLETIN  DE  PAIE    /CNSS:179997-62 "
+										style="font-size:18px" />
+
+								</div>
+								<div align="left">
+									<h:panelGrid columns="2">
+										 
+										<h:outputText value="Annee  : " style="font-size:12px" />
+										<h:outputText value="#{p.annee}" style="font-size:12px" />
+									</h:panelGrid>
+									<h:panelGrid columns="4">
+
+										<h:outputText value="Matricule : " style="font-size:12px" />
+										<h:outputText value="#{p.employee.matricule}"
+											style="font-size:12px" />
+
+
+										<h:outputText value="Nom et prénom  : " style="font-size:12px" />
+										<h:outputText value="#{p.employee.nom}" style="font-size:12px" />
+
+										<h:outputText value="CIN : " style="font-size:12px" />
+										<h:outputText value="#{p.employee.cin}" style="font-size:12px" />
+
+										<h:outputText value="Matricule CNSS : " style="font-size:12px" />
+										<h:outputText value="#{p.employee.code_cnss}"
+											style="font-size:12px" />
+
+										<h:outputText value="Adresse : " style="font-size:12px" />
+										<h:outputText value="#{p.employee.adresse}"
+											style="font-size:12px" />
+
+										<h:outputText value="RIB: " style="font-size:12px"
+											rendered="#{p.employee.RIB !=''}" />
+										<h:outputText value="#{p.employee.RIB}"
+											rendered="#{p.employee.RIB !=''}" style="font-size:12px" />
+
+										<h:outputText value="Fonction: " style="font-size:12px" />
+										<h:outputText value="#{p.employee.fonction}"
+											style="font-size:12px" />
+
+
+										<h:outputText value="Catégorie: " style="font-size:12px" />
+										<h:outputText
+											value="C#{p.employee.contrat.cat.valeur}E#{p.employee.contrat.degree.valeur}"
+											style="font-size:12px" />
+
+
+
+
+										<h:outputText value="Etat civile  : " style="font-size:12px" />
+										<h:outputText value="#{p.employee.etat}"
+											style="font-size:12px" />
+
+
+										<h:outputText value="Nombre d'enfants à charge   : "
+											style="font-size:12px" />
+										<h:outputText value="#{p.employee.nb_enfant_enCharge}"
+											style="font-size:12px" />
+									</h:panelGrid>
+
+									<br /> 
+									<table border="0" style="width: 100%">
+										<tr style="background-color: #FA9581;">
+											<td style="width: 30%"><h:outputText value="     "
+													style="font-size:12px" /></td>
+											<td style="width: 30%"><h:outputText value="GAIN "
+													style="font-size:12px" /></td>
+											<td><h:outputText value="RETENUE "
+													style="font-size:12px" /></td>
+										</tr>
+
+
+
+										<tr>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="Salaire de base (#{p.formulaire_Paie.nb_heure} jours) "
+													style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="#{p.formulaire_Paie.salairedebases}"
+													style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="    " style="font-size:12px" /></td>
+										</tr>
+
+
+										<ui:repeat var="g" value="#{p.listGestion}">
+											<tr>
+												<td style="border: thin solid #F2EFEE;"><h:outputText
+														value="#{g.lignegestion.gestion.libelle}" style="font-size:12px" /></td>
+												<td style="border: thin solid #F2EFEE;"><h:outputText
+														value="#{g.valeurdeprimeaffichers}" style="font-size:12px" /></td>
+												<td style="border: thin solid #F2EFEE;"><h:outputText
+														value="    " style="font-size:12px" /></td>
+											</tr>
+										</ui:repeat>
+
+										<tr>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="Salaire brut " style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="#{p.formulaire_Paie.salaire_bruts}"
+													style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="    " style="font-size:12px" /></td>
+										</tr>
+
+
+										<tr>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="retenue CNSS" style="font-size:12px" /></td>
+
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="    " style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="#{p.formulaire_Paie.retenue_cnsss}"
+													style="font-size:12px" /></td>
+										</tr>
+
+
+										<tr>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="Salaire imposable" style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="#{p.formulaire_Paie.salaire_imposables}"
+													style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="    " style="font-weight: bold" /></td>
+										</tr>
+										 
+										
+									 
+										<tr>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="Salaire net" style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="#{p.formulaire_Paie.salaire_nets}"
+													style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="    " style="font-size:12px" /></td>
+										</tr>
+
+										 
+
+
+
+
+
+										<tr>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="Net à payer" style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="#{p.formulaire_Paie.net_apayers}"
+													style="font-size:12px" /></td>
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="    " style="font-size:12px" /></td>
+
+										</tr>
+									</table>
+								</div>
+
+								<div align="center">
+									<h:outputText value="Net à payer : " style="font-size:16px" />
+									<h:outputText value="#{p.formulaire_Paie.net_apayers}"
+										style="font-size:16px" />
+								</div>
+								 
+
+								<table style="width: 100%">
+									<tr>
+										<td><h:outputText value="Emargement de l'employeur "
+												style="font-size:12px" /></td>
+										<td width="30%" />
+										<td><h:outputText value="Signature de l'employer"
+												style="font-size:12px" /></td>
+									</tr>
+								</table>
+                         
+                         <p style="page-break-before:always">
+                         </p>
+                         </ui:repeat>
+						</h:panelGroup>
+
+				</div>
+			</h:form>
+		</p:panel>
+	</p:panel>
+</h:body>
+</html>

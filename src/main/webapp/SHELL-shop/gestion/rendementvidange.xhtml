@@ -1,0 +1,164 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+
+<h:body   style="width:98%;margin:auto;" >
+ <p:panel style="width:100%;margin:auto;min-height:900px;">	
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Headershop.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)"> 
+			 
+					<h:form id="form">
+				<div align="center">
+					<table>
+						<tr>
+
+
+							<td><p:commandButton value="Valider" ajax="false"
+									style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+									action="#{RendementBean.validerrendementvidange}" /></td>
+						</tr>
+					</table>
+			 
+
+
+				<h:panelGrid columns="2" cellpadding="5">
+
+					<h:outputText value="Date : " style="font-weight: bold" />
+					 <p:calendar value="#{RendementBean.date}">
+					 <p:ajax   event="dateSelect" listener="#{RendementBean.getdates}" 	 render="imprimer"/> 
+					 </p:calendar>
+					<h:outputText value="Poste : " style="font-weight: bold" />
+					<p:selectOneRadio value="#{RendementBean.poste}" onclick="init();"
+						style="width:200px;font-size:14px" required="true"
+						requiredMessage="choisir la poste">
+						<f:selectItems value="#{RendementBean.postes}" />
+						 <f:ajax render="imprimer" />
+					</p:selectOneRadio>
+
+				</h:panelGrid>
+	
+				<p:commandButton value="Imprimer"
+					style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px">
+					<p:printer target="imprimer" />
+				</p:commandButton>
+				</div>
+				 
+				<p:outputPanel id="imprimer">
+				<div align="center">
+					<H5>
+						<h:outputText value="Rendement Vidange  #{RendementBean.dates} Poste #{RendementBean.poste}" />
+					</H5>
+					
+
+					<p:dataTable id="emp" var="p" editable="true" rowIndexVar="rowId"
+						value="#{RendementBean.listrendement}" editMode="cell"
+						widgetVar="articleTable"  
+						emptyMessage="aucun employer dans la base">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="EMPLOYER" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{p.employee.code}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="EMPLOYER" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{p.employee.nom}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="NOMBRE DE VOITURE" />
+							</f:facet>
+
+                           <h:outputText id="nb" value="#{p.nbvoiture}" rendered="#{p.nbvoiture !=0}"/>
+                           
+							<h:inputText value="#{RendementBean.nbvoiture}" id="id"  rendered="#{p.nbvoiture ==0}"
+								onkeyup="nexts2(this);" styleClass="inpdes"
+								style="background-color:transparent;border:none;">
+								<p:ajax listener="#{RendementBean.updatepontage1}" process="@this"
+									partialSubmit="true" update="nb">
+
+								</p:ajax>
+								<f:attribute name="test" value="#{rowId}" />
+							</h:inputText>
+						</p:column>
+						
+							 
+					</p:dataTable>
+					</div>
+				</p:outputPanel>
+				<script>
+					function init() {
+						var index = 0;
+						$('.inpdes').eq(index).focus();
+						$('.inpdes').eq(index).select();
+					}
+					
+					function nexts(input) {
+						$(document)
+								.keypress(
+										function(event) {
+											var keycode = (event.keyCode ? event.keyCode
+													: event.which);
+											if (keycode == '13') {
+												if (input.value != "") {
+													//$(input).closest('td').next('td').find('input[type=text]').focus();	 
+													$(input).closest('td').next(
+													'td').find(
+													'input[type=text]')
+													.focus();
+											$(input).closest('td').next(
+													'td').find(
+													'input[type=text]')
+													.select();
+												}
+												return false;
+											}
+
+										});
+					}
+
+					function nexts2(input) {
+						$(document)
+								.keypress(
+										function(event) {
+											var keycode = (event.keyCode ? event.keyCode
+													: event.which);
+											if (keycode == '13') {
+												$(input).closest('tr').next(
+												'tr').find(
+												'input[type=text]')
+												.focus();
+										$(input).closest('tr').next(
+												'tr').find(
+												'input[type=text]')
+												.select();
+												return false;
+											}
+
+										});
+					}
+				</script>
+
+			</h:form>
+		</p:panel>
+	</p:panel>
+</h:body>
+</html>

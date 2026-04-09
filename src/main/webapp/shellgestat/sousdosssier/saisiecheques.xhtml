@@ -1,0 +1,184 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"
+		charset="UTF-8"></meta>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<title>Shell-Sejoumi</title>
+
+</h:head>
+<h:body>
+ 
+		<div align="center">
+
+			<fieldset style="margin-bottom: 20px; background-color: #eeeec6;">
+				<legend>
+					<b> <h:outputText value="SAISIE DES CHEQUES" />
+					</b>
+
+				</legend>
+
+
+
+				<p:remoteCommand name="refreshFootercheque"
+					update="cheques:ttccheque" />
+			 
+				<p:dataTable id="cheques" var="c" editable="true" scrollable="true"  
+					scrollHeight="180" value="#{CaisseBeans.listcheque}"  rowIndexVar="rowId"
+					editMode="cell" rowKey="#{c.id}" 
+					emptyMessage="aucune ligne dans la base">
+
+
+					<p:ajax event="cellEdit" listener="#{CaisseBeans.onCellEdit2}"
+						partialSubmit="true" partialSubmitFilter="true" />
+
+
+					<p:column style="width:150px;" headerText="Num/cheque">
+
+
+
+						<h:inputText id="num" value="#{c.numero}" styleClass="cheque"
+							style="background-color:transparent;border:none;"  
+							onkeyup="nextsch3(this)">
+
+
+						</h:inputText>
+
+
+					</p:column>
+
+					<p:column style="width:100px;">
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="Banque" />
+						</f:facet>
+
+
+
+						<h:inputText onkeyup="nextsch3(this)"
+							style="background-color:transparent;border:none;"
+							value="#{c.banque}" styleClass="50"  >
+
+						</h:inputText>
+
+					</p:column>
+
+
+					<p:column style="width:250px;">
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="Montant" />
+						</f:facet>
+
+
+						<!-- <h:inputText value="#{c.montant}" onkeyup="nextsch2(this)"
+							style="background-color:transparent;border:none;"  >
+
+							   <p:ajax   listener="#{CaisseBeans.updatemontantcheque}"
+										process="@this"  oncomplete="refreshFootercheque();"
+										 partialSubmit="true" /> 
+
+						</h:inputText> -->
+						
+						<h:panelGroup id="ch">
+					 <h:inputText value="#{c.montants}"
+							valueChangeListener="#{CaisseBeans.updatemontantcheque1}"
+							rendered="#{c.montant !=0}" id="ch1"
+							onkeyup="nextsch2(this);"  
+							style="background-color:transparent;border:none;">
+							<p:ajax update="ch" event="change" process="@this" oncomplete="refreshFootercheque();"
+								partialSubmit="true">
+							</p:ajax>
+							<f:attribute name="test" value="#{rowId}" />
+						</h:inputText>
+						<h:inputText value="#{c.montant}" id="ch2"
+							onkeyup="nextsch2(this);"    
+							rendered="#{c.montant==0}"
+							style="background-color:transparent;border:none;">
+							<p:ajax update="ch" listener="#{CaisseBeans.updatemontantcheque}"
+								process="@this" partialSubmit="true" oncomplete="refreshFootercheque();">
+							</p:ajax>
+						 
+						</h:inputText>    
+						</h:panelGroup>
+					</p:column>
+
+
+
+
+					<f:facet name="footer">
+					   TOTAL  :<h:outputText id="ttccheque"
+							value="#{CaisseBeans.totals}" size="8" />
+					</f:facet>
+
+				</p:dataTable>
+
+				<script>
+				function initcheque() {
+					var index = 0;
+			         $('.cheque').eq(index).focus();
+				}
+					function nextchs(input) {
+						$(input).closest('td').next('td').find(
+								'input[type=text]').focus();
+					}
+
+					function nextsch2(input) {
+						$(document)
+						.keypress(
+								function(event) {
+									var keycode = (event.keyCode ? event.keyCode
+											: event.which);
+									if (keycode == '13') {
+					 $(input).closest('tr').next('tr').find('input[type=text]').first().focus();
+						           return false;
+									}
+
+								});
+			}
+					function nextsch3(input) {
+						$(document)
+						.keypress(
+								function(event) {
+									var keycode = (event.keyCode ? event.keyCode
+											: event.which);
+									if (keycode == '13') {
+										 
+						$(input).closest('td').next('td').find(
+								'input[type=text]').focus();
+						$(input).closest('td').next('td').find(
+						'input[type=text]').select();
+						return false;
+									}
+
+								});
+			}
+
+					function nextsch4(input) {
+						$(input).closest('tr').next('tr').find(
+								'input[type=text]').focus();
+						// $(input).closest('td').next('td').find('input[type=text]').focus();
+					}
+				</script>
+
+
+				<p:commandButton value="Ajouter cheque" update="f:totalcaisses"
+					style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);"
+					ajax="false" action="#{CaisseBeans.savecheque}" />
+
+
+
+			</fieldset>
+
+
+
+
+		</div>
+ 
+
+</h:body>
+</html>

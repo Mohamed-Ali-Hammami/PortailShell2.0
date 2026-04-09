@@ -1,0 +1,48 @@
+﻿<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:form>
+		<div align="left">
+			<table>
+				<tr>
+					<td><p:graphicImage url="/images.png" style="width:50" /></td>
+					<td width="100" />
+					<td><p:commandButton value="TRANSPORT"
+							type="button"
+							onclick="window.location.href='#{request.contextPath}/SHELL-transport/index.xhtml'"
+							style="display:block;width:150px;line-height:50px;text-align:center;vertical-align:middle;background-image:linear-gradient( red, #E5EA9D);color:#E5EA9D;text-decoration:none;" /></td>
+					<td><p:commandButton value="SHOP"
+							type="button"
+							onclick="window.location.href='#{request.contextPath}/SHELL-shop/index.xhtml'"
+							style="display:block;width:150px;line-height:50px;text-align:center;vertical-align:middle;background-image:linear-gradient( red, #E5EA9D);color:#E5EA9D;text-decoration:none;" /></td>
+					<td><p:commandButton value="GESTAT"
+							type="button"
+							onclick="window.location.href='#{request.contextPath}/shellgestat/index.xhtml'"
+							style="display:block;width:150px;line-height:50px;text-align:center;vertical-align:middle;background-image:linear-gradient( red, #E5EA9D);color:#E5EA9D;text-decoration:none;" /></td>
+					<td><p:commandButton value="Banque"
+							type="button"
+							onclick="window.location.href='#{request.contextPath}/SHELL-banque/index.xhtml'"
+							style="display:block;width:150px;line-height:50px;text-align:center;vertical-align:middle;background-image:linear-gradient( red, #E5EA9D);color:#E5EA9D;text-decoration:none;" /></td>
+					<td><p:commandButton value="Lavage"
+							type="button"
+							onclick="window.location.href='#{request.contextPath}/SHELL-lavage/indexLavage.xhtml'"
+							style="display:block;width:150px;line-height:50px;text-align:center;vertical-align:middle;background-image:linear-gradient( red, #E5EA9D);color:#E5EA9D;text-decoration:none;" /></td>
+					<td><p:commandButton value="Paie"
+							type="button"
+							onclick="window.location.href='#{request.contextPath}/shellpaie/index.xhtml'"
+							style="display:block;width:150px;line-height:50px;text-align:center;vertical-align:middle;background-image:linear-gradient( red, #E5EA9D);color:#E5EA9D;text-decoration:none;" /></td>
+					<td width="130" />
+					<td align="right">
+						<p:panel style="width:110px">
+							<b><h:outputText style="font-size:10px;"
+									value="#{empty LoginBean.user ? '' : LoginBean.user.nom.concat(' !')}" /></b>
+						</p:panel>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</h:form>
+</ui:composition>
+

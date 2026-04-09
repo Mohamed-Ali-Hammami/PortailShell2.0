@@ -1,0 +1,392 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 16px;margin-right: 16px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+			
+		 
+			<h:form id="testForm">
+			<div align="center">
+			<p:focus for="id"></p:focus>
+				<table>
+					<tbody>
+
+						<tr>
+							<td><h:outputText value="Code Fournisseur"
+									style="font-size:16px " /></td>
+							<td><h:inputText value="#{AchatcarburantBean.code}"
+									required="true" id="id" label="Firstname">
+
+
+									<f:ajax render="nom"
+										listener="#{AchatcarburantBean.getFournisseurbyid}" />
+								</h:inputText></td>
+
+							<td><h:outputText value="Du"
+									style="font-size:16px;text-decoration: underline " /></td>
+							<td><p:calendar value="#{AchatcarburantBean.date}"
+									required="true" style="font-size:16px " id="popup"
+									pattern="dd-MM-yyyy" mask="true" /></td>
+
+
+						</tr>
+						<tr>
+
+							<td><h:outputText value="Nom Fournisseur"
+									style="font-size:16px " /></td>
+							<td><h:inputText type="text"
+									value="#{AchatcarburantBean.nomfournissuer}" id="nom" /></td>
+							<td><h:outputText value="Numero Facture"
+									style="font-size:16px ;text-decoration: underline" /></td>
+									
+									
+							<td><h:inputText value="#{AchatcarburantBean.numFacture}"    data-index="1"   
+									id="facture" required="true" style="font-size:16px ">
+                              
+								</h:inputText></td>
+						</tr> 
+					</tbody>
+				</table></div>
+				<br />
+				  
+				<table border="1"  style="width: 100%;background-color:#ffffff; text-align: center
+									 ;
+									text-align: left;
+									margin-bottom: 0px;
+									border-color: #000000; 
+									border-bottom-color: #000000;
+									border-right-color: #000000
+									;border-left-color: #000000
+									;border-top-color:  #000000;
+									" id="table">
+					<tr>
+						<td><h:outputText style="font-size:12px ;color:#483d8b"
+								value="Nom" /></td>
+						<td><h:outputText style="font-size:12px ;color:#483d8b"
+								value="QUANTITE" /></td>
+						<td><h:outputText style="font-size:12px ;color:#483d8b"
+								value="Quantite en Stock" /></td>
+
+						<td><h:outputText style="font-size:12px ;color:#483d8b"
+								value="Qte Minimum" /></td>
+
+						<td><h:outputText style="font-size:12px ;color:#483d8b"
+								value="Achat" /></td>
+
+						<td><h:outputText style="font-size:12px ;color:#483d8b"
+								value="Vente" /></td>
+
+						<td><h:outputText style="font-size:12px ;color:#483d8b"
+								value="Montant" /></td>
+
+					</tr>
+					<ui:repeat var="#{p}" value="#{AchatcarburantBean.listproduit}" >
+						<tr >
+
+							<td width="15%"><b><h:outputText style="font-size:12px ;"
+										value="#{p.nom}" id="des"   /></b></td>
+										
+					 <td ><b><h:inputText style="font-size:12px ;"  id="quantite"
+										value="#{p.qte}"   required="true">
+										<p:ajax event="change"
+										listener="#{AchatcarburantBean.updatemontant}"									 
+										update=" montant" partialSubmit="true" process="@this" />
+										</h:inputText></b></td>
+					<td><h:outputText style="font-size:12px " value="#{p.quantite}"
+							id="quantitestock" /></td>
+							
+				<td><h:outputText style="font-size:12px " value="#{p.qtemin}"
+							id="qtemin" /></td>
+							
+				<td><h:outputText style="font-size:12px " value="#{p.prixachats}"
+							id="prix" /></td>
+							
+			<td>
+			<h:outputText style="font-size:12px " value="#{p.prixventes}"
+							id="prixv" />
+			</td>
+			
+			<td>
+			
+				<h:outputText style="font-size:12px " value="#{p.montants}"
+							id="montant" />
+			</td>
+						 
+						</tr>
+					</ui:repeat>
+				</table>
+
+				<script
+					src="//static.codepen.io/assets/common/stopExecutionOnTimeout-41c52890748cd7143004e05d3c5f786c66b19939c4500ce446314d1748483e13.js"></script>
+				<script
+					src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+				<script>
+   $(function () {
+	   $('input[type="text"]').bind("change", event => {
+	   var nextTr = $(event.target).closest('tr').nextAll('tr:not(.group)').first(); 
+        nextTr.find('input').focus();
+	     //nextTr.css({ background: "red" });
+	   });
+	   
+	   
+	   $('input[type="text"]').bind("blur", event => {
+		   var nextTd = $(event.target).closest('td').nextAll('td:not(.group)').first(); 
+	        nextTd.find('input').focus();
+		    // nextTd.css({ background: "blue" });
+		   });
+	    });
+   
+    
+   </script>
+    
+   	<div align="center">
+				 
+					<p:outputPanel>
+						<b> <h:outputText value="Type Payement"
+								style="font-size:14px ;color:#000000" /></b>
+						<br />
+
+						<h:selectOneRadio id="etat_payement" style="font-size:14px ;"
+							value="#{AchatcarburantBean.typepayement}">
+							<f:selectItem itemLabel="espece" itemValue="espece" />
+							<f:selectItem itemLabel="cheque" itemValue="cheque" />
+							<f:ajax render="cheque" />
+						</h:selectOneRadio>
+						<br />
+						<h:panelGroup id="cheque">
+							<table>
+
+								<tr>
+									<td><b><h:outputText value="Banque"
+												rendered="#{AchatcarburantBean.typepayement=='cheque'}"
+												style="font-size:14px ;color:#000000" /> </b></td>
+
+									<td><h:inputText
+											rendered="#{AchatcarburantBean.typepayement=='cheque'}"
+											value="#{AchatcarburantBean.banque}"
+											style="width:215px;font-size:14px ">
+
+										</h:inputText></td>
+								</tr>
+								<tr>
+									<td><b> <h:outputText value="Numero Cheque"
+												rendered="#{AchatcarburantBean.typepayement=='cheque'}"
+												style="font-size:14px ;color:#000000" /></b></td>
+
+									<td><h:inputText value="#{AchatcarburantBean.numcheque}"
+											rendered="#{AchatcarburantBean.typepayement=='cheque'}">
+
+										</h:inputText></td>
+
+								</tr>
+
+								<tr>
+									<td><b> <h:outputText value="Echeance"
+												rendered="#{AchatcarburantBean.typepayement=='cheque'}"
+												style="font-size:12px ;color:#000000" /></b></td>
+
+									<td><p:calendar value="#{AchatcarburantBean.echeance}"
+											size="20"
+											rendered="#{AchatcarburantBean.typepayement=='cheque'}">
+
+										</p:calendar></td>
+
+								</tr>
+
+							</table>
+						</h:panelGroup>
+						</p:outputPanel>
+						
+						<p:commandButton value="Valider" ajax="true"
+						 
+						style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+						action="#{AchatcarburantBean.saveAchat}" />
+						</div>
+                           
+					
+			</h:form>
+			
+		</p:panel>
+	</p:panel>
+</h:body>
+</html>
+
+<!-- 
+
+<h:form> 
+				<p:remoteCommand name="refreshFooter"
+					update="emp:ttc emp:qte emp:ttc2" />
+				<p:dataTable id="emp" var="p" editable="true"
+					value="#{AchatcarburantBean.listproduit}" editMode="cell"
+					widgetVar="articleTable" rowKey="#{p.id}"
+					emptyMessage="aucune ligne dans la base">
+
+
+					<p:ajax event="cellEdit"
+						listener="#{AchatcarburantBean.onCellEdit}" partialSubmit="true"
+						partialSubmitFilter="true" />
+
+
+
+
+					<p:column>
+
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="LIBELLE" />
+						</f:facet>
+						<b><h:outputText style="font-size:12px ;" value="#{p.nom}"
+								id="des" /></b>
+
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="QUANTITE" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<b><h:outputText style="font-size:12px ;" value="#{p.qte}"
+										id="qte2" /></b>
+
+							</f:facet>
+							<f:facet name="input">
+
+
+
+
+								<h:inputText value="#{p.qte}">
+									<p:ajax event="change"
+										listener="#{AchatcarburantBean.updatemontant}"
+										oncomplete="refreshFooter(); " onkeyup="nexts(this)"
+										update=" montant" partialSubmit="true" process="@this" />
+								</h:inputText>
+
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="Quantite en Stock" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{p.quantite}"
+							id="quantitestock" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="Qte Minimum" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{p.qtemin}"
+							id="qtemin" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="Achat" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{p.prixachats}"
+							id="prix" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="Vente" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{p.prixventes}"
+							id="prixv" />
+					</p:column>
+
+
+
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="Montant" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{p.montants}"
+							id="montant" />
+					</p:column>
+
+
+					<f:facet name="footer">
+					TOTAL Achats :
+					<h:outputText id="qte" value="#{AchatcarburantBean.totalachats}" />
+                                TOTAL Marge:
+                           <h:outputText id="ttc"
+							value="#{AchatcarburantBean.totalmarges}" />
+							
+							TOTAL VENTES:
+                           <h:outputText id="ttc2"
+							value="#{AchatcarburantBean.totalttcs}" />
+
+
+					</f:facet>
+
+				</p:dataTable>
+
+
+
+			
+					</p:outputPanel>
+
+					<p:commandButton value="Valider" ajax="false"
+						rendered="#{AchatcarburantBean.numFacture!=null}"
+						style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+						action="#{AchatcarburantBean.saveAchat}" />
+				</div>
+
+
+
+			</h:form>
+
+<table>
+					<tr>
+						<td><h:outputText value="Code Fournisseur"
+								style="font-size:16px " /></td>
+						<td><input type="text" autofocus="autofocus" min="1"
+							value="#{AchatcarburantBean.code}" id="id"> </input> </td>
+						  <td><p:selectOneMenu value="#{AchatcarburantBean.nomfournissuer}" required="true"
+								style="width:200px;font-size:16px " filter="true" id="list"
+								filterMatchMode="contains" >
+								<f:selectItem itemLabel="selectionner fournisseur" />
+								<f:selectItems value="#{AchatcarburantBean.listfournisseur}" var="f"
+									itemValue="#{f.nom}" itemLabel="#{f.nom}"  />
+								<f:ajax render="nom facture"
+									listener="#{AchatcarburantBean.getFournisseurbyname}" />
+							</p:selectOneMenu></td> 
+
+
+						<td><h:outputText value="Nom Fournisseur"
+								style="font-size:16px " /></td>
+						<td>
+							 <h:inputText value="#{AchatcarburantBean.nomfournissuer}" id="nom" required="true"
+								style="font-size:16px " >
+								 <f:validateLength minimum="2"/>
+								</h:inputText>  <input type="text" min="1"
+							value="#{AchatcarburantBean.nomfournissuer}" id="nom"> </input>
+						</td>
+					</tr>				 
+				</table> -->

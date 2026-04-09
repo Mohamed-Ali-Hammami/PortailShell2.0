@@ -1,0 +1,149 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+
+			<h:form id="ff">
+
+
+				<table>
+					<tr>
+						<td><h:outputText value="Code Fournisseur"
+								style="font-size:12px " /></td>
+
+						<td><p:selectOneMenu value="#{AchatcarburantBean.nomfournissuer}"
+								style="width:200px;font-size:12px " filter="true"
+								filterMatchMode="contains">
+								<f:selectItem itemLabel="selectionner fournisseur" />
+								<f:selectItems value="#{AchatcarburantBean.listfournisseur}" var="f"
+									itemValue="#{f.nom}" itemLabel="#{f.nom}" />
+								<f:ajax listener="#{AchatcarburantBean.getFournisseurbyname2}"
+									render="imprimer num" />
+							</p:selectOneMenu></td>
+						<td><h:inputText value="#{AchatcarburantBean.numAchat}" id="num">
+								<f:ajax listener="#{AchatcarburantBean.getFournisseurbycode}"
+									render="imprimer" />
+							</h:inputText></td>
+					</tr>
+
+
+
+
+
+				</table>
+
+				<br />
+				<br />
+				<table>
+					<tr>
+
+						<td><p:selectOneRadio value="#{AchatcarburantBean.statu}"
+								style="width:200px;font-size:12px ">
+
+								<f:selectItems value="#{AchatcarburantBean.status}" />
+								<f:ajax listener="#{AchatcarburantBean.getEtatFacturebystatus}" render="imprimer" />
+							</p:selectOneRadio></td>
+					</tr>
+				</table>
+				<br />
+				<br />
+				<p:commandButton value="Imprimer" ajax="false"
+					style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px">
+					<p:printer target="imprimer" />
+				</p:commandButton>
+				<p:outputLabel id="imprimer">
+
+					<br />
+					<br />
+
+					<h:panelGrid columns="4">
+						<b><h:outputText style="font-size:16px" value="FACTURE" /></b>
+
+						<b><h:outputText style="font-size:16px"
+								value="#{AchatcarburantBean.statu}" id="s" /></b>
+						<b><h:outputText style="font-size:16px"
+								value="#{AchatcarburantBean.nomfournissuer}" id="four" /></b>
+						<b><h:outputText style="font-size:16px"
+								value="#{AchatcarburantBean.dates}" /></b>
+					</h:panelGrid>
+					<br />
+
+					<p:dataTable id="emp" var="p" value="#{AchatcarburantBean.listAchat}"
+						emptyMessage="aucune ligne dans la base">
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px color:#483d8b" value="Date" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{p.date}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px color:#483d8b"
+									value="N_cheque" />
+							</f:facet>
+							<h:outputText style="font-size:12px "
+								value="#{p.factureachat.numerocheck}" />
+						</p:column>
+
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px color:#483d8b"
+									value="Banque" />
+							</f:facet>
+							<h:outputText style="font-size:12px "
+								value="#{p.factureachat.banque}" />
+						</p:column>
+
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px color:#483d8b"
+									value="Montant" />
+							</f:facet>
+
+							<h:outputText value="#{p.factureachat.totalttcs}"
+								style="width:96%" />
+						</p:column>
+						<h:panelGroup rendered="#{p.factureachat.echeance!=null}">
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px color:#483d8b"
+										value="Echeance" />
+								</f:facet>
+
+								<h:outputText id="codeInput" value="#{p.factureachat.echeance}"
+									style="width:96%" />
+							</p:column>
+						</h:panelGroup>
+
+					</p:dataTable>
+				</p:outputLabel>
+
+			</h:form>
+		 </p:panel>
+		 </p:panel>
+		 </h:body>
+		 </html>

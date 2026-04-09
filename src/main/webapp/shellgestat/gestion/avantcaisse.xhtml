@@ -1,0 +1,527 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<h:form id="f"   >
+			<p:panel id="basic2" closable="true"
+				style="min-height:500px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+				<div align="center">
+					<h1>
+						<h:outputLabel value="Recapitulation Carburant"
+							style=" border-color: #5cb85c;font-color : green" />
+					</h1>
+					 
+					<h:panelGrid columns="2">
+				Date
+				 
+        <p:calendar id="popup" value="#{CaisseBeans.date}" navigator="true"
+  pattern="dd/MM/yyyy" buttonTabindex="-1" type="tel"
+  mask="99/99/?9999" placeholder="__/__/____" 
+							 >
+
+							<p:ajax event="dateSelect" listener="#{CaisseBeans.getdates}" update="poste"/>
+						</p:calendar>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+				<p:selectOneRadio value="#{CaisseBeans.poste}" id="poste" 
+							style="width:200px;font-size:12px"  >
+
+							<f:selectItems value="#{CaisseBeans.postes}" />
+							<f:ajax listener="#{CaisseBeans.getCaissebydate}" event="change"
+								render="affiche fcar:ps fcar:dcs" />
+						</p:selectOneRadio>
+					</h:panelGrid> 
+					 
+
+				</div>
+
+
+
+
+				<div align="left">
+
+					<p:growl id="growl" />
+
+					<p:outputPanel id="affiche">
+
+						<table>
+							<tr>
+								<td><h:outputText value="Total Carburant" /></td>
+								<td><h:panelGrid columns="2">
+										<p:inputText size="8" readonly="true"
+											value="#{CaisseBeans.caisse.totalventeCarburants}" />
+										<p:commandLink   oncomplete="initcar();"  
+											process="@this" update="affiche fcar:carburants"  rendered="#{CaisseBeans.caisse.totalventecarburant ==0}"
+											actionListener="#{CaisseBeans.chargerindex}" >
+											<p:graphicImage url="/images/icone-actualiser.png"
+												style="width:15px" />
+										</p:commandLink>
+									</h:panelGrid></td>
+								<td width="5%" />
+								<td><h:outputLabel value="Total  Caisse " /></td>
+								<td><p:inputText size="8" readonly="true" id="totalcaisses"
+										value="#{CaisseBeans.caisse.totalcaisses}" /></td>
+							</tr>
+
+							<tr>
+								<td>
+									<!-- <h:outputLabel value="Total Magasin" /> -->
+								</td>
+								<td>
+									<!-- <h:panelGrid columns="2">
+										<p:inputText size="8"
+											value="#{CaisseBeans.caisse.totalventesmagasin}" />
+										<p:commandLink>
+											<p:graphicImage url="/images/icone-actualiser.png"
+												style="width:15px" />
+										</p:commandLink>
+									</h:panelGrid> -->
+								</td>
+								<td width="5%" />
+								<td><h:outputLabel value="Observation " /></td>
+								<td><p:inputText size="8" readonly="true" id="observations"
+										value="#{CaisseBeans.caisse.observations}" /></td>
+							</tr>
+
+							<!-- 	<tr>
+								<td><h:outputLabel value="Total Lavage" /></td>
+								<td><h:panelGrid columns="2">
+										<p:inputText size="8"
+											value="#{CaisseBeans.caisse.totalLavages}" />
+										<p:commandLink>
+											<p:graphicImage url="/images/icone-actualiser.png"
+												style="width:15px" />
+										</p:commandLink>
+									</h:panelGrid></td>
+								<td width="5%" />
+								<td />
+							</tr>
+
+						 -->
+
+							<tr>
+								<!-- depenses -->
+								<td><h:outputLabel value="Total Depense" /></td>
+								<td><h:panelGrid columns="3">
+										<p:inputText size="8" readonly="true"
+											value="#{CaisseBeans.caisse.totalDepenses}"
+											id="totalDepenses" />
+										<p:commandLink onclick="PF('depense').show();"  oncomplete="initinpdepense();"
+											process="@this" update="affiche depenses"   
+											actionListener="#{CaisseBeans.chargerfamilledepense}">
+											<p:graphicImage url="/images/icone-actualiser.png"
+												style="width:15px" />
+										</p:commandLink>
+
+									</h:panelGrid></td>
+								<td width="5%" />
+
+
+								<td>Mr.</td>
+								<td><p:inputText size="8" id="p1" readonly="true"
+										value="#{CaisseBeans.caisse.pompiste1}">
+										<f:ajax listener="#{CaisseBeans.updatenom1}" />
+									</p:inputText></td>
+								<td>ET Mr.</td>
+								<td><p:inputText id="p2" size="8" readonly="true"
+										value="#{CaisseBeans.caisse.pompiste2}">
+										<f:ajax listener="#{CaisseBeans.updatenom2}" />
+									</p:inputText></td>
+								<td><p:selectOneMenu value="#{CaisseBeans.nom}"
+										style="width:200px;font-size:12px " id="emp" filter="true"
+										filterMatchMode="contains">
+
+										<f:selectItem itemLabel="Veuillez choisir un employer" />
+										<f:selectItems value="#{CaisseBeans.listeEmployee}"
+											itemValue="#{e.nom}" var="e" itemLabel="#{e.nom}" />
+										<p:ajax listener="#{CaisseBeans.getEmployeeByNom}"
+											update="p1 p2 fcar:ppp3 fcar:p4" event="change"/>
+									</p:selectOneMenu></td>
+							</tr>
+
+
+
+							<tr>
+								<!--  creditclients -->
+								<td><h:outputLabel value="Total credit client" /></td>
+								<td><h:panelGrid columns="2">
+										<p:inputText size="8" id="totalcredits" readonly="true"
+											value="#{CaisseBeans.caisse.totalCredits}" />
+										<p:commandLink  onclick="PF('creditclient').show(); "  oncomplete="initcredit();"
+											process="@this" update="dataTable affiche" 
+											actionListener="#{CaisseBeans.chargerclient2}">
+											<p:graphicImage url="/images/icone-actualiser.png"
+												style="width:15px" />
+										</p:commandLink>
+									</h:panelGrid></td>
+								<td width="5%" />
+
+
+
+								<td>Vous avez</td>
+								<td><p:inputText size="8" readonly="true"
+										value="#{CaisseBeans.caisse.remarques}" /></td>
+								<td>DE</td>
+								<td><p:inputText size="8" readonly="true"
+										value="#{CaisseBeans.caisse.observations}" /></td>
+								<td>dans votre caisse</td>
+
+							</tr>
+
+
+							<tr>
+								<td><h:outputLabel value="Total cheques" /></td>
+								<td><h:panelGrid columns="2">
+										<p:inputText size="8" readonly="true"
+											value="#{CaisseBeans.caisse.totalCheques}" />
+										<p:commandLink onclick="PF('cheque').show();"  process="@this" oncomplete="initcheque();"
+											update="affiche cheques"  
+											actionListener="#{CaisseBeans.chargercheque}">
+											<p:graphicImage url="/images/icone-actualiser.png"
+												style="width:15px" />
+
+										</p:commandLink>
+									</h:panelGrid></td>
+								<td width="5%" />
+								<td />
+							</tr>
+
+
+							<tr>
+								<td>
+									<!-- <h:outputLabel value="Total bon station" /> -->
+								</td>
+								<td>
+									<!-- <h:panelGrid columns="2">
+										<p:inputText size="8"
+											value="#{CaisseBeans.caisse.totalBonStations}" />
+										<p:commandLink>
+											<p:graphicImage url="/images/icone-actualiser.png"
+												style="width:15px" />
+										</p:commandLink>
+									</h:panelGrid> -->
+								</td>
+								<td width="5%" />
+								<td><h:outputLabel value="Total acc/manques " /></td>
+
+
+
+
+								<td><h:panelGrid columns="2">
+										<p:inputText size="8" readonly="true"
+											value="#{CaisseBeans.caisse.totalManques}" id="totalManques" />
+										<p:commandLink onclick="PF('manques').show();" process="@this" oncomplete="initmanque();" 
+											update="affiche avances"  
+											actionListener="#{CaisseBeans.chargeremployee}">
+											<p:graphicImage url="/images/icone-actualiser.png"
+												style="width:15px" />
+										</p:commandLink>
+
+									</h:panelGrid></td>
+							</tr>
+
+							<tr>
+								<td><h:outputLabel value="Total Reglement Client" /></td>
+								<td><h:panelGrid columns="2">
+										<p:inputText size="8" readonly="true"
+											id="totalCreditAnterieurs"
+											value="#{CaisseBeans.caisse.totalCreditAnterieurs}" />
+										<p:commandLink  onclick="PF('credit').show(); " process="@this" oncomplete="initcreditant();"
+											update="affiche credits"
+											actionListener="#{CaisseBeans.chargerclient}">
+											<p:graphicImage url="/images/icone-actualiser.png"
+												style="width:15px" />
+										</p:commandLink>
+									</h:panelGrid></td>
+								<td width="5%" />
+								<td><h:outputLabel value="Total carte shell " /></td>
+								<td><h:panelGrid columns="2">
+										<p:inputText size="8" readonly="true"
+											value="#{CaisseBeans.caisse.carteShells}" />
+
+										<p:commandLink onclick="PF('tpe').show();initinput();" process="@this"
+											update="affiche  ftpe:carteShells" actionListener="#{CaisseBeans.chargertpe}">
+											<p:graphicImage url="/images/icone-actualiser.png"
+												style="width:15px" />
+										</p:commandLink>
+									</h:panelGrid></td>
+							</tr>
+
+
+							<tr>
+								<td><h:outputLabel value="Total Especes collecte" /></td>
+								<td><h:panelGrid columns="3">
+										<p:inputText readonly="true" size="8" id="totalespeces"
+											value="#{CaisseBeans.caisse.totalespeces}" />
+										<p:commandLink   onclick="PF('espece').show();initinput();" process="@this"
+											update="affiche especee:especes"
+											actionListener="#{CaisseBeans.chargerespece}">
+											<p:graphicImage url="/images/icone-actualiser.png"
+												style="width:15px" />
+										</p:commandLink>
+									</h:panelGrid></td>
+								<td width="5%" />
+								<td><h:outputLabel value="Total Carte Bancaire" /></td>
+								<td><h:panelGrid columns="3">
+										<p:inputText size="8" readonly="true"
+											value="#{CaisseBeans.caisse.carteBanquaires}" />
+
+										<p:commandLink onclick="PF('cartebanque').show();initinput();"
+											process="@this" update="affiche cb:mm "
+											actionListener="#{CaisseBeans.chargertpe}">
+											<p:graphicImage url="/images/icone-actualiser.png"
+												style="width:15px" />
+										</p:commandLink>
+									</h:panelGrid></td>
+							</tr>
+
+
+							<tr>
+								<td><h:outputLabel value="Retour Cuve " /></td>
+								<td><h:panelGrid columns="3">
+										<p:inputText size="8" readonly="true"
+											value="#{CaisseBeans.caisse.retourCuves}" id="retourcuvess" />
+										<p:commandLink onclick="PF('retourcuve').show();" oncomplete="initretour();"
+											process="@this" update="affiche cuves"
+											actionListener="#{CaisseBeans.chargerpompe}">
+											<p:graphicImage url="/images/icone-actualiser.png"
+												style="width:15px" />
+										</p:commandLink>
+									</h:panelGrid></td>
+								<td width="5%" />
+								<td><h:outputLabel value="Achat " /></td>
+								<td><h:panelGrid columns="2">
+
+										<p:inputText readonly="true" placeholder=" " size="8"
+											id="totalachats" value="#{CaisseBeans.caisse.totalachats}" />
+
+
+										<p:commandLink onclick="PF('achat').show();" process="@this" oncomplete="initachat();"
+											update="affiche achats"
+											actionListener="#{CaisseBeans.chargerachat}">
+											<p:graphicImage url="/images/icone-actualiser.png"
+												style="width:15px" />
+										</p:commandLink>
+									</h:panelGrid></td>
+							</tr>
+
+
+						</table>
+					</p:outputPanel>
+				</div>
+
+
+				<p:dialog header="Saisie Vente Carburant" widgetVar="carburant" styleClass="dialog"
+					draggable="true" modal="true" height="500" width="1300">
+
+					<ui:insert name="menu">
+						<ui:include
+							src="/shellgestat/sousdosssier/saisieventecarburants.xhtml" />
+					</ui:insert>
+				</p:dialog>
+
+				<p:dialog header="Saisie Depense" widgetVar="depense" modal="true" styleClass="dialog"
+					draggable="true" id="depense" height="450" width="1100"
+					position="top center">
+
+
+
+					<ui:insert name="menu">
+						<ui:include src="/shellgestat/sousdosssier/ajouterdepense.xhtml" />
+					</ui:insert>
+
+
+				</p:dialog>
+
+
+				<p:dialog header="Saisie Credit  client" widgetVar="creditclient" styleClass="dialog"
+					draggable="true" modal="true" id="creditclient" height="500"
+					width="1100" position="top center">
+					<ui:insert name="menu">
+						<ui:include src="/shellgestat/sousdosssier/credit.xhtml" />
+					</ui:insert>
+
+				</p:dialog>
+
+
+
+
+				<p:dialog header="Saisie Des Chèques" widgetVar="cheque" styleClass="dialog"
+					draggable="true" modal="true" id="chequeclient" height="400"
+					width="1100" position="top center">
+					<ui:insert name="menu">
+						<ui:include src="/shellgestat/sousdosssier/saisiecheques.xhtml" />
+					</ui:insert>
+
+				</p:dialog>
+
+
+				<p:dialog header="Modification ACC/MANQUES" widgetVar="manques" styleClass="dialog"
+					modal="true" id="manque" height="500" width="1100"
+					position="top center">
+
+					<ui:insert name="menu">
+						<ui:include src="/shellgestat/sousdosssier/manqueouvrier.xhtml" />
+					</ui:insert>
+
+				</p:dialog>
+
+
+				<p:dialog header="Saisie Reglement Client" widgetVar="credit" styleClass="dialog"
+					modal="true" id="credit" height="500" width="1100"
+					position="top center">
+
+					<ui:insert name="menu">
+						<ui:include src="/shellgestat/sousdosssier/creditanterieur.xhtml" />
+					</ui:insert>
+
+				</p:dialog>
+				<p:dialog header="Total TPE" widgetVar="tpe" modal="true" id="tpe" styleClass="dialog"
+					height="300" width="1100" position="top center">
+
+					<ui:insert name="menu">
+						<ui:include src="/shellgestat/sousdosssier/saisietpe.xhtml" />
+					</ui:insert>
+				</p:dialog>
+
+
+				<p:dialog header="Saisie espece collecte" widgetVar="espece" styleClass="dialog"
+					modal="true" id="espece" height="300" width="1100"
+					position="top center">
+
+					<ui:insert name="menu">
+						<ui:include src="/shellgestat/sousdosssier/saisieespece.xhtml" />
+					</ui:insert>
+				</p:dialog>
+
+
+
+
+
+				<p:dialog header="Total Bancaire" widgetVar="cartebanque" styleClass="dialog"
+					modal="true" id="cartebanque" height="300" width="1100"
+					position="top center">
+
+					<ui:insert name="menu">
+						<ui:include
+							src="/shellgestat/sousdosssier/saisiecartebancaire.xhtml" />
+					</ui:insert>
+				</p:dialog>
+
+
+
+				<p:dialog header="Saisie achat" widgetVar="achat" modal="true" styleClass="dialog"
+					id="achat" height="300" width="1100" position="top center">
+
+
+
+					<ui:insert name="menu">
+						<ui:include src="/shellgestat/sousdosssier/saisieachat.xhtml" />
+					</ui:insert>
+
+				</p:dialog>
+
+
+
+
+				<p:dialog header="Retour Cuve" widgetVar="retourcuve" modal="true" styleClass="dialog"
+					id="retourcuve" height="300" width="1100" position="top center">
+
+
+
+					<ui:insert name="menu">
+						<ui:include src="/shellgestat/sousdosssier/retourAucuve.xhtml" />
+					</ui:insert>
+
+
+				</p:dialog>
+
+
+			</p:panel>
+
+			<script type="text/javascript">
+				PrimeFaces.locales['fr'] = {
+					closeText : 'Fermer',
+					prevText : 'Précédent',
+					nextText : 'Suivant',
+					monthNames : [ 'Janvier', 'Février', 'Mars', 'Avril',
+							'Mai', 'Juin', 'Juillet', 'Août', 'Septembre',
+							'Octobre', 'Novembre', 'Décembre' ],
+					monthNamesShort : [ 'Jan', 'Fév', 'Mar', 'Avr', 'Mai',
+							'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc' ],
+					dayNames : [ 'Dimanche', 'Lundi', 'Mardi', 'Mercredi',
+							'Jeudi', 'Vendredi', 'Samedi' ],
+					dayNamesShort : [ 'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven',
+							'Sam' ],
+					dayNamesMin : [ 'D', 'L', 'M', 'M', 'J', 'V', 'S' ],
+					weekHeader : 'Semaine',
+					firstDay : 1,
+					isRTL : false,
+					showMonthAfterYear : false,
+					yearSuffix : '',
+					timeOnlyTitle : 'Choisir l\'heure',
+					timeText : 'Heure',
+					hourText : 'Heures',
+					minuteText : 'Minutes',
+					secondText : 'Secondes',
+					currentText : 'Maintenant',
+					ampm : false,
+					month : 'Mois',
+					week : 'Semaine',
+					day : 'Jour',
+					allDayText : 'Toute la journée'
+				};
+			</script>
+		
+			<style type="text/css">
+.value {
+	width: 1000px;
+}
+
+ .dialog{
+    position: fixed;
+    top: 20% !important;
+ 
+ }
+ 
+  .dialog2{
+    position: fixed;
+    top: 30% !important;
+ left:40% !important;
+ }
+</style>
+		</h:form>
+			<script>
+				function init() {
+					var index = 0;
+					$('.inpdes').eq(index).focus();
+				}
+				function initcar() {
+					var index = 29;
+					$('.inpdescar').eq(index).focus();
+					$('.inpdescar').eq(index).select();
+				} 
+				
+				function initinput() {
+					 
+					$('.styletpe').focus();
+					$('.styletpe').select();
+				}
+			</script>
+	</p:panel>
+</h:body>
+</html>

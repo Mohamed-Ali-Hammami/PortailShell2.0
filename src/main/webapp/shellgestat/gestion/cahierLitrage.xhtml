@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<h:form id="f"   >
+			<p:panel id="basic2" closable="true"
+				style="min-height:500px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+				<div align="center">
+					<h1>
+						<h:outputLabel value="Recapitulation Carburant"
+							style=" border-color: #5cb85c;font-color : green" />
+							<br/>
+						 
+					</h1>
+					    <p:calendar id="popup" value="#{SituationBean.date1}" locale="fr"
+					    pattern="dd/MM/yyyy" buttonTabindex="-1"  
+  mask="99/99/?9999" placeholder="__/__/____" 
+									>
+
+							<p:ajax event="dateSelect" listener="#{SituationBean.getDates1}" />
+						</p:calendar>
+						
+						    <p:calendar id="popup2" value="#{SituationBean.date2}" locale="fr"
+						    pattern="dd/MM/yyyy" buttonTabindex="-1"  
+  mask="99/99/?9999" placeholder="__/__/____" 
+									>
+
+							<p:ajax event="dateSelect" listener="#{SituationBean.getDates1}" />
+						</p:calendar>
+						
+						<p:commandButton value="valider" ajax="false" action="#{SituationBean.validercahierlitrage}"/>
+					</div>
+					</p:panel>
+					</h:form>
+					
+					
+					<script type="text/javascript">
+				PrimeFaces.locales['fr'] = {
+					closeText : 'Fermer',
+					prevText : 'Précédent',
+					nextText : 'Suivant',
+					monthNames : [ 'Janvier', 'Février', 'Mars', 'Avril',
+							'Mai', 'Juin', 'Juillet', 'Août', 'Septembre',
+							'Octobre', 'Novembre', 'Décembre' ],
+					monthNamesShort : [ 'Jan', 'Fév', 'Mar', 'Avr', 'Mai',
+							'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc' ],
+					dayNames : [ 'Dimanche', 'Lundi', 'Mardi', 'Mercredi',
+							'Jeudi', 'Vendredi', 'Samedi' ],
+					dayNamesShort : [ 'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven',
+							'Sam' ],
+					dayNamesMin : [ 'D', 'L', 'M', 'M', 'J', 'V', 'S' ],
+					weekHeader : 'Semaine',
+					firstDay : 1,
+					isRTL : false,
+					showMonthAfterYear : false,
+					yearSuffix : '',
+					timeOnlyTitle : 'Choisir l\'heure',
+					timeText : 'Heure',
+					hourText : 'Heures',
+					minuteText : 'Minutes',
+					secondText : 'Secondes',
+					currentText : 'Maintenant',
+					ampm : false,
+					month : 'Mois',
+					week : 'Semaine',
+					day : 'Jour',
+					allDayText : 'Toute la journée'
+				};
+			</script>
+					</p:panel>
+					</h:body>
+					</html>

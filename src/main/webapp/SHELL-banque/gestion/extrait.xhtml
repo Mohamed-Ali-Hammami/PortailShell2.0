@@ -1,0 +1,212 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      lang="fr">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Shell-Banque</title>
+</head>
+
+<h:body style="background-color:#CECECE;">
+
+<div style="text-align:center;">
+
+    <ui:include src="/SHELL-banque/Header.xhtml"/>
+    <ui:include src="/SHELL-banque/Headerbanque.xhtml"/>
+
+    <p:growl id="msgs" showDetail="true"/>
+
+    <p:panel id="basic"
+             style="min-height:900px;margin:0 50px;
+             background-image:url('#{request.contextPath}/2.png');">
+
+        <h:form>
+
+            <h:commandLink title="Imprimer">
+                <p:graphicImage url="/images/imprimante-icone.png" style="width:25px"/>
+                <p:printer target="imprimer"/>
+            </h:commandLink>
+
+            <p:outputPanel id="imprimer" style="width:99%">
+
+                <h:outputText value="Extrait des comptes BIAT"
+                              style="font-size:20px;font-weight:bold;"/>
+
+                <h:panelGrid columns="2">
+
+                    <h:outputText value="Solde Compte BIAT"/>
+                    <h:outputText value="#{BanqueBean.compteBiat.solde}"/>
+
+                    <h:outputText value="Solde Compte ZAYTOUNA"/>
+                    <h:outputText value="#{BanqueBean.compteBZ.solde}"/>
+
+                    <h:outputText value="Solde Réel Biat"/>
+                    <h:outputText value="#{BanqueBean.soldeReelBiat}"/>
+
+                    <h:outputText value="Total Chèque En cours"/>
+                    <h:outputText value="#{BanqueBean.totalChequeEncours}"/>
+
+                </h:panelGrid>
+
+                <!-- Circulation -->
+                <h:outputText value="Liste des chèques en circulation (BIAT)"
+                              style="font-size:18px;font-weight:bold;"/>
+
+                <p:dataTable var="tr"
+                             value="#{BanqueBean.listtChequeCirculationBiat}"
+                             emptyMessage="Aucune donnée">
+
+                    <p:column headerText="Date">
+                        <h:outputText value="#{tr.dates}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Intitulé">
+                        <h:outputText value="#{tr.description}"/>
+                    </p:column>
+
+                    <p:column headerText="Référence">
+                        <h:outputText value="#{tr.reference}"/>
+                    </p:column>
+
+                    <p:column headerText="Montant">
+                        <h:outputText value="#{tr.montant}">
+                            <f:convertNumber minFractionDigits="3"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:columnGroup type="footer">
+                        <p:row>
+                            <p:column colspan="3" style="text-align:right;" footerText="Total:"/>
+                            <p:column footerText="#{BanqueBean.totalChequeEncoursBiat}"/>
+                        </p:row>
+                    </p:columnGroup>
+
+                </p:dataTable>
+
+                <!-- Impayés -->
+                <h:outputText value="Liste des chèques impayés (BIAT)"
+                              style="font-size:18px;font-weight:bold;"/>
+
+                <p:dataTable var="tr"
+                             value="#{BanqueBean.listtChequeImpayeeBiat}"
+                             emptyMessage="Aucune donnée">
+
+                    <p:column headerText="Date">
+                        <h:outputText value="#{tr.dates}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Intitulé">
+                        <h:outputText value="#{tr.description}"/>
+                    </p:column>
+
+                    <p:column headerText="Référence">
+                        <h:outputText value="#{tr.reference}"/>
+                    </p:column>
+
+                    <p:column headerText="Montant">
+                        <h:outputText value="#{tr.montant}">
+                            <f:convertNumber minFractionDigits="3"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:columnGroup type="footer">
+                        <p:row>
+                            <p:column colspan="3" style="text-align:right;" footerText="Total:"/>
+                            <p:column footerText="#{BanqueBean.totalChequeImpayeeBiat}"/>
+                        </p:row>
+                    </p:columnGroup>
+
+                </p:dataTable>
+
+                <!-- Antidatés -->
+                <h:outputText value="Liste des chèques antidatés (BIAT)"
+                              style="font-size:18px;font-weight:bold;"/>
+
+                <p:dataTable var="tr"
+                             value="#{BanqueBean.listtChequeAntidateeBiat}"
+                             emptyMessage="Aucune donnée">
+
+                    <p:column headerText="Date">
+                        <h:outputText value="#{tr.dates}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Intitulé">
+                        <h:outputText value="#{tr.description}"/>
+                    </p:column>
+
+                    <p:column headerText="Référence">
+                        <h:outputText value="#{tr.reference}"/>
+                    </p:column>
+
+                    <p:column headerText="Montant">
+                        <h:outputText value="#{tr.montant}">
+                            <f:convertNumber minFractionDigits="3"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:columnGroup type="footer">
+                        <p:row>
+                            <p:column colspan="3" style="text-align:right;" footerText="Total:"/>
+                            <p:column footerText="#{BanqueBean.totalChequeAntidateBiat}"/>
+                        </p:row>
+                    </p:columnGroup>
+
+                </p:dataTable>
+
+                <!-- Préavis -->
+                <h:outputText value="Liste des chèques préavis (BIAT)"
+                              style="font-size:18px;font-weight:bold;"/>
+
+                <p:dataTable var="tr"
+                             value="#{BanqueBean.listtChequePreavisBiat}"
+                             emptyMessage="Aucune donnée">
+
+                    <p:column headerText="Date">
+                        <h:outputText value="#{tr.dates}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Intitulé">
+                        <h:outputText value="#{tr.description}"/>
+                    </p:column>
+
+                    <p:column headerText="Référence">
+                        <h:outputText value="#{tr.reference}"/>
+                    </p:column>
+
+                    <p:column headerText="Montant">
+                        <h:outputText value="#{tr.montant}">
+                            <f:convertNumber minFractionDigits="3"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:columnGroup type="footer">
+                        <p:row>
+                            <p:column colspan="3" style="text-align:right;" footerText="Total:"/>
+                            <p:column footerText="#{BanqueBean.totalChequePreavisBiat}"/>
+                        </p:row>
+                    </p:columnGroup>
+
+                </p:dataTable>
+
+            </p:outputPanel>
+
+        </h:form>
+
+    </p:panel>
+
+</div>
+
+</h:body>
+</html>

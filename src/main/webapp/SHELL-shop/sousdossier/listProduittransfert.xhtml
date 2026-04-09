@@ -1,0 +1,66 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"
+		charset="UTF-8"></meta>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<title>Shell-Sejoumi</title>
+
+</h:head>
+<h:body>
+
+        <p:hotkey bind="Enter" handler="PF('produitss').hide();"  update="emp msgg multipleDT" actionListener="#{VenteBean.saveselection}"></p:hotkey>
+	<p:commandButton value="Fermer" onclick="PF('produitss').hide();"  style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+		update="produit multipleDT" actionListener="#{VenteBean.saveselection}" oncomplete="focus();"/>
+	<br />
+<br />
+	<p:remoteCommand name="updateCarDialog"  oncomplete=" PF('produitss').hide();init2() " 
+		  update="produit" actionListener="#{VenteBean.saveselection2}"/>
+ <div tabindex="1" id="table_div">
+	<p:dataTable id="multipleDT" var="d" value="#{VenteBean.listProduit}"
+		widgetVar="table" multiViewState="true" selectionMode="single"
+		selection="#{VenteBean.selectedProduit}" rowKey="#{d.id}" rowIndexVar="rowId"
+		emptyMessage="No cars found with given criteria" 
+		filteredValue="#{VenteBean.filteredProduit}">
+
+		<f:facet name="header">
+			<p:outputPanel>
+				<h:outputText value="Search:" />
+				<p:inputText id="globalFilter" onkeyup="PF('table').filter()" 
+					style="width:150px" placeholder="Enter code" />
+			</p:outputPanel>
+		</f:facet>
+		<p:column headerText="Code" filterBy="#{d.code}"
+			filterMatchMode="contains">
+			<h:outputText value="#{d.code}" />
+		</p:column>
+		<p:column headerText="Nom" filterBy="#{d.nom}"
+			filterMatchMode="contains">
+			<h:outputText value="#{d.nom}" />
+		</p:column>
+		<p:column headerText="Vente" filterBy="#{d.vente}"
+			filterMatchMode="contains">
+			<h:outputText value="#{d.prixventes}" />
+		</p:column>
+		
+		<p:column headerText="Qte depot"  >
+			<h:outputText value="#{d.quantitedepots}" />
+		</p:column>
+
+	</p:dataTable>
+	 <h:outputScript library="js" name="keyboard_navigation.js"/>
+</div>
+
+
+
+
+
+
+
+</h:body>
+
+</html>

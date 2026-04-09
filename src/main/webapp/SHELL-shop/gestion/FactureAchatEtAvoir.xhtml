@@ -1,0 +1,285 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body onload="init();">
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Headershop.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+			<h:form id="f">
+
+				<div align="center">
+					<b><h:outputText value="Historique des Achats Par Fournissuer" /></b>
+				</div>
+
+
+
+
+				<p:dataTable id="emp" var="p"
+					value="#{EtatshopBean.listfournissuers}"
+					selection="#{EtatshopBean.fournisseur}" selectionMode="single"
+					rowKey="#{p.code}" widgetVar="articleTable" scrollable="true"
+					scrollHeight="180" emptyMessage="aucune ligne dans la base">
+
+					<p:ajax listener="#{EtatshopBean.getFacturebyFournisseur}"
+						event="rowSelect" update=":f:facture" />
+
+
+					<p:column>
+
+						<f:facet name="header">
+							<h:outputText style="font-size:16px ;color:#483d8b" value="Code" />
+						</f:facet>
+						<b><h:outputText style="font-size:16px ;" value="#{p.code}"
+								id="code" /></b>
+
+					</p:column>
+
+					<p:column>
+
+						<f:facet name="header">
+							<h:outputText style="font-size:16px ;color:#483d8b" value="Nom" />
+						</f:facet>
+						<b><h:outputText style="font-size:16px ;" value="#{p.nom}"
+								id="des" /></b>
+
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:16px ;color:#483d8b" value="Tel" />
+						</f:facet>
+
+
+						<b><h:outputText style="font-size:16px ;" value="#{p.tel}"
+								id="qte2" /></b>
+
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:16px ;color:#483d8b" value="CA" />
+						</f:facet>
+						<h:outputText style="font-size:16px " value="#{p.ca}" id="prix" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:16px ;color:#483d8b" value="Reste" />
+						</f:facet>
+						<h:outputText style="font-size:16px " value="#{p.restes}"
+							id="prixv" />
+					</p:column>
+
+
+				</p:dataTable>
+
+				<br />
+				<br />
+
+
+
+				<p:dataTable id="facture" var="p"
+					value="#{EtatshopBean.listAchat}"
+					selection="#{EtatshopBean.achat}" selectionMode="single"
+					rowKey="#{p.id}" emptyMessage="aucune ligne dans la base"
+					scrollable="true" scrollHeight="180">
+
+					<p:ajax listener="#{EtatshopBean.getligneFacturebyAchat}"
+						event="rowSelect" update=":f:imprimer" />
+
+					<p:column>
+
+						<f:facet name="header">
+							<h:outputText style="font-size:16px ;color:#483d8b" value="Date" />
+						</f:facet>
+
+
+						<b><h:outputText style="font-size:16px ;" value="#{p.dates}"
+								id="date" /></b>
+
+					</p:column>
+
+
+
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:16px ;color:#483d8b"
+								value="Num Facture" />
+						</f:facet>
+						<h:outputText style="font-size:16px "
+							value="#{p.factureachat.code}" id="fact" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:16px ;color:#483d8b"
+								value="Montant" />
+						</f:facet>
+
+
+						<b><h:outputText style="font-size:16px ;"
+								value="#{p.factureachat.totalttcs}" id="ttc" /></b>
+
+					</p:column>
+
+				</p:dataTable>
+				<br />
+				<p:commandButton title="imprimer" value="imprimer">
+					<p:printer target="imprimer" />
+				</p:commandButton>
+
+				<p:outputPanel id="imprimer">
+				<h:panelGroup id="ff">
+					<table style="width: 100%">
+						<tr>
+							<td><b><h:outputText
+										value="FACTURE #{EtatshopBean.achat.factureachat.code} #{EtatshopBean.achat.fournisseur.nom} "
+										style="font-size:12px " /></b></td>
+							<td />
+
+						</tr>
+					</table>
+					<br />
+					<br />
+					<br />
+					 
+					  <p:dataTable id="produit" var="p"  
+							value="#{EtatshopBean.listeLigne2}"
+							emptyMessage="aucune ligne dans la base">
+							<p:column width="10%" style="border: 0.5px #000000 solid;">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000"
+											value="Code" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.produit.codeshop}"  />
+								</p:column>
+
+								<p:column style="border: 0.5px #000000 solid;" width="30%">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000"
+											value="Nom" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000" value="#{p.produit.nom}"
+										  />
+								</p:column>
+
+								<p:column width="12%" style="border: 0.5px #000000 solid;">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000"
+											value="QUANTITE" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000" value="#{p.quantites}"
+										  />
+								</p:column>
+
+								<p:column width="15%" style="border: 0.5px #000000 solid;text-aligh:right">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000;text-aligh:right"
+											value="Prix" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.produit.prixachats}"  />
+								</p:column>
+								
+								<p:column width="8%" style="border: 0.5px #000000 solid;text-aligh:right">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000;text-aligh:right"
+											value="Tva" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.produit.tva}"  />
+								</p:column>
+								
+								<p:column width="15%" style="border: 0.5px #000000 solid;text-aligh:right">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000;text-aligh:right"
+											value="Montant" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.montants}"  />
+								</p:column>
+
+
+							 
+						 
+						 </p:dataTable>
+					<br />
+					<br />
+
+					<b><h:outputText
+							value="Nombre de ligne : #{EtatshopBean.listeLigne2.size()}"
+							style="font-size:12px " /></b>
+
+					<br />
+					<br />
+					<!-- 
+					<p:panel style="width:300px"
+						rendered="#{EtatshopBean.achat.factureachat.numerocheck !=null}">
+						<h:panelGrid columns="2">
+
+							<h:outputText value="Numero cheque" style="font-size:12px " />
+							<h:outputText
+								value="#{EtatshopBean.achat.factureachat.numerocheck}"
+								style="font-size:12px " />
+
+
+							<h:outputText value="Banque" style="font-size:12px " />
+							<h:outputText value="#{EtatshopBean.achat.factureachat.banque}"
+								style="font-size:12px " />
+
+							<h:outputText value="Echeance" style="font-size:12px " />
+							<h:outputText
+								value="#{EtatshopBean.achat.factureachat.echeance}"
+								style="font-size:12px " />
+						</h:panelGrid>
+
+					</p:panel>
+					 -->
+					</h:panelGroup>
+				</p:outputPanel>
+
+
+<script>
+			
+			function init2() {
+				var index = 0;
+				$('.inpdes').eq(index).focus();
+			}
+			
+			
+			function init() {
+				var index = 0;
+				$('.four').eq(index).focus();
+			}
+			</script>
+			</h:form> 
+			</p:panel>
+			</p:panel>
+			</h:body>
+			</html>

@@ -1,0 +1,217 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+				<h:form>
+				<table>
+							 
+									  
+									 	<tr>
+								 	<td><p:commandButton value="Nouveau"
+										action="#{EmployeeBean.nouvemployee}" ajax="false"
+										style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);" /></td>
+								
+								  
+                       
+
+							</tr>
+							</table>
+							</h:form>
+							
+							<br/><br/>
+					<h:form>
+					  
+                      <p:dataTable id="emp" var="emp"  editable="true"
+								  value="#{EmployeeBean.listEmp}"
+								widgetVar="articleTable"   selectionMode="single"
+								selection="#{EmployeeBean.selectedEmp}"
+								filteredValue="#{EmployeeBean.filtredEmp}"
+								rowKey="#{emp.matricule}" style="margin-bottom:10px"
+								emptyMessage="aucun employer dans la base" paginator="true"
+								rows="15" paginatorPosition="bottom" resizableColumns="true"
+								liveResize="true">
+								   
+								<p:ajax event="rowEdit" listener="#{EmployeeBean.onRowEdit}"
+									  />
+                                 
+							
+							
+								<p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="MATRICULE" />
+									</f:facet>
+									<h:outputText style="font-size:12px "
+										value="#{emp.matricule}" />
+								</p:column>
+								
+								<p:column filterBy="#{emp.nom}" filterMatchMode="contains">
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="NOM" />
+									</f:facet>
+								 
+										
+										<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText style="font-size:12px "
+												value="#{emp.nom}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText   value="#{emp.nom}"
+												style="width:96%" />
+										</f:facet>
+
+									</p:cellEditor>
+								</p:column>
+
+								 <p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="CIN" />
+									</f:facet>
+									 
+										
+										
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText style="font-size:12px "
+												value="#{emp.cin}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText   value="#{emp.cin}"
+												style="width:96%" />
+										</f:facet>
+
+									</p:cellEditor>
+								</p:column>
+								
+								 
+								 <p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="adresse" />
+									</f:facet>
+									 
+										
+										
+										<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText style="font-size:12px "
+												value="#{emp.adresse}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText   value="#{emp.adresse}"
+												style="width:96%" />
+										</f:facet>
+
+									</p:cellEditor>
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Tel" />
+									</f:facet>							 
+																				
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText style="font-size:12px "
+												value="#{emp.tel}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText   value="#{emp.tel}"
+												style="width:96%" />
+										</f:facet>
+
+									</p:cellEditor>
+								</p:column>
+							 
+								 <p:column  >
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Salaire" />
+									</f:facet>
+									 
+										
+								<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText style="font-size:12px "
+												value="#{emp.salaire_journalier}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText   value="#{emp.salaire_journalier}"
+												style="width:96%" />
+										</f:facet>
+
+									</p:cellEditor>
+								</p:column>
+                                 
+                                  <p:column style="width:40px;text-align:center">
+									<f:facet name="header">
+										<h:outputText style="font-size:9px;color:#483d8b"
+											value="supprimer" />
+									</f:facet>
+									<div align="center">
+										<p:commandLink action="#{EmployeeBean.supprimerEmployer}"
+											onclick="PF('suppressionDialog').show();">
+											<p:graphicImage url="/images/delete.png" />
+
+											<f:setPropertyActionListener target="#{EmployeeBean.selectedEmp}"
+												value="#{emp}" />
+
+											<p:confirm header="Confirmation"
+												message="Voulez-vous vraiment supprimer le salarier ?"
+												icon="ui-icon-alert" />
+										</p:commandLink>
+									</div>
+								</p:column>
+
+
+								<p:column style="width:40px">
+									<f:facet name="header">
+										<h:outputText style="font-size:9px;color:#483d8b"
+											value="modifier" />
+									</f:facet>
+									<p:rowEditor />
+								</p:column> 
+							
+
+							</p:dataTable>  
+                           <div align="center">
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+							style="width:150px" widgetVar="suppressionDialog">
+							<div align="center">
+								<p:commandButton value="oui" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Non" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</div>
+						</p:confirmDialog>
+					</div>        
+                          
+					</h:form>
+				 
+			 </p:panel>
+			 </p:panel>
+			 </h:body>
+			 </html>

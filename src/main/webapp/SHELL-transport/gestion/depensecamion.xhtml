@@ -1,0 +1,174 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body> 
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+	 
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-transport/Headertr.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+			<br />
+			<br />
+			<br />
+			<br />
+			 
+				<h:form>
+					<div align="left">
+						<h:panelGrid columns="2">
+							<h:commandLink title="imprimer">
+								<p:graphicImage url="/images/imprimante-icone.png"
+									style="width:25px" />
+								<p:printer target="imprimer"></p:printer>
+							</h:commandLink>
+						</h:panelGrid>
+						<table>
+							<tr>
+								<td><h:outputText value="ÃƒÂ  partir du :"
+										style="font-size:12px " /></td>
+								<td><p:calendar id="popup" pattern="dd-MM-yyyy" mask="true" value="#{RapportBean.date1}"
+										size="10" >
+
+									</p:calendar></td>
+
+								<td><h:outputText value="jusqu'au :"
+										style="font-size:12px " /></td>
+								<td><p:calendar id="popup2" value="#{RapportBean.date2}"
+										size="10" pattern="dd-MM-yyyy" mask="true">
+
+									</p:calendar></td>
+							</tr>
+
+							 
+							<tr>
+								<td />
+								<td><p:commandButton styleClass="ui-priority-primary" ajax="false"
+										value="Recherche" action="#{RapportBean.gettotaldepense}"
+										style="width:150px;font-size:12px;height:30;color:#0000ff;background-color:#abc8e2;" /></td>
+							</tr>
+						</table>
+						
+						 
+
+					</div>
+					<p:outputPanel id="imprimer"
+						style="width:100%; ">
+						<table>
+							<tr>
+								<td><p:panel style="width:600px;">
+										<b><h:outputText value="RAPPORT CAMION  #{RapportBean.mois} #{RapportBean.annee}" 
+												style=" font-style: italic;font-size: large;font-size:20px;" />
+										</b>
+									</p:panel></td>
+							 
+							</tr>
+						</table>
+						 
+						 <style type="text/css">
+				    .ui-dataGrid-no-border>.ui-datagrid-content{
+				    border:none;  
+                       }
+                       .old {
+        background-color: #fca752 !important;
+        background-image: none !important;
+        color: #000000 !important;
+    }
+                       
+                    .ui-datatable {
+                   border :1px solid black;
+                   }
+                   .ui-datatable tbody tr {
+                  border :1px solid black;
+                   }
+ 
+                         .ui-datatable tbody th {
+                         border :1px solid black;
+                        }
+                        .ui-datatable* {
+                        border:0px ! important;  
+                        }
+                        
+                       
+                   </style>	
+               
+       <p:dataTable var="sale" value="#{RapportBean.listdepense}"  rowStyleClass="#{sale.vhecule.salchauf ==0 ? 'old' : null}"> 
+       <p:column headerText="NÃ‚Â°VECULE">
+           <b><h:outputText value="#{sale.vhecule.matricule}" /></b> 
+        </p:column>
+        <p:column headerText="DEPENSE CARBURNAT">
+            <h:outputText value="#{sale.montants}" rendered="#{sale.montant !=0}"/>
+            
+             <h:outputText value=" " rendered="#{sale.montant ==0}"/>
+            
+        </p:column>
+        <p:column headerText="AUTRE DEPENSES">
+            <h:outputText value="#{sale.montantsautre}" rendered="#{sale.montantsautre !=null}" />
+             <h:outputText value="#{sale.montantsautre}" rendered="#{sale.montantsautre ==null}" />
+        </p:column>
+        <p:column headerText="SALAIRES CHAUFFEURS">
+            <h:outputText value="#{sale.vhecule.salchauf}"  rendered="#{sale.vhecule.salchauf !=0}"/>
+              <h:outputText value=" "  rendered="#{sale.vhecule.salchauf ==0}"/>
+        </p:column>
+        <p:column headerText="CHAUFFEUR">
+            <h:outputText value="#{sale.vhecule.chauf}" >
+                 
+            </h:outputText>
+        </p:column>
+         <p:column headerText="TOTAL DEPENSE">
+            <h:outputText value="#{sale.totaldep}">
+               
+            </h:outputText>
+        </p:column> 
+          <p:column headerText="TOTAL TRANSPORT">
+            <h:outputText value="#{sale.totaltrans}">
+               
+            </h:outputText>
+        </p:column> 
+        <p:column headerText="D.F">
+            <h:outputText value="#{sale.df}">
+               
+            </h:outputText>
+        </p:column>
+        
+          
+        
+          <p:columnGroup type="footer">
+            <p:row>
+                <p:column  style="text-align:right" footerText="Totals:" />
+                <p:column footerText="#{RapportBean.totaldepcar}" /> 
+                <p:column footerText="#{RapportBean.totalautredep}" />
+                <p:column footerText="#{RapportBean.totalsal}" />
+                       <p:column footerText=" " />
+                       <p:column footerText="#{RapportBean.totaldep}" />
+                <p:column footerText="#{RapportBean.totaltransport}" />
+                   
+                    <p:column footerText="#{RapportBean.totaldf}" />
+            </p:row>
+        </p:columnGroup>
+              
+      
+    </p:dataTable>
+    
+    <br /><br />
+		   <!-- <p:chart type="bar" model="#{chartView.barModel}" style="height:300px"/> --> 
+		                
+<br /><br />
+
+					</p:outputPanel>
+
+
+
+				</h:form>
+			 
+		 </p:panel>
+		 </p:panel>
+		 </h:body>
+		 </html>

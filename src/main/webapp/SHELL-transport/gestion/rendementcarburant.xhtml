@@ -1,0 +1,187 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body> 
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+	 
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-transport/Headertr.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+
+			<br />
+			<br />
+			<br />
+			<br />
+			 
+				<h:form>
+					<div align="left">
+						<h:panelGrid columns="2">
+							<h:commandLink title="imprimer">
+								<p:graphicImage url="/images/imprimante-icone.png"
+									style="width:25px" />
+								<p:printer target="imprimer"></p:printer>
+							</h:commandLink>
+						</h:panelGrid>
+						<table>
+							<tr>
+								<td><h:outputText value="ÃƒÂ  partir du :"
+										style="font-size:12px " /></td>
+								<td><p:calendar id="popup" pattern="dd-MM-yyyy" mask="true" value="#{RapportcarburantBean.date1}"
+										size="10" >
+
+									</p:calendar></td>
+
+								<td><h:outputText value="jusqu'au :"
+										style="font-size:12px " /></td>
+								<td><p:calendar id="popup2" value="#{RapportcarburantBean.date2}"
+										size="10" pattern="dd-MM-yyyy" mask="true">
+
+									</p:calendar></td>
+							</tr>
+
+							 
+							<tr>
+								<td />
+								<td><p:commandButton styleClass="ui-priority-primary"
+										value="Recherche" action="#{RapportcarburantBean.getrendementcarburant}"
+										style="width:150px;font-size:12px;height:30;color:#0000ff;background-color:#abc8e2;" /></td>
+							</tr>
+						</table>
+
+					</div>
+					<p:outputPanel id="imprimer"
+						style="width:100%; ">
+						<table>
+							<tr>
+								<td><p:panel style="width:600px;">
+										<b><h:outputText value="Vente des carburants par jours #{RapportcarburantBean.mois} #{RapportcarburantBean.annee}"
+												style=" font-style: italic;font-size: large;font-size:20px;" />
+										</b>
+									</p:panel></td>
+							 
+							</tr>
+						</table>
+						 
+						 <style type="text/css">
+				    .ui-dataGrid-no-border>.ui-datagrid-content{
+				    border:none;  
+                       }
+                       
+                       
+                    .ui-datatable {
+                   border :1px solid black;
+                   }
+                   .ui-datatable tbody tr {
+                  border :1px solid black;
+                   }
+ 
+                         .ui-datatable tbody th {
+                         border :1px solid black;
+                        }
+                        .ui-datatable* {
+                        border:0px ! important;  
+                        }
+                        
+                        .old{
+                        Font-Weight:Bold;
+                        }
+                   </style>	
+               
+                    <p:dataTable var="sale" value="#{RapportcarburantBean.listproduits}"  rowStyleClass="#{sale.dates == 'Total' ? 'old':null}">
+       
+ 
+        <p:columnGroup type="header">
+            <p:row>
+                <p:column rowspan="3" headerText="Date" width="220:px" style="color:#D36COB;font-size:14px "/>
+                <p:column colspan="8" headerText="Article Carburant" />
+            </p:row>
+            <p:row>
+                <p:column colspan="3" headerText="Quantite Vendu" style="color:#D36COB;font-size:14px "/>
+                <p:column colspan="5" headerText="Chiffre d'affaire" style="color:#D36COB;font-size:14px "/>
+              
+                 
+                
+            </p:row>
+            <p:row>
+                <p:column headerText="Gasoil" style="color:#1B215C;font-size:14px "/>
+                <p:column headerText="Gasoil 50" style="color:#1B215C;font-size:14px "/>
+                <p:column headerText="Petrole" style="color:#1B215C;font-size:14px "/>
+                 <p:column   headerText="Recette" style="color:#1B215C;font-size:14px "/>
+                  <p:column   headerText="Marge" style="color:#1B215C;font-size:14px "/>
+                 <p:column  headerText="Transport" style="color:#1B215C;font-size:14px "/>
+                 <p:column   headerText="Depense" style="color:#1B215C;font-size:14px "/>
+                     <p:column   headerText="Benefice" style="color:#1B215C;font-size:14px "/>
+            </p:row>
+        </p:columnGroup>
+  <p:column>
+           <b><h:outputText value="#{sale.dates}" /></b> 
+        </p:column>
+        <p:column>
+            <h:outputText value="#{sale.quantiteg}" />
+            
+        </p:column>
+        <p:column>
+            <h:outputText value="#{sale.quantiteg50}" />
+        </p:column>
+        <p:column>
+            <h:outputText value="#{sale.quantitepetrole}" />
+        </p:column>
+        <p:column>
+            <h:outputText value="#{sale.totalrecette}">
+                 
+            </h:outputText>
+        </p:column>
+         <p:column>
+            <h:outputText value="#{sale.marge}">
+               
+            </h:outputText>
+        </p:column> 
+          <p:column>
+            <h:outputText value="#{sale.totaltransport}">
+               
+            </h:outputText>
+        </p:column> 
+        <p:column>
+            <h:outputText value="#{sale.totaldepense}">
+               
+            </h:outputText>
+        </p:column>
+        
+         <p:column>
+            <h:outputText value="#{sale.benifice}">
+               
+            </h:outputText>
+        </p:column>
+        
+          
+             <f:facet name="footer">
+           Total payement chauffeurs <b><h:outputText value="#{RapportcarburantBean.totaltransport}"/></b> 
+           <br/>
+           Benefice Net <b>  <h:outputText value="#{RapportcarburantBean.totaldepense}"/></b> 
+        </f:facet>
+      
+    </p:dataTable>
+    
+    <br /><br />
+		   <!-- <p:chart type="bar" model="#{chartView.barModel}" style="height:300px"/> --> 
+		                
+<br /><br />
+
+					</p:outputPanel>
+
+
+
+				</h:form>
+			 
+		 </p:panel>
+		 </p:panel>
+		 </h:body>
+		 </html>

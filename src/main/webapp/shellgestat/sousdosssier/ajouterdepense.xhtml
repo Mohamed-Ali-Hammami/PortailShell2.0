@@ -1,0 +1,224 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"
+		charset="UTF-8"></meta>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<title>Shell-Sejoumi</title>
+
+</h:head>
+<h:body  >
+ 
+		<div align="center">
+
+			<fieldset style="margin-bottom: 20px; background-color: #eeeec6;">
+				<legend>
+					<b> <h:outputText value="SAISIE DEPENSES" />
+					</b>
+				</legend>
+
+				<p:remoteCommand name="refreshFooter2" update="depenses:ttc" /> 				
+				<p:dataTable id="depenses" var="d" editable="true" rowKey="#{d.id}"
+					editMode="cell" rowIndexVar="rowId"
+					value="#{CaisseBeans.listdepense}" widgetVar="articleTable"
+					scrollable="true" scrollHeight="300"
+					emptyMessage="aucune ligne dans la base">
+
+					<p:column style="width:150px;">
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="Famille" />
+
+						</f:facet>
+						
+						<h:inputText value="#{d.familledepense.id}"
+							valueChangeListener="#{CaisseBeans.handleChange}"
+							rendered="#{d.familledepense!=null}" id="id2"
+							onkeyup="nexts(this);"  
+							style="background-color:transparent;border:none;">
+							<p:ajax update="des depenses" event="change" process="@this"
+								partialSubmit="true">
+
+							</p:ajax>
+							<f:attribute name="test" value="#{rowId}" />
+						</h:inputText>
+						<h:inputText value="#{CaisseBeans.id}" id="id"
+							onkeyup="nexts(this);"   styleClass="inpdepense"
+							rendered="#{d.familledepense==null}"
+							style="background-color:transparent;border:none;">
+							<p:ajax update="des   depenses" listener="#{CaisseBeans.updatenom111}"
+								process="@this" partialSubmit="true">
+							</p:ajax>
+							<f:attribute name="test" value="#{rowId}" />
+						</h:inputText>
+ 
+					</p:column>
+
+					<p:column style="width:100px;">
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="nom famille" />
+						</f:facet>
+
+						<h:outputText id="des"
+							style="background-color:transparent;border:none;"
+							value="#{d.familledepense.libelle}" styleClass="50" />
+
+					</p:column>
+
+
+					<p:column style="width:250px;">
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="Libelle" />
+						</f:facet>
+
+
+
+
+
+						<h:inputText value="#{d.libelle}" id="forlib"
+							onkeyup="nexts3(this)"
+							style="background-color:transparent;border:none;">
+							<p:ajax />
+						</h:inputText>
+
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="Montant" />
+						</f:facet>
+                       
+
+                       
+                        <h:inputText value="#{d.montants}"
+							valueChangeListener="#{CaisseBeans.updatemontant}"
+							rendered="#{d.montant !=0}" id="mn2"
+							onkeyup="nexts2(this);"  
+							style="background-color:transparent;border:none;">
+							<p:ajax update="mn1 depenses" event="change" process="@this" oncomplete="refreshFooter2();"
+								partialSubmit="true">
+							</p:ajax>
+							<f:attribute name="test" value="#{rowId}" />
+						</h:inputText>
+						<h:inputText value="#{d.montant}" id="mn1"
+							onkeyup="nexts2(this);"   styleClass="inpdepense"
+							rendered="#{d.montant==0}"
+							style="background-color:transparent;border:none;">
+							<p:ajax update="mn1   depenses" listener="#{CaisseBeans.updatemontant2}"
+								process="@this" partialSubmit="true" oncomplete="refreshFooter2();">
+							</p:ajax>
+						 
+						</h:inputText>                                
+
+					</p:column>
+
+
+					<f:facet name="footer">
+					   TOTAL  :<h:outputText id="ttc" value="#{CaisseBeans.totals}"
+							size="8" />
+					</f:facet>
+
+				</p:dataTable>
+
+
+
+
+
+
+				<p:commandButton value="Ajouter depense"
+					update="totalDepenses totalcaisses observations"
+					style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);"
+					ajax="false" action="#{CaisseBeans.savedepense}" />
+
+
+
+				<script>
+				function initinpdepense() {
+					var index = 0;
+		             $('.inpdepense').eq(index).focus();
+				}
+					function nexts(input) {
+						$(document)
+								.keypress(
+										function(event) {
+											var keycode = (event.keyCode ? event.keyCode
+													: event.which);
+											if (keycode == '13') {
+												if (input.value != "") {
+													//$(input).closest('td').next('td').find('input[type=text]').focus();	 
+													$(input).closest('td')
+															.nextAll().eq(1)
+															.find('input')
+															.focus();
+													$(input).closest('td')
+															.nextAll().eq(1)
+															.find('input')
+															.select()
+												}
+												return false;
+											}
+
+										});
+					}
+
+					function nexts2(input) {
+						$(document)
+								.keypress(
+										function(event) {
+											var keycode = (event.keyCode ? event.keyCode
+													: event.which);
+											if (keycode == '13') {
+												$(input).closest('tr').next(
+														'tr').find(
+														'input[type=text]')
+														.first().focus();
+												$(input).closest('tr').next(
+														'tr').find(
+														'input[type=text]')
+														.first().select();
+												return false;
+
+											}
+
+										});
+					}
+
+					function nexts3(input) {
+
+						$(document)
+								.keypress(
+										function(event) {
+											var keycode = (event.keyCode ? event.keyCode
+													: event.which);
+											if (keycode == '13') {
+												$(input).closest('td').next(
+														'td').find(
+														'input[type=text]')
+														.focus();
+												$(input).closest('td').next(
+														'td').find(
+														'input[type=text]')
+														.select();
+												return false;
+
+											}
+
+										});
+					}
+				</script>
+
+			</fieldset>
+
+		</div>
+
+ 
+</h:body>
+
+</html>

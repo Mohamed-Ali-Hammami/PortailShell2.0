@@ -1,0 +1,63 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		 
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-transport/Headertr.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+			 
+				<div align="center">
+						  <br />
+						<fieldset style="margin-bottom: 20px;background-color:#eeeec6;">
+							<legend>
+								<b><h:outputText style="font-size:12px ;color:#2e8b57"
+										value="Ajouter Produit au stock" name="outTxtcin" /> </b>
+							</legend>
+							<br />
+							<h:form>
+								<table>
+									<tr>
+										<td width="195"><b><h:outputText
+													style="font-size:12px " value="libelle :" /></b></td>
+										 <td width="111"><h:inputText style="font-size:12px " id="des"  
+												value="#{FamilledepensetransportBean.libelle}"   >
+												 
+												</h:inputText>
+												</td>
+									</tr>
+									 
+									 
+
+								</table> 
+								
+								 
+								 <table><tr> <td><p:spacer width="40px"/><p:spacer width="50px"/><p:spacer width="40px"/>
+								 <p:spacer width="60px"/> 
+										 <p:commandButton value="Ajouter type depense"
+												style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);" 
+                                                  ajax="false"
+												action="#{FamilledepensetransportBean.savefamilledepense}" /> 
+												
+												</td></tr></table>
+							</h:form>
+						</fieldset>
+					</div>
+			 
+		 </p:panel>
+		 </p:panel>
+		 </h:body>
+		 </html>

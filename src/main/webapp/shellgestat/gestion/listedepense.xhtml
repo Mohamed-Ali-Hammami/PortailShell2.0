@@ -1,0 +1,164 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+
+
+
+	<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/shellgestat/Headerg.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+		 
+				
+				 
+				<h:form id="form"> 
+					<div align="right">
+					 <p:commandButton value="Nouveau" action="#{FamilledepenseBean.nouvaudepense}" 
+		 style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);" /> 
+                       
+					</div><br/> <br/>
+					 <p:growl id="msgs" showDetail="true"/>
+					<p:dataTable id="emp" var="fd"
+									value="#{FamilledepenseBean.listdepense}" widgetVar="articleTable"
+									 editable="true"
+									 selectionMode="single"
+								selection="#{FamilledepenseBean.depense2}"
+									rowKey="#{fd.id}" style="margin-bottom:10px"
+									emptyMessage="aucune typedep dans la base" paginator="true"
+									rows="10" paginatorPosition="bottom" resizableColumns="true"
+									liveResize="true">								 
+									   <p:ajax event="rowEdit" listener="#{FamilledepenseBean.onRowEdit}"
+									  update=":form:msgs" />
+                                      <p:column filterBy="#{fd.date}"
+										filterStyle="font-size:14px;color:blue" filterMatchMode="contains">
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Date" />
+										</f:facet>
+										<p:cellEditor>
+										<f:facet name="output">
+										<h:outputText style="font-size:12px "
+											value="#{fd.dates}" />
+											</f:facet>
+											
+											<f:facet name="input">
+											<p:calendar id="matriculeInput" value="#{fd.date}"
+												style="width:96%" />
+										</f:facet>
+
+									</p:cellEditor>
+									</p:column>
+									<p:column filterBy="#{fd.libelle}"
+										filterStyle="font-size:14px;color:blue" filterMatchMode="contains">
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Designation" />
+										</f:facet>
+										 <p:cellEditor>
+										<f:facet name="output">
+										<h:outputText style="font-size:12px "
+											value="#{fd.libelle}" />
+											</f:facet>
+												
+											<f:facet name="input">
+											  <h:inputText style="font-size:12px "
+											value="#{fd.libelle}" />
+
+										 
+										</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+								 <p:column filterBy="#{fd.montant}"
+										filterStyle="font-size:14px;color:blue" filterMatchMode="contains">
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Montant" />
+										</f:facet>
+										<p:cellEditor>
+										<f:facet name="output">
+										<h:outputText style="font-size:12px "
+											value="#{fd.montant}" />
+											</f:facet>
+											
+									 
+											<f:facet name="input">
+											<h:inputText style="font-size:12px "
+											value="#{fd.montant}" />
+											</f:facet>
+
+									</p:cellEditor>
+									</p:column>
+								 
+                                       	 
+									<p:column style="width:40px;text-align:center">
+									<f:facet name="header">
+										<h:outputText style="font-size:9px;color:#483d8b"
+											value="supprimer" />
+									</f:facet>
+									 
+									 
+									<div align="center">
+									<p:commandLink action="#{FamilledepenseBean.deletedepense}" 
+										onclick="PF('suppressionDialog').show();">
+										<p:graphicImage url="/images/delete.png" />
+										<f:setPropertyActionListener
+											target="#{FamilledepenseBean.depense2}" value="#{fd}" />
+
+										<p:confirm header="Confirmation"
+											message="Voulez-vous vraiment supprimer la depense?"
+											icon="ui-icon-alert" />
+									</p:commandLink>
+								</div>
+								</p:column>
+
+
+								<p:column style="width:40px">
+									<f:facet name="header">
+										<h:outputText style="font-size:9px;color:#483d8b"
+											value="modifier" />
+									</f:facet>
+									<p:rowEditor />
+								</p:column>									 
+
+								</p:dataTable>
+								
+								
+							<p:contextMenu for="emp" widgetVar="cMenu">
+								<p:menuitem value="Edit Cell" icon="ui-icon-search"
+									onclick="PF('articleTable').showCellEditor();return false;" />
+								<p:menuitem value="Hide Menu" icon="ui-icon-close"
+									onclick="PF('cMenu').hide()" />
+							</p:contextMenu>
+								
+								<div align="center">
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade" style="width:150px"
+								widgetVar="suppressionDialog">
+								<div align="center">
+									<p:commandButton value="oui" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Non" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</div>
+							</p:confirmDialog>
+						</div>
+					</h:form>
+				 
+			 </p:panel>
+			 </p:panel>
+			 </h:body>
+			 </html>

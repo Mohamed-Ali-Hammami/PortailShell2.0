@@ -1,0 +1,88 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"
+		charset="UTF-8"></meta>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<title>Shell-Sejoumi</title>
+
+</h:head>
+<h:body>
+<h:form id="especee" prependId="false">
+ 
+	<div align="center">
+
+		<fieldset style="margin-bottom: 20px; background-color: #eeeec6;">
+			<legend>
+				<b> <h:outputText value="SAISIE EPECES " />
+				</b>
+
+			</legend>
+            <h:outputLabel id="especess">
+           
+           
+			<table>
+                  <tr>
+                  
+                  <td><h:outputLabel value="Total Especes collecte" /></td>
+							<td> 
+									<h:inputText size="8" id="especes"
+										value="#{CaisseBeans.caisse.totalespeces}" />
+								 
+								 </td>
+              </tr>
+              <tr>
+               
+              <td>
+          <h:outputLabel value="Montant à ajouter" /> </td><td>   <h:inputText size="8"  styleClass="styletpe"
+										value="#{CaisseBeans.totalesece}" onkeyup="validerespece(this)">
+										<p:ajax listener="#{CaisseBeans.saveespece}" update="f:affiche"/>
+										</h:inputText>
+              </td>
+              </tr>
+			</table></h:outputLabel>
+
+
+
+			<br /> <br />
+
+			<p:commandButton value="Valider" update="f:totalespeces f:totalcaisses" styleClass="bespece" 
+				style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);"
+			 action="#{CaisseBeans.saveespece}" ajax="false"/>
+
+
+
+		</fieldset>
+
+
+
+	<script>
+				 
+					  
+					function validerespece(input) {
+
+						$(document)
+								.keypress(
+										function(event) {
+											var keycode = (event.keyCode ? event.keyCode
+													: event.which);
+											if (keycode == '13') {
+												if (input.value != "") {
+												$('.butontpe').click(); 
+												 
+												}
+											}
+
+										});
+					}
+				</script>
+
+	</div>
+
+ </h:form>
+</h:body>
+</html>

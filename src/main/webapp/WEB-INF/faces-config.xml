@@ -1,0 +1,4391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0">
+    <!-- Enable Spring -->
+    <application>
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+        <!-- include properties file -->
+         <locale-config>
+     	        <default-locale>fr</default-locale>
+     	   </locale-config>
+     	   
+	   <resource-bundle>
+		<base-name>messages</base-name>
+		<var>msg</var>
+	   </resource-bundle>
+    </application> 
+    <managed-bean>
+        <managed-bean-name>BanqueBean</managed-bean-name>
+        <managed-bean-class>com.tn.shell.ui.banque.BanqueBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>serviceBanque</property-name>
+            <value>#{ServiceBanque}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceCompte</property-name>
+            <value>#{ServiceCompte}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceTransaction</property-name>
+            <value>#{ServiceTransaction}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>CompteBean</managed-bean-name>
+        <managed-bean-class>com.tn.shell.ui.banque.CompteBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>serviceCompte</property-name>
+            <value>#{ServiceCompte}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceBanque</property-name>
+            <value>#{ServiceBanque}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>RendementBean</managed-bean-name>
+        <managed-bean-class>com.tn.shell.ui.shop.RendementBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>serviceEmployee</property-name>
+            <value>#{ServiceEmployee}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceRendement</property-name>
+            <value>#{ServiceRendement}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceavance</property-name>
+            <value>#{ServiceAvancegestat}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>servicePaie</property-name>
+            <value>#{ServicePaie}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>servicedepenseGestat</property-name>
+            <value>#{ServiceDepensegestat}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceDepenseheaue</property-name>
+            <value>#{ServiceDepensecheque}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>LavageBean</managed-bean-name>
+        <managed-bean-class>com.tn.shell.ui.lavage.LavageBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>serviceProduit</property-name>
+            <value>#{ServiceProduit}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceMarque</property-name>
+            <value>#{MarqueService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceModel</property-name>
+            <value>#{ModelService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>affectationFiltreService</property-name>
+            <value>#{AffectationFiltreService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>affectationHuileService</property-name>
+            <value>#{AffectationHuileService}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>ServiceLavageBean</managed-bean-name>
+        <managed-bean-class>com.tn.shell.ui.lavage.ServiceLavageBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>serviceProduit</property-name>
+            <value>#{ServiceProduit}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceEmployee</property-name>
+            <value>#{ServiceEmployee}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceMarque</property-name>
+            <value>#{MarqueService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceRendement</property-name>
+            <value>#{ServiceRendement}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceModel</property-name>
+            <value>#{ModelService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>affectationFiltreService</property-name>
+            <value>#{AffectationFiltreService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>affectationHuileService</property-name>
+            <value>#{AffectationHuileService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>ligneImageRendementService</property-name>
+            <value>#{LigneImageRendementService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>imageEmployeeService</property-name>
+            <value>#{ImageEmployeeService}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>LoginBean</managed-bean-name>
+        <managed-bean-class>com.tn.shell.ui.gestat.LoginBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>authenticationManager</property-name>
+            <value>#{authenticationManager}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>userService</property-name>
+            <value>#{UserService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>servicerole</property-name>
+            <value>#{ServiceRole}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceBanque</property-name>
+            <value>#{ServiceBanque}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceProduit</property-name>
+            <value>#{ServiceProduit}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>AccueilBean</managed-bean-name>
+        <managed-bean-class>com.tn.shell.ui.paie.Accueil</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>serviceProduit</property-name>
+            <value>#{ServiceProduit}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceLignevente</property-name>
+            <value>#{ServiceLignevente}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceEmployee</property-name>
+            <value>#{ServiceEmployee}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>serviceLignetransfert</property-name>
+            <value>#{ServiceLigneAlimentation}</value>
+        </managed-property>
+    </managed-bean>
+     <!-- navigation-rule for index.xhtml -->     
+    <navigation-rule>
+        <from-view-id>/shellpaie/index.xhtml</from-view-id>
+        <!-- navigation-case for method demarrer()  mangedbean//LoginBean-->
+           <navigation-case>
+              <from-action>#{LoginBean.demarrer}</from-action>
+              <from-outcome>demarrer</from-outcome>
+              <to-view-id>/unsecure/paie/login.xhtml</to-view-id>
+              <redirect></redirect>
+        </navigation-case>          
+    </navigation-rule>  
+      <!-- navigation-rule for login.xhtml -->
+    <navigation-rule>         
+        <!-- navigation-case for method login() -->
+        <navigation-case>
+            <from-action>#{LoginBean.login}</from-action>
+            <from-outcome>correct</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>         
+          <navigation-case>
+            <from-action>#{LoginBean.login}</from-action>
+            <from-outcome>incorrect</from-outcome>
+            <to-view-id>/unsecure/login.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>       
+        </navigation-rule>  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{LoginBean.logout}</from-action>
+              <from-outcome>loggedout</from-outcome>               
+              <to-view-id>/unsecure/login.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <!-- login to shop -->
+   <navigation-rule>         
+        <!-- navigation-case for method login() -->
+        <navigation-case>
+            <from-action>#{LoginBean.logintoshop}</from-action>
+            <from-outcome>correct</from-outcome>
+            <to-view-id>/SHELL-shop/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>         
+          <navigation-case>
+            <from-action>#{LoginBean.logintoshop}</from-action>
+            <from-outcome>incorrect</from-outcome>
+            <to-view-id>/SHELL-shop/unsecure/login.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>       
+        </navigation-rule>  
+        
+        
+          <!-- login to paie -->
+   <navigation-rule>         
+        <!-- navigation-case for method login() -->
+        <navigation-case>
+            <from-action>#{LoginBean.logintopaie}</from-action>
+            <from-outcome>correct</from-outcome>
+            <to-view-id>/shellpaie/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>         
+          <navigation-case>
+            <from-action>#{LoginBean.logintopaie}</from-action>
+            <from-outcome>incorrect</from-outcome>
+            <to-view-id>/shellpaie/unsecure/login.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>       
+        </navigation-rule>  
+        
+        
+          <!-- login to banque -->
+   <navigation-rule>         
+        <!-- navigation-case for method banque() -->
+        <navigation-case>
+            <from-action>#{LoginBean.logintobanque}</from-action>
+            <from-outcome>correct</from-outcome>
+            <to-view-id>/SHELL-banque/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>         
+          <navigation-case>
+            <from-action>#{LoginBean.logintobanque}</from-action>
+            <from-outcome>incorrect</from-outcome>
+            <to-view-id>/SHELL-banque/unsecure/login.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>       
+        </navigation-rule>  
+  <!-- Acueilbean -->   
+      <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AccueilBean.paie}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/index.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+       <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ServiceLavageBean.getLavageEcours}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-lavage/indexLavage.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+   
+  
+      <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AccueilBean.gestat}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/index.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AccueilBean.shop}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-shop/index.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AccueilBean.transport}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/index.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AccueilBean.cahierdestock}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-shop/gestion/cahierdestock.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AccueilBean.banque}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-banque/index.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  
+  
+  
+  
+  <!-- /************************************************************************************/
+  
+  navigation-rule to paie syqtem
+   -->
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ParametrageBean.deleteuser}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/admin/administrercompte.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ParametrageBean.listparamettre}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/admin/administrercompte.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ParametrageBean.savesociete}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/admin/administrercompte.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ParametrageBean.saveuser}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/admin/administrercompte.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+ 
+  <!-- Gestion de paie -->
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.index}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/index.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.validerModification}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/modifiertableauSalaire.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.pointageemployee}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/pointageemployee.xhtml</to-view-id> 
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.validerpointageemployee}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/fiche_de_paieemployee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.nouvemployee}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/nouveauEmployee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.nouveauemployee}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/listemplyee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.supprimerEmployer}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/listemplyee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.activerEmployer}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/listemplyee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.historique}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/historique_employee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.note}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/note_employee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.modifiertableau}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/modifiertableauSalaire.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.validernote}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/validation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.succes}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/modifierEmployee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.modifierEmployer}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/listemplyee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.getAllEmployee}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/listemplyee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.listemployeractif}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/listemplyee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.listemployerinactif}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/listemplyee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.tableauSalaires}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/categorie.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+     <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.listemployerdeclaree}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/listemplyee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>  
+  
+    
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.listemployernondeclareeend}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/listemplyee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.listemployernondeclaree}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/listemplyee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.nouvemployee}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/nouveauEmployee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.retourhist}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/listemplyee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  <!-- Gestion des avances -->
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AvanceBean.nouvelleAvance}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/nouvelleAvance.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AvanceBean.nouvellesAvances}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/gestion_des_avances.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AvanceBean.getAllavance}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/gestion_des_avances.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <!-- Gestion des Prets -->
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PretBean.nouveauPret}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/nouvelPret.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PretBean.nouvauxPrets}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/gestion_des_prets.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PretBean.getAllpret}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/gestion_des_prets.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <!-- gestion des pointage -->
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PretBean.Pointage}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/pointage.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PretBean.ValiderPointage}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/validation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <!-- gestion des paies -->
+   
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.validerPaie}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/validation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.etatannuel}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/etatannuel.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.getetatannuel}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/etatannuel.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+   
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.traixiemeMoi}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/traixiememois.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.supprimerpaie}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/validation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.supprimerpaie2}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/validation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.recapulatif}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/edition.xhtml"</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.historique_empl}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/historique.xhtml"</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.getAllPai}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/paie.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.getAllPai2}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/paieNondeclaree.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.journal}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/journal.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.journaltotal}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/journaltotal.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.journalNondeclare}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/journalNondeclaree.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.etat}</from-action> 
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/etat_avance.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+   
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.validerPaie2}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/validation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.getAllFicchePaie}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/fiche_de_paie.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.modifierfiche}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/modifierPaie.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  
+  <navigation-case>
+    <from-action>#{PaisBeans.modifierfiche}</from-action>
+              <from-outcome>error</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/fiche_de_paie.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.validermodificationPaie}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/modifierPaie.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AvanceBean.Visualiser}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/fiche_de_avance.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <!-- gestion des Gestions -->
+   
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.allGestions}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/gestion_des_elements_de_la_paie.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.nouvelleGestion}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/ajouter_element_de_la_paie.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.ajouterGestion}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/gestion_des_elements_de_la_paie.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <!-- 
+  etatde congÃ©s
+   -->
+   
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CongeBean.etatPointage}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/etatconge.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CongeBean.Pointageconge}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/pointageconge.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CongeBean.journalconge}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/journalconge.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.virement}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/ordre_virement.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CongeBean.ValiderPointageconge}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/validation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CongeBean.validerpaieconge}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/validation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{NoteBean.note}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/note_annuaire.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{NoteBean.journalprime}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/journalprime.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{NoteBean.etatprime}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/etatprime.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{NoteBean.supprimerpaie}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/etatprime.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <!-- -*********************************
+  
+  *************************navigation-rule for transport system
+  
+  **************************************** -->
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ClientBean.getclient}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listeclient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{VheculeBean.getvhecule}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listevhecule.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{VheculeBean.deletevhecule}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listevhecule.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+     <navigation-rule>  
+   <navigation-case>
+    <from-action>#{VheculeBean.nouvauvhecule}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/ajoutervhecule.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{VheculeBean.succes}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/pochainedate.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{VheculeBean.savevhecule}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listevhecule.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{VheculeBean.modifierDate}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listevhecule.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ClientBean.saveclient}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listeclient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+    
+    
+     <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ClientBean.nouvauclient}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/ajouterclient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChauffeurBean.getchauffeur}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listechauffeur.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChauffeurBean.savechauffeur}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listechauffeur.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  
+    
+     <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChauffeurBean.nouvauchauffeur}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/ajouterchauffeur.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ProduitBean.nouveauProduit}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/ajouterproduit.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ProduitBean.getallProduit}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listeproduit.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ProduitBean.ajouterProduit}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listeproduit.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.nouveauBL}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/facturetransport.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.nouveaufacure}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/facturepassager.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.getfacturebyClientandtypepayement}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/reaffichefacture.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.getfacturebyClientandtypepayement3}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/reaffichefacture3.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.savebl}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/bonlivraison.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+    <navigation-case>
+    <from-action>#{FactureBean.savebl}</from-action>
+              <from-outcome>error</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/nouveaubonlivraison.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.savefacture}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/facturepass.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  
+   <navigation-case>
+    <from-action>#{FactureBean.savefacture}</from-action>
+              <from-outcome>error</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/nouveaufacture.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.modifierFacture}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/modifierFacture.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.validermodifierFacture}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/facturemodifier.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.modifierFacture2}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/modifierFacturepass.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.validermodifierFacture2}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/facturemodifierpass.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  
+  </navigation-rule>
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.getBLnonfacturee}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/bondelivraisonnonfacturee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.supprimer}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listefacture.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.supprimerfacturepassager}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/facturepassagers.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.getAllPasager}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/facturepassagers.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.getAllTransport}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listefacture.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.facturer}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/facture.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.facturelistbl}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/Commun/nouveaufactureListBl.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.validerfacture}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/Commun/factureListBl.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.listFacture}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listefacture.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.visualise}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/reaffichefacture2.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.visualise2}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/reaffichefacturepass.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.visualise}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/reaffichefacture2.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.visualise2}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/reaffichefacturepass.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepensetransportBean.savefamilledepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listetypedep.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepensetransportBean.getfamilledepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listetypedep.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepensetransportBean.nouvaufamilledepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/ajouterfamilledepense.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepensetransportBean.deletedepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listedepense.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepensetransportBean.savedepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listedepense.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepensetransportBean.getdepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/listedepense.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepensetransportBean.nouvaudepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/ajouterdepense.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepensetransportBean.rapportcamion}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/rapportcamion.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepensetransportBean.calculrapportcamion}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/rapportcamion.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  <!-- etat bean -->
+     <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtattransportBean.getetats}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/etatventes.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtattransportBean.getetatventebydate}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/imprimeretatventes.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtattransportBean.getetatChauffeurs}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/etatChauffeur.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtattransportBean.getetatChauffeurs}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/etatChauffeur.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtattransportBean.getetatVehecules}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/etatVehicules.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtattransportBean.getetatDepenses}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/etatDepenses.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtattransportBean.getetatDepenses1}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/etatDepenses.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtattransportBean.getetatclient}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/etatClient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtattransportBean.getetatclient2}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/etatClient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtattransportBean.getetatProduits}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/etatProduits.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtattransportBean.getetatLivraisons}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/etatBl.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtattransportBean.getetatLivraisons3}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/etatChauffeurs.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+ <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtattransportBean.getetatLivraisons2}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/etatChauffeurs.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtattransportBean.getetatLivraisons1}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/etatBl.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  
+  
+  <!-- /************************************************************************************/
+  
+  navigation-rule to shop syqtem
+   -->
+  		<navigation-rule>
+		<navigation-case>
+			<from-action>#{LoginBean.getallUser}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/getVendeur.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{LoginBean.saveuser}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/getVendeur.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{LoginBean.deleteuser}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/getVendeur.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<!-- fournisseur bean -->
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{FournisseurBean.getAllfournisseur}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/AjouterFournisseur.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{FournisseursBean.getAllfournisseur}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/AjouterFournisseur.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{FournisseurBean.savefournisseur}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/AjouterFournisseur.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{FournisseurBean.deletefournisseur}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/AjouterFournisseur.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+	<!-- produit bean -->
+
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.majarticle}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/miseajourArticle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.getetatventeparDate2}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatVenteParFamille.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.connect}</from-action>
+			<from-outcome>correct</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/vente.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.savearticle}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/miseajourArticle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<!-- StockProduitBean -->
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.getAllarticle}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/rechercheArticle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{FamilleBean.getlistarticleParfamille}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/listarticleparfamille.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Famme article bean -->
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{FamilleBean.mouvementArticle}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/mouvementArticle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{FamilleBean.deletefamille}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/miseajourFamille.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{FamilleBean.getAllFamillearticle}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/miseajourFamille.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{FamilleBean.saveFamilles}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/miseajourFamille.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- AchatshopBean -->
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatshopBean.nouveauachat}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/achat.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatshopBean.saveAchat}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/edicitionFactAchat.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatshopBean.saveAchat}</from-action>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/achat.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatshopBean.getAllfournisseur}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/listfactureachatbyfour.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatshopBean.reglementFacture}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/reglementFactureAchat.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatshopBean.etatFactureachat}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatFactureachat.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatshopBean.validerreglement}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/validationPayment.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<!-- AvoirshopBean -->
+	 <navigation-rule>
+		<navigation-case>
+			<from-action>#{AvoirshopBean.nouveauavoir}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/avoir.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AvoirshopBean.saveavoir}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/editionAvoir.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- TransfertBean -->
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.nouveautransfer}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/transfertdepotMagasin.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.saveTransfert}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/validerTransfert.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-action>#{VenteBean.saveTransfert}</from-action>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/transfertdepotMagasin.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{TransfertBean.etatTransfert}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatTransfert.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- VenteBean -->
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.impressioninventaire}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/impressioninventaire.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.inventaire}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/impressioninventaire.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.majstock}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/MAJSTOCK.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.remiseazeoStock}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/remiseazeoStock.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.validerremiseazeoStock}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/MAJSTOCK.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.nouveauvente}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/vente.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.savevente}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/vente.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.impressionVente}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/editiondesventes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.impressionVente2}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/imprimeretatdevente.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.imprimeretatventeparDate33}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/imprimeretatdevente.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.imprimeretatventeparDate}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/editiondesventes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.impressionTicket}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/impressionTicket.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.regenerationDesVentes}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/regenerationvente.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.generationDesVentes}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/generationvente.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.regenerer}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/editiondesventes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+		<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.clotureCaisse}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/coturercaisse.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.ValiderclotureCaisse}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/validation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- TicketBean -->
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{TicketBean.listticket}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/listticket.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{TicketBean.AnnulationTicket}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/annulationticket.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{TicketBean.validerAnnulation}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/validation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{TicketBean.listeAnnulation}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/listeAnnulations.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Etat Bena -->
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.articleEnAlerteDeStock}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/articleEnAlerteDeStock.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.etatdeprofil}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatdeprofil.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.etatdeprofil2}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatdeprofilCT.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.calculeretatdeprofil2}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatdeprofilCT.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.validercalculeretatdeprofil2}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatdeprofilCT.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatBean.etatdeprofil2}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/etatdeprofilcomtable.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatBean.validerProfil}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/etatdeprofilcomtable.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatBean.calculeretatdeprofil2}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/etatdeprofilcomtable.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.getetatdeprofil}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatdeprofil.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.calculeretatdeprofil}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatdeprofil.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.etatFiscal}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatFiscal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.calculeretatfiscal}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatFiscal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.articleNonVendu}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatarticleNonVendu.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.getarticleNonVendu}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatarticleNonVendu.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.articleNonVenduShop}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatarticleNonVenduShop.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.articleVendu}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatarticleVendu.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.getarticleVendu}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatarticleVendu.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{VenteBean.etatVenteParFamille}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatVenteParFamille.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.getetatventeparDate}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatVenteParFamille.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.FactureAchatEtAvoir}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/FactureAchatEtAvoir.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.FacturationDesTickets}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/FacturationDesTickets.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.EtatVentesParVenduers}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/EtatVentesParVenduers.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatshopBean.etatdesArticles}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SHELL-shop/gestion/etatdesArticles.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- ****************************************************
+	navigation-rule for gestat system
+	***************************************************************
+	*************************************************************** -->
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{FournisseurBean.getAllfournisseur}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/AjouterFournisseur.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{FournisseurBean.savefournisseur}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/AjouterFournisseur.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{FournisseurBean.deletefournisseur}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/AjouterFournisseur.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+ 
+	<!-- AchatcarburantBean -->
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatcarburantBean.nouveauachat}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/achat.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatcarburantBean.saveAchat}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/edicitionFactAchat.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatcarburantBean.etatpeScan}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/achat.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatcarburantBean.getAllfournisseur}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/listfactureachatbyfour.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatcarburantBean.reglementFacture}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/reglementFactureAchat.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatcarburantBean.etatFactureachat}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/EtatDesFactureAchat2.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- <navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatBean.etatFactureachat}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/EtatDesFactureAchat2.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule> -->
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatcarburantBean.validerreglement}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/etatFactureachat.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatcarburantBean.historiqueCarburant}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/historiqueCarburant.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{AchatcarburantBean.historiqueParfournisseur}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/historiqueParfournisseur.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	 <!-- situationJournaliere -->
+	 <navigation-rule>
+		<navigation-case>
+			<from-action>#{SituationBean.situationJournaliere}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/situationJournalieres.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	 <navigation-rule>
+		<navigation-case>
+			<from-action>#{SituationBean.cahierlitrage}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/cahierLitrage.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	   </navigation-rule>
+	   
+	   
+	 <navigation-rule>
+		<navigation-case>
+			<from-action>#{SituationBean.validercahierlitrage}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/validercahierlitrage.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	 <navigation-rule>
+		<navigation-case>
+			<from-action>#{SituationBean.cahierlitrageAvecRetour}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/cahierLitrageAvecRetour.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	 <navigation-rule>
+		<navigation-case>
+			<from-action>#{SituationBean.validercahierlitrageAvecretour}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/validercahierlitrageretour.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	 <navigation-rule>
+		<navigation-case>
+			<from-action>#{SituationBean.impressionCaisse}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/impressioncaisse.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{SituationBean.getsituationjournaliere}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/situationJournalieres.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<!-- Etat Bena -->
+		
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{SituationBean.getsituationjournaliere}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/situationJournalieres.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	 	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatBean.etatCheques}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/etatdescheques.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	 
+	
+	 
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatBean.getetatCheques}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/etatdescheques.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatBean.etatdebanque}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/etatdebanque.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatBean.getetatdebanque}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/etatdebanque.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatBean.etatdeprofil}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/etatdeprofil.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatBean.calculeretatdeprofil}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/etatdeprofil.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatBean.etatFiscal}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/etatFiscal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{EtatBean.calculeretatfiscal}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/etatFiscal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	 
+	 
+	
+	<!-- Client Bean -->
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{ClientgestatBean.cahiercredit}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/cahiercredit.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+		<navigation-rule>
+		<navigation-case>
+			<from-action>#{ClientgestatBean.facturation}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/facturationClient.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+		<navigation-rule>
+		<navigation-case>
+			<from-action>#{ClientgestatBean.validerfacturation}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/validerfacturationClient.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{ProduitgestatBean.cahierstock}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/cahierstock.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{ProduitgestatBean.getcahierstock}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/cahierstock.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{ProduitgestatBean.verfificateurcahierStock}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/verfificateurcahierStock.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{ProduitgestatBean.initialiserStock}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/cahierstock.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{ClientgestatBean.nouvauclient}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/ajouterclient.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{ClientgestatBean.saveclient}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/listeclient.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{ClientgestatBean.deleteclient}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/listeclient.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-action>#{ClientgestatBean.getclient}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/listeclient.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<!-- Employee Bean -->
+	
+	 <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EmployeeBean.nouvemployee}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/nouveauEmployee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EmployeeBean.getAllEmployee}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/listemplyee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+	 <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EmployeeBean.nouveauemployee}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/listemplyee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EmployeeBean.supprimerEmployer}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/listemplyee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+     <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.etatPresence}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/EtatPresence.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.getetatPresence}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/EtatPresence.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  <navigation-rule>
+		<navigation-case>
+			<from-action>#{EmployeeBean.cahieremployee}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/shellgestat/gestion/cahierouvrier.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<!-- Avance Bean -->	
+	
+	<navigation-rule>  
+   <navigation-case>
+    <from-action>#{AvancegestatBean.nouvelleAvance}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/nouvelleAvance.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AvancegestatBean.nouvellesAvances}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/nouvelleAvance.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AvancegestatBean.etatAvance}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatAvance.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AvancegestatBean.validergetEtatbyDate}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatAvance.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AvancegestatBean.getAllavance}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/gestion_des_avances.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+	<!-- ChequeBeqn -->
+	
+	 <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChequeBean.findCheque}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/rechercheCheque.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChequeBean.validerrecherche}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/rechercheCheque.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+	<!-- Famille depense bean -->
+	
+	<navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepenseBean.savefamilledepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/listetypedep.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepenseBean.getfamilledepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/listetypedep.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepenseBean.nouvaufamilledepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/ajouterfamilledepense.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepenseBean.deletedepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/listedepense.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepenseBean.savedepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/listedepense.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepenseBean.getdepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/listedepense.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FamilledepenseBean.nouvaudepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/ajouterdepense.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <!-- Etat Bean -->
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtatBean.getetatDepenses}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatDepenses.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtatBean.getetatDepenses1}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatDepenses.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{EtatBean.etatAchat}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatachatesp.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <!-- caisse bean -->  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CaisseBeans.miseajourindex}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/miseajourindex.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CaisseBeans.validermiseajourindex}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/validermiseajourindex.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CaisseBeans.avantCaisse}</from-action>
+              <from-outcome>success?faces-redirect=true</from-outcome>               
+              <to-view-id>/shellgestat/gestion/avantcaisse.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CaisseBeans.caisse}</from-action>
+              <from-outcome>success?faces-redirect=true</from-outcome>               
+              <to-view-id>/shellgestat/gestion/caisse.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CaisseBeans.avantCaisse}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/Modificationcaisse.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+    
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CaisseBeans.validerindex}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/avantcaisse.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CaisseBeans.savecheque}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/avantcaisse.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CaisseBeans.saveespece}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/avantcaisse.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CaisseBeans.savetpe}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/avantcaisse.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CaisseBeans.savecartebancaire}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/avantcaisse.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CaisseBeans.savedeavnce}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/avantcaisse.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CaisseBeans.saveachat}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/avantcaisse.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CaisseBeans.savecreditant}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/avantcaisse.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CaisseBeans.savecredit}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/avantcaisse.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CaisseBeans.saveretourcuve}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/avantcaisse.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  <!-- ArticleBean -->
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ArticleBean.ficheArticle}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/fichearticle.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ArticleBean.validerregulationinventaire}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/ficheregulation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ArticleBean.inventairecarburant}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/inventairecarburant.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ArticleBean.regulationinventaire}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/regulationinventairecarburant.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+ <!-- AvoirBean -->
+ 
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AvoirBean.saisieAvoir}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/saiseavoir.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AvoirBean.validersaisieavoir}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/saiseavoir.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AvoirBean.etatcarteshell}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatcarteshell.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AvoirBean.saisieAvoirbanue}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/saiseavoirbancaire.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AvoirBean.validersaisieAvoirbanue}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/saiseavoirbancaire.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{AvoirBean.etatcartebancaires}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatcartebancaires.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  <!-- produitben -->
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ProduitgestatBean.miseAjourpompe}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/MAJpompe.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CerteficatBean.certif}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/retenue.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <!-- 
+  *****************************************************************************
+  navigation rule for facturation system
+   
+  *****************************************
+   -->
+   
+   
+   
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ClientfacBean.getclient}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/listeclient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{VheculefacBean.getvhecule}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/listevhecule.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{VheculefacBean.deletevhecule}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/listevhecule.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+     <navigation-rule>  
+   <navigation-case>
+    <from-action>#{VheculefacBean.nouvauvhecule}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/ajoutervhecule.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{VheculefacBean.succes}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/pochainedate.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{VheculefacBean.savevhecule}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/listevhecule.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{VheculefacBean.modifierDate}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/listevhecule.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ClientfacBean.saveclient}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/listeclient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+    
+    
+     <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ClientfacBean.nouvauclient}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/ajouterclient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChauffeurfacBean.getchauffeur}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/listechauffeur.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChauffeurfacBean.savechauffeur}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/listechauffeur.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.getAllPai3}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/paieNondeclareeRendement.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaisBeans.journalNondeclareparrendement}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/journalNondeclaree2.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+    
+     <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChauffeurfacBean.nouvauchauffeur}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/ajouterchauffeur.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ProduitfacBean.nouveauProduit}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/ajouterproduit.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ProduitfacBean.getallProduit}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/listeproduit.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ProduitfacBean.ajouterProduit}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/listeproduit.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.nouveauBL}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/facturetransport.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.nouveaufacure}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/facturepassager.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.getfacturebyClientandtypepayement}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/reaffichefacture.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.savebl}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/bonlivraison.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+    <navigation-case>
+    <from-action>#{FacturefacBean.savebl}</from-action>
+              <from-outcome>error</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/nouveaubonlivraison.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.savefacture}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/facturepass.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  
+   <navigation-case>
+    <from-action>#{FacturefacBean.savefacture}</from-action>
+              <from-outcome>error</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/nouveaufacture.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.modifierFacture}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/modifierFacture.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.validermodifierFacture}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/facturemodifier.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  
+  </navigation-rule>
+  
+<navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.modifierFacture2}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/modifierFacturepass.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.validermodifierFacture2}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/facturemodifierpass.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  
+  </navigation-rule> 
+  
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.getBLnonfacturee}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/bondelivraisonnonfacturee.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.supprimer}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/listefacture.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.getAllPasager}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/facturepassagers.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.getAllTransport}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/listefacture.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.facturer}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/facture.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+   
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FacturefacBean.listFacture}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-facturation/gestion/listefacture.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+   
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.visualise}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/reaffichefacture2.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{FactureBean.visualise2}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/reaffichefacturepass.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <!-- etatcheque -->
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChequeBean.getchequeparjour}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatdeschequeparjour.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChequeBean.setchequeencours}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatdeschequeparjour.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChequeBean.setchequeenpreavis}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatdeschequeparjour.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChequeBean.setchequepayee}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatdeschequeparjour.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChequeBean.setchequeimppayee}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatdeschequeparjour.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChequeBean.setchequemanuelle}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatdeschequeparjour.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChequeBean.setchequeantidate}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatdeschequeparjour.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChequeBean.supprimerchequereg}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatdeschequeparjour.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ChequeBean.supprimercheque}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/etatdeschequeparjour.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RapportLavage.rapportlavage}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-shop/gestion/rapportLavage.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RendementBean.rapportLavage}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-lavage/rapportLavage.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RendementBean.getrapportLavage}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-lavage/rapportLavage.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RendementBean.rapportVidange}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-lavage/rapportVidange.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RendementBean.getrapportVidange}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-lavage/rapportVidange.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RapportLavage.getrapportlavage}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-shop/gestion/rapportLavage.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RapportLavage.rapportvidange}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-shop/gestion/rapportvidange.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RapportLavage.getrapportvidange}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-shop/gestion/rapportvidange.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{Rapportgestat.rapportgestat}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/rapportpiste.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{Rapportgestat.getrapportgestat}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/rapportpiste.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RendementBean.rendementlavage}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-shop/gestion/rendementlavage.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RendementBean.validerrendementlavage}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-shop/gestion/rendementlavage.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RendementBean.rendementvidange}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-shop/gestion/rendementvidange.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RendementBean.validerrendementvidange}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-shop/gestion/rendementvidange.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RendementBean.etatrendementlavage}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-shop/gestion/etatrendement.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RendementBean.getetatrendementlavage}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-shop/gestion/etatrendement.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RapportBean.totaldepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/depensecamion.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RapportBean.gettotaldepense}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/depensecamion.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RapportBean.rendementchauffeur}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/rendementchauffeur.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RapportBean.getrendementchauffeur}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/rendementchauffeur.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RapportcarburantBean.ventecarburant}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/rendementcarburant.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RapportcarburantBean.getrendementcarburant}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-transport/gestion/rendementcarburant.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <!-- gestio credit Passation -->
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CreditPassationBean.accesPassation}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/gestioncreditPassation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CreditPassationBean.validerPassation}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/gestioncreditPassation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CreditPassationBean.getCreditPassationByCaisseanddates}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/gestioncreditPassation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CreditPassationBean.visualise}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/fichepassation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+    
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CreditPassationBean.suivant}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/gestioncreditPassation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CreditPassationBean.visualise2}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/ficheclient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CreditPassationBean.payer}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/fichepayementclient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CreditPassationBean.payementMutiple}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/fichepayementclient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CreditPassationBean.validerpayer}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/ficheclient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RappelBean.accesRappel}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/rappel.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RappelBean.validerRappel}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/shellpaie/gestion_paie/validerrappel.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{RappelBean.journal}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/shellpaie/gestion_paie/journalrappel.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CrediClientBean.saisiecredit}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/shellgestat/gestion/creditfuelpose.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CrediClientBean.savecredit}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/shellgestat/gestion/creditfuelpose.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>   
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CrediClientBean.saisieDepense}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/shellgestat/gestion/depensefuelpose.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CrediClientBean.validersaisieDepense}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/shellgestat/gestion/depensefuelpose.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+     <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CrediClientBean.validersaisieDepense}</from-action>
+              <from-outcome>error</from-outcome>               
+             <to-view-id>/shellgestat/gestion/depensefuelpose.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  <!-- 
+  Gestion de banque
+   -->
+   
+   
+      <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.nouveauBanque}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/gestion/nouveauBanque.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.ajouterTransaction}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/gestion/saisieoperation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.success}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/gestion/modifieroperation.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.saveBanque}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/gestion/nouveauCompte.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.saveCompte}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/gestion/indexCompte.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.valider}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/gestion/indexCompte.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.getAll}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/indexbanque.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.saveoperation}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/gestion/indexCompte.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.updateoperation}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/gestion/indexCompte.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.getchequeImpayees}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/gestion/indexCompte.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.getchequeAntidatee}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/gestion/indexCompte.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.getchequeEntree}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/gestion/indexCompte.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.getchequePreavis}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/gestion/indexCompte.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.getchequeCierculations}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/gestion/indexCompte.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.getchequeencours}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/gestion/indexCompte.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{BanqueBean.extrait}</from-action>
+              <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-banque/gestion/extrait.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule> 
+  
+  
+  <navigation-rule>
+  <navigation-case>
+  <from-action>#{DepenseChequeBean.getDepenseCheque}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/shellgestat/gestion/ajouterDepenseCheque.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>
+  <navigation-case>
+  <from-action>#{DepenseChequeBean.getByDate}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/shellgestat/gestion/ajouterDepenseCheque.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+   <navigation-rule>
+  <navigation-case>
+  <from-action>#{DepenseChequeBean.saveDepense}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/shellgestat/gestion/ajouterDepenseCheque.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <!-- devis -->
+  
+     <navigation-rule>
+  <navigation-case>
+  <from-action>#{DevisBena.nouveaufacure}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/shellgestat/gestion/nouveaudevis.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+   <navigation-rule>
+  <navigation-case>
+  <from-action>#{DevisBena.savefacture}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/shellgestat/gestion/devis.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  
+  
+   <navigation-rule>
+  <navigation-case>
+  <from-action>#{LavageBean.getAllMArque}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-lavage/allMarque.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>
+  <navigation-case>
+  <from-action>#{LavageBean.saveMarque}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-lavage/allMarque.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>
+  <navigation-case>
+  <from-action>#{LavageBean.saveModel}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-lavage/allMarque.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+    <navigation-rule>
+  <navigation-case>
+  <from-action>#{LavageBean.nouveauMarque}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-lavage/nouveauMarque.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+   <navigation-rule>
+  <navigation-case>
+  <from-action>#{LavageBean.nouveauModel}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-lavage/ajouterModel.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>
+  <navigation-case>
+  <from-action>#{LavageBean.affecterFilterToModel}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-lavage/affectationFiltreModel.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>
+  <navigation-case>
+  <from-action>#{LavageBean.saveaffecterFilterToModel}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-lavage/affectationFiltreModel.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>
+  <navigation-case>
+  <from-action>#{LavageBean.affecterHuileToModel}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-lavage/affectationHuileModel.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+    
+  <navigation-rule>
+  <navigation-case>
+  <from-action>#{LavageBean.saveaffecterHuileToModel}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-lavage/affectationHuileModel.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>
+  <navigation-case>
+  <from-action>#{ServiceLavageBean.historiqueServices}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-lavage/historiqueServices.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+  <navigation-rule>
+  <navigation-case>
+  <from-action>#{ServiceLavageBean.gethistoriqueServices}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-lavage/historiqueServices.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>
+  <navigation-case>
+  <from-action>#{ServiceLavageBean.updateHitoric}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-lavage/infoService.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>
+  <navigation-case>
+  <from-action>#{ServiceLavageBean.saveUpdate}</from-action>
+   <from-outcome>success</from-outcome>               
+             <to-view-id>/SHELL-lavage/historiqueServices.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ServiceLavageBean.supprimerRendement}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-lavage/historiqueServices.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+     <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ServiceLavageBean.rapport}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-lavage/rapport.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ServiceLavageBean.imprimer}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-lavage/Imprimerhistorique.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ServiceLavageBean.getrapport}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-lavage/rapport.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ServiceLavageBean.historiqueDuJour}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-lavage/historiqueDujour.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ServiceLavageBean.gethistoriqueDuJour}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-lavage/historiqueDujour.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{ServiceLavageBean.imprimer2}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/SHELL-lavage/imprimer2.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CarteClientBean.getcarteClient}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/carteClient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CarteClientBean.affecterCarte}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/affectercarteClient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CarteClientBean.addcarteClient}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/ajoutercarteClient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CarteClientBean.savecarteClient}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/carteClient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.historiquevetement}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/historiquevetement.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+    <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.impressionPhotos}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/impressionphotos.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+  <navigation-rule>  
+   <navigation-case>
+    <from-action>#{PaieBean.getimpressionPhotos}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellpaie/gestion_paie/impressionphotos.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+  
+   <navigation-rule>  
+   <navigation-case>
+    <from-action>#{CarteClientBean.historiquecarteClient}</from-action>
+              <from-outcome>success</from-outcome>               
+              <to-view-id>/shellgestat/gestion/HistoriquecarteClient.xhtml</to-view-id>
+              <redirect/>
+  </navigation-case>
+  </navigation-rule>
+</faces-config>
+

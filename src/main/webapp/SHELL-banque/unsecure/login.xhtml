@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Authentification</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/images/logo.png" />
+</h:head>
+
+<h:body style="background-color:#a2b5bf">
+    
+    <script type="text/javascript">
+        //<![CDATA[
+        window.addEventListener('load', function() {
+            var form = document.getElementById('loginFormId');
+            if (form) {
+                form.action = window.location.pathname + window.location.search;
+            }
+        });
+        //]]>
+    </script>
+
+    <br /><br /><br /><br /><br /><br /><br />
+
+    <div align="center">
+        <p:growl id="msgss" showDetail="true" />
+
+        <p:panel id="basic2" style="width:450px;height:auto;background-color:#eeeec6;font-size:12px" header="Connexion">
+            <h:form id="loginFormId" prependId="false">
+                <h:panelGrid columns="2" style="margin:auto;">
+
+                    <!-- Username -->
+                    <h:outputText id="outTxtUserNameId" value="#{msg['secure.username']}" style="font-size:12px;color:#006400;background-color:#a2b5bf" />
+                    <h:inputText id="userName" value="#{LoginBean.userName}" size="30" required="true" requiredMessage="#{msg['secure.error']}" />
+                    
+                    <!-- Password -->
+                    <h:outputText id="outTxtPasswordId" value="#{msg['secure.password']}" style="font-size:12px;color:#006400;background-color:#a2b5bf" />
+                    <h:inputSecret id="password" value="#{LoginBean.password}" size="30" required="true" />
+
+                    <!-- Login Button -->
+                    <h:outputText /> <!-- empty cell for spacing -->
+                    <h:commandButton id="btnLoginId" value="#{msg['secure.signin']}" 
+                        action="#{LoginBean.logintobanque}"
+                        style="width:150px;height:30px;color:white;
+                               background: linear-gradient(to bottom, #7abcff 0%, #60abf8 44%, #4096ee 100%);
+                               border:none; cursor:pointer;" />
+
+                </h:panelGrid>
+            </h:form>
+
+            <!-- Error messages -->
+            <div style="text-align:center; margin-top:10px;">
+                <p:messages id="messages" autoUpdate="true" closable="true" style="color:red" />
+            </div>
+        </p:panel>
+    </div>
+
+</h:body>
+</html>

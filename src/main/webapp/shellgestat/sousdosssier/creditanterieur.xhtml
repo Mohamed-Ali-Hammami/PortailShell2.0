@@ -1,0 +1,233 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"
+		charset="UTF-8"></meta>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<title>Shell-Sejoumi</title>
+
+</h:head>
+<h:body>
+
+	<div align="center">
+	 
+			<p:focus for="credits:idcreditant" />
+
+		<fieldset style="margin-bottom: 20px; background-color: #eeeec6;">
+			<legend>
+				<b> <h:outputText value="Saisie credit anterieur client" />
+				</b>
+
+			</legend>
+		 
+			<p:remoteCommand name="refreshFootercreditant" update="credits:ttccredit" />			 
+			  
+			  
+			  <p:commandLink onclick="PF('carDialog3').show();" process="@this"
+					update="dataTable4">
+					<p:graphicImage url="/images/bubble.png" style="width:50px" />
+				</p:commandLink>
+				
+				
+				<p:dialog widgetVar="carDialog3" styleClass="dialog"  
+					header="Liste des Clients" closeOnEscape="true" closable="true"
+					draggable="true"
+					style="margin-top: 0px;
+                     margin-right: 20px; margin-bottom: 15px; margin-left: 5px;"
+					  height="300" width="800">
+					<ui:insert name="menu">
+						<ui:include src="listclient2.xhtml" />
+					</ui:insert>
+				</p:dialog>
+			
+			<p:dataTable
+			scrollable="true" scrollHeight="280"  rowIndexVar="rowId"
+			 id="credits" var="a"  value="#{CaisseBeans.listCreditanterieur}"  editable="true"
+				editMode="cell"
+				widgetVar="articlecreditanterieur" 
+				emptyMessage="aucune ligne dans la base">
+
+			 
+	                  
+				 
+				
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b" value="Code" />
+					</f:facet>
+					
+				 
+							 
+							
+						<h:inputText value="#{a.client.code}"
+						valueChangeListener="#{CaisseBeans.handleChangeclient2}"
+						rendered="#{a.client!=null}" id="idcreditant2" onkeyup="nextscredita(this);"
+						style="background-color:transparent;border:none;">
+						<p:ajax update="nomclient" event="change" process="@this"
+							partialSubmit="true">
+
+						</p:ajax>
+						<f:attribute name="test" value="#{rowId}" />
+					</h:inputText>
+					<h:inputText value="#{CaisseBeans.id}" id="idcreditant" styleClass="creditant"
+						onkeyup="nextscredita(this);" rendered="#{a.client==null}"
+						style="background-color:transparent;border:none;">
+						<p:ajax update="nomclient" vent="change"
+							listener="#{CaisseBeans.updatenomclient2}" process="@this"
+							partialSubmit="true">
+
+						</p:ajax>
+						<f:attribute name="test" value="#{rowId}" />
+					</h:inputText> 
+				</p:column>
+                     
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b" value="nom" />
+					</f:facet>
+					
+						
+						 
+							<h:outputText style="font-size:12px ;color:#483d8b" id="nomclient"
+						value="#{a.client.nom}"  styleClass="50" />
+						 
+				</p:column> 
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b"
+							value="Montant" />
+					</f:facet>
+					 
+						<!--  	<h:inputText value="#{a.montant}" onkeyup="nextscredit2a(this)"
+						style="background-color:transparent;border:none;">
+								<p:ajax event="change"
+									listener="#{CaisseBeans.updatemontantcreditant}" process="@this"
+									  oncomplete="refreshFootercreditant();"
+									partialSubmit="true" />
+
+							</h:inputText>-->
+							<h:panelGroup id="ccc">
+					 <h:inputText value="#{a.montants}"
+							valueChangeListener="#{CaisseBeans.updatemontantcreditant1}"
+							rendered="#{a.montant !=0}" id="mca2"
+							onkeyup="nextscredit2a(this);"  
+							style="background-color:transparent;border:none;">
+							<p:ajax update="ccc" event="change" process="@this" oncomplete="refreshFootercreditant();"
+								partialSubmit="true">
+							</p:ajax>
+							<f:attribute name="test" value="#{rowId}" />
+						</h:inputText>
+						<h:inputText value="#{a.montant}" id="mca1"
+							onkeyup="nextscredit2a(this);"   styleClass="inpdepense"
+							rendered="#{a.montant==0}"
+							style="background-color:transparent;border:none;">
+							<p:ajax update="ccc" listener="#{CaisseBeans.updatemontantcreditant}"
+								process="@this" partialSubmit="true" oncomplete="refreshFootercreditant();">
+							</p:ajax>
+						 <f:attribute name="test" value="#{rowId}" />
+						</h:inputText>    
+						</h:panelGroup>   
+						 
+				</p:column>
+				
+				 
+
+                  
+				<f:facet name="footer">
+					   TOTAL  :<h:outputText id="ttccredit"
+						value="#{CaisseBeans.totals}" size="8" />
+				</f:facet>
+
+			</p:dataTable> 
+			<h:panelGrid columns="2">
+			<b><h:outputText value="Pour supprimer un credit anterieur il faut mettre le montant a zero " style="font-size:20px ;color:#483d8b"/></b>
+
+			 
+			<p:commandButton value="Valider" update="totalCreditAnterieurs totalcaisses"
+				style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);"
+				ajax="false" action="#{CaisseBeans.savecreditant}" />
+
+</h:panelGrid>
+
+
+	<script>
+	function initcreditant() {
+		var index = 0;
+         $('.creditant').eq(index).focus();
+	}
+				function nextscredita(input) {
+					$(document).keypress(
+							function(event) {
+								var keycode = (event.keyCode ? event.keyCode
+										: event.which);
+								if (keycode == '13') {
+									if (input.value != "") {
+										//$(input).closest('td').next('td').find('input[type=text]').focus();	 
+										$(input).closest('td').nextAll().eq(1)
+												.find('input').focus()
+
+										$(input).closest('td').nextAll().eq(1)
+												.find('input').select();
+										return false;
+									}
+									/*
+									if (input.value == "") {
+										alert("Code client inexistant");
+									}
+									*/
+
+								}
+
+							});
+				}
+
+				function nextscredit2a(input) {
+					$(document)
+							.keypress(
+									function(event) {
+										var keycode = (event.keyCode ? event.keyCode
+												: event.which);
+										if (keycode == '13') {
+											$(input).closest('tr').next('tr')
+													.find('input[type=text]')
+													.first().focus();
+											return false;
+
+										}
+
+									});
+				}
+
+				function nextscredit3a(input) {
+
+					$(document).keypress(
+							function(event) {
+								var keycode = (event.keyCode ? event.keyCode
+										: event.which);
+								if (keycode == '13') {
+									$(input).closest('td').next('td').find(
+											'input[type=text]').focus();
+									$(input).closest('td').next('td').find(
+											'input[type=text]').select();
+
+								}
+
+							});
+				}
+			</script>
+
+		</fieldset>
+
+
+
+
+	</div>
+
+
+</h:body>
+</html>

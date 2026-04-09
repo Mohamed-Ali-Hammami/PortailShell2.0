@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	 
+</h:head>
+
+<h:body style="background-color:#CECECE">
+	<h:panelGroup
+		rendered="#{LoginBean.user.isAdmin()==true || LoginBean.user.isSecretaire()==true}">
+		<br />
+		<div align="center">
+			<p:growl id="msgs" showDetail="true" />
+			<p:panel id="basic"
+				style="min-height:900px;margin-left: 100px;margin-right: 50px">
+				<ui:insert name="menu">
+					<ui:include src="/shellpaie/Headerpaie.xhtml" />
+				</ui:insert>
+				<p:panel >
+					<h:form>
+                         <br/>
+                          <br/>
+                           <br/>
+                            <br/>
+                             <br/>
+                              <br/>
+                               <br/>
+                                <br/>
+                                 <br/>
+                                  <br/>
+                                   <br/>
+                                    <br/>
+                               <br/>
+                                <br/>
+                                 <br/>
+                                  <br/>
+                                   <br/>
+                                   
+                          
+					</h:form>
+				</p:panel>
+			</p:panel>
+
+		</div>
+	</h:panelGroup>
+	<h:panelGroup
+		rendered="#{LoginBean.user.isAdmin()==false and LoginBean.user.isSecretaire()==false}">
+		<ui:insert name="menu">
+			<ui:include src="/shellpaie/unsecure/accessDenied.xhtml" />
+		</ui:insert>
+	</h:panelGroup>
+</h:body>
+</html>

@@ -1,0 +1,262 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head><h:body onload="init()" style="width:98%;margin:auto;" >
+
+
+	<p:panel style="width:100%;margin:auto;min-height:900px;">
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Header.xhtml" />
+		</ui:insert>
+		<ui:insert name="menu">
+			<ui:include src="/SHELL-shop/Headershop.xhtml" />
+		</ui:insert>
+		<p:panel id="basic2" closable="true"
+			style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(../2.png)">
+ 
+			 
+                  <h:form id="f">
+			    <div align="center">
+			    
+			    <h:panelGrid columns="2">
+			    <b><h:outputText value="DATE/" style="font-size:16px"  /></b>
+			        <p:calendar value="#{VenteBean.date}" required="true" requiredMessage="entrer date"/>
+			    </h:panelGrid>
+			    </div>
+			    
+				<br/><br/>
+					 
+				<p:commandLink onclick="PF('produitss').show();PF('table').clearFilters()" process="@this" update="multipleDT:globalFilter" >
+					<p:graphicImage url="/images/bubble.png"
+						style="width:50px" />
+				</p:commandLink>
+				
+					<p:dialog header="Liste Produit" widgetVar="produitss" styleClass="dialog"
+					closeOnEscape="true" closable="true" draggable="true"
+					id="produitsss" height="300" width="1100" position="top center">
+
+                    <ui:insert name="menu">
+						<ui:include src="/SHELL-shop/sousdossier/listProduittransfert.xhtml" />
+					</ui:insert>
+				</p:dialog>
+				 
+				<p:dataTable id="produit" var="p" editable="true" scrollable="true" scrollHeight="300"
+					value="#{VenteBean.listLignetransfert}" editMode="cell"
+					widgetVar="article"   rowIndexVar="rowId"
+					emptyMessage="aucune ligne dans la base">
+
+
+					<p:column id="myid">
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="CODE" />
+						</f:facet>
+                       <h:inputText value="#{p.produit.code}" styleClass="scode"
+							 onchange="javascript:this.value=this.value.toUpperCase();"
+							rendered="#{p.produit!=null}" id="id2"
+							onkeyup="nexts(this);"  
+							style="background-color:transparent;border:none;">
+							<p:ajax   event="change" process="@this" update="nom"
+								partialSubmit="true">
+
+							</p:ajax>
+							<f:attribute name="test" value="#{rowId}" />
+						</h:inputText>
+					<p class="selected">	<h:inputText value="#{p.libelle}" id="id"
+							  styleClass="inpdepense"
+							rendered="#{p.produit==null}"
+							style="background-color:transparent;border:none;">
+							<p:ajax update="nom" listener="#{VenteBean.updatenom111}"
+							  	process="@this" partialSubmit="true" 
+							  	oncomplete="init2();">
+							</p:ajax>
+							<p:ajax event="focus"   listener="#{VenteBean.getCodefocus}"  process="@this" partialSubmit="true" />
+								 <f:attribute name="test" value="#{rowId}"/>					 
+							
+						</h:inputText></p>
+					</p:column>
+
+
+					<p:column>  
+
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="LIBELLE" />
+						</f:facet>
+						 <h:outputText value="#{p.produit.nom}" styleClass="init2"  id="nom" style="background-color:transparent;border:none;"/>
+
+					</p:column>
+
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="QUANTITE" />
+						</f:facet>
+					  <h:inputText value="#{p.quantites}" rendered="#{p.quantite !=0 }" valueChangeListener="#{VenteBean.updateqte}"  style="background-color:transparent;border:none;" 
+								  onkeyup="nexts2(this);" styleClass="inputs">
+								 <p:ajax event="focus"   listener="#{VenteBean.getCodefocus}"  process="@this" partialSubmit="true" />
+                          <f:attribute name="test" value="#{rowId}" />
+                           </h:inputText>
+                           
+                            <h:inputText value="#{p.quantite}" rendered="#{p.quantite ==0 }"   style="background-color:transparent;border:none;" 
+								styleClass="qte" id="qt" onkeyup="nexts2(this);" >
+								<p:ajax listener="#{VenteBean.updatecodes}"  />
+								<f:attribute name="test" value="#{rowId}" />
+                           </h:inputText>
+
+							 
+					</p:column>
+					 
+				</p:dataTable>
+				 
+				<div align="center">
+				  
+							<br/><br/> 
+				 
+				<p:commandButton value="Valider" ajax="false" styleClass="button"
+										style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+										action="#{VenteBean.saveTransfert}" />
+				</div>
+				<script>
+				 document.addEventListener("keydown", function(event) {
+		            	if( event.altKey==true){
+		            		
+		            		if(event.which==76){
+		            			PF('produitss').show();
+								PF('table').clearFilters();
+		            		}
+		            	}
+		              });
+		            
+		            document.addEventListener("keydown", function(event) {
+		            	if( event.ctrlKey==true){
+		            		
+		            		if(event.which==113){
+		            			 
+		            			var index = 0;
+								$('.inputs').eq(index).focus();
+								$('.inputs').eq(index).select();
+		            		}
+		            	}
+		              });
+		            
+		            document.addEventListener("keydown", function(event) {
+		            	if( event.ctrlKey==true){
+		            		
+		            		if(event.which==112){
+		            			 
+		            			var index = 0;
+								$('.scode').eq(index).focus();
+								$('.scode').eq(index).select();
+		            		}
+		            	}
+		              });
+		            
+		            document.addEventListener("keydown", function(event) {
+		            	if( event.ctrlKey==true){
+		            		
+		            		if(event.which==123){
+		            			 
+		            			pressenter();
+		            		}
+		            	}
+		              });
+		            
+		            function pressenter() {
+						if (window.confirm('Vous etes sur de valider le bon ?')) {
+							$('.button').click();
+							//$('.typepayement').focus();
+							return true;
+
+						} else {
+							return false;
+						}
+
+					}
+							
+				
+				function init() {
+					 var index = 0; 
+					$('.inpdepense').eq(index).focus();
+				}
+				
+				 
+				
+				function init2() {		 
+					    var index = 0; 
+						$('.qte').eq(index).focus(); 
+						$('.qte').eq(index).select(); 
+						return false;
+				}
+				 
+				
+				function nexts(input) {
+					$(document)
+							.keypress(
+									function(event) {
+										var keycode = (event.keyCode ? event.keyCode
+												: event.which);
+										if (keycode == '13') {
+											if (input.value != "") {
+												$(input).closest('td')
+												.nextAll().eq(1)
+												.find('input')
+												.focus();
+										$(input).closest('td').next(
+												'td').find(
+												'input[type=text]')
+												.select();
+											}
+											return false;
+										}
+
+									});
+				}
+				
+				function nexts2(input) {
+					$(document)
+							.keypress(
+									function(event) {
+										var keycode = (event.keyCode ? event.keyCode
+												: event.which);
+										if (keycode == '13') {
+											$(input).closest('tr').next(
+													'tr').find(
+													'input[type=text]')
+													.first().focus();
+											$(input).closest('tr').next(
+													'tr').find(
+													'input[type=text]')
+													.first().select();
+											return false;
+
+										}
+
+									});
+				}
+
+				
+			 	</script>
+			 	
+			 	<style type="text/css">
+				 .dialog{
+    position: fixed;
+    top: 20% !important;
+ 
+ }
+ 
+  .dialog2{
+    position: fixed;
+    top: 30% !important;
+ left:40% !important;
+ }
+    </style>
+				</h:form> 
+		 </p:panel>
+		 </p:panel>
+		 </h:body>
+		 </html>
