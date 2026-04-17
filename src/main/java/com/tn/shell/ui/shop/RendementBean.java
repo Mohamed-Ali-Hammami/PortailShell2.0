@@ -147,13 +147,13 @@ public class RendementBean {
 			else if (moi == 8)
 				m = "aout";
 			else if (moi == 9)
-				m = "S�ptembre";
+				m = "SÃ©ptembre";
 			else if (moi == 10)
 				m = "Octobre";
 			else if (moi == 11)
 				m = "Novembre";
 			else if (moi == 12)
-				m = "D�cembre";
+				m = "DÃ©cembre";
 			return m;
 		}
 	 
@@ -174,8 +174,6 @@ public class RendementBean {
 		//Pointage p=servicePointage.getMaxPointage();		
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         LocalDate  d1=LocalDate.parse(sf.format(date1));
-	  System.out.println("\n mois"+d1.getMonthOfYear());
-		 System.out.println("\n year"+d1.getYear());
 		 
 		DecimalFormat df = new DecimalFormat("0.000");
 		DecimalFormat df2 = new DecimalFormat("0"); 
@@ -238,8 +236,6 @@ public class RendementBean {
 		
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         LocalDate  d1=LocalDate.parse(sf.format(date1));
-	  System.out.println("\n mois"+d1.getMonthOfYear());
-		 System.out.println("\n year"+d1.getYear());
 		 
 		double totalrecette = serviceRendement.getRecettebetwendates(s2.format(date1), s2.format(date2),TypeLavage.Vidange);
 		rapport.setRecette(df.format(totalrecette));		 
@@ -395,26 +391,22 @@ public class RendementBean {
 			d.setMonth(date1.getMonth());
 			d.setYear(date1.getYear());
 			String ds = sf.format(d);
-			System.out.println(" dates" + ds);
 			ld.add(ds); 
 		} 
 		employee=serviceEmployee.getEmployeeByNom(nom);	
 		
 		if(employee==null) { 
 			 try {
-			System.out.println("\n\n\n employee  null");
 			listemployee = new ArrayList<Employee>();		 
 			if (lavagvidange.equals("Lavage"))
 				listemployee = serviceEmployee.getEmployeeparfonction("LAVEUR");
 			else
 				listemployee = serviceEmployee.getEmployeeparfonction("VIDANGEUR");
 			
-			System.out.println("\n\n\n listemployee  size "+listemployee.size());
 			for (Employee e : listemployee) {				
 				double totalv=0;
 				double totals=0;
 				double totalmv=0;
-				System.out.println("\n\n\n employee  nom "+e.getNom());
 				listrendement = new ArrayList<Rendement>();
 				int i=1;
 				for (String s : ld) {				 
@@ -423,7 +415,6 @@ public class RendementBean {
 					double montantv=0;					 
 					 qte=serviceRendement.getnbvBydate(s, e);
 					 montantv=serviceRendement.getmontantvBydate(s, e);	 
-					 System.out.println("\n\n\n "+qte+"    "+montantv);
 	                   if(qte==0 )
 	                	   r.setTest("true");
 						r.setNbvoitures(df.format(qte));						  
@@ -447,7 +438,6 @@ public class RendementBean {
 					e.setListrendement(listrendement);
 				    
 				//}
-				 System.out.println("\n\n\n listemployee"+listemployee.size());
 					
 			}
 			Collections.sort(listemployee);
@@ -534,7 +524,6 @@ public class RendementBean {
 		totalv=0;totals=0;
 		DecimalFormat df = new DecimalFormat("#.000");
 		
-		System.out.println("\n\n\n\n ooook \\n\\n\\n\\n");
 		for(Rendement f:selectedrendement) {
 		totalv = totalv+f.getNbvoiture();		 
 		totals=totals+f.getNbsemi();		 
@@ -543,6 +532,10 @@ public class RendementBean {
 		FacesMessage msg = new FacesMessage("date Selectionnee",
 				"" + ((Rendement) event.getObject()).getDates());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onRowSelect(SelectEvent event) {
+		onrowSelect(event);
 	}
 	public ServiceEmployee getServiceEmployee() {
 		return serviceEmployee;

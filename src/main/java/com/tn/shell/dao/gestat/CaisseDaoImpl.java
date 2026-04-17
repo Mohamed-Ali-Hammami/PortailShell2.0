@@ -43,13 +43,11 @@ List<Caisse> result = em.createQuery("SELECT a FROM Caisse a  where a.statut = :
 				
 				.setParameter("statut", Statut.ACTIF).setParameter("d1", d1).setParameter("d2", d2).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet caisse trouvé " + "\n\n\n");
 		return 
 				
 				result;}
 		else {
 			
-			System.out.println("pas de caisse avec ces critères" +" "+ "\n\n\n");
 			return null;}
 	}
 	@Transactional
@@ -58,13 +56,11 @@ List<Caisse> result = em.createQuery("SELECT a FROM Caisse a  where a.statut = :
 				
 				.setParameter("statut", Statut.ACTIF).setParameter("date", date).setParameter("poste", poste).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet caisse trouvé " + "\n\n\n");
 		return 
 				
 				result.get(0);}
 		else {
 			
-			System.out.println("pas de caisse avec ces critères" +date+" "+poste+ "\n\n\n");
 			return null;}
 	}
 	public Caisse getCaissebydates(String date) {
@@ -72,7 +68,6 @@ List<Caisse> result = em.createQuery("SELECT a FROM Caisse a  where a.statut = :
 				
 				.setParameter("statut", Statut.ACTIF).setParameter("date", date).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 		return 
 				
 				result.get(0);}
@@ -93,10 +88,8 @@ List<Caisse> result = em.createQuery("SELECT a FROM Caisse a  where a.statut = :
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0);
 		} else {
-			System.out.println("\n\nl  objet Caisse n exsite pas\n\n");
 			return null;
 		}
 	}

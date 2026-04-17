@@ -1,0 +1,148 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout shop-shell-fragment">
+ <h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+		<ui:insert name="menu">
+			
+		</ui:insert>
+		<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+			<h:form id="f">
+				<h:panelGroup layout="block" style="text-align:center;">
+					 
+					<h:panelGrid columns="2">
+					 
+                            <h:outputText value="Date" style="font-size:16px" />
+                            <p:calendar value="#{TicketBean.date}" id="popup">
+                             <f:ajax listener="#{TicketBean.getTicketbydate}"
+								render="ticket"   />
+                            </p:calendar>
+						
+					</h:panelGrid>
+					
+					 
+					<br />
+					<br />
+                            <p:dataTable id="ticket" value="#{TicketBean.listticket}" var="t" selection="#{TicketBean.selectedTicket}"
+                             selectionMode="single"  rowKey="#{t.id}">
+                            
+                            <p:ajax event="rowSelect" listener="#{TicketBean.getVentebyTicket}" update=":f:vente"/>
+                           
+                             
+
+								  <p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="N° Ticket" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:12px ;" value="#{t.id}"
+										 />
+								</p:column>
+								
+								 <p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Montant" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:12px ;" value="#{t.totalttc}"
+										 />
+								</p:column>
+								
+								 <p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Heure" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:12px ;" value="#{t.heure}"
+										 />
+								</p:column>
+                                
+								 
+                            </p:dataTable>
+					 <br/><br/>
+						<h:panelGroup layout="block" style="text-align:center;">
+							 
+                       <p:dataTable id="vente" value="#{TicketBean.listelignevente}" var="p">
+                      <p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Code" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:12px ;"
+										value="#{p.produit.code}"  />
+								</p:column>
+                              
+								<p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="LIBELLE" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:12px ;" value="#{p.produit.nom}"
+										 />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Qte" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:12px ;" value="#{p.quantite}"
+										  />
+								</p:column>
+                                    
+								 <p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Prix.U" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:12px ;" value="#{p.produit.prixventes}"
+										 />
+								</p:column>
+								
+								 <p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Montant" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:12px ;" value="#{p.totalttc}"
+										 />
+								</p:column>
+                                
+								 
+								  
+							 
+						</p:dataTable> <br/>
+						 
+						  
+						</h:panelGroup>
+						<br />
+						 
+						 
+				 
+				</h:panelGroup>
+			</h:form>
+		 </h:panelGroup>
+		 </h:panelGroup>
+		 
+    </h:panelGroup>
+</ui:composition>

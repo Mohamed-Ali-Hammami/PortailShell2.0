@@ -3,6 +3,7 @@ package com.tn.shell.ui.paie;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -172,23 +173,23 @@ private boolean responsableShop;
 	@ManagedProperty(value = "#{ServiceLigneGestion}")
 	ServiceLigneGestion ligneGestion;
 
-	@PostConstruct
+@PostConstruct
 	public void init() {
-		Date d = new Date();
-		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		dates = s.format(d);
-		listMois.add("Janvier");
-		listMois.add("Fevrier");
-		listMois.add("Mars");
-		listMois.add("Avril");
-		listMois.add("Mai");
-		listMois.add("Juin");
-		listMois.add("Juillet");
-		listMois.add("aout");
-		listMois.add("Septembre");
-		listMois.add("Octobre");
-		listMois.add("Novembre");
-		listMois.add("Decembre");
+		try {
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.YEAR, resolveDefaultPaieYear());
+			calendar.set(Calendar.MONTH, resolveDefaultPaieMonth() - 1);
+			calendar.set(Calendar.DAY_OF_MONTH, 1);
+			SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
+			dates = s.format(calendar.getTime());
+			mois();
+			Annee();
+			annee = String.valueOf(resolveDefaultPaieYear());
+			moi = getMoisbyIntger(resolveDefaultPaieMonth());
+		} catch (Exception e) {
+			System.err.println("Error in PaieBean.init(): " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 	public String impressionPhotos(){
@@ -268,8 +269,8 @@ private boolean responsableShop;
 
 		Annee();
 		mois();
-		Date d = new Date();
-		moi = getMoisbyIntger(d.getMonth() + 1);
+		annee = String.valueOf(resolveDefaultPaieYear());
+		moi = getMoisbyIntger(resolveDefaultPaieMonth());
 		return SUCCESS;
 	}
 
@@ -302,7 +303,6 @@ private boolean responsableShop;
 
 			}
 		} catch (Exception ee) {
-			ee.printStackTrace();
 		}
 		listPaie = new ArrayList<Paie>();
 		List<Lignegestion> listGestion = new ArrayList<Lignegestion>();
@@ -459,9 +459,12 @@ private boolean responsableShop;
 
 	public void mois() {
 		listMois = new ArrayList<String>();
-		Date d = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, resolveDefaultPaieYear());
+		calendar.set(Calendar.MONTH, resolveDefaultPaieMonth() - 1);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		dates = s.format(d);
+		dates = s.format(calendar.getTime());
 		listMois.add("Janvier");
 		listMois.add("Fevrier");
 		listMois.add("Mars");
@@ -474,6 +477,7 @@ private boolean responsableShop;
 		listMois.add("Octobre");
 		listMois.add("Novembre");
 		listMois.add("Decembre");
+		moi = getMoisbyIntger(resolveDefaultPaieMonth());
 	}
 
 	private String getMoisbyIntger(Integer moi) {
@@ -639,9 +643,7 @@ private boolean responsableShop;
 	private void Annee() {
 		List<Annee> l = new ArrayList<Annee>();
 		listannee = new ArrayList<String>();
-		Date d = new Date();
-		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		annees = s.format(d).substring(6);
+		annees = String.valueOf(resolveDefaultPaieYear());
 		Annee a = serviceAnnee.findbyDesignation(annees);
 		if (a == null) {
 			Annee e = new Annee();
@@ -651,6 +653,65 @@ private boolean responsableShop;
 		l = serviceAnnee.getAll();
 		for (Annee aa : l)
 			listannee.add(aa.getAnnee());
+		annee = annees;
+	}
+
+	public void getMoisByAnnees(AjaxBehaviorEvent event) {
+		listMois = new ArrayList<String>();
+		listPaie = new ArrayList<Paie>();
+		if (annees == null || annees.trim().isEmpty()) {
+			return;
+		}
+		List<Pointage> pointages = servicePointage.getPointageByAnnee(Integer.parseInt(annees));
+		if (pointages != null) {
+			for (Pointage pointage : pointages) {
+				String monthLabel = getMoisbyIntger(pointage.getMois());
+				if (monthLabel != null && !monthLabel.isEmpty() && !listMois.contains(monthLabel)) {
+					listMois.add(monthLabel);
+				}
+			}
+		}
+		mois = null;
+	}
+
+	public void getPaiBymoiAndAnnee(AjaxBehaviorEvent event) {
+		listPaie = new ArrayList<Paie>();
+		if (annees == null || annees.trim().isEmpty()) {
+			return;
+		}
+		int selectedYear = Integer.parseInt(annees);
+		int selectedMonth = 0;
+		if (mois != null && !mois.trim().isEmpty()) {
+			selectedMonth = getMoisbyString(mois);
+		}
+		if (selectedMonth > 0) {
+			listPaie = servicePaie.getPaieByAnneeAndMois(selectedYear, selectedMonth);
+		} else {
+			listPaie = servicePaie.getPaieByAnnee(selectedYear);
+		}
+		if (listPaie == null) {
+			listPaie = new ArrayList<Paie>();
+			return;
+		}
+		for (Paie paie : listPaie) {
+			paie.setListGestion(serviceLigneGestionpaie.getlistbypaie(paie));
+		}
+	}
+
+	private int resolveDefaultPaieYear() {
+		Pointage latestPointage = servicePointage.getMaxPointage();
+		if (latestPointage != null && latestPointage.getAnnee() != null) {
+			return latestPointage.getAnnee();
+		}
+		return Calendar.getInstance().get(Calendar.YEAR);
+	}
+
+	private int resolveDefaultPaieMonth() {
+		Pointage latestPointage = servicePointage.getMaxPointage();
+		if (latestPointage != null && latestPointage.getMois() != null) {
+			return latestPointage.getMois();
+		}
+		return Calendar.getInstance().get(Calendar.MONTH) + 1;
 	}
 
 	/***
@@ -671,7 +732,6 @@ private boolean responsableShop;
 			getServiceGestion().update(avance);
 			return SUCCESS;
 		} catch (DataAccessException e) {
-			e.printStackTrace();
 		}
 		return ERROR;
 	}

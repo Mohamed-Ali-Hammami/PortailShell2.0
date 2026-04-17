@@ -32,10 +32,8 @@ public class AnneeDaoImpl implements AnneeDAO {
 		 List<Annee> AnneeListem=em.createQuery("SELECT u FROM  Annee u where u.annee = :designation",Annee.class).setParameter("designation", designation).getResultList();
 	        
 	        if (AnneeListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return AnneeListem.get(0);}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}   
 	}
 	@Transactional

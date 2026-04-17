@@ -35,10 +35,8 @@ public class ProduitDaoImpl implements ProduitDAO {
 				 .getResultList();
 	        
 	        if (VheculeListem.size() > 0){
-	        	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
 	            return VheculeListem;}
 	        else{
-	        	System.out.println("\n\nl  objet Vhecule n exsite pas\n\n");
 	              return new ArrayList<Produit>();
 	        }
 	}
@@ -48,10 +46,8 @@ public class ProduitDaoImpl implements ProduitDAO {
 		 List<Produit> VheculeListem=em.createQuery("SELECT c FROM  Produit c where c.id = :nom and c.statut = :statut",Produit.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (VheculeListem.size() > 0){
-	        	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
 	            return VheculeListem.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet Vhecule n exsite pas\n\n");
 	            return null;}   
 	}
 	
@@ -60,10 +56,8 @@ public class ProduitDaoImpl implements ProduitDAO {
 		 List<Produit> VheculeListem=em.createQuery("SELECT c FROM  Produit c where c.codeshop = :nom and c.statut = :statut",Produit.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (VheculeListem.size() > 0){
-	        	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
 	            return VheculeListem.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet Vhecule n exsite pas\n\n");
 	            return null;}   
 	}
 	
@@ -71,10 +65,8 @@ public class ProduitDaoImpl implements ProduitDAO {
 		List<Produit> VheculeListem=em.createQuery("SELECT c FROM  Produit c where c.nom = :nom and c.statut = :statut",Produit.class).setParameter("statut", Statut.ACTIF).setParameter("nom", des).getResultList();
         
         if (VheculeListem.size() > 0){
-        	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
             return VheculeListem.get(0);}
         else{
-        	System.out.println("\n\nl  objet Vhecule n exsite pas\n\n");
             return null;}   
 	}
 	
@@ -82,10 +74,8 @@ public class ProduitDaoImpl implements ProduitDAO {
 		List<Produit> VheculeListem=em.createQuery("SELECT c FROM  Produit c where c.code = :nom and c.statut = :statut",Produit.class).setParameter("statut", Statut.ACTIF).setParameter("nom", des).getResultList();
         
         if (VheculeListem.size() > 0){
-        	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
             return VheculeListem.get(0);}
         else{
-        	System.out.println("\n\nl  objet Vhecule n exsite pas\n\n");
             return null;}   
 	}
 	@Transactional
@@ -95,7 +85,6 @@ List<Produit> VheculeListem=em.createQuery("SELECT c FROM  Produit c where c.fam
 .getResultList();
         
         if (VheculeListem.size() > 0){
-        	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
             return VheculeListem;}
         else{
             return new ArrayList<Produit>();}  
@@ -108,7 +97,6 @@ List<Produit> VheculeListem=em.createQuery("SELECT c FROM  Produit c where c.fam
 .getResultList();
         
         if (VheculeListem.size() > 0){
-        	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
             return VheculeListem;}
         else{
             return new ArrayList<Produit>();}  
@@ -121,7 +109,6 @@ List<Produit> VheculeListem=em.createQuery("SELECT c FROM  Produit c where c.fam
 .getResultList();
         
         if (VheculeListem.size() > 0){
-        	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
             return VheculeListem;}
         else{
             return new ArrayList<Produit>();}  
@@ -136,7 +123,6 @@ List<Produit> VheculeListem=em.createQuery("SELECT c FROM  Produit c where c.fam
 .getResultList();
         
         if (VheculeListem.size() > 0){
-        	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
             return VheculeListem;}
         else{
             return new ArrayList<Produit>();}  
@@ -196,7 +182,6 @@ List<Produit> VheculeListem=em.createQuery("SELECT c FROM  Produit c where c.fam
 			return fis.get(0);
 
 		} else {
-			System.out.println("le produit  n exsite pas  \n\n\n\n");
 			return null;
 		}
 
@@ -213,7 +198,6 @@ List<Produit> VheculeListem=em.createQuery("SELECT c FROM  Produit c where c.fam
 			return fis.get(0);
 
 		} else {
-			System.out.println("le produit  n exsite pas  \n\n\n\n");
 			return null;
 		}
 	}

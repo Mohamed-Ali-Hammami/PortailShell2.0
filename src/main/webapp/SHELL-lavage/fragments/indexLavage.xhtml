@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout lavage-shell-fragment">
+		<p:growl id="msgs" showDetail="true" />
+		<h:form>
+			<h:panelGroup layout="block" style="text-align:left;">
+				<b><h:outputText value="Services en cours" style="font-size:14px ;color:black;" /></b>
+			</h:panelGroup>
+
+			<p:panel id="vidange" header="Vidange" toggleable="true" closable="true" toggleSpeed="500" closeSpeed="500" widgetVar="panel" style="margin-bottom:20px">
+				<p:ajax event="close" listener="#{ServiceLavageBean.onClose}" />
+				<p:ajax event="toggle" listener="#{ServiceLavageBean.onToggle}" />
+
+				<p:dataGrid var="r" value="#{ServiceLavageBean.listRendement}" styleClass="ui-dataGrid-no-border" rowIndexVar="rowid" columns="4" id="rendement" style="width:100%">
+					<p:commandLink action="#{ServiceLavageBean.updateHitoric}" ajax="false" process="@this">
+						<h:panelGrid columns="2" cellpadding="10" style="border: groove; padding-right: 1px;">
+							<h:graphicImage value="data:image/jpg;base64,#{r.detail}" style="max-width: 120px; max-height: 150px;" />
+							<h:panelGrid columns="1" cellpadding="10">
+								<h:outputText value="#{r.marque}  #{r.model}" style="font-size:10px ;color:black;" />
+								<h:outputText value="#{r.matricule}" style="font-size:10px ;color:black;" />
+								<h:outputText value="#{r.service}" style="font-size:10px ;color:black;" />
+								<h:panelGrid columns="2">
+									<h:outputText value="#{r.laveur}" style="font-size:10px ;color:black;" />
+									<h:graphicImage width="70px;" value="data:image/jpg;base64,#{r.employee.photos}" style="max-width: 120px; max-height: 130px;" />
+								</h:panelGrid>
+								<h:outputText value="#{r.heure_entree}" style="font-size:10px ;color:black;" />
+							</h:panelGrid>
+						</h:panelGrid>
+						<f:setPropertyActionListener value="#{r}" target="#{ServiceLavageBean.selectedRendement}" />
+					</p:commandLink>
+				</p:dataGrid>
+			</p:panel>
+
+			<p:panel id="lavage" header="Lavage" toggleable="true" closable="true" toggleSpeed="500" closeSpeed="500" widgetVar="panel" style="margin-bottom:20px">
+				<p:ajax event="close" listener="#{ServiceLavageBean.onClose}" />
+				<p:ajax event="toggle" listener="#{ServiceLavageBean.onToggle}" />
+
+				<p:dataGrid var="r" value="#{ServiceLavageBean.listRendementLav}" styleClass="ui-dataGrid-no-border" rowIndexVar="rowid" columns="4" id="rendementlav" style="width:100%">
+					<p:commandLink action="#{ServiceLavageBean.updateHitoric}" ajax="false" process="@this">
+						<h:panelGrid columns="2" style="border: groove; padding-right: 1px;">
+							<h:graphicImage value="data:image/jpg;base64,#{r.detail}" style="max-width: 120px; max-height: 150px;" />
+							<h:panelGrid columns="1" cellpadding="10">
+								<h:outputText value="#{r.marque}  #{r.model}" style="font-size:10px ;color:black;" />
+								<h:outputText value="#{r.matricule}" style="font-size:10px ;color:black;" />
+								<h:outputText value="#{r.service}" style="font-size:10px ;color:black;" />
+								<h:panelGrid columns="2">
+									<h:outputText value="#{r.laveur}" style="font-size:10px ;color:black;" />
+									<h:graphicImage width="70px;" value="data:image/jpg;base64,#{r.employee.photos}" style="max-width: 120px; max-height: 130px;" />
+								</h:panelGrid>
+								<h:outputText value="#{r.heure_entree}" style="font-size:10px ;color:black;" />
+								<p:graphicImage rendered="#{r.testDuree=='true'}" url="/SHELL-lavage/images/alerte.png" style="width:40" />
+							</h:panelGrid>
+						</h:panelGrid>
+						<f:setPropertyActionListener value="#{r}" target="#{ServiceLavageBean.selectedRendement}" />
+					</p:commandLink>
+				</p:dataGrid>
+			</p:panel>
+		</h:form>
+	
+    </h:panelGroup>
+</ui:composition>

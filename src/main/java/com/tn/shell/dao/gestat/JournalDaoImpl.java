@@ -118,7 +118,6 @@ public class JournalDaoImpl implements JournalDAO {
 				.createQuery("SELECT a FROM TransactionCredit a where   a.affecte = :aff", TransactionCredit.class)
 				 .setParameter("aff",false ).getResultList();
 		if(result.size()>0) {
-			System.out.println("\n\n\n resultat journal " +result.size());
 		return result;
 		}
 		return null;

@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/style.css" />
+
+	<h:form>
+		<p:growl id="messages" />
+
+		<p:menubar styleClass="shell-module-menubar" autoDisplay="true">
+			<p:menuitem icon="ui-icon-home" url="#{request.contextPath}/SHELL-lavage/index.xhtml" style="font-size:12px" />
+			<p:menuitem value="SERVICES EN COURS" style="font-size:12px" url="#{request.contextPath}/SHELL-lavage/index.xhtml?view=indexLavage" />
+			<p:menuitem value="MARQUE / MODELE" style="font-size:12px" url="#{request.contextPath}/SHELL-lavage/index.xhtml?view=allMarque" />
+			<p:menuitem value="AFFECTATION FILTRE" style="font-size:12px" url="#{request.contextPath}/SHELL-lavage/index.xhtml?view=affectationFiltreModel" />
+			<p:menuitem value="AFFECTATION HUILE" style="font-size:12px" url="#{request.contextPath}/SHELL-lavage/index.xhtml?view=affectationHuileModel" />
+			<p:menuitem value="HISTORIQUE SERVICES" style="font-size:12px" url="#{request.contextPath}/SHELL-lavage/index.xhtml?view=historiqueServices" />
+			<p:menuitem value="HISTORIQUE DU JOUR" style="font-size:12px" url="#{request.contextPath}/SHELL-lavage/index.xhtml?view=historiqueDujour" />
+			<p:menuitem value="RAPPORT" style="font-size:12px" url="#{request.contextPath}/SHELL-lavage/index.xhtml?view=rapport" />
+
+			<f:facet name="options">
+				<p:commandLink id="nonAjax" action="#{LoginBean.logout}" ajax="false" styleClass="shell-logout-link">
+					<p:graphicImage url="/images/logout.png" />
+					<h:outputText value="#{msg['logout.user']}" />
+				</p:commandLink>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+</ui:composition>

@@ -1,0 +1,95 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout shop-shell-fragment">
+ <h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+		<ui:insert name="menu">
+			
+		</ui:insert>
+		<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+			<h:form id="f">
+				<h:panelGroup layout="block" style="text-align:center;">
+					 
+					<h:panelGrid columns="3">
+						<h:outputText value="Numero Tickets" style="font-size:16px" />
+						<h:inputText value="#{VenteBean.numticket}" id="p" >
+							  <f:ajax listener="#{VenteBean.getticketbyId}"
+								render="imprimer msg"   />  
+						</h:inputText>
+
+						<p:commandButton title="imprimer" value="valider">
+							 
+							<p:printer target="imprimer"/>
+						 
+					</p:commandButton>
+					<br />
+					<br />
+                     </h:panelGrid>
+                     
+                      <p:messages id="msg" />
+					<p:outputPanel id="imprimer"> 
+					 
+						<h:panelGroup layout="block" style="text-align:center;">
+							<b><h:outputText
+									value="SHOP SHELL SIJOUMI"
+									style="font-size:20px" />   </b>
+
+
+						
+						<br />
+						 <table><tr><td>
+						<b><h:outputText value="Ticket N° :" style="font-size:16px"/></b></td>
+						<td><h:outputText value="#{VenteBean.ticket.id}"/></td></tr>
+						 <tr><td>
+						<b><h:outputText value="Date :" style="font-size:16px"/></b></td>
+						<td><h:outputText value="#{VenteBean.ticket.dates} a #{VenteBean.ticket.heure} "/> </td>
+						</tr>
+						 </table>
+						</h:panelGroup>
+						<h:panelGroup layout="block" style="text-align:center;">
+						<TABLE>
+						<tr>
+						<td><b><h:outputText value="Nom" style="font-size:12px"/></b></td>
+						<td><b><h:outputText value="Qte" style="font-size:12px"/></b></td>
+						<td><b><h:outputText value="P.U" style="font-size:12px"/></b></td>
+						<td><b><h:outputText value="Montant" style="font-size:12px"/></b></td>
+						</tr>
+						<ui:repeat var="t" value="#{VenteBean.listelignevente}">
+						<tr>
+						<td> <h:outputText value="#{t.produit.nom}" style="font-size:12px"/> </td>
+						<td> <h:outputText value="#{t.quantite}" style="font-size:12px"/> </td>
+						<td> <h:outputText value="#{t.produit.prixventes}" style="font-size:12px"/> </td>
+						<td> <h:outputText value="#{t.totalttc}" style="font-size:12px"/> </td>
+						</tr>
+						</ui:repeat>
+						</TABLE>
+						<TABLE>
+						<tr>
+						<td>
+						<b><h:outputText value="Total Ventes" style="font-size:12px"/></b></td>
+						<td><h:outputText value="#{VenteBean.ticket.total_ventes}"/><br/></td>
+						</tr>
+						<tr>
+						
+					<td>	<b><h:outputText value="Total Recus" style="font-size:12px"/></b></td>
+						<td><h:outputText value="#{VenteBean.ticket.total_recus}"/></td>
+						</tr>
+						<tr>
+					<td>	<b><h:outputText value="Total Rendu" style="font-size:12px"/></b></td>
+					<td>	<h:outputText value="#{VenteBean.ticket.total_rendus}"/></td>
+					</tr></TABLE>
+						 <br/>
+						<b><h:outputText value="M E R C I" style="font-size:16px"/></b>
+						</h:panelGroup>
+					</p:outputPanel>
+				</h:panelGroup>
+			</h:form>
+		 </h:panelGroup>
+		 </h:panelGroup>
+		 
+    </h:panelGroup>
+</ui:composition>

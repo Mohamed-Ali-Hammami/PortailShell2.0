@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+        <h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+            <h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+                <h:form id="f">
+                    <p:messages closable="true" />
+
+                    <h:panelGroup layout="block" style="text-align:center;">
+                        <b><h:outputText value="Achat Bon Client" style="font-size:20px;" /></b>
+                    </h:panelGroup>
+
+                    <br />
+
+                    <p:panel style="max-width:760px; margin:0 auto;">
+                        <h:panelGroup layout="block" style="text-align:center;">
+                            <h:outputText
+                                value="Cet ecran legacy reference BonClientBean, mais ce managed bean n'existe pas dans le code source actuel. La route est conservee sans erreur runtime; la logique metier doit etre restauree depuis l'ancien bean avant de reactiver la saisie."
+                                style="font-size:13px; color:#8a4b00;" />
+                        </h:panelGroup>
+                    </p:panel>
+                </h:form>
+            </h:panelGroup>
+        </h:panelGroup>
+    </h:panelGroup>
+</ui:composition>

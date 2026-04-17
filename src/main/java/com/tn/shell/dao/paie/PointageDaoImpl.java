@@ -46,10 +46,8 @@ List<Pointage> result = em.createQuery("SELECT a FROM Pointage a  where a.statut
 				 
 				 .getResultList();
 		 if (result.size() > 0){
-	     	System.out.println("objet trouvé "+"\n\n\n");
 	         return result.get(0);}
 	     else{
-	     	System.out.println("\n\nl  objet pointage n exsite pas\n\n");
 	         return null;} 
 		 }
 	 
@@ -61,10 +59,8 @@ List<Pointage> result = em.createQuery("SELECT a FROM Pointage a  where a.statut
 				 .setParameter("mois",mois)
 				 .getResultList();
 		 if (result.size() > 0){
-	     	System.out.println("objet trouvé "+"\n\n\n");
 	         return result;}
 	     else{
-	     	System.out.println("\n\nl  objet pointage n exsite pas\n\n");
 	         return null;} 
 		 }
 	 @Transactional
@@ -76,10 +72,8 @@ List<Pointage> result = em.createQuery("SELECT a FROM Pointage a  where a.statut
 			 .setParameter("mois",mois)
 			 .getResultList();
 	 if (result.size() > 0){
-     	System.out.println("pontage "+result.get(0).getNb_jour()+"\n\n\n");
          return result.get(0);}
      else{
-     	System.out.println("\n\nl  objet pointage n exsite pas\n\n");
          return null;} 
 	 }
 	 @Transactional
@@ -108,10 +102,8 @@ List<Pointage> result = em.createQuery("SELECT a FROM Pointage a  where a.statut
 				  
 				 .getResultList();
 		 if (result.size() > 0){
-	     	System.out.println("objet trouvé "+"\n\n\n");
 	         return result;}
 	     else{
-	     	System.out.println("\n\nl  objet pointage n exsite pas\n\n");
 	         return null;} 
 		 
 	 }
@@ -123,10 +115,8 @@ List<Pointage> result = em.createQuery("SELECT a FROM Pointage a  where a.statut
 				  
 				 .getResultList();
 		 if (result.size() > 0){
-	     	System.out.println("objet trouvé  "+annee+" \n\n\n");
 	         return result;}
 	     else{
-	     	System.out.println("\n\nl  objet pointage by "+annee +" n exsite pas\n\n");
 	         return null;} 
 	 }
 	 @Transactional

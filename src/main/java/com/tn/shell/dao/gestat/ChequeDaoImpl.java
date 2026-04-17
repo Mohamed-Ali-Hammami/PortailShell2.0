@@ -62,7 +62,6 @@ public class ChequeDaoImpl implements ChequeDao {
 			if(result.size()>0)
 		    return result;
 			else {
-				System.out.println("chargement erreur cheque entre");
 				return result;
 			}
 			 
@@ -103,10 +102,8 @@ public class ChequeDaoImpl implements ChequeDao {
 		 List<Cheque> ChequeListem=em.createQuery("SELECT c FROM  Cheque c where c.numero = :nom and c.statut = :statut",Cheque.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (ChequeListem.size() > 0){
-	        	System.out.println("objet trouvé "+"\n\n\n");
 	            return ChequeListem;}
 	        else{
-	        	System.out.println("\n\nl  objet Cheque n exsite pas\n\n");
 	            return null;}   
 	}
 	 
@@ -115,10 +112,8 @@ public class ChequeDaoImpl implements ChequeDao {
 			 List<Cheque> ChequeListem=em.createQuery("SELECT c FROM  Cheque c where c.id = :nom and c.statut = :statut",Cheque.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 		        
 		        if (ChequeListem.size() > 0){
-		        	System.out.println("objet trouvé "+"\n\n\n");
 		            return ChequeListem.get(0);}
 		        else{
-		        	System.out.println("\n\nl  objet Cheque n exsite pas\n\n");
 		            return null;}   
 		}
  
@@ -127,10 +122,8 @@ public class ChequeDaoImpl implements ChequeDao {
 		 List<Cheque> ChequeListem=em.createQuery("SELECT c FROM  Cheque c where c.mf = :nom and c.statut = :statut",Cheque.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (ChequeListem.size() > 0){
-	        	System.out.println("objet trouvé "+"\n\n\n");
 	            return ChequeListem.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet Cheque n exsite pas\n\n");
 	            return null;}   
 	}
 	 @Transactional

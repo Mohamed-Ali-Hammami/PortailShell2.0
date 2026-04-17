@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+ 
+
+	<h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+
+			<h:panelGroup layout="block" style="text-align:center;">
+
+                <b><h:outputText value="FACTURATION CLIENT" style="font-size:28px ;color:blue;"/>  </b>
+				<h:panelGroup layout="block" style="text-align:center;">
+
+					<h:form>
+                       
+				<table>
+					<tr>
+					<td>
+					<h:outputLabel value="Date de début :"/>
+					</td>
+					<td>
+					<p:calendar value="#{ClientgestatBean.date1}" >
+					 <p:ajax 
+										event="dateSelect" />
+					</p:calendar>
+					</td>
+					</tr>
+					
+					
+					<tr>
+					<td>
+					<h:outputLabel value="Date de fin :"/>
+					</td>
+					<td>
+					<p:calendar value="#{ClientgestatBean.date2}" >
+					 <p:ajax 
+										event="dateSelect" />
+					</p:calendar>
+					</td>
+						<td><h:outputText value="Nom Client"
+								style="font-size:12px " /></td>
+						<td><p:selectOneMenu value="#{ClientgestatBean.nom}"
+								style="width:200px;font-size:12px " filter="true"
+								filterMatchMode="contains">
+								<f:selectItem itemLabel="selectionner client" />
+								<f:selectItems value="#{ClientgestatBean.listclient}" var="f"
+									itemValue="#{f.nom}" itemLabel="#{f.nom}" />
+							 
+							</p:selectOneMenu></td>
+ 
+					</tr>
+					 
+					 
+					</table>
+					<br/>
+					<h:panelGrid columns="2">
+					<p:commandButton value="Valider" action="#{ClientgestatBean.validerfacturation}" ajax="false"/>
+				<p:selectOneRadio value="#{ClientgestatBean.efactureaction}"
+							style="width:200px;font-size:12px" required="true"
+							requiredMessage="choisir la poste">
+
+							<f:selectItems value="#{ClientgestatBean.efactureactions}" />
+							 
+						</p:selectOneRadio>
+					</h:panelGrid>
+					
+					
+					</h:form>
+				</h:panelGroup>
+
+
+
+			</h:panelGroup>
+
+		 </h:panelGroup>
+		 </h:panelGroup>
+		 
+    </h:panelGroup>
+</ui:composition>

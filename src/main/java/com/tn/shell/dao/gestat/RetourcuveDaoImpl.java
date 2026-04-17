@@ -63,7 +63,6 @@ public class RetourcuveDaoImpl implements RetourcuveDAO {
 				.setParameter("date1", d);
 		 try {
 		Long result = (Long) q.getSingleResult();
-			System.out.println("retour "+d+" article "+a.getNom()+" "+result);
 			if(result!=null)
 			return result;
 			return 0;
@@ -80,10 +79,8 @@ public class RetourcuveDaoImpl implements RetourcuveDAO {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0).getId();
 		} else {
-			System.out.println("\n\nl  objet Retourcuve n exsite pas\n\n");
 			return 0;
 		}
 	}
@@ -95,10 +92,8 @@ public class RetourcuveDaoImpl implements RetourcuveDAO {
 				.setParameter("id",id)
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0);
 		} else {
-			System.out.println("\n\nl  objet Retourcuve n exsite pas\n\n");
 			return null;
 		}
 	}

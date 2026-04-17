@@ -1,0 +1,203 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:panelGroup layout="block" styleClass="shell-module-layout shop-shell-fragment">
+        <h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+
+            <ui:insert name="menu" />
+
+            <h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+                <h:form>
+                    <table>
+                        <tr>
+                            <td><h:outputText value="Code Fournisseur" style="font-size:12px " /></td>
+                            <td>
+                                <p:selectOneMenu value="#{AchatshopBean.nomfournissuer}"
+                                    style="width:200px;font-size:12px " filter="true"
+                                    filterMatchMode="contains">
+                                    <f:selectItem itemLabel="selectionner fournisseur" />
+                                    <f:selectItems value="#{AchatshopBean.listfournisseur}" var="f"
+                                        itemValue="#{f.nom}" itemLabel="#{f.nom}" />
+                                    <f:ajax render="nom facture" listener="#{AchatshopBean.getFournisseurbyname}" />
+                                </p:selectOneMenu>
+                            </td>
+
+                            <td><h:outputText value="Nom Fournisseur" style="font-size:12px " /></td>
+                            <td><h:inputText value="#{AchatshopBean.nomfournissuer}" id="nom" style="font-size:12px " /></td>
+                            <td><h:outputText value="Facture N°" style="font-size:12px " /></td>
+                            <td><h:inputText value="#{AchatshopBean.numFacture}" style="font-size:12px " /></td>
+                        </tr>
+                        <tr>
+                            <td><h:outputText value="Avoir N°" style="font-size:20px; text-decoration:underline" /></td>
+                            <td><h:inputText value="#{AchatshopBean.numAchat}" id="facture" style="font-size:20px " /></td>
+                            <td />
+                            <td />
+                            <td><h:outputText value="Du" style="font-size:20px; text-decoration:underline " /></td>
+                            <td>
+                                <p:calendar value="#{AchatshopBean.date}"
+                                    style="font-size:20px " id="popup" pattern="dd-MM-yyyy" mask="true" />
+                            </td>
+                        </tr>
+                    </table>
+
+                    <br />
+                    <br />
+
+                    <p:dataTable id="emp" var="p" editable="true"
+                        value="#{AchatshopBean.listProduit}" editMode="cell"
+                        widgetVar="articleTable" rowKey="#{p.id}"
+                        emptyMessage="aucune ligne dans la base">
+
+                        <p:ajax event="cellEdit" listener="#{AchatshopBean.onCellEdit}" />
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="CODE" style="font-size:12px; color:#483d8b" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <b><h:outputText id="p" value="#{p.id}" style="font-size:12px;" /></b>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <h:inputText id="qteInput2" value="#{AchatshopBean.codeproduit}"
+                                        style="width:96%" size="2">
+                                        <f:ajax listener="#{AchatshopBean.updateCode}" />
+                                    </h:inputText>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="LIBELLE" style="font-size:12px; color:#483d8b" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <b><h:outputText id="des" value="#{p.nom}" style="font-size:12px;" /></b>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu value="#{AchatshopBean.libelle}" filter="true"
+                                        filterMatchMode="contains" style="width:50px;font-size:12px">
+                                        <f:selectItem itemLabel="selectionner produit" />
+                                        <f:selectItems value="#{AchatshopBean.listProduits}" />
+                                        <f:ajax listener="#{AchatshopBean.updatenom}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="QUANTITE" style="font-size:12px; color:#483d8b" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <b><h:outputText id="qte2" value="#{p.quantites}" style="font-size:12px;" /></b>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <h:inputText value="#{p.quantites}" style="width:96%">
+                                        <p:ajax event="change" listener="#{AchatshopBean.updatemontant}" />
+                                    </h:inputText>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="TVA" style="font-size:12px; color:#483d8b" />
+                            </f:facet>
+                            <h:outputText id="tva" value="#{p.tva}" style="font-size:12px " />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="P.U HT" style="font-size:12px; color:#483d8b" />
+                            </f:facet>
+                            <h:outputText id="prix" value="#{p.prixachats}" style="font-size:12px " />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Montant" style="font-size:12px; color:#483d8b" />
+                            </f:facet>
+                            <h:outputText id="montant" value="#{p.montant}" style="font-size:12px " />
+                        </p:column>
+
+                        <p:columnGroup type="footer">
+                            <p:row>
+                                <p:column colspan="2" style="text-align:right" footerText="Totals:" />
+                                <p:column colspan="3" id="qte" footerText="#{AchatshopBean.totalquantite}" />
+                                <p:column colspan="1" id="ttc" footerText="#{AchatshopBean.totalttc}" />
+                            </p:row>
+                        </p:columnGroup>
+                    </p:dataTable>
+
+                    <h:panelGroup layout="block" style="text-align:center;">
+                        <p:outputPanel>
+                            <b><h:outputText value="Type Payement" style="font-size:12px; color:#000000" /></b>
+                            <br />
+
+                            <h:selectOneRadio id="etat_payement" style="font-size:12px;"
+                                value="#{AchatshopBean.typepayement}">
+                                <f:selectItem itemLabel="espece" itemValue="espece" />
+                                <f:selectItem itemLabel="cheque" itemValue="cheque" />
+                                <f:ajax render="cheque" />
+                            </h:selectOneRadio>
+
+                            <br />
+
+                            <h:panelGroup id="cheque">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <b><h:outputText value="Banque"
+                                                rendered="#{AchatshopBean.typepayement=='cheque'}"
+                                                style="font-size:12px; color:#000000" /></b>
+                                        </td>
+                                        <td>
+                                            <h:inputText rendered="#{AchatshopBean.typepayement=='cheque'}"
+                                                value="#{AchatshopBean.banque}"
+                                                style="width:215px;font-size:12px " />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b><h:outputText value="Numero Cheque"
+                                                rendered="#{AchatshopBean.typepayement=='cheque'}"
+                                                style="font-size:12px; color:#000000" /></b>
+                                        </td>
+                                        <td>
+                                            <h:inputText value="#{AchatshopBean.numcheque}"
+                                                rendered="#{AchatshopBean.typepayement=='cheque'}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b><h:outputText value="Echeance"
+                                                rendered="#{AchatshopBean.typepayement=='cheque'}"
+                                                style="font-size:12px; color:#000000" /></b>
+                                        </td>
+                                        <td>
+                                            <p:calendar value="#{AchatshopBean.echeance}" size="20"
+                                                rendered="#{AchatshopBean.typepayement=='cheque'}" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </h:panelGroup>
+                        </p:outputPanel>
+
+                        <p:commandButton value="Valider" ajax="false"
+                            style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+                            action="#{AchatshopBean.saveAchat}" />
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </h:panelGroup>
+    </h:panelGroup>
+</ui:composition>

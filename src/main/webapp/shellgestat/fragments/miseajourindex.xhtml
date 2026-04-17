@@ -1,0 +1,164 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+<script>
+		
+		function init() {
+			var index = 0;
+             $('.inpdes').eq(index).focus();
+		}
+		
+		
+		function nexts2(input) {
+			$(document)
+					.keypress(
+							function(event) {
+								var keycode = (event.keyCode - event.keyCode
+										: event.which);
+								if (keycode == '13') {
+									$(input).closest('tr').next(
+											'tr').find(
+											'input[type=text]')
+											.first().focus();
+									$(input).closest('tr').next(
+											'tr').find(
+											'input[type=text]')
+											.first().select();
+									return false;
+
+								}
+
+							});
+		}
+		
+		</script>
+	<h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+			<h:form id="f">
+		<fieldset style="margin-bottom: 20px; background-color: #eeeec6;">
+			<legend>
+				<b> <h:outputText value="Mise à jour d'un index" />
+				</b>
+
+			</legend>
+
+			<h:panelGrid columns="4">
+				<H3>
+					<h:outputLabel value="Date" />
+				</H3>
+				<p:calendar value="#{CaisseBeans.date}" >
+				<f:ajax event="dateSelect" listener="#{CaisseBeans.getdates}"/>
+				</p:calendar>
+				<H3>
+					<h:outputLabel value="POSTE" />
+				</H3>
+				
+				<h:panelGrid columns="2">Poste
+				<p:selectOneRadio value="#{CaisseBeans.poste}"
+							style="width:200px;font-size:12px" required="true"
+							requiredMessage="choisir la poste">
+
+							<f:selectItems value="#{CaisseBeans.postes}" />
+							<p:ajax listener="#{CaisseBeans.getindexbydateandposte}"  oncomplete="init();" event="change"
+								render="carburants" />
+						</p:selectOneRadio>
+					</h:panelGrid>
+			 
+
+				 
+			</h:panelGrid>
+
+		 
+		 <p:dataTable id="carburants" var="c" editable="true"
+				style="width:80%" value="#{CaisseBeans.ligneindex}" editMode="cell"
+				  emptyMessage="aucune ligne dans la base" rowIndexVar="rowId">
+
+
+				 
+                    	
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b" value="Pompe" />
+					</f:facet>
+
+					<b><h:outputText style="font-size:12px ;"
+							value="#{c.pompe.libelle}" id="libpompe" /></b>
+				</p:column>
+				
+				<p:column>
+					<f:facet name="header">
+						<h:outputText style="font-size:12px ;color:#483d8b"
+							value="Index" />
+					</f:facet>
+					 
+							<h:inputText styleClass="inpdes" valueChangeListener="#{CaisseBeans.updatemontantindex2}"  style="background-color:transparent;border:none;" value="#{c.indexfermuture}"
+							onkeyup="nexts2(this);">
+
+								 
+									 
+									 <f:attribute name="test" value="#{rowId}" />
+							</h:inputText>
+						 
+
+				</p:column>
+				 
+			</p:dataTable>
+			
+
+
+
+			<br /> <br />
+
+			<p:commandButton value="Valider"
+				style="width:150px;font-size:12px;height:30px;color:white;background-image:linear-gradient( #FAF281, red);"
+				ajax="false" action="#{CaisseBeans.validermiseajourindex}" />
+
+
+
+
+		</fieldset>
+		
+		<script>
+		
+		function init() {
+			var index = 0;
+             $('.inpdes').eq(index).focus();
+		}
+		
+		
+		function nexts2(input) {
+			$(document)
+					.keypress(
+							function(event) {
+								var keycode = (event.keyCode - event.keyCode
+										: event.which);
+								if (keycode == '13') {
+									$(input).closest('tr').next(
+											'tr').find(
+											'input[type=text]')
+											.first().focus();
+									$(input).closest('tr').next(
+											'tr').find(
+											'input[type=text]')
+											.first().select();
+									return false;
+
+								}
+
+							});
+		}
+		
+		</script>
+
+</h:form>
+ </h:panelGroup>
+ </h:panelGroup>
+ 
+    </h:panelGroup>
+</ui:composition>

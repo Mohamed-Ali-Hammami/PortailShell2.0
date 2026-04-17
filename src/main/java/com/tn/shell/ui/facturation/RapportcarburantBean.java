@@ -150,7 +150,6 @@ public class RapportcarburantBean implements Serializable {
 			d.setMonth(date1.getMonth());
 			d.setYear(date1.getYear());
 			String ds = sf.format(d);
-			System.out.println(" dates" +ds);
 			ld.add(ds);
 
 		}

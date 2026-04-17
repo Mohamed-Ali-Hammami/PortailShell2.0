@@ -1,0 +1,127 @@
+.app-header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--shell-space-4);
+	padding: var(--shell-space-4);
+	border: 1px solid var(--shell-border);
+	border-radius: var(--shell-radius-xl);
+	background:
+		linear-gradient(180deg, rgba(255, 246, 203, 0.94), rgba(255, 236, 154, 0.9));
+	box-shadow: var(--shell-shadow-md);
+}
+
+.app-brand {
+	display: flex;
+	align-items: center;
+	gap: var(--shell-space-3);
+	min-width: 250px;
+}
+
+.app-brand__logo {
+	width: 54px;
+	height: 54px;
+	object-fit: contain;
+	filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.16));
+}
+
+.app-brand__title {
+	margin: 0;
+	font-size: 26px;
+	font-weight: bold;
+	letter-spacing: 0.4px;
+	color: var(--shell-text-strong);
+}
+
+.app-brand__subtitle {
+	margin: 4px 0 0 0;
+	font-size: 12px;
+	color: var(--shell-text-soft);
+}
+
+.app-nav {
+	flex: 1 1 520px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--shell-space-2);
+}
+
+.app-nav__button.ui-button {
+	min-width: 136px;
+	border: 1px solid rgba(120, 32, 0, 0.18);
+	border-radius: var(--shell-radius-pill);
+	background: linear-gradient(180deg, #d72f0d 0%, #ad1400 52%, #7f0b00 100%);
+	box-shadow: var(--shell-shadow-sm);
+	color: #fff4cf;
+	text-shadow: none;
+	font-weight: bold;
+	padding: 0;
+}
+
+.app-nav__button.ui-button .ui-button-text {
+	padding: 12px 18px;
+}
+
+.app-nav__button.ui-button:hover {
+	background: linear-gradient(180deg, #e53e14 0%, #c71a00 52%, #8f0d00 100%);
+}
+
+.app-nav__button.ui-button:focus {
+	box-shadow: 0 0 0 3px rgba(35, 104, 201, 0.16);
+}
+
+.app-user {
+	display: flex;
+	justify-content: flex-end;
+	flex: 0 0 auto;
+	margin-left: auto;
+}
+
+.app-user__card {
+	min-width: 180px;
+	padding: 12px 16px;
+	border: 1px solid rgba(110, 48, 0, 0.12);
+	border-radius: var(--shell-radius-lg);
+	background: rgba(255, 252, 241, 0.92);
+	box-shadow: var(--shell-shadow-sm);
+}
+
+.app-user__label {
+	display: block;
+	font-size: 10px;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: #8d7656;
+}
+
+.app-user__name {
+	display: block;
+	margin-top: 4px;
+	font-size: 13px;
+	font-weight: bold;
+	color: var(--shell-text-strong);
+}
+
+@media (max-width: 1180px) {
+	.app-header {
+		align-items: flex-start;
+	}
+
+	.app-user {
+		width: 100%;
+		margin-left: 0;
+		justify-content: flex-start;
+	}
+}
+
+@media (max-width: 720px) {
+	.app-brand,
+	.app-nav,
+	.app-user {
+		width: 100%;
+	}
+
+	.app-nav__button.ui-button {
+		width: 100%;
+	}
+}

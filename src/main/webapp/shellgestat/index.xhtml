@@ -3,17 +3,261 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	template="/WEB-INF/templates/app.xhtml">
 	<f:metadata>
 		<f:event type="preRenderView" listener="#{AccueilBean.gestat}" />
 	</f:metadata>
 	<ui:define name="title">Shell-Gestat</ui:define>
+	<ui:define name="head">
+		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/style.css" />
+	</ui:define>
+	<ui:define name="moduleNav">
+		<ui:include src="/shellgestat/Headerg.xhtml" />
+	</ui:define>
 	<ui:define name="content">
-		<h:panelGroup rendered="#{LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true}">
-			<ui:include src="/shellgestat/indexg.xhtml" />
+		<h:panelGroup rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true or LoginBean.user.isResponsableshops()==true or LoginBean.user.isSuperviseur()==true or LoginBean.user.isCaissier()==true)}">
+			<c:choose>
+				<c:when test="#{param.view eq 'achat'}">
+					<ui:include src="/shellgestat/fragments/achat.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'achat2'}">
+					<ui:include src="/shellgestat/fragments/achat2.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'achatBon'}">
+					<ui:include src="/shellgestat/fragments/achatBon.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'ajouterclient'}">
+					<ui:include src="/shellgestat/fragments/ajouterclient.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'ajouterdepense'}">
+					<ui:include src="/shellgestat/fragments/ajouterdepense.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'ajouterDepenseCheque'}">
+					<ui:include src="/shellgestat/fragments/ajouterDepenseCheque.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'ajouterfamilledepense'}">
+					<ui:include src="/shellgestat/fragments/ajouterfamilledepense.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'AjouterFournisseur'}">
+					<ui:include src="/shellgestat/fragments/AjouterFournisseur.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'avantcaisse'}">
+					<ui:include src="/shellgestat/fragments/avantcaisse.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'cahiercredit'}">
+					<ui:include src="/shellgestat/fragments/cahiercredit.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'cahierLitrage'}">
+					<ui:include src="/shellgestat/fragments/cahierLitrage.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'cahierLitrageAvecRetour'}">
+					<ui:include src="/shellgestat/fragments/cahierLitrageAvecRetour.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'cahierouvrier'}">
+					<ui:include src="/shellgestat/fragments/cahierouvrier.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'cahierstock'}">
+					<ui:include src="/shellgestat/fragments/cahierstock.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'caisse'}">
+					<ui:include src="/shellgestat/fragments/caisse.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'creditfuelpose'}">
+					<ui:include src="/shellgestat/fragments/creditfuelpose.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'depensefuelpose'}">
+					<ui:include src="/shellgestat/fragments/depensefuelpose.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'devis'}">
+					<ui:include src="/shellgestat/fragments/devis.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'edicitionFactAchat'}">
+					<ui:include src="/shellgestat/fragments/edicitionFactAchat.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'etatachatesp'}">
+					<ui:include src="/shellgestat/fragments/etatachatesp.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'etatAvance'}">
+					<ui:include src="/shellgestat/fragments/etatAvance.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'etatcartebancaires'}">
+					<ui:include src="/shellgestat/fragments/etatcartebancaires.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'etatcarteshell'}">
+					<ui:include src="/shellgestat/fragments/etatcarteshell.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'etatdebanque'}">
+					<ui:include src="/shellgestat/fragments/etatdebanque.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'etatDepenses'}">
+					<ui:include src="/shellgestat/fragments/etatDepenses.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'etatdeprofil'}">
+					<ui:include src="/shellgestat/fragments/etatdeprofil.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'etatdeprofilcomtable'}">
+					<ui:include src="/shellgestat/fragments/etatdeprofilcomtable.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'etatdeschequeparjour'}">
+					<ui:include src="/shellgestat/fragments/etatdeschequeparjour.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'etatdescheques'}">
+					<ui:include src="/shellgestat/fragments/etatdescheques.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'EtatDesFactureAchat'}">
+					<ui:include src="/shellgestat/fragments/EtatDesFactureAchat.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'EtatDesFactureAchat2'}">
+					<ui:include src="/shellgestat/fragments/EtatDesFactureAchat2.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'etatdesventes'}">
+					<ui:include src="/shellgestat/fragments/etatdesventes.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'etatFactureachat'}">
+					<ui:include src="/shellgestat/fragments/etatFactureachat.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'etatFiscal'}">
+					<ui:include src="/shellgestat/fragments/etatFiscal.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'facturationClient'}">
+					<ui:include src="/shellgestat/fragments/facturationClient.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'fichearticle'}">
+					<ui:include src="/shellgestat/fragments/fichearticle.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'ficheclient'}">
+					<ui:include src="/shellgestat/fragments/ficheclient.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'fichepassation'}">
+					<ui:include src="/shellgestat/fragments/fichepassation.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'fichepayementclient'}">
+					<ui:include src="/shellgestat/fragments/fichepayementclient.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'ficheregulation'}">
+					<ui:include src="/shellgestat/fragments/ficheregulation.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'gestion_des_avances'}">
+					<ui:include src="/shellgestat/fragments/gestion_des_avances.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'gestioncreditPassation'}">
+					<ui:include src="/shellgestat/fragments/gestioncreditPassation.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'historiqueCarburant'}">
+					<ui:include src="/shellgestat/fragments/historiqueCarburant.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'historiqueParfournisseur'}">
+					<ui:include src="/shellgestat/fragments/historiqueParfournisseur.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'impressioncaisse'}">
+					<ui:include src="/shellgestat/fragments/impressioncaisse.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'inventairecarburant'}">
+					<ui:include src="/shellgestat/fragments/inventairecarburant.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'listeclient'}">
+					<ui:include src="/shellgestat/fragments/listeclient.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'listedepense'}">
+					<ui:include src="/shellgestat/fragments/listedepense.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'listemplyee'}">
+					<ui:include src="/shellgestat/fragments/listemplyee.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'listfactureachatbyfour'}">
+					<ui:include src="/shellgestat/fragments/listfactureachatbyfour.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'listetypedep'}">
+					<ui:include src="/shellgestat/fragments/listetypedep.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'MAJpompe'}">
+					<ui:include src="/shellgestat/fragments/MAJpompe.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'miseajourindex'}">
+					<ui:include src="/shellgestat/fragments/miseajourindex.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'Modificationcaisse'}">
+					<ui:include src="/shellgestat/fragments/Modificationcaisse.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'nouveaudevis'}">
+					<ui:include src="/shellgestat/fragments/nouveaudevis.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'nouveauEmployee'}">
+					<ui:include src="/shellgestat/fragments/nouveauEmployee.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'nouvelleAvance'}">
+					<ui:include src="/shellgestat/fragments/nouvelleAvance.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'carteClient'}">
+					<ui:include src="/shellgestat/fragments/carteClient.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'affectercarteClient'}">
+					<ui:include src="/shellgestat/fragments/affectercarteClient.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'ajoutercarteClient'}">
+					<ui:include src="/shellgestat/fragments/ajoutercarteClient.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'HistoriquecarteClient'}">
+					<ui:include src="/shellgestat/fragments/HistoriquecarteClient.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'rapportpiste'}">
+					<ui:include src="/shellgestat/fragments/rapportpiste.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'rechercheCheque'}">
+					<ui:include src="/shellgestat/fragments/rechercheCheque.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'reglementFactureAchat'}">
+					<ui:include src="/shellgestat/fragments/reglementFactureAchat.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'regulationinventairecarburant'}">
+					<ui:include src="/shellgestat/fragments/regulationinventairecarburant.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'retenue'}">
+					<ui:include src="/shellgestat/fragments/retenue.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'saiseavoir'}">
+					<ui:include src="/shellgestat/fragments/saiseavoir.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'saiseavoirbancaire'}">
+					<ui:include src="/shellgestat/fragments/saiseavoirbancaire.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'situationJournalieres'}">
+					<ui:include src="/shellgestat/fragments/situationJournalieres.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'test'}">
+					<ui:include src="/shellgestat/fragments/test.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'validation'}">
+					<ui:include src="/shellgestat/fragments/validation.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'validercahierlitrage'}">
+					<ui:include src="/shellgestat/fragments/validercahierlitrage.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'validercahierlitrageretour'}">
+					<ui:include src="/shellgestat/fragments/validercahierlitrageretour.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'validerfacturationClient'}">
+					<ui:include src="/shellgestat/fragments/validerfacturationClient.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'validermiseajourindex'}">
+					<ui:include src="/shellgestat/fragments/validermiseajourindex.xhtml" />
+				</c:when>
+				<c:when test="#{param.view eq 'verfificateurcahierStock'}">
+					<ui:include src="/shellgestat/fragments/verfificateurcahierStock.xhtml" />
+				</c:when>
+				<c:otherwise>
+					<ui:include src="/shellgestat/fragments/home.xhtml" />
+				</c:otherwise>
+			</c:choose>
 		</h:panelGroup>
-		<h:panelGroup rendered="#{LoginBean.user.isAdmin()==false and LoginBean.user.isResponsableshops()==false}">
-			<ui:include src="/unsecure/accessDenied.xhtml" />
+		<h:panelGroup rendered="#{empty LoginBean.user or (LoginBean.user.isAdmin()==false and LoginBean.user.isResponsableshops()==false and LoginBean.user.isSuperviseur()==false and LoginBean.user.isCaissier()==false)}">
+			<div class="shell-empty-state" style="margin:24px 0;">
+				Acces refuse: votre profil ne dispose pas des droits pour ce module.
+			</div>
+			<h:form>
+				<p:commandButton value="Se deconnecter" action="#{LoginBean.logout}" ajax="false" styleClass="shell-action-button" />
+			</h:form>
 		</h:panelGroup>
 	</ui:define>
 </ui:composition>

@@ -1,0 +1,93 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout shop-shell-fragment">
+ <h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+		<ui:insert name="menu">
+			
+		</ui:insert>
+		<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+
+			<h:form> 
+				<h:panelGroup layout="block" style="text-align:center;">
+					<b><h:outputText value="Liste Des Factures Achats"
+							style="font-size:20px;" /></b><br />
+					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"
+						columnClasses="label, value">
+						<p:outputLabel   value="Fournisseur:" />
+
+						 <p:selectManyMenu id="basic" value="#{AchatshopBean.listfours}"	
+					style="width:300px;font-size:12px ">
+					  <f:selectItem itemLabel="selectionner fournisseur"/>
+                  <f:selectItems value="#{AchatshopBean.listfournisseur}" var="f" itemValue="#{f.nom}"  itemLabel="#{f.nom}"/>
+                    <f:ajax listener="#{AchatshopBean.getFacturebyFour}" render="f"/> 
+                      </p:selectManyMenu>
+					</h:panelGrid>
+				</h:panelGroup>
+
+
+
+
+				<br />
+				<br />
+				 
+				 
+                      <!--  filteredValue="#{AchatBean.filterachats}"
+
+
+ selection="#{AchatBean.selectedAchat}" -->
+		 
+				
+				<p:dataTable id="f" var="p"
+							value="#{AchatshopBean.listAchat}"
+							widgetVar="ArticleTable"  
+							 rowKey="#{p.id}"
+							emptyMessage="aucune facture dans le stock" paginator="true"
+							rows="10" paginatorPosition="bottom"  > 
+                              
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px color:#483d8b" value="Numfac" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{p.factureachat.code}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px color:#483d8b" value="Date" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{p.factureachat.dates}" />
+							</p:column>
+							
+							<p:column      >
+								<f:facet name="header">
+									<h:outputText style="font-size:12px color:#483d8b" value="Montant" />
+								</f:facet>
+								
+									 <p:inputText  value="#{p.factureachat.totalttcs}" style="width:96%"/>	 
+							</p:column>
+							
+								<p:column      >
+								<f:facet name="header">
+									<h:outputText style="font-size:12px color:#483d8b" value="Num achat" />
+								</f:facet>
+								
+									 <p:inputText  id="codeInput" value="#{p.id}" style="width:96%"/>	 
+							</p:column>
+							
+							 
+							 
+						</p:dataTable>  
+				 
+
+			</h:form>
+		 </h:panelGroup>
+		 </h:panelGroup>
+		 
+    </h:panelGroup>
+</ui:composition>

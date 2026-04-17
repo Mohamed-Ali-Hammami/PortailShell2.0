@@ -1,14 +1,34 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-xmlns:p="http://primefaces.org/ui"  >
-<h:head>	<title>Authentification</title>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputText escape="false"
+		value="&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;" />
+	<title>Authentification Paie</title>
 	<link rel="shortcut icon" type="image/x-icon" href="/images/logo.png" />
+	<style type="text/css">
+		body.login-page { margin: 0; min-height: 100vh; background: linear-gradient(135deg, rgba(195, 0, 0, 0.88), rgba(247, 202, 72, 0.78)), url(../../2.png) center center / cover no-repeat; font-family: "Trebuchet MS", Verdana, sans-serif; color: #1e1e1e; }
+		.login-shell { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 32px 16px; }
+		.login-card { width: 100%; max-width: 460px; background: rgba(255, 248, 220, 0.96); border: 1px solid rgba(110, 48, 0, 0.18); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22); border-radius: 14px; overflow: hidden; }
+		.login-header { padding: 18px 24px 10px 24px; background: linear-gradient(180deg, rgba(255, 244, 188, 0.92), rgba(255, 232, 146, 0.88)); border-bottom: 1px solid rgba(110, 48, 0, 0.15); }
+		.login-title { margin: 0; font-size: 24px; font-weight: bold; letter-spacing: 0.4px; color: #8a1200; }
+		.login-subtitle { margin: 6px 0 0 0; font-size: 12px; color: #5d4b22; }
+		.login-content { padding: 24px; }
+		.login-grid { width: 100%; border-collapse: collapse; }
+		.login-grid td { padding: 8px 0; vertical-align: middle; }
+		.login-label { width: 145px; font-size: 12px; font-weight: bold; color: #0f4c2f; padding-right: 14px; }
+		.login-field { width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #c9b67b; border-radius: 8px; background: #fffdf6; font-size: 13px; }
+		.login-field:focus { outline: none; border-color: #d23800; box-shadow: 0 0 0 3px rgba(210, 56, 0, 0.12); }
+		.login-actions { padding-top: 14px; text-align: right; }
+		.login-button { min-width: 170px; height: 38px; border: none; border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: bold; color: #fff9e6; background: linear-gradient(180deg, #83c7ff 0%, #449df3 48%, #2368c9 100%); box-shadow: 0 10px 22px rgba(35, 104, 201, 0.28); }
+		.messages-wrap { margin-top: 16px; }
+	</style>
 </h:head>
-<h:body style="background-color:#a2b5bf">
+<h:body styleClass="login-page">
 	<script type="text/javascript">
 //<![CDATA[
 		window.addEventListener('load', function() {
@@ -19,61 +39,35 @@ xmlns:p="http://primefaces.org/ui"  >
 		});
 //]]>
 	</script>
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<br />
-	<div align="center">
-		<p:growl id="msgss" showDetail="true" />
-
-		<p:panel  style="width:450px;height:200px;background-color:#eeeec6;font-size:12px " header="Connexion"> 
-			  
-			<br></br>
-			<br></br>
-			<div align="center" style="">
-    <table align="center"><tr><td>
-        <h:form  id="loginFormId" prependId="false">
-        <tr>
-                 
-                    
-                     <td>   <h:outputText id="outTxtUserNameId" value="#{msg['secure.username']} " name="outTxtUserNameNm" style="font-size:12px;color:#006400;background-color:#a2b5bf"/></td>
-                       <td> <h:inputText id="userName" required="true" value="#{LoginBean.userName}" size="30" requiredMessage="#{msg['secure.error']}"> </h:inputText>
-                        <h:outputLabel id="outLblUserNameId" for="userName" name="outLblUserNameNm" style="font-size:12px;color:#006400;background-color:#a2b5bf"/>
-                   </td> </tr>
-                     
-                    <tr> <td> <h:outputText id="outTxtPasswordId" value="#{msg['secure.password']} " name="outTxtPasswordNm" style="font-size:12px;color:#006400;background-color:#a2b5bf" /></td>
-                     <td>   <h:inputSecret id="password"  required="true" value="#{LoginBean.password}" size="30" name="inTxtPasswordNm"  ></h:inputSecret>
-                        <h:outputLabel id="outLblPasswordId" for="password" name="outLblPasswordNm"></h:outputLabel>
-                        </td></tr>
-                        
-                        
-               <tr><td></td>
-                <td>
-                    <h:commandButton id="btnLoginId" value="#{msg['secure.signin']} "   action="#{LoginBean.logintopaie}" style=" background: #7abcff; /* Old browsers */
-        background: -moz-linear-gradient(top, #7abcff 0%, #60abf8 44%, #4096ee 100%); /* FF3.6+ */
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7abcff), color-stop(44%,#60abf8), color-stop(100%,#4096ee)); /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(top, #7abcff 0%,#60abf8 44%,#4096ee 100%); /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(top, #7abcff 0%,#60abf8 44%,#4096ee 100%); /* Opera 11.10+ */
-        background: -ms-linear-gradient(top, #7abcff 0%,#60abf8 44%,#4096ee 100%); /* IE10+ */
-        background: linear-gradient(top, #7abcff 0%,#60abf8 44%,#4096ee 100%);"></h:commandButton></td>
-                    
-                
-                </tr>
-                <h:panelGrid columns="2">
-				 
-			</h:panelGrid>
-			
-        </h:form></td></tr></table>
-    	</div>
-			<div>
-				<font color="red"><p:messages id="messages" autoUpdate="true"
-						closable="true" style="color:red" /></font> 
-			</div> 
-			
-		</p:panel>
+	<div class="login-shell">
+		<div class="login-card">
+			<div class="login-header">
+				<h1 class="login-title">Connexion Paie</h1>
+				<p class="login-subtitle">Acces au module paie</p>
+			</div>
+			<div class="login-content">
+				<p:growl id="msgss" showDetail="true" />
+				<h:form id="loginFormId" prependId="false">
+					<table class="login-grid">
+						<tr>
+							<td class="login-label"><h:outputText id="outTxtUserNameId" value="#{msg['secure.username']}" /></td>
+							<td><h:inputText id="userName" styleClass="login-field" required="true" value="#{LoginBean.userName}" size="30" requiredMessage="#{msg['secure.error']}" /></td>
+						</tr>
+						<tr>
+							<td class="login-label"><h:outputText id="outTxtPasswordId" value="#{msg['secure.password']}" /></td>
+							<td><h:inputSecret id="password" styleClass="login-field" required="true" value="#{LoginBean.password}" size="30" /></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td class="login-actions"><h:commandButton id="btnLoginId" value="#{msg['secure.signin']}" action="#{LoginBean.logintopaie}" styleClass="login-button" /></td>
+						</tr>
+					</table>
+					<div class="messages-wrap">
+						<p:messages id="messages" autoUpdate="true" closable="true" style="color:red" />
+					</div>
+				</h:form>
+			</div>
+		</div>
 	</div>
 </h:body>
 </html>

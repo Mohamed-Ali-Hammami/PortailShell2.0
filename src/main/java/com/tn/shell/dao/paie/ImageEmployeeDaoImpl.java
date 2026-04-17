@@ -27,10 +27,8 @@ public class ImageEmployeeDaoImpl implements ImageEmployeeDAO {
 				"SELECT b FROM LigneImageEmployee  b  where  b.employee.matricule = :numero and b.position = :pos",
 				LigneImageEmployee.class).setParameter("numero", f.getMatricule()).setParameter("pos", position).getSingleResult();
 		 if (result!=null) {
-				System.out.println("objet trouvé " + "\n\n\n");
 				return result;
 			} else {
-				System.out.println("\n\nl  objet LigneImagerendement n exsite pas\n\n");
 				return null;
 			}
 			}

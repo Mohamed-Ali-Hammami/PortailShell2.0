@@ -37,10 +37,8 @@ public class BanqueDaoImpl implements BanqueDao {
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 
 		if (BanqueListem.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return BanqueListem.get(0);
 		} else {
-			System.out.println("\n\nl  objet Banque n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -52,10 +50,8 @@ public class BanqueDaoImpl implements BanqueDao {
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 
 		if (BanqueListem.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return BanqueListem.get(0);
 		} else {
-			System.out.println("\n\nl  objet Banque n exsite pas\n\n");
 			return null;
 		}
 	}

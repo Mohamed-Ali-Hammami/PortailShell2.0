@@ -86,10 +86,8 @@ public class CreditanterieurDaoImpl implements CreditanterieurDao {
 		 List<Creditanterieur> CreditanterieurListem=em.createQuery("SELECT c FROM  Creditanterieur c where c.numero = :nom and c.statut = :statut",Creditanterieur.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (CreditanterieurListem.size() > 0){
-	        	System.out.println("objet trouvé "+"\n\n\n");
 	            return CreditanterieurListem;}
 	        else{
-	        	System.out.println("\n\nl  objet Creditanterieur n exsite pas\n\n");
 	            return null;}   
 	}
 	 
@@ -98,10 +96,8 @@ public class CreditanterieurDaoImpl implements CreditanterieurDao {
 			 List<Creditanterieur> CreditanterieurListem=em.createQuery("SELECT c FROM  Creditanterieur c where c.code = :nom and c.statut = :statut",Creditanterieur.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 		        
 		        if (CreditanterieurListem.size() > 0){
-		        	System.out.println("objet trouvé "+"\n\n\n");
 		            return CreditanterieurListem.get(0);}
 		        else{
-		        	System.out.println("\n\nl  objet Creditanterieur n exsite pas\n\n");
 		            return null;}   
 		}
 	 
@@ -110,10 +106,8 @@ public class CreditanterieurDaoImpl implements CreditanterieurDao {
 		 List<Creditanterieur> CreditanterieurListem=em.createQuery("SELECT c FROM  Creditanterieur c where c.mf = :nom and c.statut = :statut",Creditanterieur.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (CreditanterieurListem.size() > 0){
-	        	System.out.println("objet trouvé "+"\n\n\n");
 	            return CreditanterieurListem.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet Creditanterieur n exsite pas\n\n");
 	            return null;}   
 	}
 	 @Transactional

@@ -1,5 +1,6 @@
 package com.tn.shell.dao.lavage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -41,10 +42,8 @@ public class AffectationHuileDaoImpl implements AffectationHuileDAO {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0).getId();
 		} else {
-			System.out.println("\n\nl  objet AffectationHuile n exsite pas\n\n");
 			return 0;
 		}
 	}
@@ -60,8 +59,11 @@ public class AffectationHuileDaoImpl implements AffectationHuileDAO {
 
 	}
 
- 
+
 	public List<AffectationHuile> getAffectationHuilebyModel(Model f) {
+		if (f == null || f.getId() == null) {
+			return new ArrayList<AffectationHuile>();
+		}
 		List<AffectationHuile> result = em.createQuery(
 				"SELECT b FROM AffectationHuile  b  where b.statut = :statut  and b.model.id = :numero order by b.id Desc",
 				AffectationHuile.class).setParameter("statut", Statut.ACTIF).setParameter("numero", f.getId()).getResultList();

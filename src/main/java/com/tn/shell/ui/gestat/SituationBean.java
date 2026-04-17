@@ -175,7 +175,6 @@ public class SituationBean {
 			d.setYear(date1.getYear());
 			String ds = sf.format(d);
 			ld.add(ds);
-			System.out.println("dates " + ds);
 
 		}
 		List<Cumulcarburant> ls = new ArrayList<Cumulcarburant>();
@@ -260,7 +259,6 @@ public class SituationBean {
 			}
 
 		} catch (Exception e) {
-			System.out.println("probleme ligneindex");
 
 			return SUCCESS;
 		}
@@ -289,7 +287,6 @@ public class SituationBean {
 			d.setYear(date1.getYear());
 			String ds = sf.format(d);
 			ld.add(ds);
-			System.out.println("dates " + ds);
 
 		}
 		List<Cumulcarburant> ls = new ArrayList<Cumulcarburant>();
@@ -316,7 +313,6 @@ public class SituationBean {
 //					}
 					qte = serviceLigneindex.getquantitebyarticledates(a, s);
 					ret = serviceRetourcuve.getquantitebyarticledates(a, s);
-					System.out.println("\n\n retour  "+s+"   "+ret);
 					
 					c.setQuantite(qte-ret);
 					c.setQuantites(df.format(c.getQuantite()));
@@ -373,7 +369,6 @@ public class SituationBean {
 			}
 
 		/*} catch (Exception e) {
-			System.out.println("probleme ligneindex");
 
 			return SUCCESS;
 		}*/
@@ -602,7 +597,6 @@ public class SituationBean {
 		 this.totalPoste2=dfss.format(totalPoste2);
 		 this.totalPoste1=dfss.format(totalPoste1);
 		}catch(Exception e) {
-			System.out.println("erreur");
 		}*/
 		
 		
@@ -737,7 +731,6 @@ public class SituationBean {
 				caisse.setTotalVentesMagasins(df.format(totalventemagazin));
 				caisse.setTotalespeceshop(totalventemagazin);
 		/*	} catch (Exception e) {
-				System.out.println("erreur de chargement vente");
 			}*/
 
 			double totalshop = 0;
@@ -773,7 +766,6 @@ public class SituationBean {
 			caisse.setTotalespeceq1(caisse1.getTotalespece());
 			caisse.setTotalespeceq2(caisse2.getTotalespece());
 			caisse.setTotalespeceq3(0);
-			System.out.println("\n\n caisse 1 " + caisse1.getId() + "\n\n");
 			// ligneindex = serviceLigneindex.getAllventepardate(dates1);
 
 			// vente par famille et vente magasin
@@ -839,7 +831,6 @@ public class SituationBean {
 			totalretour = df.format(t);
 			t = 0;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return SUCCESS;
 	}

@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout shop-shell-fragment">
+ <h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+		<ui:insert name="menu">
+			
+		</ui:insert>
+		<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+			<h:form id="f">
+
+				<h:panelGroup layout="block" style="text-align:center;">
+					<h:panelGrid columns="3">
+						<h:outputText value="DATE" style="font-size:16px" />
+						<p:calendar value="#{TransfertBean.date}" id="p" required="true"
+							requiredMessage="entrer date">
+							<p:ajax listener="#{TransfertBean.gettrasfertbydate}"
+							update="imprimer" event="dateSelect"/>
+						</p:calendar>
+						
+						<h:commandLink title="imprimer">
+									<p:graphicImage url="/images/imprimante-icone.png"
+										style="width:25px" />
+									<p:printer target="imprimer"></p:printer>
+								</h:commandLink>
+					</h:panelGrid>
+                     <br/><br/>
+					<p:outputPanel id="imprimer">
+
+						<p:dataTable id="produit" var="p"
+							value="#{TransfertBean.listLignetransfert}"
+							emptyMessage="aucune ligne dans la base">
+							
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Code" />
+								</f:facet>
+
+
+								<h:outputText style="font-size:12px ;" value="#{p.produit.code}"
+									id="qte2" /> 
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Designation" />
+								</f:facet>
+
+
+								<h:outputText style="font-size:12px ;" value="#{p.produit.nom}"
+									id="nom" /> 
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="QUANTITE" />
+								</f:facet>
+
+
+								<h:outputText style="font-size:12px ;" value="#{p.quantite}"
+									id="qte" /> 
+							</p:column>
+						</p:dataTable>
+					</p:outputPanel>
+				</h:panelGroup>
+			</h:form>
+		 </h:panelGroup>
+		 </h:panelGroup>
+		 
+    </h:panelGroup>
+</ui:composition>

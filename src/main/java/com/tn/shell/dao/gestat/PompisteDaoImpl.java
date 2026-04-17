@@ -34,7 +34,6 @@ public class PompisteDaoImpl implements PompisteDAO {
 		List<Pompiste> result = em.createQuery("SELECT a FROM Pompiste a  where a.statut = :statut and a.dates = :date and a.poste = :poste", Pompiste.class)
 				.setParameter("statut", Statut.ACTIF).setParameter("date", date).setParameter("poste", poste).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 		return result.get(0);}
 		else return null;
 	}
@@ -48,10 +47,8 @@ public class PompisteDaoImpl implements PompisteDAO {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0).getId();
 		} else {
-			System.out.println("\n\nl  objet Pompiste n exsite pas\n\n");
 			return 0;
 		}
 	}

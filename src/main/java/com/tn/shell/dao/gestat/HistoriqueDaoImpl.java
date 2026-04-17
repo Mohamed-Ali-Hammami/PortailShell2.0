@@ -88,10 +88,8 @@ public class HistoriqueDaoImpl implements HistoriqueDao {
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 
 		if (HistoriquepayementclientListem.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return HistoriquepayementclientListem;
 		} else {
-			System.out.println("\n\nl  objet Historiquepayementclient n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -107,12 +105,10 @@ public class HistoriqueDaoImpl implements HistoriqueDao {
 				.setParameter("code", cl.getId()).getResultList();
 
 		if (result.size() > 0) {
-			System.out.println("" + result.get(0).getCreditpassation().getId());
 			return result.get(0);
 		}
 
 		else {
-			System.out.println("\n\npas de crdit" + cl.getId());
 			return null;
 		}
 	}
@@ -125,10 +121,8 @@ public class HistoriqueDaoImpl implements HistoriqueDao {
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 
 		if (HistoriquepayementclientListem.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return HistoriquepayementclientListem.get(0);
 		} else {
-			System.out.println("\n\nl  objet Historiquepayementclient n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -141,10 +135,8 @@ public class HistoriqueDaoImpl implements HistoriqueDao {
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 
 		if (HistoriquepayementclientListem.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return HistoriquepayementclientListem.get(0);
 		} else {
-			System.out.println("\n\nl  objet Historiquepayementclient n exsite pas\n\n");
 			return null;
 		}
 	}

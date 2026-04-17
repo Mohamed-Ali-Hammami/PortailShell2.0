@@ -238,6 +238,10 @@ public class CreditPassationBean {
 		return ERROR;
 	}
 
+	public String validerPassation() {
+		return validerpayer();
+	}
+
 	public String suivant() {
 
 		SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");

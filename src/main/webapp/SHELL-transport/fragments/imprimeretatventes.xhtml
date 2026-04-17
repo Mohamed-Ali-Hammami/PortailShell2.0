@@ -1,0 +1,140 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:panelGroup layout="block" styleClass="shell-module-layout transport-shell-fragment"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+		 
+		
+		<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+			<br />
+			<br />
+			<br />
+			<br />
+			<h:panelGroup layout="block" style="text-align:left;">
+				<h:form>
+					<h:panelGroup layout="block" style="text-align:right;">
+						<h:commandLink value="Retour" ajax="false"
+							style="width:100px;height:30;color:#0000ff;background-color:#abc8e2;"
+							action="#{EtattransportBean.getetats}" />
+						<h:commandLink title="imprimer">
+							<p:graphicImage url="/images/imprimante-icone.png"
+								style="width:20px" />
+							<p:printer target="imprimer"></p:printer>
+						</h:commandLink>
+					</h:panelGroup>
+					<p:outputPanel id="imprimer">
+
+						<h:panelGroup layout="block" style="text-align:center;">
+							<b><h:outputText value="STATION SHELL SEDJOUMI "
+									style="font-size:20px " /></b><br /> <b><h:outputText
+									value="SIDI HASSINE " style="font-size:20px " /></b><br /> <b><h:outputText
+									value="TVA : 805781/Q/P/C/000 " style="font-size:20px " /></b>
+						</h:panelGroup>
+						<br />
+						<br />
+						<h:panelGroup layout="block" style="text-align:left;">
+
+							<h:panelGroup layout="block" style="text-align:center;">
+								<b> <h:outputText value="ETAT DE LA FACTURATION"
+										style="font-size:25px;" /></b> <br /> <b><h:outputText
+										value="Edité le : #{EtattransportBean.dates}" style="font-size:12px;" /></b>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" style="text-align:center;">
+							<table style="width: 100%; text-align: center">
+
+								<tr>
+									<td><b><h:outputText value="Edition à partir du :"
+												rendered="#{EtattransportBean.date1 !=null}" style="font-size:12px " /></b></td>
+									<td><h:outputText value="#{EtattransportBean.date1s}"
+											rendered="#{EtattransportBean.date1 !=null}" /></td>
+
+									<td><b><h:outputText value="Edition jusqu'au :"
+												rendered="#{EtattransportBean.date2 !=null}" style="font-size:12px " /></b></td>
+									<td><h:outputText value="#{EtattransportBean.date2s}"
+											rendered="#{EtattransportBean.date2 !=null}" /></td>
+								</tr>
+
+
+								<tr>
+									<td><b><h:outputText value="Client"
+												rendered="#{EtattransportBean.client !=null}" style="font-size:12px " /></b></td>
+									<td><h:outputText value="#{EtattransportBean.client.nom}"
+											rendered="#{EtattransportBean.client!= null}" /></td>
+								</tr>
+							</table>
+							<br />
+							<table border="1"
+								style="width: 100%; text-align: center; text-align: left; margin-bottom: 0px; border-color: #000000; border-bottom-color: #ffffff; border-right-color: #ffffff; border-left-color: #ffffff; border-top-color: #ffffff;">
+								<tr>
+									<td><h:outputText value="Numero" style="font-size:12px " /></td>
+									<td><h:outputText value="Client" style="font-size:12px " /></td>
+									<td><h:outputText value="Date d'edition"
+											style="font-size:12px " /></td>
+
+									<td><h:outputText value="Montant HT"
+											style="font-size:12px " /></td>
+									<td><h:outputText value="Total TVA"
+											style="font-size:12px " /></td>
+									<td><h:outputText value="Timbres" style="font-size:12px " /></td>
+									<td><h:outputText value="Total TTC"
+											style="font-size:12px " /></td>
+								</tr>
+								<ui:repeat var="ff" value="#{EtattransportBean.factureventes}">
+									<tr style="text-align: left">
+										<td><h:outputText value="#{ff.codes}"
+												style="font-size:15px" /></td>
+										<td><h:outputText value="#{ff
+										.bl.client.nom}"
+												style="font-size:15px" /></td>
+										<td><h:outputText value="#{ff.dates}"
+												style="font-size:15px" /></td>
+
+										<td><h:outputText value="#{ff.totalhts}"
+												style="font-size:15px" /></td>
+										<td><h:outputText value="#{ff.totaltvas}"
+												style="font-size:15px" /></td>
+										<td><h:outputText value="#{ff.timbress}"
+												style="font-size:15px" /></td>
+										<td><h:outputText value="#{ff.totalttcs}"
+												style="font-size:15px" /></td>
+									</tr>
+								</ui:repeat>
+							</table>
+							<br /> <br />
+							<table style="width: 50%">
+								<tr>
+									<td><b><h:outputText value="Total HT=   "
+												style="font-size:12px " /></b></td>
+									<td><h:outputText value="#{EtattransportBean.totalhts}"
+											style="font-size:12px " id="ht2" /></td>
+								</tr>
+								<tr>
+									<td><b><h:outputText value="Total TVA=   "
+												style="font-size:12px " /></b></td>
+									<td><h:outputText value="#{EtattransportBean.totaltvas}"
+											style="font-size:12px " id="tva2" /></td>
+								</tr>
+								<tr>
+									<td><b><h:outputText value="Total Timbres=  "
+												style="font-size:12px " /></b></td>
+									<td><h:outputText value="#{EtattransportBean.totaltimbres}"
+											style="font-size:12px " id="timbre2" /></td>
+								</tr>
+								<tr>
+									<td><b><h:outputText value="Total TTC=  "
+												style="font-size:12px " /></b></td>
+									<td><h:outputText value="#{EtattransportBean.totalttcs}"
+											style="font-size:12px " id="ttc2" /></td>
+								</tr>
+							</table>
+						</h:panelGroup>
+					</p:outputPanel>
+				</h:form>
+			</h:panelGroup>
+		</h:panelGroup>
+	</h:panelGroup>
+</ui:composition>

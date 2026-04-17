@@ -18,7 +18,7 @@ public double getAllventepardatearticle( Articlecarburant a,Date d1,Date d2);
 public double getAllventepardatearticlequantite( Articlecarburant a,Date d1,Date d2);
 public List<Ligneindex> getAllventepardate(String d);
 public List<Ligneindex> getAllventeparposteNegatif(String d ,Poste poste);
-public double getmaxcode(Pompe p,Caisse c);
+public double getmaxcode(Pompe p,Caisse c) throws Exception;
 public List<Ligneindex> getAllparposte(Caisse c) ;
 public Ligneindex getmaxcode();
 public List<Ligneindex> getAllbyProduit(Produit p);

@@ -65,11 +65,27 @@ public class LavageBean implements Serializable {
 		listProduit=serviceProduit.getAllbyfamilles0("FILTRE");
 		typefiltres=TypeFiltre.values();		
 		listAffectaionFiltre=new ArrayList<AffectationFiltre>();
+		if (selctedModel == null) {
+			addWarn("Modele obligatoire", "Selectionnez un modele avant d'afficher les filtres.");
+			return SUCCESS;
+		}
 		listAffectaionFiltre=affectationFiltreService.getAffectationFiltrebyModel(selctedModel);
 		return SUCCESS;
 	}
 	public String saveaffecterFilterToModel() {
+		 if (selctedModel == null) {
+		 	addWarn("Modele obligatoire", "Selectionnez un modele avant d'enregistrer un filtre.");
+		 	return null;
+		 }
+		 if (filtre == null || filtre.trim().isEmpty()) {
+		 	addWarn("Filtre obligatoire", "Selectionnez un filtre avant de valider.");
+		 	return null;
+		 }
 		 Produit p=serviceProduit.Findbydes(filtre);	
+		 if (p == null) {
+		 	addWarn("Filtre introuvable", "Le produit selectionne n'existe plus ou n'est plus actif.");
+		 	return null;
+		 }
 		 AffectationFiltre aff=new AffectationFiltre();
 		 aff.setModel(selctedModel);
 		 aff.setProduit(p);
@@ -85,31 +101,35 @@ public class LavageBean implements Serializable {
 	}	
 	
 	public String saveaffecterHuileToModel() {
+		 if (selctedModel == null) {
+		 	addWarn("Modele obligatoire", "Selectionnez un modele avant d'enregistrer une huile.");
+		 	return null;
+		 }
 		 if (listProduit == null || listProduit.isEmpty()) {
 		 	addWarn("Aucun lubrifiant disponible", "Ajoutez d'abord un produit dans la famille LUBRIFIANTS.");
 		 	return null;
 		 }
 		 if (filtre == null || filtre.trim().isEmpty()) {
-		 	addWarn("Huile obligatoire", "Sélectionnez une huile avant de valider.");
+		 	addWarn("Huile obligatoire", "SÃ©lectionnez une huile avant de valider.");
 		 	return null;
 		 }
 		 Produit p=serviceProduit.Findbydes(filtre);	
 		 if (p == null) {
-		 	addWarn("Huile introuvable", "Le produit sélectionné n'existe plus ou n'est plus actif.");
+		 	addWarn("Huile introuvable", "Le produit sÃ©lectionnÃ© n'existe plus ou n'est plus actif.");
 		 	return null;
 		 }
 		 AffectationHuile aff=new AffectationHuile();
-		// aff.setModel(selctedModel);
+		 aff.setModel(selctedModel);
 		 aff.setProduit(p);
 		 aff.setMetrage(metrage);
 		 aff.setNbvidange(nbvidange);
 		 affectationHuileService.save(aff);
 		 listAffectaionhuile =new ArrayList<AffectationHuile>();
-		 listAffectaionhuile=affectationHuileService.getAll();
+		 listAffectaionhuile=affectationHuileService.getAffectationHuilebyModel(selctedModel);
 		 metrage=null;
 		 nbvidange=null;
 		 filtre=null;
-		 addInfo("Affectation enregistrée", "La fiche huile a été ajoutée.");
+		 addInfo("Affectation enregistrÃ©e", "La fiche huile a Ã©tÃ© ajoutÃ©e.");
 		 return SUCCESS;
 	}	
 	
@@ -118,7 +138,9 @@ public class LavageBean implements Serializable {
 		listProduit=new ArrayList<Produit>();
 		listProduit=serviceProduit.getAllbyfamilles0("LUBRIFIANTS");
 		listAffectaionhuile =new ArrayList<AffectationHuile>();
-		listAffectaionhuile=affectationHuileService.getAll();
+		if (selctedModel != null) {
+			listAffectaionhuile=affectationHuileService.getAffectationHuilebyModel(selctedModel);
+		}
 		filtre=null;
 		metrage=null;
 		nbvidange=null;
@@ -126,9 +148,12 @@ public class LavageBean implements Serializable {
 			listProduit = new ArrayList<Produit>();
 		}
 		if (listProduit.isEmpty()) {
-			huileAvailabilityMessage = "Aucun produit actif de la famille LUBRIFIANTS n'est disponible. Ajoutez un produit lubrifiant avec un code shop supérieur à 0 pour activer cette fiche.";
+			huileAvailabilityMessage = "Aucun produit actif de la famille LUBRIFIANTS n'est disponible. Ajoutez un produit lubrifiant avec un code shop supÃ©rieur Ã  0 pour activer cette fiche.";
 		} else {
 			huileAvailabilityMessage = null;
+		}
+		if (selctedModel == null) {
+			addWarn("Modele obligatoire", "Selectionnez un modele avant d'afficher les huiles.");
 		}
 		typefiltres=TypeFiltre.values();
 		return SUCCESS;

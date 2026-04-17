@@ -3,6 +3,7 @@ package com.tn.shell.ui.shop;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 
+import com.tn.shell.ui.common.UiDateDefaults;
 import com.tn.shell.model.gestat.Achatcarburant;
 import com.tn.shell.model.gestat.Etatprofil;
 import com.tn.shell.model.gestat.Lignealimentationcar;
@@ -80,18 +82,20 @@ public class EtatshopBean {
 		
 		totaCA=("0.000");
 		totalProfilBrut=("0.000");
-		date1=new Date();
-		date2=new Date();
+		initializeMonthlyDateRange();
 		listProduit=new ArrayList<Produit>();
 		return SUCCESS;
 	}
+
+	public String getetatdeprofil() {
+		return etatdeprofil();
+	}
 	
-public String etatdeprofil2() {	
+	public String etatdeprofil2() {	
 		
 		totaCA=("0.000");
 		totalProfilBrut=("0.000");
-		date1=new Date();
-		date2=new Date();
+		initializeMonthlyDateRange();
 		listProduit=new ArrayList<Produit>();
 		return SUCCESS;
 	}
@@ -140,7 +144,6 @@ public String etatdeprofil2() {
 			 totalProfil=df.format(pbruts);
                totaltva=df.format(pbruts/totalca*100);
 		} catch (Exception e) {
-			System.out.println("erreur de chargement vente");
 		}
 		 
 		 
@@ -202,7 +205,6 @@ public String etatdeprofil2() {
 			 totalProfil=df.format(pbruts);
                totaltva=df.format(pbruts/totalca*100);
 		} catch (Exception e) {
-			System.out.println("erreur de chargement vente");
 		}
 		 
 		
@@ -213,7 +215,6 @@ public String etatdeprofil2() {
 	public void handleChange1(ValueChangeEvent event) {
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codes" + codes + "\n\n");
 		Famillearticle e = listfamile.get(codes);
 		DecimalFormat dfs = new DecimalFormat("0");
 		DecimalFormat df = new DecimalFormat("0.000");		  
@@ -226,7 +227,6 @@ public String etatdeprofil2() {
 	public void handleChange2(ValueChangeEvent event) {
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codes" + codes + "\n\n");
 		Famillearticle e = listfamile.get(codes);
 		DecimalFormat dfs = new DecimalFormat("0");
 		DecimalFormat df = new DecimalFormat("0.000");		  
@@ -264,8 +264,7 @@ public String etatdeprofil2() {
 	public String etatFiscal() {
 		totaCA=("0.000");
 		totalProfilBrut=("0.000");
-		date1=new Date();
-		date2=new Date();
+		initializeMonthlyDateRange();
 		listProduit=new ArrayList<Produit>();
 		return SUCCESS;
 	}
@@ -308,11 +307,14 @@ public String etatdeprofil2() {
 	public String articleNonVendu() {
 		listfamile = new ArrayList<Famillearticle>();
 		listfamile = serviceFamilleaticle.getAll();
-		date1 = new Date();
-		date2=new Date();
+		initializeMonthlyDateRange();
 		 
 		listProduit = new ArrayList<Produit>();
 		return SUCCESS;
+	}
+
+	public String articleNonVenduShop() {
+		return articleNonVendu();
 	}
 	
 	public String getarticleNonVendu() {
@@ -339,8 +341,7 @@ public String etatdeprofil2() {
 	public String articleVendu() {
 		listfamile = new ArrayList<Famillearticle>();
 		listfamile = serviceFamilleaticle.getAll();
-		date1 = new Date();
-		date2 = new Date();
+		initializeMonthlyDateRange();
 		listProduit = new ArrayList<Produit>();
 		return SUCCESS;
 	}
@@ -403,11 +404,35 @@ public String etatdeprofil2() {
 	}
 	 
 	public String etatVenteParFamille() {
-		date = new Date();
+		date = UiDateDefaults.startOfDay(resolveLatestShopDate());
 		postes = Poste.values();
 		listelignevente = new ArrayList<Lignevente>();
 		 
 		return SUCCESS;
+	}
+
+	private void initializeMonthlyDateRange() {
+		Date latestBusinessDate = resolveLatestShopDate();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(latestBusinessDate);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		date1 = UiDateDefaults.startOfDay(calendar.getTime());
+		date2 = UiDateDefaults.endOfDay(latestBusinessDate);
+	}
+
+	private Date resolveLatestShopDate() {
+		Date latestBusinessDate = null;
+		Lignevente latestSale = serviceLignevente.getmaxlignevente();
+		if (latestSale != null) {
+			latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, latestSale.getDate());
+		}
+		List<Lignealimentation> alimentations = serviceLigneAlimentation.getAll();
+		if (alimentations != null) {
+			for (Lignealimentation alimentation : alimentations) {
+				latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, alimentation.getDate());
+			}
+		}
+		return UiDateDefaults.coalesce(latestBusinessDate, new Date());
 	}
 	public String getetatventeparDate(AjaxBehaviorEvent event) {
 		listelignevente = new ArrayList<Lignevente>();

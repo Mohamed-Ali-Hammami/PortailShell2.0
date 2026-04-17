@@ -132,13 +132,13 @@ private String getMoisbyIntger(Integer moi) {
 	else if (moi == 8)
 		m = "aout";
 	else if (moi == 9)
-		m = "Séptembre";
+		m = "SÃ©ptembre";
 	else if (moi == 10)
 		m = "Octobre";
 	else if (moi == 11)
 		m = "Novembre";
 	else if (moi == 12)
-		m = "Décembre";
+		m = "DÃ©cembre";
 	return m;
 }
 public String getMontant_avances() {

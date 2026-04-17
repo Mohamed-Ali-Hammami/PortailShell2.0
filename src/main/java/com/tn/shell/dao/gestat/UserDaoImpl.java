@@ -40,10 +40,8 @@ public class UserDaoImpl implements UserDAO {
 	        List<Utilisateur> UtilisateurListem=em.createQuery("SELECT u FROM  Utilisateur u where u.login = :login",Utilisateur.class).setParameter("login", login).getResultList();
 	        
 	        if (UtilisateurListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return UtilisateurListem.get(0);}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}   
 	    } 
 	 
@@ -123,10 +121,8 @@ public class UserDaoImpl implements UserDAO {
 		 List<Utilisateur> UtilisateurListem=em.createQuery("SELECT u FROM  Utilisateur u where u.boutique.id =:id AND u.statut =:statut",Utilisateur.class).setParameter("id", id).setParameter("statut", Utilisateur.UserStatut.ACTIF).getResultList();
 	        
 	        if (UtilisateurListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return UtilisateurListem;}
 	        else{
-	        	System.out.println("la fiche  n exsite pas  \n\n\n\n");
 	            return null;}   
 	}
 
@@ -136,10 +132,8 @@ public class UserDaoImpl implements UserDAO {
 		 List<Utilisateur> UtilisateurListem=em.createQuery("SELECT u FROM  Utilisateur u where u.role.role =:profil  AND u.statut =:statut",Utilisateur.class).setParameter("profil", E).setParameter("statut", Utilisateur.UserStatut.ACTIF).getResultList();
 	        
 	        if (UtilisateurListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return UtilisateurListem;}
 	        else{
-	        	System.out.println("la fiche  n exsite pas  \n\n\n\n");
 	            return null;}   
 	}
     
@@ -148,10 +142,8 @@ public class UserDaoImpl implements UserDAO {
 		 List<Utilisateur> UtilisateurListem=em.createQuery("SELECT u FROM  Utilisateur u where u.role.role =:profil ",Utilisateur.class).setParameter("profil", E).getResultList();
 	        
 	        if (UtilisateurListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return UtilisateurListem;}
 	        else{
-	        	System.out.println("la fiche  n exsite pas  \n\n\n\n");
 	            return null;}   
 	}
 }

@@ -27,6 +27,7 @@ import com.tn.shell.model.paie.Employee;
 import com.tn.shell.model.paie.Pointage;
 import com.tn.shell.service.gestat.*;
 import com.tn.shell.service.paie.ServiceEmployee;
+import com.tn.shell.ui.common.UiDateDefaults;
 
  
 
@@ -62,6 +63,12 @@ public class AvancegestatBean {
     private String dates1;
     private Date date2;
     private String dates2;
+
+	@PostConstruct
+	public void init() {
+		initializeDefaultDateRange();
+	}
+
 	public String getListavanceByEmployer() {
 
 		return SUCCESS;
@@ -81,7 +88,6 @@ public class AvancegestatBean {
 			getServiceAvance().update(avance);
 			return SUCCESS;
 		} catch (DataAccessException e) {
-			e.printStackTrace();
 		}
 		
 		Utilisateur user=userservice.getCurrentUser();
@@ -103,10 +109,10 @@ public class AvancegestatBean {
 	public String etatAvance()
 	{		
 		listAvenc=new ArrayList<Avancegestat>();
-		date1=new Date();
-		date2=new Date();
+		initializeDefaultDateRange();
 		listeEmployee = new ArrayList<Employee>();
 		listeEmployee = serviceEmployee.getAll();
+		listAvenc = serviceAvance.getAvancesBybetweendate(date1, date2);
 		return SUCCESS;
 	}
 	private String total;
@@ -116,14 +122,17 @@ public class AvancegestatBean {
 		if (employee == null) {
 			String message = "Veuillez choisir un employe";
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+			listAvenc = new ArrayList<Avancegestat>();
+			total = null;
+			return;
 		}
+		initializeDefaultDateRange();
 		listAvenc=new ArrayList<Avancegestat>();
 		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
 		String d1=s.format(date1);
 		String d2=s.format(date2);
 		//date1=s.parse(d1);
 		//date2=s.parse(d2);
-		System.out.println("date format "+date1+"   "+date2);
 		listAvenc=serviceAvance.getAvancebDate(date1, date2, employee);
 		if(listAvenc.size()>0)
 		for(Avancegestat a:listAvenc)t=t+a.getMontant_avance();
@@ -151,26 +160,41 @@ public class AvancegestatBean {
 	}
 	
 	public String getAllavance() {
-		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		String d1=s.format(date1);
-		String d2=s.format(date2);
-		Date d = new Date();
-	 	listAvenc = new ArrayList<Avancegestat>();
-		/*listAvenc = serviceAvance.getAll(); 
-		
-		List<Employee> l=new ArrayList<Employee>();
-		l=serviceEmployee.getAll();
-		for(Employee e:l) {
-			listAvenc = new ArrayList<Avancegestat>();
-			listAvenc=serviceAvance.getAvancebDate(date1, date2, employee);
-		}*/
+		refreshAvancesForCurrentFilters();
 		return SUCCESS;
 	}
 	
 	public void validergetEtatbyDate(AjaxBehaviorEvent event) {
-		listAvenc=new ArrayList<Avancegestat>();
-		listAvenc=serviceAvance.getAvancebDate(date1, date2, employee);
-		 
+		refreshAvancesForCurrentFilters();
+	}
+
+	private void initializeDefaultDateRange() {
+		Date latestBusinessDate = resolveLatestAvanceDate();
+		date1 = UiDateDefaults.startOfDay(date1 == null ? latestBusinessDate : date1);
+		date2 = UiDateDefaults.endOfDay(date2 == null ? latestBusinessDate : date2);
+	}
+
+	private Date resolveLatestAvanceDate() {
+		List<Avancegestat> avances = serviceAvance.getAll();
+		Date latestBusinessDate = null;
+		if (avances != null) {
+			for (Avancegestat avanceCourante : avances) {
+				if (avanceCourante != null && avanceCourante.getDate() != null) {
+					latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, avanceCourante.getDate());
+				}
+			}
+		}
+		return latestBusinessDate == null ? new Date() : latestBusinessDate;
+	}
+
+	private void refreshAvancesForCurrentFilters() {
+		initializeDefaultDateRange();
+		listAvenc = new ArrayList<Avancegestat>();
+		if (employee != null) {
+			listAvenc = serviceAvance.getAvancebDate(date1, date2, employee);
+		} else {
+			listAvenc = serviceAvance.getAvancesBybetweendate(date1, date2);
+		}
 	}
 	/***
 	 * editer avance

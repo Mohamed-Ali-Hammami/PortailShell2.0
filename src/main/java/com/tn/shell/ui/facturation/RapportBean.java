@@ -201,7 +201,6 @@ public class RapportBean {
 		this.totaldepcar=df.format(totaldepcar);
 		this.totaldf=df.format(totaldf);
 		/*}catch(Exception e) {
-			e.printStackTrace();
 		}*/
 		
 		Utilisateur user=userService.getCurrentUser();
@@ -243,7 +242,6 @@ public class RapportBean {
 			d.setMonth(date1.getMonth());
 			d.setYear(date1.getYear());
 			String ds = sf.format(d);
-			System.out.println(" dates" +ds);
 			ld.add(ds);
 
 		}
@@ -298,7 +296,6 @@ public class RapportBean {
 		
 		size=listchauffeur.get(listchauffeur.size()-1).getId();
 		}catch(Exception e) {
-				System.out.println("ereur dans ligne index");
 			}
 		
 		Utilisateur user=userService.getCurrentUser();

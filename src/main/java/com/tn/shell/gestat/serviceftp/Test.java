@@ -43,7 +43,6 @@ public class Test {
      			  
      		} catch (ParseException e1) {
      			// TODO Autof-generated catch block
-     			e1.printStackTrace();
      		}
         
         listachat=new ArrayList<Achat>();
@@ -80,7 +79,6 @@ public class Test {
      			  
      		} catch (ParseException e1) {
      			// TODO Autof-generated catch block
-     			e1.printStackTrace();
      		}
  * */
 }

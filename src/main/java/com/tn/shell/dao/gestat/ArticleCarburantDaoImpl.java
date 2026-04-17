@@ -23,7 +23,6 @@ public class ArticleCarburantDaoImpl implements ArticleCarburantDAO {
                 .setParameter("statut", Statut.ACTIF)
                 .getResultList();
         if (result.isEmpty()) {
-            System.out.println("\n\nl  objet Vhecule n exsite pas\n\n");
         }
         return result;
     }
@@ -35,7 +34,6 @@ public class ArticleCarburantDaoImpl implements ArticleCarburantDAO {
                 .setParameter("nom", nom)
                 .getResultList();
         if (result.isEmpty()) {
-            System.out.println("\n\nl  objet Vhecule n exsite pas\n\n");
             return null;
         }
         return result.get(0);
@@ -47,7 +45,6 @@ public class ArticleCarburantDaoImpl implements ArticleCarburantDAO {
                 .setParameter("nom", des)
                 .getResultList();
         if (result.isEmpty()) {
-            System.out.println("\n\nl  objet Article n exsite pas\n\n");
             return null;
         }
         return result.get(0);
@@ -60,7 +57,6 @@ public class ArticleCarburantDaoImpl implements ArticleCarburantDAO {
                 .setParameter("nom", des)
                 .getResultList();
         if (result.isEmpty()) {
-            System.out.println("\n\nl  objet Articlecarburant n exsite pas\n\n");
         }
         return result;
     }
@@ -97,7 +93,6 @@ public class ArticleCarburantDaoImpl implements ArticleCarburantDAO {
                         Articlecarburant.class).setParameter("desig", designation).getResultList();
 
         if (fis.isEmpty()) {
-            System.out.println("le Articlecarburant  n exsite pas  \n\n\n\n");
             return null;
         }
         return fis.get(0);

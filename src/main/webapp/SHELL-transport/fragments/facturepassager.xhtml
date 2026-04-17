@@ -1,0 +1,241 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:panelGroup layout="block" styleClass="shell-module-layout transport-shell-fragment"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+		 
+		
+		<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+
+			<fieldset style="margin-bottom: 20px; background-color: #eeeec6;">
+				<legend>
+					<b><h:outputText
+							style="font-size:14px ;color:white;background-image:linear-gradient( #FAF281, red);"
+							value="Fiche Facture " name="outTxtcin" /> </b>
+				</legend>
+				<h:panelGroup layout="block" style="text-align:center;">
+
+
+
+					<h:form id="form">
+						<table>
+							<tr>
+
+								<td width="20%"><b><h:outputText value="Date :"
+											style="font-size:12px " /></b></td>
+								<td><p:calendar value="#{FactureBean.date}"
+										requiredMessage="entrer La date" style="font-size:12px "
+										required="true" /> <p:messages for="date" closable="true"
+										autoUpdate="true" /></td>
+							</tr>
+
+							<tr>
+								<td><b><h:outputText value="Vehicule :"
+											style="font-size:12px " /></b></td>
+								<td><p:selectOneMenu value="#{FactureBean.codevhecule}"
+										style="width:200px;font-size:12px " id="vehicule"
+										filter="true" filterMatchMode="contains">
+										<f:selectItem itemLabel="selectionner vehicule" />
+										<f:selectItems value="#{FactureBean.listeVehicules}"
+											itemValue="#{s.matricule}" var="s" itemLabel="#{s.matricule}" />
+										<f:ajax listener="#{FactureBean.getChauffeurs}"
+											render="chauffeur" />
+									</p:selectOneMenu> <p:messages for="vehicule" closable="true" autoUpdate="true" /></td>
+
+
+								<td><h:outputText value="Matricule :"
+										style="font-size:12px " /></td>
+								<td><h:inputText value="#{FactureBean.codevhecule}"
+										id="codevhecule" style="font-size:14px " /></td>
+							</tr>
+
+
+							<tr>
+								<td><b><h:outputText value="Chauffeur :"
+											style="font-size:12px " /></b></td>
+								<td><p:selectOneMenu value="#{FactureBean.codechaffeur}"
+										style="width:200px;font-size:12px " id="chauffeur"
+										filter="true" filterMatchMode="contains">
+										<f:selectItem itemLabel="selectionner chauffeur" />
+										<f:selectItems value="#{FactureBean.listeChauffeurs}"
+											itemValue="#{s.nompenom}" var="s" itemLabel="#{s.nompenom}" />
+
+									</p:selectOneMenu> <p:messages for="chauffeur" closable="true" autoUpdate="true" /></td>
+
+							</tr>
+
+
+
+
+							<tr>
+								<td><b><h:outputText value="Client :"
+											style="font-size:12px " /></b></td>
+								<td><p:selectOneMenu value="#{FactureBean.codeclient}"
+										requiredMessage="entrer client"
+										style="width:200px;font-size:12px " required="true"
+										id="client" filter="true" filterMatchMode="contains">
+										<f:selectItem itemLabel="selectionner client" />
+										<f:selectItems value="#{FactureBean.listeClients}"
+											itemValue="#{s.nom}" var="s" itemLabel="#{s.nom}" />
+										<p:ajax listener="#{FactureBean.getTransportbyclient2}"
+											update="mf " />
+									</p:selectOneMenu> <p:messages for="client" closable="true" autoUpdate="true" /></td>
+
+								<td><h:outputText value="MF :" style="font-size:12px " /></td>
+								<td><h:inputText value="#{FactureBean.mf}" id="mf"
+										style="font-size:14px " /></td>
+							</tr>
+
+							<tr>
+
+								<td><b><h:outputText value="Transport: "
+											style="font-size:12px " /></b></td>
+								<td><h:inputText value="#{FactureBean.transport}"
+										id="transport" style="font-size:14px " /></td>
+							</tr>
+
+						</table>
+
+						<p:messages autoUpdate="true" closable="true" id="message" />
+						<p:remoteCommand name="refreshFooter" update="emp:totalttc" />
+
+						<p:dataTable id="emp" var="p" editable="true"
+							value="#{FactureBean.listeProduits}" editMode="cell"
+							widgetVar="articleTable" rowKey="#{p.id}"
+							emptyMessage="aucune ligne dans la base">
+
+							<p:ajax event="cellEdit" listener="#{FactureBean.onCellEdit2}" />
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="CODE" />
+								</f:facet>
+								<p:cellEditor>
+									<f:facet name="output">
+										<b><h:outputText style="font-size:12px ;" value="#{p.id}"
+												id="p" /> </b>
+
+									</f:facet>
+									<f:facet name="input">
+
+										<h:inputText id="qteInput2" value="#{FactureBean.codeproduit}"
+											style="width:96%" size="2">
+
+
+											<p:ajax update="p tva des prix qte" event="blur"
+												process="@this" partialSubmit="true"
+												listener="#{FactureBean.updateCode}" />
+										</h:inputText>
+
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column>
+
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="LIBELLE" />
+								</f:facet>
+								<p:cellEditor>
+									<f:facet name="output">
+										<b><h:outputText style="font-size:12px ;" value="#{p.nom}"
+												id="des" /></b>
+
+									</f:facet>
+
+									<f:facet name="input">
+										<p:selectOneMenu value="#{FactureBean.code}" filter="true"
+											id="list" filterMatchMode="contains"
+											style="width:50px;font-size:12px">
+											<f:selectItem itemLabel="selectionner produit" />
+											<f:selectItems value="#{FactureBean.listproduits}"
+												itemValue="#{s.nom}" var="s" itemLabel="#{s.nom}" />
+											<p:ajax update="p tva des prix qte" event="blur"
+												process="@this" partialSubmit="true"
+												listener="#{FactureBean.updatenom}" />
+										</p:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+
+							</p:column>
+
+
+
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="QUANTITE" />
+								</f:facet>
+								<p:cellEditor>
+									<f:facet name="output">
+										<b><h:outputText style="font-size:12px ;"
+												value="#{p.quantites}" id="qte" /> </b>
+
+									</f:facet>
+									<f:facet name="input">
+
+
+										<h:inputText value="#{p.quantites}" style="width:96%">
+
+
+											<p:ajax event="change"
+												listener="#{FactureBean.updatemontant}" process="@this"
+												oncomplete="refreshFooter();" update="qte"
+												partialSubmit="true" />
+										</h:inputText>
+
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b" value="P.U" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{p.prixventes}"
+									id="prix" />
+							</p:column>
+
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b" value="TVA" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{p.tva}" id="tva" />
+							</p:column>
+							<f:facet name="footer">
+								 Totals TTC:
+								 <h:outputText value="#{FactureBean.totalttcs}" id="totalttc" />
+							</f:facet>
+
+
+						</p:dataTable>
+
+						<table>
+							<tr>
+
+								<td width="320px"><p:commandButton value="Ajouter"
+										ajax="false"
+										style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);"
+										action="#{FactureBean.savefacture}" /></td>
+
+
+							</tr>
+
+						</table>
+
+
+
+					</h:form>
+				</h:panelGroup>
+			</fieldset>
+
+
+		</h:panelGroup>
+	</h:panelGroup>
+</ui:composition>

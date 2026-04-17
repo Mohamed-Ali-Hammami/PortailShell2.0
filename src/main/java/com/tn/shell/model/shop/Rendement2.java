@@ -230,7 +230,6 @@ public class Rendement2 implements Comparable<Object> {
 			Rendement2 f = (Rendement2) o;
 			return (int) (this.montantv - f.montantv);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return 0;
 		}
 	}

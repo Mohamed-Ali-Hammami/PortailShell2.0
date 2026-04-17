@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+
+        <ui:insert name="menu" />
+
+        <h:outputScript target="body">
+            PrimeFaces.locales['fr'] = {
+                closeText: 'Fermer',
+                prevText: 'Précédent',
+                nextText: 'Suivant',
+                monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                monthNamesShort: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
+                dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                dayNamesShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+                dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+                weekHeader: 'Semaine',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Choisir l\'heure',
+                timeText: 'Heure',
+                hourText: 'Heures',
+                minuteText: 'Minutes',
+                secondText: 'Secondes',
+                currentText: 'Maintenant',
+                ampm: false,
+                month: 'Mois',
+                week: 'Semaine',
+                day: 'Jour',
+                allDayText: 'Toute la journée'
+            };
+        </h:outputScript>
+
+        <h:form id="recapitulatifCarburantForm">
+
+            <h:panelGroup layout="block"
+                style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+
+                <h:panelGroup layout="block"
+                    style="min-height:500px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92); text-align:center;">
+
+                    <h1>
+                        <h:outputLabel value="Recapitulation Carburant"
+                            style="border-color:#5cb85c; color:green;" />
+                    </h1>
+
+                    <br />
+
+                    <p:calendar id="popup"
+                        value="#{SituationBean.date1}"
+                        locale="fr"
+                        pattern="dd/MM/yyyy"
+                        buttonTabindex="-1"
+                        mask="99/99/9999"
+                        placeholder="__/__/____">
+                        <p:ajax event="dateSelect" listener="#{SituationBean.getDates1}" />
+                    </p:calendar>
+
+                    <p:calendar id="popup2"
+                        value="#{SituationBean.date2}"
+                        locale="fr"
+                        pattern="dd/MM/yyyy"
+                        buttonTabindex="-1"
+                        mask="99/99/9999"
+                        placeholder="__/__/____">
+                        <p:ajax event="dateSelect" listener="#{SituationBean.getDates1}" />
+                    </p:calendar>
+
+                    <p:commandButton value="valider"
+                        ajax="false"
+                        action="#{SituationBean.validercahierlitrage}" />
+
+                </h:panelGroup>
+            </h:panelGroup>
+
+        </h:form>
+
+    </h:panelGroup>
+</ui:composition>

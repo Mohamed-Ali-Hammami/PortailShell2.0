@@ -1,0 +1,551 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+
+        <ui:insert name="menu" />
+
+        <h:outputScript target="body">
+            $(function () {
+                var $form = $('#inputform');
+
+                $form.on('change', 'input[type="text"]', function (event) {
+                    var $nextTr = $(event.target).closest('tr').nextAll('tr:not(.group)').first();
+                    $nextTr.find('input').first().focus();
+                });
+
+                $form.on('blur', 'input[type="text"]', function (event) {
+                    var $nextTd = $(event.target).closest('td').nextAll('td:not(.group)').first();
+                    $nextTd.find('input').first().focus();
+                });
+
+                $form.on('keydown', 'input', function (event) {
+                    if (event.which === 13) {
+                        event.preventDefault();
+                        var $this = $(event.target);
+                        var index = parseFloat($this.attr('tabindex'));
+
+                        if (!isNaN(index)) {
+                            $('[tabindex="' + (index + 1) + '"]').focus();
+                        }
+                    }
+                });
+            });
+        </h:outputScript>
+
+        <h:form id="inputform">
+            <p:focus for="id" />
+
+            <h:panelGroup layout="block" styleClass="achatcarburant-page"
+                style="min-height:900px; margin:0 16px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+
+                <h:panelGroup layout="block" styleClass="achatcarburant-card"
+                    style="min-height:900px; margin:0 34px; padding:24px; background:rgba(255,255,255,0.92);">
+
+                    <h:panelGroup layout="block" style="text-align:center;">
+                        <h:panelGrid columns="4" columnClasses="field-label,field-input,field-label,field-input">
+
+                            <h:outputText value="Code Fournisseur" style="font-size:16px;" />
+                            <h:inputText id="id"
+                                value="#{AchatcarburantBean.code}"
+                                tabindex="1">
+                                <f:ajax render="nom"
+                                    listener="#{AchatcarburantBean.getFournisseurbyid}" />
+                            </h:inputText>
+
+                            <h:outputText value="Du"
+                                style="font-size:16px; text-decoration:underline;" />
+                            <p:calendar id="popup"
+                                value="#{AchatcarburantBean.date}"
+                                required="true"
+                                pattern="dd-MM-yyyy"
+                                mask="true"
+                                style="font-size:16px;" />
+
+                            <h:outputText value="Nom Fournisseur" style="font-size:16px;" />
+                            <h:inputText id="nom"
+                                value="#{AchatcarburantBean.nomfournissuer}" />
+
+                            <h:outputText value="Numero Facture"
+                                style="font-size:16px; text-decoration:underline;" />
+                            <h:inputText id="Tasudok"
+                                value="#{AchatcarburantBean.numFacture}"
+                                tabindex="2"
+                                required="true">
+                                <f:ajax render="msg"
+                                    listener="#{AchatcarburantBean.verifnumfact}" />
+                            </h:inputText>
+
+                        </h:panelGrid>
+
+                        <br />
+
+                        <p:messages id="msg" closable="true" />
+
+                        <ui:fragment rendered="#{AchatcarburantBean.listproduit != null}">
+                            <table id="tableId" border="1"
+                                style="width:100%; background-color:#ffffff; text-align:left; margin-bottom:0; border-color:#000000;">
+                                <tr>
+                                    <td><h:outputText value="Nom" style="font-size:12px; color:#483d8b;" /></td>
+                                    <td><h:outputText value="QUANTITE" style="font-size:12px; color:#483d8b;" /></td>
+                                    <td><h:outputText value="REMISE" style="font-size:12px; color:#483d8b;" /></td>
+                                    <td><h:outputText value="Quantite en Stock" style="font-size:12px; color:#483d8b;" /></td>
+                                    <td><h:outputText value="Qte Minimum" style="font-size:12px; color:#483d8b;" /></td>
+                                    <td><h:outputText value="Achat" style="font-size:12px; color:#483d8b;" /></td>
+                                    <td><h:outputText value="Vente" style="font-size:12px; color:#483d8b;" /></td>
+                                    <td><h:outputText value="Montant" style="font-size:12px; color:#483d8b;" /></td>
+                                </tr>
+
+                                <tr>
+                                    <td width="15%">
+                                        <b>
+                                            <h:outputText id="des"
+                                                value="#{AchatcarburantBean.listproduit.get(0).nom}"
+                                                rendered="#{AchatcarburantBean.listproduit != null}"
+                                                style="font-size:12px;" />
+                                        </b>
+                                    </td>
+                                    <td>
+                                        <b>
+                                            <h:inputText id="quantite"
+                                                value="#{AchatcarburantBean.qte}"
+                                                tabindex="3"
+                                                style="font-size:12px;">
+                                                <f:ajax render="montant1 ttc ttc2 qte"
+                                                    listener="#{AchatcarburantBean.updatemontant}" />
+                                            </h:inputText>
+                                        </b>
+                                    </td>
+                                    <td>
+                                        <h:inputText id="remise"
+                                            value="#{AchatcarburantBean.remise}"
+                                            tabindex="4"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;">
+                                            <f:ajax event="blur"
+                                                render="montant1 ttc ttc2 qte"
+                                                listener="#{AchatcarburantBean.updateremise}" />
+                                        </h:inputText>
+                                    </td>
+                                    <td>
+                                        <h:outputText id="quantitestock"
+                                            value="#{AchatcarburantBean.listproduit.get(0).quantites}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText id="qtemin"
+                                            value="#{AchatcarburantBean.listproduit.get(0).qtemin}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText id="prix"
+                                            value="#{AchatcarburantBean.listproduit.get(0).prixachats}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText id="prixv"
+                                            value="#{AchatcarburantBean.listproduit.get(0).prixventes}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText id="montant1"
+                                            value="#{AchatcarburantBean.listproduit.get(0).montants}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td width="15%">
+                                        <b>
+                                            <h:outputText
+                                                value="#{AchatcarburantBean.listproduit.get(1).nom}"
+                                                rendered="#{AchatcarburantBean.listproduit != null}"
+                                                style="font-size:12px;" />
+                                        </b>
+                                    </td>
+                                    <td>
+                                        <b>
+                                            <h:inputText id="quantite2"
+                                                value="#{AchatcarburantBean.qte}"
+                                                tabindex="5"
+                                                style="font-size:12px;">
+                                                <f:ajax event="blur"
+                                                    render="montant2 ttc ttc2 qte"
+                                                    listener="#{AchatcarburantBean.updatemontant2}" />
+                                            </h:inputText>
+                                        </b>
+                                    </td>
+                                    <td>
+                                        <h:inputText id="remise2"
+                                            value="#{AchatcarburantBean.remise}"
+                                            tabindex="6"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;">
+                                            <f:ajax event="blur"
+                                                render="montant1 ttc ttc2 qte"
+                                                listener="#{AchatcarburantBean.updateremise2}" />
+                                        </h:inputText>
+                                    </td>
+                                    <td>
+                                        <h:outputText
+                                            value="#{AchatcarburantBean.listproduit.get(1).quantites}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText
+                                            value="#{AchatcarburantBean.listproduit.get(1).qtemin}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText
+                                            value="#{AchatcarburantBean.listproduit.get(1).prixachats}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText
+                                            value="#{AchatcarburantBean.listproduit.get(1).prixventes}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText id="montant2"
+                                            value="#{AchatcarburantBean.listproduit.get(1).montants}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td width="15%">
+                                        <b>
+                                            <h:outputText
+                                                value="#{AchatcarburantBean.listproduit.get(2).nom}"
+                                                rendered="#{AchatcarburantBean.listproduit != null}"
+                                                style="font-size:12px;" />
+                                        </b>
+                                    </td>
+                                    <td>
+                                        <b>
+                                            <h:inputText id="quantite3"
+                                                value="#{AchatcarburantBean.qte}"
+                                                tabindex="7"
+                                                style="font-size:12px;">
+                                                <f:ajax event="blur"
+                                                    render="montant3 ttc ttc2 qte"
+                                                    listener="#{AchatcarburantBean.updatemontant3}" />
+                                            </h:inputText>
+                                        </b>
+                                    </td>
+                                    <td>
+                                        <h:inputText id="remise3"
+                                            value="#{AchatcarburantBean.remise}"
+                                            tabindex="8"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;">
+                                            <f:ajax event="blur"
+                                                render="montant1 ttc ttc2 qte"
+                                                listener="#{AchatcarburantBean.updateremise3}" />
+                                        </h:inputText>
+                                    </td>
+                                    <td>
+                                        <h:outputText
+                                            value="#{AchatcarburantBean.listproduit.get(2).quantites}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText
+                                            value="#{AchatcarburantBean.listproduit.get(2).qtemin}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText
+                                            value="#{AchatcarburantBean.listproduit.get(2).prixachats}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText
+                                            value="#{AchatcarburantBean.listproduit.get(2).prixventes}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText id="montant3"
+                                            value="#{AchatcarburantBean.listproduit.get(2).montants}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td width="15%">
+                                        <b>
+                                            <h:outputText
+                                                value="#{AchatcarburantBean.listproduit.get(3).nom}"
+                                                rendered="#{AchatcarburantBean.listproduit != null}"
+                                                style="font-size:12px;" />
+                                        </b>
+                                    </td>
+                                    <td>
+                                        <b>
+                                            <h:inputText id="quantite4"
+                                                value="#{AchatcarburantBean.qte}"
+                                                tabindex="9"
+                                                style="font-size:12px;">
+                                                <f:ajax render="montant4 ttc ttc2 qte"
+                                                    listener="#{AchatcarburantBean.updatemontant4}" />
+                                            </h:inputText>
+                                        </b>
+                                    </td>
+                                    <td>
+                                        <h:inputText id="remise4"
+                                            value="#{AchatcarburantBean.remise}"
+                                            tabindex="10"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;">
+                                            <f:ajax event="blur"
+                                                render="montant1 ttc ttc2 qte"
+                                                listener="#{AchatcarburantBean.updateremise4}" />
+                                        </h:inputText>
+                                    </td>
+                                    <td>
+                                        <h:outputText
+                                            value="#{AchatcarburantBean.listproduit.get(3).quantites}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText
+                                            value="#{AchatcarburantBean.listproduit.get(3).qtemin}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText
+                                            value="#{AchatcarburantBean.listproduit.get(3).prixachats}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText
+                                            value="#{AchatcarburantBean.listproduit.get(3).prixventes}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td>
+                                        <h:outputText id="montant4"
+                                            value="#{AchatcarburantBean.listproduit.get(3).montants}"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td width="15%">
+                                        <b><h:outputText value="" style="font-size:12px;" /></b>
+                                    </td>
+                                    <td>
+                                        <b>
+                                            <h:inputText id="quantite6"
+                                                value="#{AchatcarburantBean.qte}"
+                                                tabindex="11"
+                                                style="font-size:12px;" />
+                                        </b>
+                                    </td>
+                                    <td>
+                                        <h:inputText id="remise6"
+                                            value="#{AchatcarburantBean.remise}"
+                                            tabindex="12"
+                                            rendered="#{AchatcarburantBean.listproduit != null}"
+                                            style="font-size:12px;" />
+                                    </td>
+                                    <td><h:outputText value=" " style="font-size:12px;" /></td>
+                                    <td><h:outputText value=" " style="font-size:12px;" /></td>
+                                    <td><h:outputText value=" " style="font-size:12px;" /></td>
+                                    <td><h:outputText value=" " style="font-size:12px;" /></td>
+                                    <td><h:outputText id="montant6" value=" " style="font-size:12px;" /></td>
+                                </tr>
+                            </table>
+                        </ui:fragment>
+
+                        <h:panelGrid columns="6" style="margin-top:16px;">
+                            <h:outputText value="TOTAL Achats :" />
+                            <h:outputText id="qte" value="#{AchatcarburantBean.totalachats}" />
+
+                            <h:outputText value="TOTAL Marge:" />
+                            <h:outputText id="ttc" value="#{AchatcarburantBean.totalmarges}" />
+
+                            <h:outputText value="TOTAL VENTES:" />
+                            <h:outputText id="ttc2" value="#{AchatcarburantBean.totalttcs}" />
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" style="text-align:center; margin-top:24px;">
+                        <h:outputText value="Type Payement"
+                            style="font-size:14px; color:#000000; font-weight:bold;" />
+                        <br />
+
+                        <h:selectOneRadio id="etat_payement"
+                            value="#{AchatcarburantBean.typepayement}"
+                            style="font-size:14px;">
+                            <f:selectItem itemLabel="espece" itemValue="espece" />
+                            <f:selectItem itemLabel="cheque" itemValue="cheque" />
+                            <f:selectItem itemLabel="avoir" itemValue="avoir" />
+                            <f:selectItem itemLabel="cheque_avoir" itemValue="cheque_avoir" />
+                            <f:ajax render="cheque ach" />
+                        </h:selectOneRadio>
+
+                        <br />
+
+                        <h:panelGroup id="cheque">
+                            <ui:fragment rendered="#{AchatcarburantBean.typepayement == 'cheque'}">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <b>
+                                                <h:outputText value="Banque"
+                                                    style="font-size:14px; color:#000000;" />
+                                            </b>
+                                        </td>
+                                        <td>
+                                            <h:inputText value="#{AchatcarburantBean.banque}"
+                                                style="width:215px; font-size:14px;" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>
+                                                <h:outputText value="Numero Cheque"
+                                                    style="font-size:14px; color:#000000;" />
+                                            </b>
+                                        </td>
+                                        <td>
+                                            <h:inputText value="#{AchatcarburantBean.numcheque}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>
+                                                <h:outputText value="Montant Cheque"
+                                                    style="font-size:14px; color:#000000;" />
+                                            </b>
+                                        </td>
+                                        <td>
+                                            <h:inputText value="#{AchatcarburantBean.montantcheque}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>
+                                                <h:outputText value="Echeance"
+                                                    style="font-size:12px; color:#000000;" />
+                                            </b>
+                                        </td>
+                                        <td>
+                                            <p:calendar value="#{AchatcarburantBean.echeance}" size="20" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </ui:fragment>
+                        </h:panelGroup>
+
+                        <h:panelGroup id="ach">
+                            <ui:fragment rendered="#{AchatcarburantBean.typepayement == 'cheque_avoir'}">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <b>
+                                                <h:outputText value="Banque"
+                                                    style="font-size:14px; color:#000000;" />
+                                            </b>
+                                        </td>
+                                        <td>
+                                            <h:inputText value="#{AchatcarburantBean.banque}"
+                                                style="width:215px; font-size:14px;" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>
+                                                <h:outputText value="Numero Cheque"
+                                                    style="font-size:14px; color:#000000;" />
+                                            </b>
+                                        </td>
+                                        <td>
+                                            <h:inputText value="#{AchatcarburantBean.numcheque}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>
+                                                <h:outputText value="Numero Avoirs"
+                                                    style="font-size:14px; color:#000000;" />
+                                            </b>
+                                        </td>
+                                        <td>
+                                            <h:inputText value="#{AchatcarburantBean.numavoir}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>
+                                                <h:outputText value="Montant Avoir"
+                                                    style="font-size:14px; color:#000000;" />
+                                            </b>
+                                        </td>
+                                        <td>
+                                            <h:inputText value="#{AchatcarburantBean.montantavoir}">
+                                                <f:ajax render="resteMontantCheque"
+                                                    listener="#{AchatcarburantBean.getmontantcheque}" />
+                                            </h:inputText>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>
+                                                <h:outputText value="Montant Cheque"
+                                                    style="font-size:14px; color:#000000;" />
+                                            </b>
+                                        </td>
+                                        <td>
+                                            <h:inputText id="resteMontantCheque"
+                                                value="#{AchatcarburantBean.resteMontantCheque}" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </ui:fragment>
+                        </h:panelGroup>
+
+                        <p:commandButton id="valider"
+                            value="Valider"
+                            ajax="false"
+                            action="#{AchatcarburantBean.saveAchat}"
+                            style="width:200px; height:30px; color:white; background-image:linear-gradient(#FAF281, red); font-size:12px; margin-top:16px;" />
+
+                        <!--
+                        <p:commandButton id="scanDocument"
+                            value="Scaner le document"
+                            ajax="false"
+                            action="#{AchatcarburantBean.etatpeScan}"
+                            style="width:200px; height:30px; color:white; background-image:linear-gradient(#FAF281, red); font-size:12px;" />
+                        -->
+                    </h:panelGroup>
+
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:form>
+    </h:panelGroup>
+</ui:composition>

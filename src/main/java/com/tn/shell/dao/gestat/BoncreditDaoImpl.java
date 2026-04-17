@@ -24,10 +24,8 @@ public class BoncreditDaoImpl implements BoncreditDAO {
 		 List<Boncredit> VheculeListem=em.createQuery("SELECT c FROM  Boncredit c where c.quantitestock < c.qtemin and c.statut = :statut",Boncredit.class).setParameter("statut", Statut.ACTIF).getResultList();
 	        
 	        if (VheculeListem.size() > 0){
-	        	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
 	            return VheculeListem;}
 	        else{
-	        	System.out.println("\n\nl  objet Vhecule n exsite pas\n\n");
 	            return null;}  
 	}
 
@@ -36,10 +34,8 @@ public class BoncreditDaoImpl implements BoncreditDAO {
 		 List<Boncredit> VheculeListem=em.createQuery("SELECT c FROM  Boncredit c where c.id = :nom and c.statut = :statut",Boncredit.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (VheculeListem.size() > 0){
-	        	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
 	            return VheculeListem.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet Vhecule n exsite pas\n\n");
 	            return null;}   
 	}
 	
@@ -47,10 +43,8 @@ public class BoncreditDaoImpl implements BoncreditDAO {
 		List<Boncredit> VheculeListem=em.createQuery("SELECT c FROM  Boncredit c where c.nom = :nom and c.statut = :statut",Boncredit.class).setParameter("statut", Statut.ACTIF).setParameter("nom", des).getResultList();
         
         if (VheculeListem.size() > 0){
-        	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
             return VheculeListem.get(0);}
         else{
-        	System.out.println("\n\nl  objet Vhecule n exsite pas\n\n");
             return null;}   
 	}
 	@Transactional
@@ -58,10 +52,8 @@ public class BoncreditDaoImpl implements BoncreditDAO {
 List<Boncredit> VheculeListem=em.createQuery("SELECT c FROM  Boncredit c where c.famille.nom = :nom and c.statut = :statut",Boncredit.class).setParameter("statut", Statut.ACTIF).setParameter("nom", des).getResultList();
         
         if (VheculeListem.size() > 0){
-        	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
             return VheculeListem;}
         else{
-        	System.out.println("\n\nl  objet produit n exsite pas\n\n");
             return null;}  
 	}
 	@Transactional
@@ -95,7 +87,6 @@ List<Boncredit> VheculeListem=em.createQuery("SELECT c FROM  Boncredit c where c
 			return fis.get(0);
 
 		} else {
-			System.out.println("le produit  n exsite pas  \n\n\n\n");
 			return null;
 		}
 

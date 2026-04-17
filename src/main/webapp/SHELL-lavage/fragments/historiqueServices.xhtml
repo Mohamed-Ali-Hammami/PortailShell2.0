@@ -1,0 +1,286 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout lavage-shell-fragment">
+<f:metadata>
+		<f:event type="preRenderView" listener="#{ServiceLavageBean.historiqueServices}" />
+	</f:metadata>
+	
+				<h:form id="f">
+
+				<h:panelGroup layout="block" style="text-align:center;">				
+					 <table style="width: 70% ">
+					<tr><td>
+						<h:outputText value="DATE DU" style="font-size:10px" />
+						<p:calendar value="#{ServiceLavageBean.date1}" id="date1"     
+							 navigator="true"
+  pattern="dd/MM/yyyy" buttonTabindex="-1" type="tel"
+  mask="99/99/-9999" placeholder="__/__/____" 
+							 >
+							<p:ajax  
+								event="dateSelect"   /> 
+						</p:calendar></td>
+						
+						<td><h:outputText value="DATE AU" style="font-size:10px" />
+						<p:calendar value="#{ServiceLavageBean.date2}" id="date2"    
+							navigator="true"
+  pattern="dd/MM/yyyy" buttonTabindex="-1" type="tel"
+  mask="99/99/-9999" placeholder="__/__/____" 	 
+							 >
+							<p:ajax  
+								event="dateSelect"   /> 
+						</p:calendar></td>
+						
+						 
+							<td>	<p:selectOneRadio value="#{ServiceLavageBean.typerecherche}"
+						style="width:100px;font-size:12px"  >
+						<f:selectItem itemValue="Par Date" itemLabel="Par Date"/>
+						<f:selectItem itemValue="Par Poste" itemLabel="Par Poste"/>						 
+					 
+					</p:selectOneRadio></td>
+							
+						
+						<td>
+						<p:selectOneRadio value="#{ServiceLavageBean.poste}"
+						style="width:100px;font-size:12px"  >
+						<f:selectItems value="#{ServiceLavageBean.postes}" />						 
+					</p:selectOneRadio></td>
+					 
+					<td>
+						<p:selectOneRadio value="#{ServiceLavageBean.typalavage}"
+						style="width:100px;font-size:12px"  >
+						<f:selectItems value="#{ServiceLavageBean.typalavages}" />						 
+					</p:selectOneRadio></td>
+					</tr>
+					
+					<tr>
+					
+					<td>
+					
+					<h:inputText value="#{ServiceLavageBean.matricule}" />
+						</td>
+						<td>TU</td>
+							<td> 
+					
+					<h:inputText value="#{ServiceLavageBean.matricule2}" />
+						</td>
+				</tr>
+					<tr>
+					
+				
+					<td>
+						
+				 <p:commandButton  value="valider" action="#{ServiceLavageBean.gethistoriqueServices}" ajax="false"
+						style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px" >
+							 
+							 
+					</p:commandButton></td>
+                    
+					<td>	<p:commandButton title="imprimer" value="imprimer" action="#{ServiceLavageBean.imprimer}" ajax="false" >
+							 
+							 
+						 
+					</p:commandButton></td>
+					 </tr>
+					 </table>
+					<br />
+					<br />
+                     
+					<p:outputPanel id="imprimer" >
+						<!-- 
+						<h:panelGroup layout="block" style="text-align:center;">
+							<b><h:outputText
+									value="EDITION DES VENTES DU : #{ServiceLavageBean.dates} #{ServiceLavageBean.poste}"
+									style="font-size:20px" />   </b>
+
+
+						</h:panelGroup>
+						 -->
+						<br /> 
+						<h:panelGroup layout="block" style="text-align:right;">
+						<p:dataTable id="produit" var="p"  selection="#{ServiceLavageBean.selectedRendement}" 
+							value="#{ServiceLavageBean.listRendement}" rowKey="#{p.id}" selectionMode="single"
+							emptyMessage="aucune ligne dans la base">
+							 
+								<p:column width="10%" style="border: 0.5px #000000 solid;">
+									<f:facet name="header">
+										<h:outputText style="font-size:10px ;color:#000000"
+											value="Date" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.dates}"  />
+								</p:column>
+
+								<p:column style="border: 0.5px #000000 solid;">
+									<f:facet name="header">
+										<h:outputText style="font-size:10px ;color:#000000"
+											value="Heure entree" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000" value="#{p.heure_entree}"
+										  />
+								</p:column>
+
+								<p:column   style="border: 0.5px #000000 solid;">
+									<f:facet name="header">
+										<h:outputText style="font-size:10px ;color:#000000"
+											value="Heure Fin" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000" value="#{p.heure_sortie}"
+										  />
+								</p:column>
+
+								<p:column   style="border: 0.5px #000000 solid;text-aligh:right"  filterBy="#{p.client}" sortBy="#{p.client}" filterStyle="font-size:14px;color:blue" filterMatchMode="contains">
+									<f:facet name="header">
+										<h:outputText style="font-size:10px ;color:#000000;text-aligh:right"
+											value="Client" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.client}"  />
+								</p:column>
+								
+								<p:column style="border: 0.5px #000000 solid;text-aligh:right"  filterBy="#{p.tel}" sortBy="#{p.tel}" filterStyle="font-size:14px;color:blue" filterMatchMode="contains">
+									<f:facet name="header">
+										<h:outputText style="font-size:10px ;color:#000000;text-aligh:right"
+											value="N° Tel" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.tel}"  />
+								</p:column>
+
+                              
+								<p:column width="17%"  style="border: 0.5px #000000 solid;text-aligh:right" >
+									<f:facet name="header">
+										<h:outputText style="font-size:10px ;color:#000000;text-aligh:right"
+											value="Laveur"   />
+											
+											 
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.laveur}"   />
+								</p:column>
+								 
+								
+								 
+								 
+								<p:column  width="10%" style="border: 0.5px #000000 solid;text-aligh:right"  filterBy="#{p.matricule}" sortBy="#{p.matricule}" filterStyle="font-size:14px;color:blue" filterMatchMode="contains">
+									<f:facet name="header">
+										<h:outputText style="font-size:10px ;color:#000000;text-aligh:right"
+											value="Matricule" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.matricule}"   />
+								</p:column>
+								
+								<p:column  style="border: 0.5px #000000 solid;text-aligh:right"  filterBy="#{p.model}" sortBy="#{p.model}" filterStyle="font-size:14px;color:blue" filterMatchMode="contains">
+									<f:facet name="header">
+										<h:outputText style="font-size:10px ;color:#000000;text-aligh:right"
+											value="Model" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.model}"   />
+								</p:column>
+								
+								<p:column  width="12%" style="border: 0.5px #000000 solid;text-aligh:right">
+									<f:facet name="header">
+										<h:outputText style="font-size:10px ;color:#000000;text-aligh:right"
+											value="Service" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.service}"   />
+								</p:column>
+								
+								<p:column style="width:40px;text-align:center ;border: 0.5px #000000 solid;text-aligh:right">
+									<f:facet name="header">
+										<h:outputText style="font-size:10px ;color:#000000;text-aligh:right"
+											value="Montant" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.montantvs}" rendered="#{p.montants ==0}"  />
+										
+										<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.montantss}"   rendered="#{p.montantv ==0}" />
+								</p:column>
+								
+								
+								<p:column style="width:40px;text-align:center ;border: 0.5px #000000 solid;text-aligh:right">
+									<f:facet name="header">
+										<h:outputText style="font-size:10px ;color:#000000;text-aligh:right"
+											value="Huile" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.huile}"    />
+										
+										 
+								</p:column>
+								
+						   <p:column style="width:20px;text-align:center">
+								<f:facet name="header">
+								 
+								</f:facet>
+								<p:commandLink    action="#{ServiceLavageBean.updateHitoric}" ajax="false"
+									title="Add Model"   process="@this" >
+									<p:graphicImage url="/images/pencil.png" style="width:20px" />
+									  <f:setPropertyActionListener value="#{p}"
+										target="#{ServiceLavageBean.selectedRendement}" /> 
+								</p:commandLink>
+							</p:column>	
+							
+							 <p:column style="width:20px;text-align:center">
+								<f:facet name="header">
+								 
+								</f:facet>
+								<p:commandLink    action="#{ServiceLavageBean.supprimerRendement}" ajax="false"
+									title="Add Model"   process="@this" >
+									<p:graphicImage url="/images/trash.png" style="width:20px" />
+									  <f:setPropertyActionListener value="#{p}"
+										target="#{ServiceLavageBean.selectedRendement}" /> 
+								</p:commandLink>
+							</p:column>			 
+				      	<p:columnGroup type="footer">
+									<p:row>
+										<p:column colspan="9" style="text-align:right"
+											footerText="Totals: #{ServiceLavageBean.listRendement.size()}" />
+										<p:column footerText="#{ServiceLavageBean.total}" style="text-align:left" />
+										  
+									</p:row>
+								</p:columnGroup>	
+				  
+						</p:dataTable></h:panelGroup><br/>
+						
+					 
+                              
+						 <br/>
+						 
+						 	 
+						
+						<br/>
+					</p:outputPanel>
+				</h:panelGroup>
+			</h:form>
+	 
+    </h:panelGroup>
+</ui:composition>

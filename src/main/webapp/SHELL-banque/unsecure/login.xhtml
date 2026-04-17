@@ -1,65 +1,73 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-
-<h:head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Authentification</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/images/logo.png" />
-</h:head>
-
-<h:body style="background-color:#a2b5bf">
-    
-    <script type="text/javascript">
-        //<![CDATA[
-        window.addEventListener('load', function() {
-            var form = document.getElementById('loginFormId');
-            if (form) {
-                form.action = window.location.pathname + window.location.search;
-            }
-        });
-        //]]>
-    </script>
-
-    <br /><br /><br /><br /><br /><br /><br />
-
-    <div align="center">
-        <p:growl id="msgss" showDetail="true" />
-
-        <p:panel id="basic2" style="width:450px;height:auto;background-color:#eeeec6;font-size:12px" header="Connexion">
-            <h:form id="loginFormId" prependId="false">
-                <h:panelGrid columns="2" style="margin:auto;">
-
-                    <!-- Username -->
-                    <h:outputText id="outTxtUserNameId" value="#{msg['secure.username']}" style="font-size:12px;color:#006400;background-color:#a2b5bf" />
-                    <h:inputText id="userName" value="#{LoginBean.userName}" size="30" required="true" requiredMessage="#{msg['secure.error']}" />
-                    
-                    <!-- Password -->
-                    <h:outputText id="outTxtPasswordId" value="#{msg['secure.password']}" style="font-size:12px;color:#006400;background-color:#a2b5bf" />
-                    <h:inputSecret id="password" value="#{LoginBean.password}" size="30" required="true" />
-
-                    <!-- Login Button -->
-                    <h:outputText /> <!-- empty cell for spacing -->
-                    <h:commandButton id="btnLoginId" value="#{msg['secure.signin']}" 
-                        action="#{LoginBean.logintobanque}"
-                        style="width:150px;height:30px;color:white;
-                               background: linear-gradient(to bottom, #7abcff 0%, #60abf8 44%, #4096ee 100%);
-                               border:none; cursor:pointer;" />
-
-                </h:panelGrid>
-            </h:form>
-
-            <!-- Error messages -->
-            <div style="text-align:center; margin-top:10px;">
-                <p:messages id="messages" autoUpdate="true" closable="true" style="color:red" />
-            </div>
-        </p:panel>
-    </div>
-
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Authentification Banque</title>
+	<link rel="shortcut icon" type="image/x-icon" href="/images/logo.png" />
+	<style type="text/css">
+		body.login-page { margin: 0; min-height: 100vh; background: linear-gradient(135deg, rgba(195, 0, 0, 0.88), rgba(247, 202, 72, 0.78)), url(../../2.png) center center / cover no-repeat; font-family: "Trebuchet MS", Verdana, sans-serif; color: #1e1e1e; }
+		.login-shell { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 32px 16px; }
+		.login-card { width: 100%; max-width: 460px; background: rgba(255, 248, 220, 0.96); border: 1px solid rgba(110, 48, 0, 0.18); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22); border-radius: 14px; overflow: hidden; }
+		.login-header { padding: 18px 24px 10px 24px; background: linear-gradient(180deg, rgba(255, 244, 188, 0.92), rgba(255, 232, 146, 0.88)); border-bottom: 1px solid rgba(110, 48, 0, 0.15); }
+		.login-title { margin: 0; font-size: 24px; font-weight: bold; letter-spacing: 0.4px; color: #8a1200; }
+		.login-subtitle { margin: 6px 0 0 0; font-size: 12px; color: #5d4b22; }
+		.login-content { padding: 24px; }
+		.login-grid { width: 100%; border-collapse: collapse; }
+		.login-grid td { padding: 8px 0; vertical-align: middle; }
+		.login-label { width: 145px; font-size: 12px; font-weight: bold; color: #0f4c2f; padding-right: 14px; }
+		.login-field { width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #c9b67b; border-radius: 8px; background: #fffdf6; font-size: 13px; }
+		.login-field:focus { outline: none; border-color: #d23800; box-shadow: 0 0 0 3px rgba(210, 56, 0, 0.12); }
+		.login-actions { padding-top: 14px; text-align: right; }
+		.login-button { min-width: 170px; height: 38px; border: none; border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: bold; color: #fff9e6; background: linear-gradient(180deg, #83c7ff 0%, #449df3 48%, #2368c9 100%); box-shadow: 0 10px 22px rgba(35, 104, 201, 0.28); }
+		.messages-wrap { margin-top: 16px; }
+	</style>
+</head>
+<h:body styleClass="login-page">
+	<script type="text/javascript">
+//<![CDATA[
+		window.addEventListener('load', function() {
+			var form = document.getElementById('loginFormId');
+			if (form) {
+				form.action = window.location.pathname + window.location.search;
+			}
+		});
+//]]>
+	</script>
+	<div class="login-shell">
+		<div class="login-card">
+			<div class="login-header">
+				<h1 class="login-title">Connexion Banque</h1>
+				<p class="login-subtitle">Acces au module bancaire</p>
+			</div>
+			<div class="login-content">
+				<p:growl id="msgss" showDetail="true" />
+				<h:form id="loginFormId" prependId="false">
+					<table class="login-grid">
+						<tr>
+							<td class="login-label"><h:outputText id="outTxtUserNameId" value="#{msg['secure.username']}" /></td>
+							<td><h:inputText id="userName" styleClass="login-field" value="#{LoginBean.userName}" size="30" required="true" requiredMessage="#{msg['secure.error']}" /></td>
+						</tr>
+						<tr>
+							<td class="login-label"><h:outputText id="outTxtPasswordId" value="#{msg['secure.password']}" /></td>
+							<td><h:inputSecret id="password" styleClass="login-field" value="#{LoginBean.password}" size="30" required="true" /></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td class="login-actions"><h:commandButton id="btnLoginId" value="#{msg['secure.signin']}" action="#{LoginBean.logintobanque}" styleClass="login-button" /></td>
+						</tr>
+					</table>
+					<div class="messages-wrap">
+						<p:messages id="messages" autoUpdate="true" closable="true" style="color:red" />
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</div>
 </h:body>
 </html>

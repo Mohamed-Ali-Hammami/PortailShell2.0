@@ -1,0 +1,16 @@
+# Ignore .env file
+.env
+
+# Ignore target folder and its contents
+target/
+.vscode/
+exports_last100/
+scripts/
+bdsta.sql
+db_diff_report.txt
+Dump.sql
+FIXED_PAIE_MODULE.md
+frontend_click_audit_report.txt
+shellpaie-runtime-checklist.md
+TODO.md
+tomcat-run.log

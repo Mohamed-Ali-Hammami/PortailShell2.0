@@ -141,7 +141,6 @@ public class Rapportgestat {
         date1.setHours(0);
         date1.setMinutes(0);
         date1.setSeconds(0);
-        System.out.println(date1+"    "+date2);
         List<String> ld = new ArrayList<String>();
         SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
 		for (int i = date1.getDate(); i <= date2.getDate(); i++) {
@@ -150,7 +149,6 @@ public class Rapportgestat {
 			d.setMonth(date1.getMonth());
 			d.setYear(date1.getYear());
 			String ds = sf.format(d);
-			System.out.println(" dates" + ds);
 			ld.add(ds);
 		}
 		try {
@@ -187,10 +185,8 @@ public class Rapportgestat {
 			
 				 
 				 mgs = montant - motantachat;
-				System.out.println("_n\n\n  mgs"+mgs +" "+a.getNom());
 				//marge = marge + mgs;
 				margecarburant = margecarburant + mgs;
-				System.out.println("_n\n\n  margecarburant"+margecarburant +" "+margecarburant);
 			}
 			rapportpiste.setMatgecarburant(df.format(margecarburant));
 			listfamile = new ArrayList<Famillearticle>();
@@ -324,7 +320,6 @@ public class Rapportgestat {
 			t.setUtilisateur(user);
 			servicetrace.save(t);
 	 	} catch (Exception l) {
-			System.out.println("ereur dans ligne index");
 		}
 		return SUCCESS;
 	}

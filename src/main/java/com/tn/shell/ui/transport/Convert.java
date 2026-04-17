@@ -24,7 +24,6 @@ public class Convert {
         	Facture facture =new Facture();facture.setTotalttc((float) 364.9735);
         	Convert c=new Convert();
         	String s="";    
-        	System.out.println(facture.getTotalttcs());
 			 double ss=   facture.getTotalttc(); 
 				int e = new Float(ss).intValue();		 
 				 
@@ -47,7 +46,6 @@ public class Convert {
 				 facture.setSommes(c.convertt(e) + " dinars et  "
 						+ s + " millimes");
 				
-				System.out.println(facture.getSommes()+"\n"); 
 
         }
 private static final String [] uniteNames1 = {
@@ -166,7 +164,7 @@ public String convertLessThanOneThousand(int number){
 	 }
 	 public   String convertt(long number){
 	 
-	 if( number == 0 ) { return "z�ro";}
+	 if( number == 0 ) { return "zÃ©ro";}
 	 String snumber = Long.toString(number);
 	 //pad des "0"
 	 String mask ="000000000000";
@@ -226,9 +224,6 @@ public String convertLessThanOneThousand(int number){
 		 int e=new Float(f).intValue();
 		 float d=f-(new Float(e).floatValue());
 		 String s=""+d;
-		 System.out.println("int  "+e+" float "+d);
-		 System.out.println("int  "+e+" float "+s.substring(0, 5));
-	     System.out.println("10873  vaut  "+Convert.convertt(e)+" dinars "+s.substring(2, 5)+" millimes"  );
 		 
 									}*/
 }

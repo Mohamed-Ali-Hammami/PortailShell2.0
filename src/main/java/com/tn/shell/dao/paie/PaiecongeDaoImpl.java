@@ -32,10 +32,8 @@ public class PaiecongeDaoImpl  implements PaiecongeDAO{
 				 
 				 .getResultList();
 		 if (result.size() > 0){
-		    	System.out.println("objet trouvé "+"\n\n\n");
 		        return result;}
 		    else{
-		    	System.out.println("\n\nl  objet client n exsite pas\n\n");
 		        return null;} 
 	 }
 	  
@@ -47,10 +45,8 @@ public class PaiecongeDaoImpl  implements PaiecongeDAO{
 				 .setParameter("status", Status.Declare)
 				 .getResultList();
 		 if (result.size() > 0){
-	        	System.out.println("objet trouvé "+"\n\n\n");
 	            return result;}
 	        else{
-	        	System.out.println("\n\nl  objet client n exsite pas\n\n");
 	            return null;} 
 	 }
 		 @Transactional
@@ -62,10 +58,8 @@ public class PaiecongeDaoImpl  implements PaiecongeDAO{
 		 .setParameter("status", Status.Declare)
 		 .getResultList();
  if (result.size() > 0){
-    	System.out.println("objet trouvé "+"\n\n\n");
         return result;}
     else{
-    	System.out.println("\n\nl  objet client n exsite pas\n\n");
         return null;} 
 }
 		 
@@ -96,10 +90,8 @@ public class PaiecongeDaoImpl  implements PaiecongeDAO{
 		 .setParameter("status", Status.NonDeclaree)
 		 .getResultList();
  if (result.size() > 0){
-    	System.out.println("objet trouvé "+"\n\n\n");
         return result;}
     else{
-    	System.out.println("\n\nl  objet client n exsite pas\n\n");
         return null;} 
 }
 		 @Transactional	 
@@ -112,10 +104,8 @@ public class PaiecongeDaoImpl  implements PaiecongeDAO{
 					 .setParameter("mois", mois)
 					 .getResultList();
 			 if (result.size() > 0){
-			    	System.out.println("objet trouvé "+"\n\n\n");
 			        return result;}
 			    else{
-			    	System.out.println("\n\nl  objet client n exsite pas\n\n");
 			        return null;} 
 		 }
 		 @Transactional	
@@ -128,10 +118,8 @@ public class PaiecongeDaoImpl  implements PaiecongeDAO{
 					 
 					 .getResultList();
 			 if (result.size() > 0){
-			    	System.out.println("objet trouvé "+"\n\n\n");
 			        return result;}
 			    else{
-			    	System.out.println("\n\nl  objet client n exsite pas\n\n");
 			        return null;} 
 		 }
 	 @Transactional

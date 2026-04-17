@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 @Entity
 @Table(name = "Note")
 public class Note {
@@ -30,6 +33,7 @@ private Statut statut= Statut.ACTIF;
 
 @ManyToOne(cascade = { CascadeType.MERGE })
 @JoinColumn(name = "employeeid")
+@NotFound(action = NotFoundAction.IGNORE)
 private Employee employee;
 
 // lien one to many avec Paie

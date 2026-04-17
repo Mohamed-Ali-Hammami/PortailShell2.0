@@ -1,0 +1,91 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+	<h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+<h:form id="f"   >
+			<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+             <p:commandButton value="Imprimer"
+											style="width:200px;height:30px;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px">
+											<p:printer target="imprimers" />
+										</p:commandButton>
+										<p:outputPanel id="imprimers">
+				<h:panelGroup layout="block" style="text-align:center;">
+					<h5>
+						<h:outputLabel value="EDITION DU CAHIER DE LITRAGE"
+							style=" border-color: #5cb85c;font-color : green" />
+							<br/>
+							<h:outputText value="DU  #{SituationBean.dates1} AU #{SituationBean.dates2}"/><br/>
+							
+					</h5>
+					 <!--
+				  <h:outputText value="#{b.dates}" style="font-size:14px "/> -->
+				  
+				   
+		  <p:dataGrid var="c" value="#{SituationBean.listArticlecarburants}" styleClass="table" rowIndexVar="rowid" columns="6" id="produits"  style="width:100%" >              
+            
+                
+		       <p:dataTable  var="b" value="#{c.listcumil}"  >	
+		      
+		       
+		       <p:column rendered="#{rowid==0}"  style="width: 100px" >
+		      <f:facet name="header" >
+					<h:outputText value="Date" style="font-size:12px " />
+						</f:facet>
+						
+		 	 <p style="height:11px">	     <h:outputText value="#{b.dates}" style="font-size:14px "  /></p>
+		 	   
+		       </p:column>	
+		       
+		      
+		      
+		
+		 
+		
+		 
+		
+		
+		 
+		<p:column style="width: 10px" >
+		<f:facet name="header" >
+					<h:outputText value="#{c.nom}" style="font-size:12px " rendered="#{c.id != 2  and c.id != 3 }" />
+				 
+					 
+					<h:outputText value="Super" style="font-size:12px " rendered="#{c.id ==2}"/> 
+					<h:outputText value="50 PPM" style="font-size:12px " rendered="#{c.id ==3}"/>
+						</f:facet>
+						
+		 <p style="height:11px">	 <h:outputText value="#{b.quantites}" style="font-size:14px "/></p>
+		 	   
+		</p:column>	
+		
+		 
+		
+		<p:column style="width:10px" >
+		<f:facet name="header" >
+					<h:outputText value="Cumul" style="font-size:12px " />
+						</f:facet>
+						
+		  <p style="height:11px">		<h:outputText value="#{b.cumul}" style="font-size:14px "/> </p>
+		 	   
+		</p:column>
+		
+		 
+		 
+		  	</p:dataTable>
+		  	 
+            </p:dataGrid>
+             
+					</h:panelGroup>
+					</p:outputPanel>
+					</h:panelGroup>
+					 
+					 </h:form>
+					</h:panelGroup>
+					
+    </h:panelGroup>
+</ui:composition>

@@ -31,6 +31,7 @@ import com.tn.shell.service.transport.ServiceFacture;
 import com.tn.shell.service.transport.ServiceLigneCommande;
 import com.tn.shell.service.transport.ServiceTracetransport;
 import com.tn.shell.service.transport.ServiceVhecule;
+import com.tn.shell.ui.common.UiDateDefaults;
 
 @ManagedBean(name = "RapportBean")
 @SessionScoped
@@ -77,8 +78,7 @@ public class RapportBean {
     private String totaltransport;
     private String totaldf;
 	public String rendementchauffeur() {
-		date1 = new Date();
-		date2 = new Date();
+		initializeMonthlyDateRange();
 		listchauffeurs = new ArrayList<RapportChauffeur>();
 		mois = null;
 		annee = null;
@@ -93,8 +93,7 @@ public class RapportBean {
 	}
 	
 	public String totaldepense() {
-		date1 = new Date();
-		date2 = new Date();
+		initializeMonthlyDateRange();
 		 
 		mois = null;
 		annee = null;		 
@@ -201,7 +200,6 @@ public class RapportBean {
 		this.totaldepcar=df.format(totaldepcar);
 		this.totaldf=df.format(totaldf);
 		/*}catch(Exception e) {
-			e.printStackTrace();
 		}*/
 		
 		Utilisateur user=userService.getCurrentUser();
@@ -213,8 +211,7 @@ public class RapportBean {
 	}
 	
 	public String Ventecarburant() {
-		date1 = new Date();
-		date2 = new Date();
+		initializeMonthlyDateRange();
 		listchauffeurs = new ArrayList<RapportChauffeur>();
 		mois = null;
 		annee = null;
@@ -233,20 +230,9 @@ public class RapportBean {
 	private Integer annee;
 
 	public String getrendementchauffeur() {
-		List<String> ld = new ArrayList<String>();
+		List<String> ld = buildDateLabels(date1, date2);
 		mois=getMoisbyIntger(date1.getMonth()+1);
 		annee=date1.getYear()+1900;
-		SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
-		for (int i = date1.getDate(); i <= date2.getDate(); i++) {
-			Date d = new Date();
-			d.setDate(i);
-			d.setMonth(date1.getMonth());
-			d.setYear(date1.getYear());
-			String ds = sf.format(d);
-			System.out.println(" dates" +ds);
-			ld.add(ds);
-
-		}
 		List<Chauffeur>  listf = new ArrayList<Chauffeur>();
 		  listchauffeur = new ArrayList<Chauffeur>();
 		  listf = serviceChauffeur.getAll();
@@ -298,7 +284,6 @@ public class RapportBean {
 		
 		size=listchauffeur.get(listchauffeur.size()-1).getId();
 		}catch(Exception e) {
-				System.out.println("ereur dans ligne index");
 			}
 		
 		Utilisateur user=userService.getCurrentUser();
@@ -307,6 +292,44 @@ public class RapportBean {
 	       t.setDate(new Date());
 	        serviceTrace.save(t);
 		return SUCCESS;
+	}
+
+	private void initializeMonthlyDateRange() {
+		Date latestBusinessDate = resolveLatestTransportDate();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(latestBusinessDate);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		date1 = UiDateDefaults.startOfDay(calendar.getTime());
+		date2 = UiDateDefaults.endOfDay(latestBusinessDate);
+	}
+
+	private Date resolveLatestTransportDate() {
+		Date latestBusinessDate = null;
+		Bonlivraison latestBonLivraison = servicebonLivraison.getMaxbl();
+		if (latestBonLivraison != null) {
+			latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, latestBonLivraison.getDate());
+		}
+		List<Depense> depenses = serviceDepense.getAll();
+		if (depenses != null) {
+			for (Depense depense : depenses) {
+				latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, depense.getDate());
+			}
+		}
+		return UiDateDefaults.coalesce(latestBusinessDate, new Date());
+	}
+
+	private List<String> buildDateLabels(Date startDate, Date endDate) {
+		List<String> labels = new ArrayList<String>();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		Calendar cursor = Calendar.getInstance();
+		cursor.setTime(UiDateDefaults.startOfDay(startDate));
+		Calendar end = Calendar.getInstance();
+		end.setTime(UiDateDefaults.startOfDay(endDate));
+		while (!cursor.after(end)) {
+			labels.add(formatter.format(cursor.getTime()));
+			cursor.add(Calendar.DATE, 1);
+		}
+		return labels;
 	}
 
 	private String getMoisbyIntger(Integer moi) {
@@ -328,13 +351,13 @@ public class RapportBean {
 		else if (moi == 8)
 			m = "aout";
 		else if (moi == 9)
-			m = "S�ptembre";
+			m = "SÃ©ptembre";
 		else if (moi == 10)
 			m = "Octobre";
 		else if (moi == 11)
 			m = "Novembre";
 		else if (moi == 12)
-			m = "D�cembre";
+			m = "DÃ©cembre";
 		return m;
 	}
 

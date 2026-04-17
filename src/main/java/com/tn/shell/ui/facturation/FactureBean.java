@@ -280,7 +280,6 @@ public class FactureBean implements Serializable {
 		}
 
 		catch (Exception e) {
-			System.out.println();
 		}
 		return SUCCESS;
 	}
@@ -1039,7 +1038,6 @@ public void setDates(String dates) {
 
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		listfacturepass = new ArrayList<Facturepassager>();
 		if (client != null) {
@@ -1135,7 +1133,6 @@ public void setDates(String dates) {
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		// selectedsBl.add((Bonlivraison) event.getObject());
 		test = true;
-		System.out.println("test" + test);
 	}
 
 	public Date dat;
@@ -1189,7 +1186,6 @@ public void setDates(String dates) {
 
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 
 	}

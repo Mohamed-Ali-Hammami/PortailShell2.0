@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout paie-shell-fragment">
+        <p:panel styleClass="shell-home-panel paie-shell-panel">
+				<h:form>
+					<h:panelGroup layout="block" style="text-align:center;">
+						<table>
+							<tr>
+								
+
+								<td><p:commandButton value="Valider" ajax="false"
+										style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+										action="#{NoteBean.Validernote}" /></td>
+							</tr>
+						</table>
+					</h:panelGroup>
+					<br/><br/>
+					 
+						 
+							<h:panelGrid columns="2" cellpadding="5">
+								 
+								 
+								
+						         
+								 <h:outputText value="Annee : " style="font-weight: bold" /> 
+								<p:selectOneMenu  value="#{NoteBean.annee}"  
+						        style="width:200px;font-size:12px " id="annee" turefilter="true" filterMatchMode="contains">
+							    <!-- <p:ajax listener="#{NoteBean.GetMoisByAnnee}" /> -->
+							     <f:selectItems value="#{NoteBean.listannee}"   />							 
+						         </p:selectOneMenu>
+						       <h:outputText value="tous les employérs" style="font-size:12px " />
+                          
+                         <p:selectOneMenu value="#{NoteBean.employer}" 
+								style="width:200px;font-size:12px " id="emp" filter="true"
+								filterMatchMode="contains">								 
+								<f:selectItem itemLabel="Veuillez choisir un employer"  />
+								<f:selectItems value="#{NoteBean.listEmployee}"    itemValue="#{e.nom}" var="e"  itemLabel="#{e.nom}" />
+								 <f:ajax listener="#{NoteBean.verifierpointage}" render=" message" />
+								  
+							</p:selectOneMenu>
+
+							<br/><br/><br/>
+							</h:panelGrid>
+								
+							<h:panelGrid columns="2" cellpadding="5">
+								 
+						  <h:outputText value="entrer la note " style="font-size:12px " />
+								 <h:inputText value="#{NoteBean.note}"/>
+								 </h:panelGrid>
+								 <p:messages id="message" autoUpdate="true" closable="true"/>
+								<br/>
+								 
+								 
+								  
+								
+								 
+	</h:form>
+        </p:panel>
+    </h:panelGroup>
+</ui:composition>

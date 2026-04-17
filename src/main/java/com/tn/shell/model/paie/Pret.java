@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 @Entity
 @Table(name = "Pret")
 public class Pret {
@@ -31,6 +34,7 @@ private Integer reste_mois=0;
 private double deductionParmois;
 @ManyToOne(cascade = { CascadeType.MERGE })
 @JoinColumn(name = "employeeid")
+@NotFound(action = NotFoundAction.IGNORE)
 private Employee employee;
 @Transient
 private double valeur_retirer;

@@ -1,78 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-  <display-name>Archetype Created Web Application</display-name> 
-    <!--  <context-param>
-        <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
-        <param-value>/WEB-INF/springsecurity.taglib.xml</param-value>
-    </context-param>
-     /WEB-INF/security-context.xml  
-      -->  
+  <display-name>PortailShellRR21</display-name> 
+  <!-- Spring Context -->
   <context-param>    
       <param-name>contextConfigLocation</param-name>
-      <param-value>/WEB-INF/applicationContext.xml     
-                            /WEB-INF/security-context.xml                
-      </param-value>            
+      <param-value>/WEB-INF/applicationContext.xml /WEB-INF/security-context.xml</param-value>            
   </context-param>   
-  <!-- Spring -->
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    <listener>
-        <listener-class>
-            org.springframework.web.context.request.RequestContextListener
-        </listener-class>
-    </listener>       
-        <!-- Spring Security -->
-   <filter>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <!-- Welcome page -->
-  
-	     <!-- JSF mapping -->
-    <servlet>
-        <servlet-name>Faces Servlet</servlet-name>
-        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-   
- 
-    <!-- Map these files with JSF -->
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.jsf</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.faces</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.xhtml</url-pattern>
-    </servlet-mapping>
-    
-   <session-config>
-        <session-timeout>
-           1200
-        </session-timeout>
-    </session-config>
-    <welcome-file-list>
-        <welcome-file>/unsecure/login.xhtml</welcome-file>
-    </welcome-file-list>
-    <context-param>
-   <param-name>facelets.SKIP_COMMENTS</param-name>
-   <param-value>true</param-value>
-</context-param>
-  
+  <!-- JSF Config Files -->
+  <context-param>
+    <param-name>javax.faces.CONFIG_FILES</param-name>
+    <param-value>/WEB-INF/faces-config_common.xml,/WEB-INF/faces-config_paie.xml,/WEB-INF/faces-config_gestat.xml,/WEB-INF/faces-config_shop.xml,/WEB-INF/faces-config_transport.xml,/WEB-INF/faces-config_banque.xml,/WEB-INF/faces-config_lavage.xml</param-value>
+  </context-param>
+  <!-- Spring Listeners -->
+  <listener>
+      <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+      <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>       
+  <!-- Spring Security -->
+  <filter>
+      <filter-name>springSecurityFilterChain</filter-name>
+      <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+      <filter-name>springSecurityFilterChain</filter-name>
+      <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <!-- JSF Servlet -->
+  <servlet>
+      <servlet-name>Faces Servlet</servlet-name>
+      <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>Faces Servlet</servlet-name>
+      <url-pattern>/faces/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+      <servlet-name>Faces Servlet</servlet-name>
+      <url-pattern>*.jsf</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+      <servlet-name>Faces Servlet</servlet-name>
+      <url-pattern>*.faces</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+      <servlet-name>Faces Servlet</servlet-name>
+      <url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
+  <session-config>
+      <session-timeout>1200</session-timeout>
+  </session-config>
+  <welcome-file-list>
+      <welcome-file>/unsecure/login.xhtml</welcome-file>
+  </welcome-file-list>
+  <context-param>
+      <param-name>facelets.SKIP_COMMENTS</param-name>
+      <param-value>true</param-value>
+  </context-param>
 </web-app>
-
-

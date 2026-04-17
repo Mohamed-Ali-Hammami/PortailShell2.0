@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div class="shell-module-layout">
+		<p:panel id="basic" styleClass="shell-home-panel">
+			<h2 class="shell-page-title">Ajouter Transaction</h2>
+			<p class="shell-page-subtitle">Saisie d'une operation sur le compte bancaire actif.</p>
+
+			<h:form id="operations" prependId="false">
+				<h:panelGrid columns="2">
+					<h:outputText value="Description:" style="font-size:14px;color:#483d8b"/>
+					<h:inputText value="#{BanqueBean.description}"/>
+					<h:outputText value="Montant:" style="font-size:14px;color:#483d8b"/>
+					<h:inputText value="#{BanqueBean.montant}"/>
+					<h:outputText value="Type Reglement:" style="font-size:14px;color:#483d8b"/>
+					<p:selectOneMenu value="#{BanqueBean.reglement}" id="reglement" required="true"
+						requiredMessage="Entrer le type du reglement" filter="true" filterMatchMode="contains"
+						style="width:200px;font-size:12px">
+						<f:selectItem itemLabel="Selectionner reglement"/>
+						<f:selectItems value="#{BanqueBean.reglements}"/>
+					</p:selectOneMenu>
+					<h:outputText value="Numero Cheque:" style="font-size:14px;color:#483d8b"/>
+					<h:inputText value="#{BanqueBean.reference}"/>
+					<h:outputText value="Type Operation:" style="font-size:14px;color:#483d8b"/>
+					<p:selectOneMenu value="#{BanqueBean.type}" id="type2" required="true"
+						requiredMessage="Entrer le type d'operation" filter="true" filterMatchMode="contains"
+						style="width:200px;font-size:12px">
+						<f:selectItem itemLabel="Selectionner type"/>
+						<f:selectItems value="#{BanqueBean.types}"/>
+					</p:selectOneMenu>
+				</h:panelGrid>
+				<br/><br/>
+				<p:commandButton value="Valider"
+					styleClass="shell-action-button"
+					action="#{BanqueBean.saveoperation}" ajax="false"/>
+			</h:form>
+		</p:panel>
+	</div>
+</ui:composition>

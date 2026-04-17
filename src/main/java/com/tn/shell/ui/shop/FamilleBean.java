@@ -109,6 +109,10 @@ public class FamilleBean {
 		return SUCCESS;
 	}
 
+	public String saveFamilles() {
+		return saveFamille();
+	}
+
 	public String getAllFamillearticle() {
 		listFamille = new ArrayList<Famillearticle>();
 		listFamille = serviceFamilleaticle.getAll();
@@ -142,7 +146,6 @@ public class FamilleBean {
 			getServiceFamilleaticle().update(produit);
 			return SUCCESS;
 		} catch (DataAccessException e) {
-			e.printStackTrace();
 		}
 		return ERROR;
 	}

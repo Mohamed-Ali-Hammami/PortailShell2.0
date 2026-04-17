@@ -26,10 +26,8 @@ public class EmployeegestatDaoImpl  implements EmployeegestatDAO{
 		 List<Employeegestat> result = em.createQuery("SELECT a FROM Employeegestat a  where a.statut = :statut and a.nom = :nom", Employeegestat.class).setParameter("statut", Statut.ACTIF)
 				 .setParameter("nom",nom).getResultList();
 		 if (result.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return result.get(0);}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}  
 	 }
 	 @Transactional
@@ -37,20 +35,16 @@ public class EmployeegestatDaoImpl  implements EmployeegestatDAO{
 		 List<Employeegestat> result = em.createQuery("SELECT a FROM Employeegestat a  where a.statut = :statut and a.matricule = :nom", Employeegestat.class).setParameter("statut", Statut.ACTIF)
 				 .setParameter("nom",nom).getResultList();
 		 if (result.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return result.get(0);}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}  
 	 }
 	 @Transactional
 	 public List<Employeegestat> getEmployeeparnature(String  nature ){
 		 List<Employeegestat> result = em.createQuery("SELECT a FROM Employeegestat a  where a.statut = :statut and a.nature = :nature", Employeegestat.class).setParameter("statut", Statut.ACTIF).setParameter("nature",nature).getResultList();
 		 if (result.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return result;}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}  
 	 }
 	 @Transactional

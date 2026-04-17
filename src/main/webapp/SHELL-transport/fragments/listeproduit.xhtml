@@ -1,0 +1,158 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:panelGroup layout="block" styleClass="shell-module-layout transport-shell-fragment"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+		 
+		
+		<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+			<h:form>
+				<h:panelGroup layout="block" style="text-align:right;">
+					<p:commandButton value="Nouveau"
+						action="#{ProduitBean.nouveauProduit}"
+						style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);" />
+                       <p:commandButton value="Supprimer" ajax="false"
+						action="#{ProduitBean.supprimerlist}"
+						style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);" />
+                       
+				</h:panelGroup>
+				<br />
+				<br />
+				<!-- 
+
+
+ -->
+				<p:dataTable id="Produit" var="Produit"
+					value="#{ProduitBean.listprosuits}" widgetVar="articleTable"
+					editable="true"  
+					selection="#{ProduitBean.selectedProduits}" rowKey="#{Produit.id}"
+					style="margin-bottom:10px"
+					emptyMessage="aucun produit dans la base" paginator="true"
+					rows="100" paginatorPosition="bottom" resizableColumns="true"
+					liveResize="true">
+					<p:ajax event="rowEdit" listener="#{ProduitBean.onRowEdit}" />
+                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+
+					<p:column filterBy="#{Produit.nom}"
+						filterStyle="font-size:14px;color:blue" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="Designation" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText style="font-size:12px " value="#{Produit.nom}" />
+							</f:facet>
+
+							<f:facet name="input">
+								<h:inputText style="font-size:12px " value="#{Produit.nom}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column filterBy="#{Produit.id}"
+						filterStyle="font-size:14px;color:blue" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="Code" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText style="font-size:12px " value="#{Produit.id}" />
+							</f:facet>
+
+							<f:facet name="input">
+								<h:inputText style="font-size:12px " value="#{Produit.id}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="Vente" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText style="font-size:12px "
+									value="#{Produit.prixventes}" />
+							</f:facet>
+
+							<f:facet name="input">
+								<h:inputText style="font-size:12px " value="#{Produit.vente}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="Tva" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText style="font-size:12px " value="#{Produit.tva}" />
+							</f:facet>
+
+							<f:facet name="input">
+								<h:inputText style="font-size:12px " value="#{Produit.tva}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+
+
+
+
+
+					<p:column style="width:40px;text-align:center">
+						<f:facet name="header">
+							<h:outputText style="font-size:9px;color:#483d8b"
+								value="supprimer" />
+						</f:facet>
+						<h:panelGroup layout="block" style="text-align:center;">
+							<p:commandLink action="#{ProduitBean.deleteproduit}"
+								onclick="PF('suppressionDialog').show();">
+								<p:graphicImage url="/images/delete.png" />
+
+								<f:setPropertyActionListener target="#{ProduitBean.produits}"
+									value="#{Produit}" />
+
+								<p:confirm header="Confirmation"
+									message="Voulez-vous vraiment supprimer  produit ?"
+									icon="ui-icon-alert" />
+							</p:commandLink>
+						</h:panelGroup>
+					</p:column>
+
+
+					<p:column style="width:40px">
+						<f:facet name="header">
+							<h:outputText style="font-size:9px;color:#483d8b"
+								value="modifier" />
+						</f:facet>
+						<p:rowEditor />
+					</p:column>
+
+
+				</p:dataTable>
+
+
+				<h:panelGroup layout="block" style="text-align:center;">
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+						style="width:150px" widgetVar="suppressionDialog">
+						<h:panelGroup layout="block" style="text-align:center;">
+							<p:commandButton value="oui" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="Non" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</h:panelGroup>
+					</p:confirmDialog>
+				</h:panelGroup>
+			</h:form>
+
+		</h:panelGroup>
+	</h:panelGroup>
+</ui:composition>

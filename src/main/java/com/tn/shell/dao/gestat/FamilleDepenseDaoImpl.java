@@ -31,10 +31,8 @@ public Familledepensegestat getFamilebyeibelle(String libelle){
 	 List<Familledepensegestat> VheculeListem=em.createQuery("SELECT c FROM  Familledepensegestat c where c.libelle = :nom and c.statut = :statut",Familledepensegestat.class).setParameter("statut", Statut.ACTIF).setParameter("nom", libelle).getResultList();
      
      if (VheculeListem.size() > 0){
-     	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
          return VheculeListem.get(0);}
      else{
-     	System.out.println("\n\nl  objet Vhecule n exsite pas\n\n");
          return null;}   
 }
 @Transactional
@@ -42,10 +40,8 @@ public Familledepensegestat getFamilebyeid(Integer id) {
 List<Familledepensegestat> VheculeListem=em.createQuery("SELECT c FROM  Familledepensegestat c where c.id = :nom and c.statut = :statut",Familledepensegestat.class).setParameter("statut", Statut.ACTIF).setParameter("nom", id).getResultList();
 
 if (VheculeListem.size() > 0){
-	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
     return VheculeListem.get(0);}
 else{
-	System.out.println("\n\nl  objet familrdepense n exsite pas\n\n");
     return null;}   
 }
 @Transactional

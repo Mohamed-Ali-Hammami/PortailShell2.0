@@ -23,7 +23,6 @@ public class FTPConnectionLogin {
 		try {
 			BufferedReader IN = new BufferedReader(new FileReader("D:/FTP_E00/num.txt"));
 			String s = IN.readLine();
-			System.out.println(s);
 			BufferedReader IN2 = new BufferedReader(new FileReader("D:/FTP_E00/000" + s + ".P"));
 
 			String ligne;
@@ -41,13 +40,10 @@ public class FTPConnectionLogin {
 			for (int i = 0; i < mots.length; i++) {
 				if (mots[i].contains("QUA")) {
 					System.out.print(returnPompe(mots[i].substring(0, mots[i].indexOf("=")))+" ");
-					System.out.println("index " +  Double.parseDouble(mots[i].substring(mots[i].indexOf("=") + 1, mots[i].length())));
 				}
 			}
 
 		} catch (IOException ex) {
-			System.out.println("erreur de lecture du fichier");
-			ex.printStackTrace();
 
 		}
 	}
@@ -165,17 +161,14 @@ public static String returnPompe(String s) {
 			reponseServeur(ftpClient);
 			int reponse = ftpClient.getReplyCode();
 			if (!FTPReply.isPositiveCompletion(reponse)) {
-				System.out.println("Operation �chou�. R�ponse Serveur: " + reponse);
 				return;
 			}
 			boolean etat = ftpClient.login(username, password);
 			reponseServeur(ftpClient);
 			if (!etat) {
-				System.out.println("Impossible d'acc�der au serveur");
 				return;
 
 			} else {
-				System.out.println("Identification r�ussie");
                 
 				ftpClient.enterLocalPassiveMode();
 				ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
@@ -200,7 +193,6 @@ public static String returnPompe(String s) {
 					if (files1[i].getName().equals(nomFichier2))
 						// obtenir la taille du fichier
 						size = files1[i].getSize();
-					System.out.println(" s" + size);
 				}
 
 				OutputStream outputStream2 = new BufferedOutputStream(new FileOutputStream(fichierlocal));
@@ -214,22 +206,19 @@ public static String returnPompe(String s) {
 				int transfer = 0;
 				int pourcentage = 0;
 				while ((bytesRead = inputStream2.read(bytesArray)) != -1) {
-					// on �crit les octets dans l'emplacement pr�cis�
+					// on Ã¯Â¿Â½crit les octets dans l'emplacement prÃ¯Â¿Â½cisÃ¯Â¿Â½
 					outputStream2.write(bytesArray, 0, bytesRead);
 
 					transfer += bytesRead;
 					pourcentage = (int) (transfer * 100 / size);
-					System.out.println(pourcentage + "%");
 				} // outputStream3.write();
 
-				// fermer les flux de lecture de d'�criture
+				// fermer les flux de lecture de d'Ã¯Â¿Â½criture
 				inputStream2.close();
 				outputStream2.close();
 
 			}
 		} catch (IOException ex) {
-			System.out.println("Une erreur lors de la connexion a �t� d�tect�");
-			ex.printStackTrace();
 		} finally {
 			try {
 				if (ftpClient.isConnected()) {
@@ -238,7 +227,6 @@ public static String returnPompe(String s) {
 					ftpClient.disconnect();
 				}
 			} catch (IOException ex) {
-				ex.printStackTrace();
 			}
 
 		}
@@ -248,7 +236,6 @@ public static String returnPompe(String s) {
 		String[] reponses = ftpClient.getReplyStrings();
 		if (reponses != null && reponses.length > 0) {
 			for (String reponse : reponses) {
-				System.out.println("SERVEUR :" + reponse);
 			}
 		}
 	}

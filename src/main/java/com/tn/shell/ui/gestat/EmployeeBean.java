@@ -183,7 +183,6 @@ public class EmployeeBean {
 			getServiceEmployee().update(client);
 			return SUCCESS;
 		} catch (DataAccessException e) {
-			e.printStackTrace();
 		}
 		return ERROR;
 	}

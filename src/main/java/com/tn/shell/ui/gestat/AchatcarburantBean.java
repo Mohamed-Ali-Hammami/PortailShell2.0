@@ -682,7 +682,6 @@ public class AchatcarburantBean {
 
 		} catch (ParseException e1) {
 			// TODO Autof-generated catch block
-			e1.printStackTrace();
 		}
 		DecimalFormat df = new DecimalFormat("#,###.000");
 		totaltva = df.format(0);
@@ -777,6 +776,10 @@ public class AchatcarburantBean {
 		statu = null;
 		date = new Date();
 		listAchat = new ArrayList<Achatcarburant>();
+		return SUCCESS;
+	}
+
+	public String etatpeScan() {
 		return SUCCESS;
 	}
 

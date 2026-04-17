@@ -7,7 +7,7 @@
 <h:head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8"
 		charset="UTF-8"></meta>
-	<link type="text/css" rel="stylesheet" href="style.css" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/style.css" />
 	<title>Shell-Sejoumi</title>
 
 </h:head>
@@ -211,7 +211,7 @@
 								<h:inputText value="#{CaisseBeans.poste}" />
 								<h:outputLabel value="Client" />
 								<h:inputText value="#{CaisseBeans.credit.client.nom}" />
-								<h:outputLabel value="Bon N°" />
+								<h:outputLabel value="Bon NÂ°" />
 								<h:inputText value="#{CaisseBeans.credit.numbon}" />
 							</h:panelGrid>
 

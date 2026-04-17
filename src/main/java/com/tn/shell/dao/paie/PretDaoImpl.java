@@ -38,12 +38,10 @@ public class PretDaoImpl  implements PretDAO{
 				 .getResultList();
 		 if (result.size() > 0){
 			 Date d=new Date();
-		     	System.out.println("objet trouvé "+"\n\n\n");
 		     	//if(result.get(0).getDate_debut().getMonth()+1+result.get(0).getNbmois()<=d.getMonth()+1)
 		         return result.get(0);
 		     	}
 		     else{
-		     	System.out.println("\n\nl  objet pointage n exsite pas\n\n");
 		         return null;} 
 	 }
 	 @Transactional

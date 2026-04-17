@@ -43,10 +43,8 @@ public class AchatDaoImpl implements AchatDAO {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0).getId();
 		} else {
-			System.out.println("\n\nl  objet achat n exsite pas\n\n");
 			return 0;
 		}
 	}

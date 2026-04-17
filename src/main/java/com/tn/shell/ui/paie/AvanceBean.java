@@ -63,15 +63,30 @@ public class AvanceBean {
 	private double montant;
 	private String nom;
 	private Employee employee;
+	private List<Avancegestat> listAvenc;
+	private List<Avancegestat> selectedAvenc;
+	private List<Avancegestat> filtredAvenc;
+	private Avancegestat selectedAvance;
+	private Avancegestat avance;
 	 
 	
 	
 	 
+	@PostConstruct
+	public void init() {
+		Annee();
+		mois();
+		moi = getMoisbyIntger(resolveDefaultAvanceMonth());
+		refreshAvancesForCurrentPeriod();
+	}
 
 	public void mois() {
-		Date d = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, resolveDefaultAvanceYear());
+		calendar.set(Calendar.MONTH, resolveDefaultAvanceMonth() - 1);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		dates = s.format(d);
+		dates = s.format(calendar.getTime());
 		listMois=new ArrayList<String>();
 		listMois.add("Janvier");
 		listMois.add("Fevrier");
@@ -85,15 +100,21 @@ public class AvanceBean {
 		listMois.add("Octobre");
 		listMois.add("Novembre");
 		listMois.add("Decembre");
-		
+		mois = resolveDefaultAvanceMonth();
+		moi = getMoisbyIntger(mois);
 		 
 	}
     
 	 
-	 public String getListavanceByEmployer(){
-		 
+	public String getListavanceByEmployer(){
+		 refreshAvancesForCurrentPeriod();
 		 return SUCCESS;
 	 }
+
+	public String getAllavance() {
+		refreshAvancesForCurrentPeriod();
+		return SUCCESS;
+	}
 	 private Integer getMoisbyString(String moi) {
 			Integer m = 0;
 			if (moi.equals("Janvier"))
@@ -127,9 +148,7 @@ public class AvanceBean {
 	private void Annee() {
 		List<Annee> l = new ArrayList<Annee>();
 		listannee = new ArrayList<String>();
-		Date d = new Date();
-		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		  annees = s.format(d).substring(6);
+		  annees = String.valueOf(resolveDefaultAvanceYear());
 		Annee a = serviceAnnee.findbyDesignation(annees);
 		if (a == null) {
 			Annee e = new Annee();
@@ -169,8 +188,78 @@ public class AvanceBean {
 		 
 		Annee();
 		mois();
+		moi = getMoisbyIntger(resolveDefaultAvanceMonth());
 		 
 		return SUCCESS;
+	}
+
+	public String nouvellesAvances() {
+		if (employee == null) {
+			employee = serviceEmployee.getEmployeeByNom(nom);
+		}
+		if (employee == null) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Veuillez choisir un employe"));
+			return ERROR;
+		}
+		avance = new Avancegestat();
+		avance.setEmployee(employee);
+		avance.setMontant_avance(montant);
+		avance.setMois(mois == null ? resolveDefaultAvanceMonth() : mois);
+		avance.setAnnee(annee == null ? resolveDefaultAvanceYear() : annee);
+		avance.setDate(new Date());
+		serviceavanceg.save(avance);
+		refreshAvancesForCurrentPeriod();
+		montant = 0;
+		nom = "";
+		employee = null;
+		return SUCCESS;
+	}
+
+	private void refreshAvancesForCurrentPeriod() {
+		if (annees == null || annees.trim().isEmpty()) {
+			annees = String.valueOf(resolveDefaultAvanceYear());
+		}
+		if (moi == null || moi.trim().isEmpty()) {
+			moi = getMoisbyIntger(resolveDefaultAvanceMonth());
+		}
+		int selectedYear = Integer.parseInt(annees);
+		int selectedMonth = getMoisbyString(moi);
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, selectedYear);
+		calendar.set(Calendar.MONTH, selectedMonth - 1);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		Date date1 = new Date(selectedYear - 1900, selectedMonth - 1, 1, 0, 0, 0);
+		Date date2 = new Date(selectedYear - 1900, selectedMonth - 1, maxDay, 23, 59, 59);
+		listAvenc = serviceavanceg.getAvancesBybetweendate(date1, date2);
+		if (listAvenc == null) {
+			listAvenc = new ArrayList<Avancegestat>();
+		}
+	}
+
+	public void getAllavances(AjaxBehaviorEvent event) {
+		refreshAvancesForCurrentPeriod();
+	}
+
+	public String Visualiser() {
+		refreshAvancesForCurrentPeriod();
+		return SUCCESS;
+	}
+
+	private int resolveDefaultAvanceYear() {
+		Pointage latestPointage = servicePointage.getMaxPointage();
+		if (latestPointage != null && latestPointage.getAnnee() != null) {
+			return latestPointage.getAnnee();
+		}
+		return Calendar.getInstance().get(Calendar.YEAR);
+	}
+
+	private int resolveDefaultAvanceMonth() {
+		Pointage latestPointage = servicePointage.getMaxPointage();
+		if (latestPointage != null && latestPointage.getMois() != null) {
+			return latestPointage.getMois();
+		}
+		return Calendar.getInstance().get(Calendar.MONTH) + 1;
 	}
 
 	 
@@ -265,7 +354,7 @@ public class AvanceBean {
 	}
 	
 	 public String listAvenceEncours(){
-		  
+		  refreshAvancesForCurrentPeriod();
 		   return SUCCESS;
 	   }
 	   
@@ -456,9 +545,44 @@ public class AvanceBean {
 		this.serviceavanceg = serviceavanceg;
 	}
 
-	
+	public List<Avancegestat> getListAvenc() {
+		return listAvenc;
+	}
 
-	
-	
+	public void setListAvenc(List<Avancegestat> listAvenc) {
+		this.listAvenc = listAvenc;
+	}
+
+	public List<Avancegestat> getSelectedAvenc() {
+		return selectedAvenc;
+	}
+
+	public void setSelectedAvenc(List<Avancegestat> selectedAvenc) {
+		this.selectedAvenc = selectedAvenc;
+	}
+
+	public List<Avancegestat> getFiltredAvenc() {
+		return filtredAvenc;
+	}
+
+	public void setFiltredAvenc(List<Avancegestat> filtredAvenc) {
+		this.filtredAvenc = filtredAvenc;
+	}
+
+	public Avancegestat getSelectedAvance() {
+		return selectedAvance;
+	}
+
+	public void setSelectedAvance(Avancegestat selectedAvance) {
+		this.selectedAvance = selectedAvance;
+	}
+
+	public Avancegestat getAvance() {
+		return avance;
+	}
+
+	public void setAvance(Avancegestat avance) {
+		this.avance = avance;
+	}
 
 }

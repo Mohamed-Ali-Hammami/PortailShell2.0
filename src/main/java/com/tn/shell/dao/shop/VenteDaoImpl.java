@@ -38,10 +38,8 @@ public class VenteDaoImpl implements VenteDAO {
 
 				.getResultList();
 		if (result.size()>0) {
-			System.out.println("objet trouvé " +result.get(0).getId()+ "\n\n\n");
 			return result.get(0).getId();
 		} else {
-			System.out.println("\n\nl  objet Vente n exsite pas\n\n");
 			return 0;
 		}
 	}

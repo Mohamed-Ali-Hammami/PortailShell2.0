@@ -131,6 +131,10 @@ public class RappelBean {
 			listMois.add("Novembre");
 			listMois.add("Decembre");
 			listMois2 =listMois;
+			annee = String.valueOf(resolveDefaultRappelYear());
+			annee2 = annee;
+			mois = getMoisbyIntger(resolveDefaultRappelMonth());
+			mois2 = mois;
 		return SUCCESS;
 	}
 	private Integer codes;
@@ -144,13 +148,8 @@ public class RappelBean {
 		nbjour=20;
 	}
 	public void updatedate(AjaxBehaviorEvent event) {
-		System.out.println("\n\n\n");
-     	System.out.println("annee"+annee);
-		System.out.println("mois1"+getMoisbyString(mois));
-		System.out.println("mois2"+getMoisbyString(mois2));
  		nbjour=servicePointage.getsumPointageByEmployee(serviceEmployee.getEmployeeById(7),
  				Integer.parseInt(annee),getMoisbyString(mois),getMoisbyString(mois2));
-		System.out.println("\n\n\n"+nbjour+"\n\n\n");
 	}
 	
 	public String validerRappel() {
@@ -319,11 +318,61 @@ public class RappelBean {
 	public String journal() {
 		listannee=new ArrayList<Annee>();
 		listannee=serviceAnnee.getAll();
+		annee = String.valueOf(resolveDefaultRappelYear());
 		listRappel=new ArrayList<Rappel>();
 		listPai = new ArrayList<Recapulatif>();
 		return SUCCESS;
 	}
 	private List<Recapulatif> listPai ;
+
+	private int resolveDefaultRappelYear() {
+		Rappel latestRappel = serviceRappel.getMaxPointageconge();
+		if (latestRappel != null && latestRappel.getAnnee() != null) {
+			return latestRappel.getAnnee();
+		}
+		Pointage latestPointage = servicePointage.getMaxPointage();
+		if (latestPointage != null && latestPointage.getAnnee() != null) {
+			return latestPointage.getAnnee();
+		}
+		return new java.util.Date().getYear() + 1900;
+	}
+
+	private int resolveDefaultRappelMonth() {
+		Pointage latestPointage = servicePointage.getMaxPointage();
+		if (latestPointage != null && latestPointage.getMois() != null) {
+			return latestPointage.getMois();
+		}
+		return new java.util.Date().getMonth() + 1;
+	}
+
+	private String getMoisbyIntger(Integer moi) {
+		String m = "";
+		if (moi == 1)
+			m = "Janvier";
+		else if (moi == 2)
+			m = "Fevrier";
+		else if (moi == 3)
+			m = "Mars";
+		else if (moi == 4)
+			m = "Avril";
+		else if (moi == 5)
+			m = "Mai";
+		else if (moi == 6)
+			m = "Juin";
+		else if (moi == 7)
+			m = "Juillet";
+		else if (moi == 8)
+			m = "aout";
+		else if (moi == 9)
+			m = "Septembre";
+		else if (moi == 10)
+			m = "Octobre";
+		else if (moi == 11)
+			m = "Novembre";
+		else if (moi == 12)
+			m = "Decembre";
+		return m;
+	}
 	public void getRappelbyannee(AjaxBehaviorEvent event) {
 		listRappel=new ArrayList<Rappel>();
 		listRappel=serviceRappel.getAll(Integer.parseInt(annee));
@@ -376,7 +425,6 @@ public class RappelBean {
 		lg = serviceGestion.getAll();
 		DecimalFormat df=new DecimalFormat("0.000");
 		if(listpaieGestion.size()>0)
-			System.out.println("\n\n\n listpaieGestion ferghaaaa"+listpaieGestion.size());
 		for (Gestion ll : lg) {
 			 
 			double total=0;
@@ -391,7 +439,6 @@ public class RappelBean {
 			lg2.add(lgg);
 		}
 		if(lg2.size()!=0)
-			System.out.println("\n\n\n lg2 ferghaaaa"+lg2.size());
 		r.setListGestions(lg2);
          
 		listPai.add(r);

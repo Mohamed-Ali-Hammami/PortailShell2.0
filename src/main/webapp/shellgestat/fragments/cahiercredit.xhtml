@@ -1,0 +1,118 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+
+        <ui:insert name="menu" />
+
+        <h:form id="impressionClientForm">
+
+            <h:panelGroup layout="block"
+                style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+
+                <h:panelGroup layout="block"
+                    style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+                    <h:panelGroup layout="block" style="text-align:center;">
+                        <p:commandButton value="Valider"
+                            ajax="false"
+                            style="width:200px; height:30px; color:white; background-image:linear-gradient(#FAF281, red); font-size:12px;">
+                            <p:printer target="imprimer" />
+                        </p:commandButton>
+                    </h:panelGroup>
+
+                    <p:outputPanel id="imprimer">
+
+                        <style type="text/css">
+                            .ui-datatable {
+                                border: 1px solid black;
+                            }
+
+                            .ui-datatable .ui-datatable-header {
+                                border-bottom: 0 none;
+                            }
+
+                            .ui-datatable-header {
+                                background: red;
+                                border: 1px solid black;
+                            }
+
+                            .ui-datatable thead th {
+                                background: red;
+                                color: red;
+                                border: 1px solid black;
+                            }
+
+                            .ui-datatable tbody tr {
+                                border: 1px solid black;
+                            }
+
+                            .ui-datatable tbody th {
+                                border: 1px solid black;
+                            }
+                        </style>
+
+                        <ui:repeat var="client" value="#{ClientgestatBean.listclient}">
+
+                            <table style="width:100%;">
+                                <tr>
+                                    <td><h:outputText value="Code client" /></td>
+                                    <td><h:outputText value="#{client.code}" /></td>
+                                    <td><h:outputText value="Solde" /></td>
+                                    <td><h3><h:outputText value="#{client.restes}" /></h3></td>
+                                </tr>
+                                <tr>
+                                    <td><h:outputText value="Nom client" /></td>
+                                    <td><h:outputText value="#{client.nom}" /></td>
+                                    <td><h:outputText value="Tel" /></td>
+                                    <td><h:outputText value="#{client.tel}" /></td>
+                                </tr>
+                            </table>
+
+                            <p:dataTable var="credit"
+                                value="#{ClientgestatBean.listcredits}"
+                                style="width:100%;">
+
+                                <p:column width="7%">
+                                    <f:facet name="header">
+                                        <h:outputText value="Date" style="font-size:12px;" />
+                                    </f:facet>
+                                    <p style="height:20px;">
+                                        <h:outputText value="#{credit}" style="font-size:12px;" />
+                                    </p>
+                                </p:column>
+
+                                <p:column headerText="CR/JOUR" width="48%">
+                                    <h:outputText value=" " style="font-size:12px;" />
+                                </p:column>
+
+                                <p:column headerText="TOT Credit/J">
+                                    <h:outputText value=" " style="font-size:12px;" />
+                                </p:column>
+
+                                <p:column headerText="Cumul">
+                                    <h:outputText value=" " style="font-size:12px;" />
+                                </p:column>
+
+                                <p:column headerText="Paiement">
+                                    <h:outputText value=" " style="font-size:12px;" />
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <p style="page-break-before:always;" />
+
+                        </ui:repeat>
+
+                    </p:outputPanel>
+
+                </h:panelGroup>
+            </h:panelGroup>
+
+        </h:form>
+
+    </h:panelGroup>
+</ui:composition>

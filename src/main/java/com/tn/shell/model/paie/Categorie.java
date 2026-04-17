@@ -17,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 @Entity
 @Table(name = "Categorie")
 public class Categorie {
@@ -27,10 +30,12 @@ public class Categorie {
 	
 	@ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "degreeid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Degree degree;
 	
 	@ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "catid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Cat cat;
 	
 	@OneToMany(mappedBy = "contrat", cascade = { CascadeType.MERGE,

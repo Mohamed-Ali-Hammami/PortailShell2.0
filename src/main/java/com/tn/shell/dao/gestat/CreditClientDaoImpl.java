@@ -78,10 +78,8 @@ public class CreditClientDaoImpl implements CreditClientDao {
 		 List<Credit> CreditclientListem=em.createQuery("SELECT c FROM  Credit c where c.numero = :nom and c.statut = :statut",Credit.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (CreditclientListem.size() > 0){
-	        	System.out.println("objet trouvé "+"\n\n\n");
 	            return CreditclientListem;}
 	        else{
-	        	System.out.println("\n\nl  objet Creditclient n exsite pas\n\n");
 	            return null;}   
 	}
 	 @Transactional
@@ -93,12 +91,10 @@ public class CreditClientDaoImpl implements CreditClientDao {
 					.getResultList();
 			
 			if(result.size()>0) {
-				System.out.println(""+result.get(0).getClient().getNom());
 				  return result;
 			}
 		  
 			else {
-				System.out.println("\n\npas de crdit"+c.getId());
 				return result;}
 	 }
 	 @Transactional
@@ -111,12 +107,10 @@ public class CreditClientDaoImpl implements CreditClientDao {
 					.getResultList();
 			
 			if(result.size()>0) {
-				System.out.println(""+result.get(0).getClient().getNom());
 				  return result.get(0);
 			}
 		  
 			else {
-				System.out.println("\n\npas de crdit"+cl.getId());
 				return null;}
 	 }
 	 @Transactional
@@ -124,10 +118,8 @@ public class CreditClientDaoImpl implements CreditClientDao {
 			 List<Credit> CreditclientListem=em.createQuery("SELECT c FROM  Credit c where c.code = :nom and c.statut = :statut",Credit.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 		        
 		        if (CreditclientListem.size() > 0){
-		        	System.out.println("objet trouvé "+"\n\n\n");
 		            return CreditclientListem.get(0);}
 		        else{
-		        	System.out.println("\n\nl  objet Creditclient n exsite pas\n\n");
 		            return null;}   
 		}
 	 
@@ -136,10 +128,8 @@ public class CreditClientDaoImpl implements CreditClientDao {
 		 List<Credit> CreditclientListem=em.createQuery("SELECT c FROM  Credit c where c.mf = :nom and c.statut = :statut",Credit.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (CreditclientListem.size() > 0){
-	        	System.out.println("objet trouvé "+"\n\n\n");
 	            return CreditclientListem.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet Creditclient n exsite pas\n\n");
 	            return null;}   
 	}
 	 @Transactional

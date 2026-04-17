@@ -1,0 +1,375 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+<h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+
+
+						 <h:form>
+				 <h:panelGroup layout="block" style="text-align:center;">
+				  
+				 <table border="1" style="width:50%;margin-bottom: 1px" >
+				<tr>
+				<td><h:outputText value="B-RETENUE EFFECTUEES SUR : " style="font-size:12px "/></td>
+				<td><h:outputText value="MONTANT BRUT" style="font-size:12px "/></td>
+				<td><h:outputText value="RETENUE" style="font-size:12px "/></td>
+				<td><h:outputText value="MONTANT" style="font-size:12px "/></td>
+				</tr>
+				
+				<tr>
+				<td><h:outputText value="HONORAIRE, AUTRES 15%" style="font-size:12px "/></td>
+				<td><h:inputText value="#{CerteficatBean.honoraire}">
+				<f:ajax event="keyup" render="rh mh hn1 hn2 hn3 t1 t2 t3 tt1 tt2 tt3" listener="#{CerteficatBean.certificat1}"/>
+				</h:inputText>
+				</td>
+				<td><h:outputText value="#{CerteficatBean.certif1.retenues}" id="rh"/></td>
+				<td><h:outputText value="#{CerteficatBean.certif1.montants}" id="mh"/></td>
+				</tr>
+				
+				<tr>
+				<td><h:outputText value="Jeton de présence 20%" style="font-size:12px "/><br/>
+				<h:outputText value="Redevence" style="font-size:12px "/>
+				</td>
+				<td><h:inputText value="#{CerteficatBean.montantjeton}">
+				<f:ajax event="keyup" render="rj3 mj3 jt2 jt3 jt4 t1 t2 t3 tt1 tt2 tt3" listener="#{CerteficatBean.certificat2}"/>
+				</h:inputText></td>
+				<td><h:outputText value="#{CerteficatBean.certif2.retenues}" id="rj3"/></td>
+				<td><h:outputText value="#{CerteficatBean.certif2.montants}" id="mj3"/></td>
+				</tr>
+				
+				<tr>  
+				<td><h:outputText value="Retenue sur honoraire 5%" style="font-size:12px "/></td>
+				<td><h:inputText value="#{CerteficatBean.montantretenuHor}">
+				<f:ajax event="keyup" render="rhj mhj rhh1 rhh2 rhh3 t1 t2 t3 tt1 tt2 tt3" listener="#{CerteficatBean.certificat3}"/>
+				</h:inputText></td>
+				<td><h:outputText value="#{CerteficatBean.certif3.retenues}" id="rhj"/></td>
+				<td> <h:outputText value="#{CerteficatBean.certif3.montants}" id="mhj"/> </td>
+				</tr>
+				
+				<tr>
+				<td><h:outputText value="Revenue sur marché 1%" style="font-size:12px "/></td>
+				 <td>
+				<h:inputText value="#{CerteficatBean.montantbrut}">
+				<f:ajax event="keyup" render="rt m rtm1 rtm2 rtm3 t1 t2 t3 tt1 tt2 tt3" listener="#{CerteficatBean.certificat4}"/>
+				</h:inputText>
+				</td>
+				<td><h:outputText  value="#{CerteficatBean.certif4.retenues}" id="rt"/></td>
+				<td><h:outputText  value="#{CerteficatBean.certif4.montants}" id="m"/></td>
+				</tr>
+				
+				<tr>
+				<td><h:outputText value="IRIS 2.5%" style="font-size:12px "/></td>
+				 <td>
+				<h:inputText value="#{CerteficatBean.montantbrut2}">
+				<f:ajax event="keyup" render="rt5 m5 rtm15 rtm25 rtm35 t1 t2 t3 tt1 tt2 tt3" listener="#{CerteficatBean.certificat5}"/>
+				</h:inputText>
+				</td>
+				<td><h:outputText  value="#{CerteficatBean.certif5.retenues}" id="rt5"/></td>
+				<td><h:outputText  value="#{CerteficatBean.certif5.montants}" id="m5"/></td>
+				</tr>
+				
+				<tr>
+				<td><h:panelGroup layout="block" style="text-align:left;"><h:outputText value="total général:" style="font-size:12px "/></h:panelGroup></td>
+				<td><h:outputText  value="#{CerteficatBean.total1}" id="t1" /></td>
+				<td><h:outputText  value="#{CerteficatBean.total2}"  id="t2"/></td>
+				<td><h:outputText  value="#{CerteficatBean.total3}"  id="t3"/></td>
+				</tr>
+				</table>				 
+				 <table><tr><td>
+				 <b><h:outputText style="font-size:12px "
+													value="Fournisseur" /></b> </td>
+										<td>  <p:selectOneMenu filter="true"
+												value="#{CerteficatBean.libelle}"
+												style="width:215px;font-size:12px " id="etat">
+												<f:selectItem itemLabel="Selectionner Fournisseur"
+													itemvalue="" />
+												<f:selectItems value="#{CerteficatBean.listfournisseurs}" />
+												<f:ajax render=" nom f fff mf1 " listener="#{CerteficatBean.getfournisseurbylibelle}"/>
+											</p:selectOneMenu> </td>
+											
+											<td><b><h:outputText style="font-size:12px "
+													value="M.fiscal" /></b></td>
+											<td>
+											<table border="1" >
+											<tr> 
+											  <td><h:inputText value="#{CerteficatBean.matricule}"  id="fff">
+											  <f:ajax listener="#{CerteficatBean.getfournisseurbylibelle2}" render=" mf1 "/>
+											  </h:inputText>
+											   </td>
+											 
+											  </tr>
+											  
+											  
+											</table>
+											</td>
+											</tr>
+											<tr><td>
+											 <b><h:outputText value="Numero facture" style="font-size:12px"/></b></td>
+											<td>  <h:inputText value="#{CerteficatBean.cin}" size="30">
+											  <f:ajax event="keyup" render="cin" />
+											  </h:inputText>
+											  </td></tr>
+											  <tr><td>
+											<b>  <h:outputText value="Mois" style="font-size:12px"/></b></td>
+											<td>
+											  <p:selectOneMenu  
+												value="#{CerteficatBean.mois}"
+												style="width:215px;font-size:12px " id="etat2">
+												 
+												<f:selectItems value="#{CerteficatBean.listMois}" />
+												<f:ajax render="year"/>
+											</p:selectOneMenu> </td>
+											
+											<td>
+											<b>  <h:outputText value="Annee" style="font-size:12px"/></b></td>
+											<td>
+											  <p:selectOneMenu  
+												value="#{CerteficatBean.year}"
+												style="width:215px;font-size:12px " id="etat3">
+												 
+												<f:selectItems value="#{CerteficatBean.listAnnee}" />
+												<f:ajax render="year"/>
+											</p:selectOneMenu> </td>
+											  </tr></table>
+								<h:commandLink>
+									<p:graphicImage url="/images/imprimante-icone.png"
+										style="width:50px" />
+									<p:printer target="imprimer"></p:printer>
+								</h:commandLink>
+				 </h:panelGroup>
+				 <p:separator/>
+				 
+				<p:outputPanel id="imprimer">
+				 				
+				<table>
+				<tr>
+				<td ><b>
+				<h:outputLabel value="MINISTERE DU PLAN ET DES FINANCES" style="font-size:12px "/></b>
+				</td>
+				</tr>
+				<tr>
+				 
+				<td width="1px"><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+				<p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+				<p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+				<p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+				<p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+				<p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+				<b><h:outputLabel value="DIRECTION GENERALE" style="font-size:12px "/></b></td>
+				</tr>
+				<tr>
+				 
+				<td width="1px"><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+				<p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+				<p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+				<p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+				<p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+				<p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+				<b><h:outputLabel value="DU CONTROLE FISCAL" style="font-size:12px "/></b></td>
+				</tr>
+				</table>
+				<br/><br/>
+				 <h:panelGroup layout="block" style="text-align:center;">
+				<table>
+				<tr><td>
+				  
+				<h:outputLabel value="CERTIFICAT DE RETENUE D'IMPOT" style="font-size:12px "/> </td>
+				 </tr> 
+				<tr>
+				<td>
+				<h:outputLabel value="SUR LE REVENU OU D'IMPOT SUR LES SOCIETES" style="font-size:12px "/> 
+				</td>
+				</tr> 
+				</table>
+				<br/>
+				 <h:outputLabel value="PENDANT LE MOIS : #{CerteficatBean.mois} #{CerteficatBean.year}" id="year" style="font-size:12px "/> 
+				<br/>
+				</h:panelGroup>
+				 
+				<p:panel style="width:95%">
+				<h:panelGroup layout="block" style="text-align:left;">
+				<table style="width:100%;text-aling:center">
+				<tr>
+				<td style="text-align:center"> <b><h:outputText value="A- PERSONNE OU ORGANISME PAYEUR" style="font-size:12px "/></b>
+				 
+				</td>
+				<td style="text-align:center"> 
+				<b> <h:outputText value="IDENTIFIANT" style="font-size:12px "/></b>  <br/>
+				</td>
+				</tr> 
+				<tr>
+				<td/>
+				<td style="text-align:center">
+				 
+				<table border="1" style="text-align:center">
+				<tr>
+				<td ><h:outputText value="Matricule fiscal" style="font-size:12px "/></td>
+				<td><h:outputText value="Code" style="font-size:12px "/><br/>
+				<h:outputText value="T.V.A" style="font-size:12px "/>
+				</td>
+				<td><h:outputText value="Code de" style="font-size:12px "/><br/>
+				<h:outputText value="catégorie" style="font-size:12px "/>
+				</td>
+				<td><h:outputText value="N. etab." style="font-size:12px "/><br/>
+				<h:outputText value="secandaire" style="font-size:12px "/>
+				</td>
+				</tr>
+				<tr>
+				<td><h:outputText value="1716134z" style="font-size:12px "/></td>
+				<td><h:outputText value="P" style="font-size:12px "/></td>
+				<td><h:outputText value="M" style="font-size:12px "/></td>
+				<td><h:outputText value="000" style="font-size:12px "/></td>
+				</tr>
+				</table> 
+				 
+				</td>
+				</tr> 
+				</table>
+				</h:panelGroup>
+				<h:panelGroup layout="block" style="text-align:left;">
+				 <h:outputText value="Détermination de la personne ou de l'organisme payeur :" style="font-size:12px "/>
+				 <b> <h:outputText value="STE Fathi MAHMOUD SASSI" style="font-size:12px "/></b>
+				 <br/> 
+				 <h:outputText value="Adresse: " style="font-size:12px "/>
+				 <b><h:outputText value="N° 32 RUE 4883 Tunis" style="font-size:12px "/></b>
+				<br/><br/>
+				 
+				<table border="1" style="width:100%">
+				<tr>
+				<td><h:outputText value="B-RETENUE EFFECTUEES SUR : " style="font-size:12px "/></td>
+				<td><h:outputText value="MONTANT BRUT" style="font-size:12px "/></td>
+				<td><h:outputText value="RETENUE" style="font-size:12px "/></td>
+				<td><h:outputText value="MONTANT" style="font-size:12px "/></td>
+				</tr>
+				
+				<tr>
+				<td><h:outputText value="HONORAIRE, AUTRES 15%" style="font-size:12px "/></td>
+				<td><h:outputText value="#{CerteficatBean.certif1.montantbruts}"  id="hn1"/> </td>				
+				<td><h:outputText value="#{CerteficatBean.certif1.retenues}" id="hn2" />	 
+				</td>
+				<td><h:outputText value="#{CerteficatBean.certif1.montants}" id="hn3"  />				 
+				</td>
+				</tr>
+				
+				<tr>
+				<td><h:outputText value="Jeton de présence 20%" style="font-size:12px "/><br/>
+				<h:outputText value="Redevence" style="font-size:12px "/>
+				</td>
+				<td><h:outputText value="#{CerteficatBean.certif2.montantbruts}" id="jt2"/>
+				 </td>
+				<td><h:outputText value="#{CerteficatBean.certif2.retenues}" id="jt3"  />				 
+				</td>
+				<td><h:outputText value="#{CerteficatBean.certif2.montants}" id="jt4"  />				 
+				</td>
+				</tr>
+				
+				<tr>  
+				<td><h:outputText value="Retenue sur honoraire 5%" style="font-size:12px "/></td>
+				<td><h:outputText value="#{CerteficatBean.certif3.montantbruts}" id="rhh1"/>
+				 </td>
+				<td><h:outputText value="#{CerteficatBean.certif3.retenues}" id="rhh2"/></td>
+				<td> <h:outputText value="#{CerteficatBean.certif3.montants}" id="rhh3"/> </td>
+				</tr>
+				
+				
+				<tr>
+				<td><h:outputText value="Revenue/MARCHE 1%" style="font-size:12px "/></td>
+				 <td>
+				<h:outputText  value="#{CerteficatBean.certif4.montantbruts}" id="rtm1"/>
+				 
+				</td>
+				<td><h:outputText  value="#{CerteficatBean.certif4.retenues}" id="rtm2"/></td>
+				<td><h:outputText  value="#{CerteficatBean.certif4.montants}" id="rtm3"/></td>
+				</tr>
+				
+				<tr>
+				<td><h:outputText value="IRIS 2.5%" style="font-size:12px "/></td>
+				 <td>
+				<h:outputText  value="#{CerteficatBean.certif5.montantbruts}" id="rtm15"/>
+				 
+				</td>
+				<td><h:outputText  value="#{CerteficatBean.certif5.retenues}" id="rtm25"/></td>
+				<td><h:outputText  value="#{CerteficatBean.certif5.montants}" id="rtm35"/></td>
+				</tr>
+				
+				<tr>
+				<td><h:panelGroup layout="block" style="text-align:left;"><h:outputText value="total général:" style="font-size:12px "/></h:panelGroup></td>
+				<td><h:outputText  value="#{CerteficatBean.total1}" id="tt1" /></td>
+				<td><h:outputText  value="#{CerteficatBean.total2}" id="tt2" /></td>
+				<td><h:outputText  value="#{CerteficatBean.total3}" id="tt3" /></td>
+				</tr>
+				</table>
+				
+				 
+				 
+				<table style="width:100%;text-aling:center">
+				<tr>
+				<td><b><h:outputText value="A- BENEFICAIRE" style="font-size:12px "  /></b></td>
+				<td><h:panelGroup layout="block" style="text-align:center;"><b><h:outputText value="IDENTIFIANT" style="font-size:12px "  /></b></h:panelGroup></td>
+				 </tr>
+				<tr>
+				<td><h:outputText value="N° de la carte d'identité ou de séjour pour les étrangers"   style="font-size:12px "  /></td>
+			    <td>
+			    <table border="1" style="text-align:center">
+			    <tr>
+			    <td><h:outputText value="Matricule fiscal" style="font-size:12px "/></td>
+				 
+			    </tr>
+			     <tr>
+			    <td><h:outputText value="#{CerteficatBean.matricule}" style="font-size:12px " id="mf1"/></td>
+				 
+			    </tr>
+			    </table>
+			    </td> 
+				</tr>
+				<tr>
+				<td style="text-align:right"><p:separator  style="width:50%"/>	
+				</td>
+				</tr>
+				
+				<tr>
+				<td><h:outputText value="Nom prénom ou raison social : #{CerteficatBean.fournisseur.nom}" style="font-size:12px " id="nom" /></td>
+				 
+				</tr>
+				<tr>
+				<td><h:outputText value="Adresse professionnelle   : #{CerteficatBean.fournisseur.address}" style="font-size:12px " id="f"/></td>
+				 
+				</tr> 
+				</table>
+				 </h:panelGroup>  
+				</p:panel>
+				 <br/><br/>
+				<h:panelGroup layout="block" style="text-align:center;"> 
+				<h:outputText value="Je soussigne ,certifie exacte les renseignements figurants sur le présent
+				" style="font-size:12px "/><br/>
+				
+				<h:outputText value="  certificat
+				et m'expose aux sanctions prévues par la loi pour tout inexactitude. 
+				" style="font-size:12px "/><br/>
+				<h:outputText value="A Tunis, le #{CerteficatBean.dates}" style="font-size:12px "/><br/>
+				<h:outputText value="Cachet et signature du payeur" style="font-size:12px "/>
+				</h:panelGroup>
+				
+				<br/><br/><br/><br/><br/>
+				<h:panelGroup layout="block" style="text-align:left;">
+				<h:outputText value="Reg fac n° #{CerteficatBean.cin}" id="cin" style="font-size:12px "/><br/>
+				<h:outputText value="(1) Le certificat est délivré à l'occasion de chaque paiement toutefois pour les opérations repetitives, le" style="font-size:12px "/><br/>
+				<h:outputText value="certificat peut etre délivré trimestriellement." style="font-size:12px "/><br/>
+				<h:outputText value="(2) Code catégorie: M. personne morale - C personne physique[industrie et commerce] -P professions" style="font-size:12px "/><br/>
+				<h:outputText value="libérales" style="font-size:12px "/><br/>
+				<h:outputText value="N. employeur non soumis à l'impot sur le revenu ou sur les société(administrations et établissements publics)" style="font-size:12px "/><br/>
+				<h:outputText value="-E etablissements secandaires" style="font-size:12px "/><br/>
+				</h:panelGroup>
+				</p:outputPanel>
+				</h:form>
+					 </h:panelGroup>
+					 </h:panelGroup>
+					 
+    </h:panelGroup>
+</ui:composition>

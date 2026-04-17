@@ -14,7 +14,6 @@ public class Main {
 		  String ch=ss.substring(0,2)+":"+ss.substring(2)+":00";	
 		  String ch2=ss4.substring(0,2)+":"+ss4.substring(2)+":00";	
 		  
-		  System.out.println("ch"+ch);
 		 
 		  try {
 			    SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
@@ -23,9 +22,7 @@ public class Main {
 			    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 			    Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
 			    
-			    System.out.println("before"+timestamp.before(timestamp2));
 			} catch(Exception e) { //this generic but you can control another types of exception
-			   System.out.println(e.getMessage());
 			}
 		  
 		  

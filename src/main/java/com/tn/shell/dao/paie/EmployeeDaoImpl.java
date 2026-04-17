@@ -44,10 +44,8 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 		 List<Employee> result = em.createQuery("SELECT a FROM Employee a  where a.statut = :statut and a.fonction = :nom", Employee.class).setParameter("statut", Statut.ACTIF)
 				 .setParameter("nom",nom).getResultList();
 		 if (result.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return result;}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}  
 		 
 	 }
@@ -56,10 +54,8 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 		List<Employee> result = em.createQuery("SELECT a FROM Employee a  where a.statut = :statut and a.contrat.id = :nom", Employee.class).setParameter("statut", Statut.ACTIF)
 				 .setParameter("nom",c.getId()).getResultList();
 		 if (result.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return result;}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;} 
 	}
 	@Transactional
@@ -68,10 +64,8 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 				.createQuery("SELECT a FROM Employee a  where a.statut = :statut and a.nom = :nom", Employee.class)
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé\n");
 			return result.get(0);
 		} else {
-			System.out.println("l  objet n exsite pas");
 			return null;
 		}
 	}
@@ -83,10 +77,8 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 						Employee.class)
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé\n");
 			return result.get(0);
 		} else {
-			System.out.println("l  objet n exsite pas");
 			return null;
 		}
 	}
@@ -97,10 +89,8 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 				.createQuery("SELECT a FROM Employee a  where a.statut = :statut and a.code = :nom", Employee.class)
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé\n");
 			return result.get(0);
 		} else {
-			System.out.println("l  objet n exsite pas");
 			return null;
 		}
 	}
@@ -113,10 +103,8 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 						Employee.class)
 				.setParameter("statut", Statut.ACTIF).setParameter("nature", nature).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé\n");
 			return result;
 		} else {
-			System.out.println("l  objet n exsite pas");
 			return null;
 		}
 	}
@@ -128,10 +116,8 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 						Employee.class)
 				.setParameter("statut", Statut.ACTIF).setParameter("nature", nature).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé\n");
 			return result;
 		} else {
-			System.out.println("l  objet n exsite pas");
 			return null;
 		}
 	}

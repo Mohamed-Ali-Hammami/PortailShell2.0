@@ -1,0 +1,689 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+	<h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+			<br />
+			<style type="text/css">
+.ui-treetable table {
+	table-layout: fixed
+}
+
+.value {
+	font-weight: bold
+}
+
+.ui-dialog table {
+	margin-left: auto;
+	margin-right: auto;
+}
+</style>
+			
+
+				<h:panelGroup layout="block" style="text-align:center;">
+					<h:panelGrid columns="2">
+						<p:commandButton title="imprimer">
+
+							<p:printer target="imprimer"></p:printer>
+						</p:commandButton>
+					</h:panelGrid>
+
+				</h:panelGroup>
+
+				<p:outputPanel id="imprimer" style="width:99%">
+					<h:outputText
+						value="ETAT DES CHEQUES EN CIRCULATION DU #{ChequeBean.dates} "
+						style=" font-style: italic;font-size: large;" />
+
+					<br />
+					<br />
+
+					<p:dataTable var="fd" value="#{ChequeBean.listetat}"
+						editable="true" editMode="cell" selectionMode="single"
+						selection="#{ChequeBean.selectedetat}" rowKey="#{fd.id}">
+
+						<p:ajax event="cellEdit" listener="#{ChequeBean.onCellEdit}"
+							partialSubmit="true" partialSubmitFilter="true" />
+
+						<p:column headerText="Cheque impayes ">
+							<h:outputText value="#{fd.totalchequeimpaye}" />
+						</p:column>
+
+
+						<p:column headerText="Cheque ANTIDATE">
+
+							<h:outputText value="#{fd.totalchequeanidate}" />
+						</p:column>
+
+						<p:column headerText="Solde crediteur zitouna">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText style="font-size:12px " id="z"
+										value="#{fd.totalcrediteurzitounas}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{fd.totalcrediteurzitouna}">
+										<f:ajax render="z" listener="#{ChequeBean.updatemontantBZ}"
+											event="change" />
+									</h:inputText>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Solde STB jazira">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText style="font-size:12px "
+										value="#{fd.totalsoldejazira}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{fd.totalsoldejazira}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Solde BIAT ">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText style="font-size:12px "
+										value="#{fd.totalsoldebiats}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{fd.totalsoldebiat}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Cheques En  Preavis">
+
+							<h:outputText value="#{fd.totalchequepreavis}" />
+						</p:column>
+
+						<p:column headerText="Cheques En   Cours Zitouna">
+
+							<h:outputText value="#{fd.totalchequeencours}" />
+						</p:column>
+
+						<br />
+						<!-- <h:outputText value="Solde NET"/>
+				<h:outputText value="#{fd.soldenet}"/> -->
+
+					</p:dataTable>
+					<br />
+					
+					<h:form id="form">
+
+					<h:outputText value="CHEQUES ENTREES DES CLIENTS" />
+					<br />
+
+                     
+                      <p:remoteCommand name="refreshFooter"
+					update="emp1" />
+                   <p:dataTable var="fd" value="#{ChequeBean.listcheques}" id="emp1" widgetVar="cheque"
+					 selection="#{ChequeBean.selecredcheques}" 
+						 rowKey="#{fd.id}">
+					
+                      <p:column selectionMode="multiple" style="width:16px;text-align:center"  />
+                        
+                        <p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="Numero" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.numero}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="Date" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.dates}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Banque" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.banque}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Montant" />
+							</f:facet>
+							
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText style="font-size:12px " value="#{fd.montants}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{fd.montant}" />
+								</f:facet>
+							</p:cellEditor>
+							
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Echeance" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.datesecheance}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="Etat" />
+							</f:facet>
+							 
+								 
+									<h:outputText style="font-size:12px "
+										value="#{fd.etat}" id="etat"/>
+								 
+							 
+
+						</p:column>
+
+						
+						
+						<p:columnGroup type="footer">
+							<p:row>
+								<p:column style="text-align:right" colspan="2"
+									footerText="Nomre de lignes #{ChequeBean.listcheques.size()}" />
+								<p:column style="text-align:right" footerText="Totals:" />
+								<p:column footerText=" " />
+
+							</p:row>
+						</p:columnGroup>
+						  
+						
+						<f:facet name="footer">
+                  <p:commandButton process="emp1" update=":form:multiCarDetail" icon="pi pi-search" value="Cheque en cours" action="#{ChequeBean.setchequeencours}"
+                   oncomplete="PF('multiCarDialog').show()"/>
+                   
+                   <p:commandButton process="emp1" update=":form:multiCarDetail" icon="pi pi-search" value="Cheque antidates" action="#{ChequeBean.setchequeencours}"
+                   oncomplete="PF('multiCarDialog').show()"/>
+                      </f:facet>
+					</p:dataTable>
+					
+					
+					<p:dialog header="Selected cheque" widgetVar="multiCarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="220">
+        <p:outputPanel id="multiCarDetail" style="text-align:center;">
+            <ui:repeat value="#{ChequeBean.selecredcheques}" var="car">
+                <h:outputText value="#{car.id} - #{car.numero}" style="display:block"/>
+            </ui:repeat>
+        </p:outputPanel>
+    </p:dialog>
+				 
+					 
+					
+				
+					<br />
+
+					<h:outputText value="CHEQUES EN COURS DES CLIENTS" />
+					<br />
+
+                     
+                      
+                   <p:dataTable var="fd" value="#{ChequeBean.listcheques2}" id="emp2"
+					 selection="#{ChequeBean.selecredcheques}"
+						 rowKey="#{fd.id}">
+					
+                      <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+					 
+                        <p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="Numero" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.numero}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="Date" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.dates}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Banque" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.banque}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Montant" />
+							</f:facet>
+							
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText style="font-size:12px " value="#{fd.montants}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{fd.montant}" />
+								</f:facet>
+							</p:cellEditor>
+							
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Echeance" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.datesecheance}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="Etat" />
+							</f:facet>
+							 
+								 
+									<h:outputText style="font-size:12px "
+										value="#{fd.etat}" id="etat"/>
+								 
+							 
+
+						</p:column>
+						
+						<f:facet name="footer">
+                  <p:commandButton process="emp2" update=":form:multiCarDetail" icon="pi pi-search" value="Cheque payee" action="#{ChequeBean.setchequepayee}"
+                   oncomplete="PF('multiCarDialog').show()"/>
+                   
+                    <p:commandButton process="emp2" update=":form:multiCarDetail" value="Cheque en preavis" action="#{ChequeBean.setchequeenpreavis}"/>
+                    <p:commandButton process="emp2" update=":form:multiCarDetail" value="Cheque Manuelle" action="#{ChequeBean.setchequemanuelle}"/>
+                   
+                   
+                      </f:facet>
+
+						<p:columnGroup type="footer">
+							<p:row>
+								<p:column style="text-align:right" colspan="2"
+									footerText="Nomre de lignes #{ChequeBean.listcheques2.size()}" />
+								<p:column style="text-align:right" footerText="Totals:" />
+								<p:column footerText=" " />
+
+							</p:row>
+						</p:columnGroup>
+					</p:dataTable>
+                     <br/>
+                    
+                    
+					<br />
+					
+					
+					
+					<h:outputText value="CHEQUES EN PREAVIS DES CLIENTS" />
+					<br />
+
+                     
+                      
+                   <p:dataTable var="fd" value="#{ChequeBean.listchequepreavis}" id="emp3"
+					 selection="#{ChequeBean.selecredcheques}"
+						 rowKey="#{fd.id}">
+					
+                      <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+					 
+                        <p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="Numero" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.numero}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="Date" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.dates}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Banque" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.banque}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Montant" />
+							</f:facet>
+							
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText style="font-size:12px " value="#{fd.montants}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{fd.montant}" />
+								</f:facet>
+							</p:cellEditor>
+							
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Echeance" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.datesecheance}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="Etat" />
+							</f:facet>
+							 
+								 
+									<h:outputText style="font-size:12px "
+										value="#{fd.etat}" id="etat"/>
+								 
+							 
+
+						</p:column>
+						
+						<f:facet name="footer">
+                  <p:commandButton process="emp3" update=":form:multiCarDetail" icon="pi pi-search" value="Cheque payee" action="#{ChequeBean.setchequepayee}"
+                   oncomplete="PF('multiCarDialog').show()"/>
+                   
+                    
+                    <p:commandButton process="emp3" update=":form:multiCarDetail"  value="Cheque imppayee" action="#{ChequeBean.setchequeimppayee}"/>
+                      
+                    
+                      </f:facet>
+
+						<p:columnGroup type="footer">
+							<p:row>
+								<p:column style="text-align:right" colspan="2"
+									footerText="Nomre de lignes #{ChequeBean.listcheques2.size()}" />
+								<p:column style="text-align:right" footerText="Totals:" />
+								<p:column footerText=" " />
+
+							</p:row>
+						</p:columnGroup>
+					</p:dataTable>
+                     <br/>
+						</h:form>
+                
+					<h:outputText value="CHEQUES EN CIRCULATIONS BANQUE ZITOUNA" />
+					<br />
+
+					<p:dataTable var="fd" selection="#{ChequeBean.selecredchequereg}"
+						selectionMode="single" editMode="cell" editable="true"
+						value="#{ChequeBean.listchequereglementbz}"
+						widgetVar="articleTable" rowKey="#{fd.id}"
+						style="margin-bottom:10px"
+						emptyMessage="aucun cheque dans la base">
+						<p:ajax event="cellEdit" listener="#{ChequeBean.onCellEdit2}"
+							partialSubmit="true" partialSubmitFilter="true" />
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="Date" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.dates}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Banque" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.banque}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Montant" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.montants}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Echeance" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.datesecheance}" />
+						</p:column>
+
+						<p:column headerText="Libelle">
+
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText style="font-size:12px " id="libz"
+										value="#{fd.libelle}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText style="font-size:12px " value="#{fd.libelle}">
+										 >
+											</h:inputText>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:columnGroup type="footer">
+							<p:row>
+								<p:column style="text-align:right"
+									footerText="Nomre de lignes #{ChequeBean.listchequereglementbz.size()}" />
+								<p:column style="text-align:right" footerText="Totals:" />
+								<p:column footerText=" " />
+
+							</p:row>
+						</p:columnGroup>
+					</p:dataTable>
+
+
+					<br />
+
+					<h:outputText value="CHEQUES IMPAYES" />
+					<br />
+
+					<p:dataTable var="fd" value="#{ChequeBean.listchequeimpayes}"
+						widgetVar="articleTable" rowKey="#{fd.id}" id="imps4"
+						style="margin-bottom:10px"
+						emptyMessage="aucun cheque dans la base">
+						
+						   <p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="Numero" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.numero}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Client" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.client}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="Date" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.dates}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Banque" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.banque}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Montant" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.montants}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Echeance" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.datesecheance}" />
+						</p:column>
+						
+						<f:facet name="footer">
+						
+						  <p:commandButton process="imps4" update=":form:multiCarDetail" icon="pi pi-search" value="Cheque en cours" action="#{ChequeBean.setchequeencours}"
+                   oncomplete="PF('multiCarDialog').show()"/>
+                               </f:facet>
+
+						<p:columnGroup type="footer">
+							<p:row>
+								<p:column style="text-align:right"
+									footerText="Nomre de lignes #{ChequeBean.listchequeimpayes.size()}" />
+								<p:column style="text-align:right" footerText="Totals:" />
+								<p:column footerText=" " />
+
+							</p:row>
+						</p:columnGroup>
+					</p:dataTable>
+
+
+					<br />
+
+					<h:outputText value="CHEQUES ANTIDATES" />
+					<br />
+
+					<p:dataTable var="fd" value="#{ChequeBean.listchequeantidates}"
+						widgetVar="articleTable" rowKey="#{fd.id}" id="ss"
+						style="margin-bottom:10px"
+						emptyMessage="aucun cheque dans la base">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Client" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.client}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="Date" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.dates}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Banque" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.banque}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Montant" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.montants}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Echeance" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.datesecheance}" />
+						</p:column>
+                        
+                        
+                        <f:facet name="footer">
+                  <p:commandButton process="ss" update=":form:multiCarDetail" icon="pi pi-search" value="Cheque en cours" action="#{ChequeBean.setchequeencours}"
+                   oncomplete="PF('multiCarDialog').show()"/>
+                   </f:facet>
+						<p:columnGroup type="footer">
+							<p:row>
+								<p:column style="text-align:right"
+									footerText="Nomre de lignes #{ChequeBean.listchequeantidates.size()}" />
+								<p:column style="text-align:right" footerText="Totals:" />
+								<p:column footerText=" " />
+
+							</p:row>
+						</p:columnGroup>
+					</p:dataTable>
+
+					<br />
+
+					<h:outputText value="CHEQUES MANNUEL" />
+					<br />
+
+					<p:dataTable var="fd" value="#{ChequeBean.listchequemanuels}"
+						widgetVar="articleTable" rowKey="#{fd.id}" id="emps5"
+						style="margin-bottom:10px"
+						emptyMessage="aucun cheque dans la base">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Client" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.client}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="Date" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.dates}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Banque" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.banque}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Montant" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.montants}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Echeance" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.datesecheance}" />
+						</p:column>
+						
+						<f:facet name="footer">
+                  <p:commandButton process="emps5" update=":form:multiCarDetail" icon="pi pi-search" value="Cheque payee" action="#{ChequeBean.setchequepayee}"
+                   oncomplete="PF('multiCarDialog').show()"/>
+                   
+                    <p:commandButton process="emps5" update=":form:multiCarDetail" value="Cheque en preavis" action="#{ChequeBean.setchequeenpreavis}"/>
+               
+                   
+                   
+                      </f:facet>
+
+						<p:columnGroup type="footer">
+							<p:row>
+								<p:column style="text-align:right"
+									footerText="Nomre de lignes #{ChequeBean.listchequemanuels.size()}" />
+								<p:column style="text-align:right" footerText="Totals:" />
+								<p:column footerText=" " />
+
+							</p:row>
+						</p:columnGroup>
+					</p:dataTable>
+
+
+				</p:outputPanel>
+
+			 
+
+		</h:panelGroup>
+	</h:panelGroup>
+    </h:panelGroup>
+</ui:composition>

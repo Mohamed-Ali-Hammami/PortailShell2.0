@@ -41,10 +41,8 @@ public class LigneCommandepassDaoImpl implements LigneCommandepassdao {
 				 .setParameter("numero", f.getNumero()).getResultList();
 		 
 		 if (result.size() > 0){
-	        	System.out.println("objet trouvé "+result.get(0).getId()+"\n\n\n");
 	            return result.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet lignecoamanse n exsite pas\n\n");
 	            return null;}   
 		 
 		   

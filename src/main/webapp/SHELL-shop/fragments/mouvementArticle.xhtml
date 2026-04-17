@@ -1,0 +1,193 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout shop-shell-fragment">
+ <h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+		<ui:insert name="menu">
+			
+		</ui:insert>
+		<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+			<h:panelGroup layout="block" style="text-align:center;">
+			<h:form id="f">
+
+				
+
+					<b> <h:outputText value="Mouvement Articles par Famille"
+							style="font-size:24px color:#483d8b" /></b><br />
+					<br />
+				 
+						<p:dataTable id="f" var="f" value="#{FamilleBean.listFamille}"
+							selection="#{FamilleBean.selectedFamillearticle}"  selectionMode="single"
+							rowKey="#{f.code}" emptyMessage="aucune famille dans le stock"
+							paginator="true" rows="10" paginatorPosition="bottom">
+
+							<p:ajax event="rowSelect"
+								listener="#{FamilleBean.getArticlebyfamilles2}"
+								update=":f:produit" />
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px color:#483d8b" value="Code" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{f.code}" />
+							</p:column>
+
+							<p:column filterBy="#{f.nom}"
+								filterStyle="font-size:14px;color:blue"
+								filterMatchMode="contains">
+								<f:facet name="header">
+									<h:outputText style="font-size:12px color:#483d8b" value="Nom" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{f.nom}" />
+
+							</p:column>
+
+						</p:dataTable>
+			
+					<br /> <br />
+					 
+						<p:dataTable id="produit" value="#{FamilleBean.listProduit}"
+							var="p" selection="#{FamilleBean.selectedProduit}" 
+							selectionMode="single" rowKey="#{p.id}">
+
+							<p:ajax event="rowSelect"
+								listener="#{FamilleBean.getVentebyarticle}" update=":f:vente" />
+
+
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Code" />
+								</f:facet>
+
+
+								<h:outputText style="font-size:12px ;" value="#{p.id}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b" value="Nom" />
+								</f:facet>
+
+
+								<h:outputText style="font-size:12px ;" value="#{p.nom}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Quantite" />
+								</f:facet>
+
+
+								<h:outputText style="font-size:12px ;" value="#{p.quantite}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Vente" />
+								</f:facet>
+
+
+								<h:outputText style="font-size:12px ;" value="#{p.prixventes}" />
+							</p:column>
+
+						</p:dataTable>
+
+					 
+					<br />
+					<br /> 
+					
+						 
+				 
+					 	
+							<p:dataTable id="vente" value="#{FamilleBean.listelignevente}"
+								var="p">
+								<p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Code" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:12px ;"
+										value="#{p.produit.code}" />
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Date" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:12px ;"
+										value="#{p.dates}" />
+								</p:column>
+ 
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Vente" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:12px ;" value="#{p.prixs}" />
+								</p:column>
+
+								<!-- <p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Avoir" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:12px ;"
+										value="#{p.produit.nbAvoir}" />
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Achat" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:12px ;"
+										value="#{p.produit.nbAchat}" />
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Numfac" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:12px ;"
+										value="#{p.produit.Numfac}" />
+								</p:column>
+								 -->
+
+							 
+
+							</p:dataTable>  
+					 
+					<br />
+
+
+
+				
+			</h:form>
+			</h:panelGroup>
+		 </h:panelGroup>
+		 </h:panelGroup>
+		 
+    </h:panelGroup>
+</ui:composition>

@@ -30,10 +30,8 @@ public class CatDaoImpl implements CatDAO {
 		 List<Cat> AnneeListem=em.createQuery("SELECT u FROM  Cat u where u.cat = :designation",Cat.class).setParameter("designation", designation).getResultList();
 	        
 	        if (AnneeListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return AnneeListem;}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}   
 	}
 	@Transactional

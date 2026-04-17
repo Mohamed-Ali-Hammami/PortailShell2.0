@@ -25,18 +25,17 @@ public class Main {
 	 
 	public static void main(String[] args) {
 		PrinterJob job = PrinterJob.getPrinterJob();
-	      // D�finit son contenu � imprimer
+	      // DÃ©finit son contenu Ã  imprimer
 		 
 	      job.setPrintable(new PrintRectangle());
 	       
 	      
-	      // Affiche une bo�te de choix d'imprimante
+	      // Affiche une boÃ®te de choix d'imprimante
 	     // if (job.printDialog()){
 	         try {
 	            // Effectue l'impression	        	 
 	            job.print();
 	         } catch (PrinterException ex) {
-	            ex.printStackTrace();
 	         }
 	     // }
 	}

@@ -65,6 +65,7 @@ import com.tn.shell.service.transport.ServiceFacture;
 import com.tn.shell.service.transport.ServiceLigneCommande;
 import com.tn.shell.service.transport.ServiceTracetransport;
 import com.tn.shell.service.transport.ServiceVhecule;
+import com.tn.shell.ui.common.UiDateDefaults;
 
 @ManagedBean(name = "RapportcarburantBean")
 @SessionScoped
@@ -111,8 +112,7 @@ public class RapportcarburantBean implements Serializable {
 	private double totalmarge;
 
 	public String ventecarburant() {
-		date1 = new Date();
-		date2 = new Date();
+		initializeMonthlyDateRange();
 		listproduits = new ArrayList<RapportCarburant>();
 		mois = getMoisbyIntger(date1.getMonth()+1);
 		annee = date1.getYear()+1900;
@@ -137,23 +137,12 @@ public class RapportcarburantBean implements Serializable {
 	public String getrendementcarburant() {
 		  double totaltransport=0; double totaldepense=0;
 		totaltransport=0;totaldepense=0;
-		List<String> ld = new ArrayList<String>();
+		List<String> ld = buildDateLabels(date1, date2);
 		mois=getMoisbyIntger(date1.getMonth()+1);
 		Integer moi=date1.getMonth()+1;
 		DecimalFormat df=new DecimalFormat("0.000");
 		DecimalFormat dfs=new DecimalFormat("0");
 		annee=date1.getYear()+1900;
-		SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
-		for (int i = date1.getDate(); i <= date2.getDate(); i++) {
-			Date d = new Date();
-			d.setDate(i);
-			d.setMonth(date1.getMonth());
-			d.setYear(date1.getYear());
-			String ds = sf.format(d);
-			System.out.println(" dates" +ds);
-			ld.add(ds);
-
-		}
 		 
 		  Produit p1=serviceProduit.Findbycode(126);
 		  Produit p2=serviceProduit.Findbycode(684);
@@ -260,6 +249,48 @@ public class RapportcarburantBean implements Serializable {
 	return SUCCESS;
 	}
 
+	private void initializeMonthlyDateRange() {
+		Date latestBusinessDate = resolveLatestCarburantDate();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(latestBusinessDate);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		date1 = UiDateDefaults.startOfDay(calendar.getTime());
+		date2 = UiDateDefaults.endOfDay(latestBusinessDate);
+	}
+
+	private Date resolveLatestCarburantDate() {
+		Date latestBusinessDate = null;
+		List<Lignecommande> commandes = servicelignecommande.getAll();
+		if (commandes != null) {
+			for (Lignecommande commande : commandes) {
+				if (commande.getBl() != null) {
+					latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, commande.getBl().getDate());
+				}
+			}
+		}
+		List<Depense> depenses = serviceDepense.getAll();
+		if (depenses != null) {
+			for (Depense depense : depenses) {
+				latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, depense.getDate());
+			}
+		}
+		return UiDateDefaults.coalesce(latestBusinessDate, new Date());
+	}
+
+	private List<String> buildDateLabels(Date startDate, Date endDate) {
+		List<String> labels = new ArrayList<String>();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		Calendar cursor = Calendar.getInstance();
+		cursor.setTime(UiDateDefaults.startOfDay(startDate));
+		Calendar end = Calendar.getInstance();
+		end.setTime(UiDateDefaults.startOfDay(endDate));
+		while (!cursor.after(end)) {
+			labels.add(formatter.format(cursor.getTime()));
+			cursor.add(Calendar.DATE, 1);
+		}
+		return labels;
+	}
+
 	private String getMoisbyIntger(Integer moi) {
 		String m = "";
 		if (moi == 1)
@@ -279,13 +310,13 @@ public class RapportcarburantBean implements Serializable {
 		else if (moi == 8)
 			m = "aout";
 		else if (moi == 9)
-			m = "Séptembre";
+			m = "SÃ©ptembre";
 		else if (moi == 10)
 			m = "Octobre";
 		else if (moi == 11)
 			m = "Novembre";
 		else if (moi == 12)
-			m = "Décembre";
+			m = "DÃ©cembre";
 		return m;
 	}
 

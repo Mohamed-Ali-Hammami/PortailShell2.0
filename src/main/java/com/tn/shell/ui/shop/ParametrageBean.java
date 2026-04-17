@@ -299,9 +299,8 @@ public class ParametrageBean {
 	
 	
 	public void onRowEdit1(RowEditEvent event){				 
-		FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"utilisateur chang�",((Utilisateur)event.getObject()).getLogin());
+		FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"utilisateur changÃ©",((Utilisateur)event.getObject()).getLogin());
 	     FacesContext.getCurrentInstance().addMessage(null, msg);
-	     System.out.println("\n\n\n" +((Utilisateur)event.getObject()).getLogin()+"n\n\n");
 	     ((Utilisateur)event.getObject()).setRole(serviceRole.getRolebyprifil(role));
 	     updateUtilisateur((Utilisateur)event.getObject()); 
 }
@@ -314,13 +313,12 @@ public String updateUtilisateur(Utilisateur u) {
         userService.updateUser(u);
         return SUCCESS;     }  
     } catch (DataAccessException e) {
-        e.printStackTrace();       
     }    
     return ERROR;
 } 
 
 public void onRowEdit2(RowEditEvent event){				 
-	FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"utilisateur chang�",((Paramettre)event.getObject()).getId()+"");
+	FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"utilisateur changÃ©",((Paramettre)event.getObject()).getId()+"");
      FacesContext.getCurrentInstance().addMessage(null, msg);
      updateParamettre((Paramettre)event.getObject());
  
@@ -332,14 +330,13 @@ try {
     getServiceParamettre().update(p) ;
     return SUCCESS;       
 } catch (DataAccessException e) {
-    e.printStackTrace();       
 }    
 return ERROR;
 } 
 	
  
 public void onRowEdit4(RowEditEvent event){				 
-	FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"utilisateur chang�",((Tva)event.getObject()).getId()+"");
+	FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"utilisateur changÃ©",((Tva)event.getObject()).getId()+"");
      FacesContext.getCurrentInstance().addMessage(null, msg);
      updateTva((Tva)event.getObject());
  
@@ -351,7 +348,6 @@ try {
     getServiceTva().update(p) ;
     return SUCCESS;       
 } catch (DataAccessException e) {
-    e.printStackTrace();       
 }    
 return ERROR;
 }

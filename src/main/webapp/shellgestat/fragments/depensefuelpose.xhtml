@@ -1,0 +1,317 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+
+        <h:form id="depenseStationForm">
+
+            <h:panelGroup layout="block"
+                style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+
+                <h:panelGroup layout="block"
+                    style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+                    <h:panelGroup layout="block" style="text-align:center;">
+
+                        <b>
+                            <h:outputText value="Saisie Depense Station" />
+                        </b>
+
+                        <br />
+                        <br />
+
+                        <p:outputPanel id="panel">
+
+                            <p:focus context="panel" />
+                            <p:messages for="panel" />
+
+                            <h:selectOneRadio id="etat_payement"
+                                value="#{CrediClientBean.typecredit}"
+                                style="font-size:14px;">
+
+                                <f:selectItem itemLabel="Passager" itemValue="passager" />
+                                <f:selectItem itemLabel="Depense" itemValue="depense" />
+
+                                <f:ajax render="passager depense" />
+
+                            </h:selectOneRadio>
+
+                            <h:panelGroup id="passager">
+
+                                <h:panelGroup rendered="#{CrediClientBean.typecredit=='passager'}">
+
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <b>
+                                                    <h:outputText value="Date :" style="font-size:12px;" />
+                                                </b>
+                                            </td>
+                                            <td>
+                                                <p:calendar id="popup"
+                                                    value="#{CrediClientBean.date}"
+                                                    showOn="button"
+                                                    locale="fr"
+                                                    style="font-size:12px;">
+                                                    <p:ajax event="dateSelect" update="popup" />
+                                                </p:calendar>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <b>
+                                                    <h:outputText value="Véhicule :" style="font-size:12px;" />
+                                                </b>
+                                            </td>
+                                            <td>
+                                                <h:inputText value="#{CrediClientBean.vhecule}"
+                                                    required="true"
+                                                    requiredMessage="Entrer Matricule"
+                                                    style="font-size:12px;" />
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <b>
+                                                    <h:outputText value="Chauffeur :" style="font-size:12px;" />
+                                                </b>
+                                            </td>
+                                            <td>
+                                                <h:inputText value="#{CrediClientBean.chauffeur}"
+                                                    required="true"
+                                                    requiredMessage="Entrer Nom chauffeur"
+                                                    style="font-size:12px;" />
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </h:panelGroup>
+
+                            </h:panelGroup>
+
+                            <h:panelGroup id="depense">
+
+                                <h:panelGroup rendered="#{CrediClientBean.typecredit=='depense'}">
+
+                                    <table style="width:50%;">
+
+                                        <tr>
+                                            <td>
+                                                <b>
+                                                    <h:outputText value="Date :" style="font-size:12px;" />
+                                                </b>
+                                            </td>
+                                            <td>
+                                                <p:calendar id="popup2"
+                                                    value="#{CrediClientBean.date}"
+                                                    showOn="button"
+                                                    locale="fr"
+                                                    style="font-size:12px;">
+                                                    <p:ajax event="dateSelect" update="popup2" />
+                                                </p:calendar>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <b>
+                                                    <h:outputText value="Vehicule :" style="font-size:12px;" />
+                                                </b>
+                                            </td>
+                                            <td>
+                                                <p:selectOneMenu id="vehicule"
+                                                    value="#{CrediClientBean.codeclient}"
+                                                    required="true"
+                                                    requiredMessage="entrer Vehicule"
+                                                    filter="true"
+                                                    filterMatchMode="contains"
+                                                    style="width:200px; font-size:12px;">
+
+                                                    <f:selectItem itemLabel="selectionner Vehicule" />
+
+                                                    <f:selectItems value="#{CrediClientBean.listVehecule}"
+                                                        var="s"
+                                                        itemValue="#{s.matricule}"
+                                                        itemLabel="#{s.matricule}" />
+
+                                                    <p:ajax listener="#{CrediClientBean.getClients}"
+                                                        process="@this" />
+
+                                                </p:selectOneMenu>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+
+                                    <h:selectOneRadio id="etat_depense"
+                                        value="#{CrediClientBean.groupe}"
+                                        style="font-size:14px;">
+
+                                        <f:selectItem itemLabel="Groupe" itemValue="groupe" />
+                                        <f:selectItem itemLabel="Kilométrage" itemValue="kilometrage" />
+
+                                        <f:ajax render="kilometrage" />
+
+                                    </h:selectOneRadio>
+
+                                    <h:panelGroup id="kilometrage">
+
+                                        <h:panelGroup rendered="#{CrediClientBean.groupe=='kilometrage'}">
+
+                                            <table style="width:50%;">
+
+                                                <tr>
+                                                    <td>
+                                                        <b>
+                                                            <h:outputText value="Kilométrage :" style="font-size:12px;" />
+                                                        </b>
+                                                    </td>
+                                                    <td>
+                                                        <h:inputText value="#{CrediClientBean.kilometrage}"
+                                                            required="true"
+                                                            requiredMessage="Entrer kilometrage"
+                                                            style="font-size:12px;" />
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+                                        </h:panelGroup>
+
+                                    </h:panelGroup>
+
+                                </h:panelGroup>
+
+                            </h:panelGroup>
+
+                            <table>
+
+                                <tr>
+                                    <td>
+                                        <h:outputText value="Pompes :" />
+                                    </td>
+                                    <td>
+                                        <p:selectCheckboxMenu id="multiple"
+                                            value="#{CrediClientBean.selectedspompes}"
+                                            label="Pompes"
+                                            multiple="true"
+                                            filter="true"
+                                            filterMatchMode="startsWith"
+                                            panelStyle="width:250px">
+
+                                            <f:selectItems value="#{CrediClientBean.listpompes}" />
+
+                                            <f:ajax render="emp" />
+
+                                        </p:selectCheckboxMenu>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <h:outputText value="Time :" style="font-size:12px;" />
+                                        </b>
+                                    </td>
+
+                                    <td>
+                                        <p:calendar id="time"
+                                            value="#{CrediClientBean.date11}"
+                                            pattern="HH:mm:ss"
+                                            timeOnly="true">
+                                            <f:ajax render="emp" />
+                                        </p:calendar>
+                                    </td>
+
+                                    <td>
+                                        <p:calendar id="time2"
+                                            value="#{CrediClientBean.date12}"
+                                            pattern="HH:mm:ss"
+                                            timeOnly="true" />
+                                    </td>
+
+                                    <td>
+                                        <p:commandLink action="#{CrediClientBean.getTransactionBetweenTime2}"
+                                            ajax="false">
+                                            <p:graphicImage url="/images/icone-actualiser.png"
+                                                style="width:40px;" />
+                                        </p:commandLink>
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+                            <p:dataTable id="emp"
+                                var="car"
+                                value="#{CrediClientBean.listjournaldep}"
+                                selection="#{CrediClientBean.selectedlistjournaldep}"
+                                rowKey="#{car.id2}"
+                                selectionMode="single"
+                                emptyMessage="aucune ligne dans le serveur"
+                                style="margin-bottom:0;">
+
+                                <p:ajax event="rowSelect"
+                                    update="emp"
+                                    listener="#{CrediClientBean.onRowSelect}" />
+
+                                <p:ajax event="rowUnselect"
+                                    update="emp"
+                                    listener="#{CrediClientBean.onRowUnselect}" />
+
+                                <p:column headerText="Heure">
+                                    <h:outputText value="#{car.time}" />
+                                </p:column>
+
+                                <p:column headerText="Pompe">
+                                    <h:outputText value="#{car.pompe}" />
+                                </p:column>
+
+                                <p:column headerText="Pistolet">
+                                    <h:outputText value="#{car.pistolet}" />
+                                </p:column>
+
+                                <p:column headerText="Article">
+                                    <h:outputText value="#{car.article}" />
+                                </p:column>
+
+                                <p:column headerText="Prix">
+                                    <h:outputText value="#{car.prix}" />
+                                </p:column>
+
+                                <p:column headerText="Quantite">
+                                    <h:outputText value="#{car.quantite}" />
+                                </p:column>
+
+                                <p:column headerText="Montant">
+                                    <h:outputText value="#{car.montant}" />
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <br />
+                            <br />
+
+                            <p:commandButton id="b1"
+                                value="Valider"
+                                ajax="false"
+                                action="#{CrediClientBean.validersaisieDepense}"
+                                style="width:150px; font-size:12px; height:30px; color:white; background-image:linear-gradient(#FAF281, red);" />
+
+                        </p:outputPanel>
+
+                    </h:panelGroup>
+
+                </h:panelGroup>
+
+            </h:panelGroup>
+
+        </h:form>
+
+    </h:panelGroup>
+</ui:composition>

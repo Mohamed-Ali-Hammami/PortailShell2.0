@@ -37,10 +37,8 @@ List<Facture> result = em.createQuery("SELECT a FROM Facture a  where a.statut =
 				 
 				 .getResultList();
 		 if (result.size() > 0){
-	     	System.out.println("objet trouv� "+"\n\n\n");
 	         return result.get(0);}
 	     else{
-	     	System.out.println("\n\nl  objet Pointageconge n exsite pas\n\n");
 	         return null;} 
 		 }
 	 @Transactional
@@ -77,20 +75,16 @@ List<Facture> result = em.createQuery("SELECT a FROM Facture a  where a.statut =
 		 List<Facture> FactureachatListem=em.createQuery("SELECT u FROM  Facture u where u.codes = :code and u.statut = :statut",Facture.class).setParameter("code", code).setParameter("statut", Statut.ACTIF).getResultList();
 	        
 	        if (FactureachatListem.size() > 0){
-	        	System.out.println("\n\n\n\nfacture bydate trouv�\n\n\n\n");
 	            return FactureachatListem.get(0);}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}
 	}
 	public Facture getBLbycodes(String code) {
 List<Facture> BonlivraisonListem=em.createQuery("SELECT u FROM  Facture u where u.codes = :code and u.statut = :statut",Facture.class).setParameter("code", code).setParameter("statut", Statut.ACTIF).getResultList();
         
         if (BonlivraisonListem.size() > 0){
-        	System.out.println("objet trouv�\n");
             return BonlivraisonListem.get(0);}
         else{
-        	System.out.println("l  objet n exsite pas");
             return null;} 
 	}
 	public Integer getmaxcode() {
@@ -102,10 +96,8 @@ List<Facture> BonlivraisonListem=em.createQuery("SELECT u FROM  Facture u where 
 List<Facture> BonlivraisonListem=em.createQuery("SELECT u FROM  Facture u where u.code = :code and u.statut = :statut",Facture.class).setParameter("code", code).setParameter("statut", Statut.ACTIF).getResultList();
         
         if (BonlivraisonListem.size() > 0){
-        	System.out.println("objet trouv�\n");
             return BonlivraisonListem.get(0);}
         else{
-        	System.out.println("l  objet n exsite pas");
             return null;} 
 	}
 	 

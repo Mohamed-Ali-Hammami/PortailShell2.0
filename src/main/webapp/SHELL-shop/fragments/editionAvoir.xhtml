@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:panelGroup layout="block" styleClass="shell-module-layout shop-shell-fragment">
+        <h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+
+            <ui:insert name="menu" />
+
+            <h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+                <h:form>
+                    <h:panelGroup layout="block" style="text-align:left;">
+                        <h:commandLink title="imprimer">
+                            <p:graphicImage url="/images/imprimante-icone.png" style="width:25px" />
+                            <p:printer target="imprimer" />
+                        </h:commandLink>
+
+                        <p:outputPanel id="imprimer">
+                            <table style="width:100%">
+                                <tr>
+                                    <td>
+                                        <b><h:outputText value="EDITION FACTURE ACHAT N° #{AchatshopBean.factureAchat.code}"
+                                            style="font-size:12px " /></b>
+                                    </td>
+                                    <td />
+                                    <td>
+                                        <b><h:outputText value="Bon De Livraison N° #{AchatshopBean.achat.id}"
+                                            style="font-size:12px " /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b><h:outputText value="Fournisseur #{AchatshopBean.fourniseur.nom}"
+                                            style="font-size:12px " /></b>
+                                    </td>
+                                    <td />
+                                </tr>
+                            </table>
+
+                            <br />
+
+                            <table>
+                                <tr>
+                                    <td>
+                                        <b><h:outputText value="DATE #{AchatshopBean.dates}" style="font-size:12px " /></b>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <br />
+                            <br />
+
+                            <table border="1" style="width:100%">
+                                <tr>
+                                    <td><b><h:outputText value="Code" style="font-size:12px " /></b></td>
+                                    <td><b><h:outputText value="Nom" style="font-size:12px " /></b></td>
+                                    <td><b><h:outputText value="Quantite" style="font-size:12px " /></b></td>
+                                    <td><b><h:outputText value="Prix" style="font-size:12px " /></b></td>
+                                    <td><b><h:outputText value="Tva" style="font-size:12px " /></b></td>
+                                    <td><b><h:outputText value="Montant" style="font-size:12px " /></b></td>
+                                </tr>
+                                <ui:repeat var="a" value="#{AchatshopBean.listeLigne}">
+                                    <tr>
+                                        <td><h:outputText value="#{a.produit.code}" style="font-size:12px " /></td>
+                                        <td><h:outputText value="#{a.produit.nom}" style="font-size:12px " /></td>
+                                        <td><h:outputText value="#{a.quantite}" style="font-size:12px " /></td>
+                                        <td><h:outputText value="#{a.produit.achat}" style="font-size:12px " /></td>
+                                        <td><h:outputText value="#{a.produit.tva}" style="font-size:12px " /></td>
+                                        <td><h:outputText value="#{a.montant}" style="font-size:12px " /></td>
+                                    </tr>
+                                </ui:repeat>
+                            </table>
+
+                            <table style="width:100%">
+                                <tr>
+                                    <td><b><h:outputText value="Total HT" style="font-size:12px " /></b></td>
+                                    <td><h:outputText value="#{AchatshopBean.totalht}" style="font-size:12px " /></td>
+                                    <td><b><h:outputText value="Total TVA" style="font-size:12px " /></b></td>
+                                    <td><h:outputText value="#{AchatshopBean.totaltva}" style="font-size:12px " /></td>
+                                    <td><b><h:outputText value="Total TTC" style="font-size:12px " /></b></td>
+                                    <td><h:outputText value="#{AchatshopBean.totalttc}" style="font-size:12px " /></td>
+                                </tr>
+                            </table>
+                        </p:outputPanel>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </h:panelGroup>
+    </h:panelGroup>
+</ui:composition>

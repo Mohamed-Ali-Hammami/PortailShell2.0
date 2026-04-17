@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div class="shell-module-layout">
+		<p:growl id="msgs" showDetail="true"/>
+		<p:panel styleClass="shell-home-panel">
+			<h:form id="form">
+				<fieldset style="margin-bottom:20px;background-color:#eeeec6;">
+					<legend>
+						<h:outputText value="Numero de compte : #{BanqueBean.compte.numerodecompte}" style="font-size:18px;font-weight:bold;"/>
+						<br/>
+						<h:outputText value="Raison Sociale : Shell Sijoumi Fathi Sassi" style="font-size:18px;font-weight:bold;"/>
+					</legend>
+
+					<div style="text-align:center;">
+						<table>
+							<tr>
+								<td style="width:250px;height:80px;text-align:center;">
+									<h:outputText value="Cumul credit #{BanqueBean.compte.soldecredit}"/>
+								</td>
+								<td style="width:30px;"></td>
+								<td style="width:250px;height:80px;text-align:center;">
+									<h:outputText value="Cumul debit #{BanqueBean.compte.soldedebit}"/>
+								</td>
+								<td style="width:30px;"></td>
+								<td style="width:250px;height:80px;text-align:center;">
+									<h:outputText value="Solde arrete au #{BanqueBean.dates} #{BanqueBean.compte.solde}"/>
+								</td>
+								<td style="width:30px;"></td>
+								<td style="width:250px;height:80px;text-align:center;">
+									<p:commandLink value="Ajouter transaction"
+										action="#{BanqueBean.ajouterTransaction}"
+										ajax="false"/>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</fieldset>
+
+				<table>
+					<tr>
+						<td><h:outputText value="Date operation :" style="font-size:12px"/></td>
+						<td><p:calendar value="#{BanqueBean.date1}" size="10"/></td>
+						<td><p:calendar value="#{BanqueBean.date2}" size="10"/></td>
+						<td>
+							<p:commandButton value="Recherche"
+								action="#{BanqueBean.recherchertransaction}"
+								ajax="false"
+								styleClass="shell-action-button"/>
+						</td>
+						<td>
+							<p:commandButton value="Extrait"
+								action="#{BanqueBean.extrait}"
+								ajax="false"
+								styleClass="shell-action-button"/>
+						</td>
+					</tr>
+				</table>
+
+				<br/>
+				<h:outputText value="Liste des derniers mouvements (Derniere mise a jour le #{BanqueBean.dates})"
+					style="font-size:12px;font-weight:bold;"/>
+				<br/><br/>
+
+				<p:dataTable id="emp"
+					var="tr"
+					value="#{BanqueBean.listtransaction}"
+					selection="#{BanqueBean.selectedTranaction}"
+					rowKey="#{tr.id}"
+					selectionMode="single"
+					styleClass="shell-home-table"
+					emptyMessage="Aucune donnee">
+					<p:column headerText="Date">
+						<h:outputText value="#{tr.dates}">
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Intitule">
+						<h:outputText value="#{tr.description}"/>
+					</p:column>
+					<p:column headerText="Reference">
+						<h:outputText value="#{tr.reference}"/>
+					</p:column>
+					<p:column headerText="Montant">
+						<h:outputText value="#{tr.montant}" rendered="#{tr.typetransaction == 'Credit'}"/>
+						<h:outputText value="#{tr.montant}" rendered="#{tr.typetransaction == 'Debit'}"/>
+					</p:column>
+					<p:column headerText="Etat">
+						<h:outputText value="#{tr.etatcheque}"/>
+					</p:column>
+					<p:column headerText="Operation" style="text-align:center;width:40px;">
+						<p:commandLink action="#{BanqueBean.success}"
+							ajax="false"
+							rendered="#{tr.reglement == 'Cheque'}"
+							process="@this">
+							<p:graphicImage url="/images/icone-actualiser.png" style="width:20px"/>
+							<f:setPropertyActionListener value="#{tr}" target="#{BanqueBean.selectedTranaction}"/>
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+	</div>
+</ui:composition>

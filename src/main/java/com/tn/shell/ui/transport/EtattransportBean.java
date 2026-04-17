@@ -182,7 +182,6 @@ public class EtattransportBean implements Serializable {
 			}
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		clients = "";
 		return SUCCESS;
@@ -256,7 +255,6 @@ public class EtattransportBean implements Serializable {
 
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		listDepense = new ArrayList<Depense>();
 		totaltransport = 0;
@@ -358,7 +356,6 @@ public class EtattransportBean implements Serializable {
 
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 
 		for (Bonlivraison bl : listLivraison) {
@@ -375,7 +372,6 @@ public class EtattransportBean implements Serializable {
 			double g501 = 0;
 			double ssp1 = 0;
 			List<Lignecommande> l = serviceLigneCommande.getLcbyBL(b);
-			System.out.println("size" + l.size());
 			b.setListeligne(l);
 			for (Lignecommande c : l) {
 				if (c.getBl() != null && c.getProduit() != null) {
@@ -396,7 +392,6 @@ public class EtattransportBean implements Serializable {
 					}
 				}
 			}
-			System.out.println(petrole1);
 			b.setPetrole(petrole1);
 			b.setGasoil(gasoil1);
 			b.setG50(g501);
@@ -460,7 +455,6 @@ public class EtattransportBean implements Serializable {
 			double g501 = 0;
 			double ssp1 = 0;
 			List<Lignecommande> l = serviceLigneCommande.getLcbyBL(b);
-			System.out.println("size" + l.size());
 			b.setListeligne(l);
 			for (Lignecommande c : l) {
 				if (c.getBl() != null && c.getProduit() != null) {
@@ -483,7 +477,6 @@ public class EtattransportBean implements Serializable {
 
 				}
 			}
-			System.out.println(petrole1);
 			b.setPetrole(petrole1);
 			b.setGasoil(gasoil1);
 			b.setG50(g501);
@@ -546,7 +539,6 @@ public class EtattransportBean implements Serializable {
 
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 
 		for (Chauffeur f : lc) {
@@ -560,7 +552,6 @@ public class EtattransportBean implements Serializable {
 				if (f.equals(b.getChauffeur())) {
 
 					List<Lignecommande> l = serviceLigneCommande.getLcbyBL(b);
-					System.out.println("size" + l.size());
 					b.setListeligne(l);
 					for (Lignecommande c : l) {
 						if (c.getBl() != null && c.getProduit() != null) {
@@ -582,7 +573,6 @@ public class EtattransportBean implements Serializable {
 
 						}
 					}
-					System.out.println(petrole1);
 					b.setPetrole(petrole1);
 					b.setGasoil(gasoil1);
 					b.setG50(g501);

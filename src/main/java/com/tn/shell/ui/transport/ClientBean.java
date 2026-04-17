@@ -100,7 +100,6 @@ public String nouvauclient(){
 			getServiceClient().update(client);
 			return SUCCESS;
 		} catch (DataAccessException e) {
-			e.printStackTrace();
 		}
 		return ERROR;
 	}
@@ -108,7 +107,7 @@ public String nouvauclient(){
 	public void onRowEdit(RowEditEvent event) {
 
 		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"client chang�", ((Client) event.getObject()).getNom());
+				"client changÃ©", ((Client) event.getObject()).getNom());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		updateClient((Client) event.getObject());
 

@@ -7,7 +7,7 @@
 <h:head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8"
 		charset="UTF-8"></meta>
-	<link type="text/css" rel="stylesheet" href="style.css" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/style.css" />
 	<title>Shell-Sejoumi</title>
 
 </h:head>
@@ -38,7 +38,7 @@
               <tr>
                
               <td>
-          <h:outputLabel value="Montant à ajouter" /> </td><td>   <h:inputText size="8"  styleClass="styletpe"
+          <h:outputLabel value="Montant Ã  ajouter" /> </td><td>   <h:inputText size="8"  styleClass="styletpe"
 										value="#{CaisseBeans.totalesece}" onkeyup="validerespece(this)">
 										<p:ajax listener="#{CaisseBeans.saveespece}" update="f:affiche"/>
 										</h:inputText>

@@ -121,7 +121,6 @@ public String nouvauvhecule(){
 			getServiceVhecule().update(vhecule);
 			return SUCCESS;
 		} catch (DataAccessException e) {
-			e.printStackTrace();
 		}
 		return ERROR;
 	}
@@ -129,7 +128,7 @@ public String nouvauvhecule(){
 	public void onRowEdit(RowEditEvent event) {
 
 		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Vhecule chang�", ((Vhecule) event.getObject()).getMatricule());
+				"Vhecule changÃ©", ((Vhecule) event.getObject()).getMatricule());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		updateVhecule((Vhecule) event.getObject());
 

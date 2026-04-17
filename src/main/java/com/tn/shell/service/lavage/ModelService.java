@@ -1,5 +1,6 @@
 package com.tn.shell.service.lavage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,15 @@ public class ModelService {
 		return modelDAO.getModelbyid(id);
 	}
 	public List<Model> getModelbyMarque(Marque f){
+		if (f == null || f.getId() == null) {
+			return new ArrayList<Model>();
+		}
 		return modelDAO.getModelbyMarque(f);
 	}
 	public List<Model> getModelbyArticle(Produit f){
+		if (f == null || f.getCode() == null) {
+			return new ArrayList<Model>();
+		}
 		return modelDAO.getModelbyArticle(f);
 	}
 }

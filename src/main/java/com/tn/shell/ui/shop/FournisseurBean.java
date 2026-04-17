@@ -132,14 +132,13 @@ public class FournisseurBean {
             getServiceFournisseur().update(fournisseur);
             return SUCCESS;       
         } catch (DataAccessException e) {
-            e.printStackTrace();       
         }    
         return ERROR;
     } 
  
 	public void onRowEdit(RowEditEvent event){
 					 
-			FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"fournisseur chang�",((Fournisseur)event.getObject()).getNom());
+			FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"fournisseur changÃ©",((Fournisseur)event.getObject()).getNom());
 		     FacesContext.getCurrentInstance().addMessage(null, msg);
 		     updateFournisseur((Fournisseur)event.getObject());
 		    

@@ -74,13 +74,11 @@ List<Lignevente> result = em.createQuery("SELECT a FROM Lignevente a  where a.st
 				
 				.setParameter("statut", Statut.ACTIF).setParameter("p",p.getId()).setParameter("d1", d1).setParameter("d2", d2).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet caisse trouvé " + "\n\n\n");
 		return 
 				
 				result;}
 		else {
 			
-			System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 			return null;}
 	}
 	 public double getmontantbetwendate(Date d1,Date d2){
@@ -201,13 +199,11 @@ List<Lignevente> result = em.createQuery("SELECT a FROM Lignevente a  where a.st
 					
 					.setParameter("statut", Statut.ACTIF) .setParameter("d1", d1).setParameter("d2", d2).getResultList();
 			if (result.size() > 0) {
-				System.out.println("objet caisse trouvé " + "\n\n\n");
 			return 
 					
 					result;}
 			else {
 				
-				System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 				return null;}
 	 }
  
@@ -222,10 +218,8 @@ List<Lignevente> result = em.createQuery("SELECT a FROM Lignevente a  where a.st
 					.setParameter("gen", TypeGeneration.Cloture)
 					.getResultList();
 			if (result.size() > 0) {
-				System.out.println("objet trouvé " + "\n\n\n");
 				return result.get(0);
 			} else {
-				System.out.println("\n\nl  objet Lignevente n exsite pas\n\n");
 				return null;
 			}
 	 }

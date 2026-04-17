@@ -281,8 +281,6 @@ public class CaisseBeans {
 				ffw.close();
 
 			} catch (IOException ex) {
-				System.out.println("erreur de lecture du fichier");
-				ex.printStackTrace();
 
 			}/*
 
@@ -405,7 +403,6 @@ public class CaisseBeans {
 	public void chargerindex() {
 		totalLitrage = 0;
 		totalventecarburant = 0;
-		System.out.println("\\n\\n\\nchargement index\n\n\n");
 		EL1 = 0;
 		EL2 = 0;
 		EL3 = 0;
@@ -415,20 +412,16 @@ public class CaisseBeans {
 		try {
 			BufferedReader IN = new BufferedReader(new FileReader("M:/FTP_E00/num.txt"));
 			Integer s = Integer.parseInt(IN.readLine());
-			System.out.println("s" +s);
 			IN.close();
-			System.out.println("\n\n\n row"+s);
 			BufferedReader csvReader = new BufferedReader(new FileReader("M:/FTP_E00/" + (s) + ".csv"));
 			try {
 				int i =0;
 				String row = null;
 				while ((row = csvReader.readLine()) != null) {
-					System.out.println("\n\n\n row"+row);
 					if (i >=6  && i <= 41) {
 						String[] data = row.split(",");
 						Pompe p =null;
 						if (data != null) {
-							System.out.println("\n\n\n data[0]"+data[0]);
 							 	
 									if(Integer.parseInt(data[0])==34 || Integer.parseInt(data[0])==36) 
 										p=null;
@@ -444,7 +437,6 @@ public class CaisseBeans {
 									Ligneindex pel = serviceLigneindex.getAllventepardateandpompeandposte2(p,
 											serviceLigneindex.getmaxcode().getCaisse());
 									if (pel != null) {
-										System.out.println("\n\n\n" + p.getLibelle() + "\n\n\n");
 										x.setIndexouverture(pel.getIndexfermuture());
 									}
 									x.setIndexfermuture(Double.parseDouble(data[2]));
@@ -461,19 +453,15 @@ public class CaisseBeans {
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 			try {
 				csvReader.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 
 			// IN2.close();
 		} catch (Exception ex) {// IOException
-			System.out.println("erreur de lecture du fichier");
-			ex.printStackTrace();
 
 		}
 		
@@ -524,9 +512,7 @@ public class CaisseBeans {
 			/*BufferedReader IN = new BufferedReader(new FileReader("M:/FTP_E00/num.txt"));
 			Integer s = Integer.parseInt(IN.readLine());
 			IN.close();
-			System.out.println(s);
 			BufferedReader IN2 = new BufferedReader(new FileReader("M:/FTP_E00/000" + (s) + ".P"));
-			System.out.println("M:/FTP_E00/000" + (s) + ".P");
 			String ligne;
 			String l2;
 			String l3;
@@ -561,7 +547,6 @@ public class CaisseBeans {
 				Ligneindex pel = serviceLigneindex.getAllventepardateandpompeandposte2(p,
 						serviceLigneindex.getmaxcode().getCaisse());
 				if (pel != null) {
-					System.out.println("\n\n\n" + p.getLibelle() + "\n\n\n");
 					x.setIndexouverture(pel.getIndexfermuture());
 				}
 				boolean test = false;*/
@@ -616,7 +601,6 @@ public class CaisseBeans {
 						Ligneindex pel2 = serviceLigneindex.getAllventepardateandpompeandposte2(p,
 								serviceLigneindex.getmaxcode().getCaisse());
 						if (pel2 != null) {
-							System.out.println("\n\n\n" + p.getLibelle() + "\n\n\n");
 							x.setIndexouverture(pel2.getIndexfermuture());// pel.getIndexfermuture()
 							x.setIndexfermuture(0);
 						} else {
@@ -634,8 +618,6 @@ public class CaisseBeans {
 
 			//IN2.close();
 		/*} catch (Exception ex) {//IOException
-			System.out.println("erreur de lecture du fichier");
-			ex.printStackTrace();
 
 		}*/
 
@@ -782,7 +764,6 @@ public class CaisseBeans {
 			caisse.setRemarques("");
 			caisse.setCarteshell(0);
 			serviceCaisse.save(caisse);
-			System.out.println(" nouvelle caisse" + caisse.getId());
 
 		} else {
 			totalcaisse = caisse.getTotalcaisses();
@@ -1218,7 +1199,6 @@ public class CaisseBeans {
 
 		for (int j = 0; j < listAvances.size(); j++) {
 			if (libelle.getCode().equals(listAvances.get(j).getId()) && j != i) {
-				System.out.println("j" + j);
 				return j;
 
 			}
@@ -1235,7 +1215,6 @@ public class CaisseBeans {
 		UIComponent component = event.getComponent();
 		DecimalFormat df = new DecimalFormat("0.000");
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n\n " + codes + "new value" + event.getNewValue());
 		depense = listdepense.get(codes);
 		total = 0;
 		try {
@@ -1244,7 +1223,6 @@ public class CaisseBeans {
 			depense.setMontant(tt);
 			depense.setMontants(df.format(tt));
 
-			System.out.println("\n\n\n " + "new value en double" + t + "  s");
 
 			listdepense.set(codes, depense);
 
@@ -1252,10 +1230,8 @@ public class CaisseBeans {
 				total = total + d.getMontant();
 
 		} catch (Exception e) {
-			System.out.println("\n\n\n " + "erreur dans montantrs");
 		}
 		totals = df.format(total);
-		System.out.println("total " + total);
 	}
 
 	public void updatemontantcredit1(ValueChangeEvent event) {
@@ -1266,7 +1242,6 @@ public class CaisseBeans {
 		credit = listcredit.get(codes);
 		client = credit.getClient();
 
-		System.out.println("\n\n\n " + "old value en double" + credit.getMontants() + "  s");
 		// client.setReste(client.getReste()-credit.getMontant());
 
 		total = 0;
@@ -1278,7 +1253,6 @@ public class CaisseBeans {
 			credit.setMontant(tt);
 			credit.setMontants(df.format(tt));
 			// client.setReste(client.getReste()+credit.getMontant());
-			System.out.println("\n\n\n " + "new value en double" + t + "  s");
 
 			listcredit.set(codes, credit);
 
@@ -1286,12 +1260,10 @@ public class CaisseBeans {
 				total = total + d.getMontant();
 
 		} catch (Exception e) {
-			System.out.println("\n\n\n " + "erreur dans montantrs");
 		}
 		// serviceClient.update(client);
 		// serviceCreditclient.update(credit);
 		totals = df.format(total);
-		System.out.println("total " + total);
 	}
 
 	public void updatemontantcreditant1(ValueChangeEvent event) {
@@ -1309,14 +1281,12 @@ public class CaisseBeans {
 			creditanterieur.setMontant(tt);
 			creditanterieur.setMontants(df.format(tt));
 			// client.setReste(client.getReste() - creditanterieur.getMontant());
-			System.out.println("\n\n\n " + "new value en double" + t + "  s");
 			listCreditanterieur.set(codes, creditanterieur);
 
 			for (Creditanterieur d : listCreditanterieur)
 				total = total + d.getMontant();
 
 		} catch (Exception e) {
-			System.out.println("\n\n\n " + "erreur dans montantrs");
 		}
 		totals = df.format(total);
 		// serviceClient.update(client);
@@ -1327,7 +1297,6 @@ public class CaisseBeans {
 		UIComponent component = event.getComponent();
 		DecimalFormat df = new DecimalFormat("0.000");
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n\n " + codes + "new value" + event.getNewValue());
 		cheque = listcheque.get(codes);
 		total = 0;
 		try {
@@ -1335,16 +1304,13 @@ public class CaisseBeans {
 			Double tt = Double.parseDouble(t);
 			cheque.setMontant(tt);
 			cheque.setMontants(df.format(tt));
-			System.out.println("\n\n\n " + "new value en double" + t + "  s");
 			listcheque.set(codes, cheque);
 			for (Cheque d : listcheque)
 				total = total + d.getMontant();
 
 		} catch (Exception e) {
-			System.out.println("\n\n\n " + "erreur dans montantrs");
 		}
 		totals = df.format(total);
-		System.out.println("total " + total);
 
 	}
 
@@ -1352,7 +1318,6 @@ public class CaisseBeans {
 		UIComponent component = event.getComponent();
 		DecimalFormat df = new DecimalFormat("0.000");
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n\n " + codes + "new value" + event.getNewValue());
 		achatcaisse = listachatcaisse.get(codes);
 		total = 0;
 		try {
@@ -1361,7 +1326,6 @@ public class CaisseBeans {
 			achatcaisse.setMontant(tt);
 			achatcaisse.setMontants(df.format(tt));
 
-			System.out.println("\n\n\n " + "new value en double" + t + "  s");
 
 			listachatcaisse.set(codes, achatcaisse);
 
@@ -1369,17 +1333,14 @@ public class CaisseBeans {
 				total = total + d.getMontant();
 
 		} catch (Exception e) {
-			System.out.println("\n\n\n " + "erreur dans montantrs");
 		}
 		totals = df.format(total);
-		System.out.println("total " + total);
 	}
 
 	public void updatemontantaccompte(ValueChangeEvent event) {
 		UIComponent component = event.getComponent();
 		DecimalFormat df = new DecimalFormat("0.000");
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n\n " + codes + "new value" + event.getNewValue());
 		avance = listAvances.get(codes);
 		total = 0;
 		try {
@@ -1388,7 +1349,6 @@ public class CaisseBeans {
 			avance.setMontant_avance(tt);
 			avance.setMontant_avances(df.format(tt));
 			serviceAvance.update(avance);
-			System.out.println("\n\n\n " + "new value en double" + t + "  s");
 
 			listAvances.set(codes, avance);
 
@@ -1396,10 +1356,8 @@ public class CaisseBeans {
 				total = total + d.getMontant_avance();
 
 		} catch (Exception e) {
-			System.out.println("\n\n\n " + "erreur dans montantrs");
 		}
 		totals = df.format(total);
-		System.out.println("total " + total);
 	}
 
 	private List<Employee> filteredEmployee;
@@ -1432,7 +1390,6 @@ public class CaisseBeans {
 		}
 
 		totals = df.format(total);
-		System.out.println("total " + total);
 	}
 
 	public void updatemontantcheque(AjaxBehaviorEvent event) {
@@ -1441,14 +1398,12 @@ public class CaisseBeans {
 		for (Cheque d : listcheque)
 			total = total + d.getMontant();
 		totals = df.format(total);
-		System.out.println("total " + total);
 	}
 
 	public void updatemontantachat(AjaxBehaviorEvent event) {
 		total = 0;
 		for (Achatcaisse d : listachatcaisse)
 			total = total + d.getMontant();
-		System.out.println("total " + total);
 		DecimalFormat df = new DecimalFormat("0.000");
 		totals = df.format(total);
 	}
@@ -1475,7 +1430,6 @@ public class CaisseBeans {
 
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codes" + codes + "\n\n");
 		total = 0;
 		retourcuve = retourcuves.get(codes);
 		retourcuve.setQuantite((Integer) event.getNewValue());
@@ -1494,7 +1448,6 @@ public class CaisseBeans {
 		for (Avancegestat d : listAvances)
 			total = total + d.getMontant_avance();
 
-		System.out.println("total " + total);
 		DecimalFormat df = new DecimalFormat("0.000");
 		totals = df.format(total);
 	}
@@ -1515,7 +1468,6 @@ public class CaisseBeans {
 			total = total + d.getMontant();
 
 		totals = df.format(total);
-		System.out.println("total " + total);
 	}
 
 	public void updatemontantcredit(AjaxBehaviorEvent event) {
@@ -1530,22 +1482,18 @@ public class CaisseBeans {
 		credit.setMontants(df.format(credit.getMontant()));
 		// serviceClient.update(client);
 		listcredit.set(codes, credit);
-		System.out.println("reste " + client.getReste());
 		for (Credit d : listcredit) {
 			total = total + d.getMontant();
 
 		}
 
 		totals = df.format(total);
-		System.out.println("total " + total);
 	}
 
 	public void updatenumbon(AjaxBehaviorEvent event) {
-		System.out.println("num bon " + credit.getNumbon());
 	}
 
 	public void buttonAction(ActionEvent actionEvent) {
-		System.out.println("ooooooooooook");
 		addMessage("Welcome to Primefaces!!");
 	}
 
@@ -1576,7 +1524,6 @@ public class CaisseBeans {
 		Familledepensegestat familledepense = serviceFamilleDepense.getFamilebyeibelle(libelle);
 		depense.setFamilledepense(familledepense);
 		listdepense.set(codes, depense);
-		System.out.println(depense.getFamilledepense().getLibelle());
 		libelle = null;
 		codes = null;
 	}
@@ -1590,7 +1537,6 @@ public class CaisseBeans {
 				.setLibelle(serviceFamilleDepense.getFamilebyeid(cdto.getFamilledepense().getId()).getLibelle());
 		thisButton.setValue(cdto);
 		addMessage("famille depense \n" + cdto.getFamilledepense().getId());
-		System.out.println("famille depense \n" + cdto.getFamilledepense().getId());
 	}
 
 	public HtmlDataTable getDepenses() {
@@ -1605,7 +1551,6 @@ public class CaisseBeans {
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
 		credit = listcredit.get(codes);
-		System.out.println("\n\n codes" + codes + "\n\n");
 		client = serviceClient.Findbycode(id);
 		credit.setClient(client);
 		credit.setTels(client.getTel());
@@ -1617,11 +1562,9 @@ public class CaisseBeans {
 	}
 
 	public void handleChangeclient(ValueChangeEvent event) {
-		System.out.println("here " + event.getNewValue());
 		// System.out.println("statut "+depense.getId());
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codes" + codes + "\n\n");
 		client = serviceClient.Findbycode((Integer) event.getNewValue());
 		credit = listcredit.get(codes);
 		credit.setClient(client);
@@ -1635,7 +1578,6 @@ public class CaisseBeans {
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
 		creditanterieur = listCreditanterieur.get(codes);
-		System.out.println("\n\n codes" + codes + "\n\n");
 		client = serviceClient.Findbycode(id);
 		creditanterieur.setClient(client);
 		listCreditanterieur.set(codes, creditanterieur);
@@ -1646,11 +1588,9 @@ public class CaisseBeans {
 	}
 
 	public void handleChangeclient2(ValueChangeEvent event) {
-		System.out.println("here " + event.getNewValue());
 		// System.out.println("statut "+depense.getId());
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codes" + codes + "\n\n");
 		client = serviceClient.Findbycode((Integer) event.getNewValue());
 		creditanterieur = listCreditanterieur.get(codes);
 		creditanterieur.setClient(client);
@@ -1662,7 +1602,6 @@ public class CaisseBeans {
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
 		avance = listAvances.get(codes);
-		System.out.println("\n\n codes" + codes + "\n\n");
 		employee = serviceemployees.getEmployeeBycode(id);
 		avance.setEmployee(employee);
 		listAvances.set(codes, avance);
@@ -1673,11 +1612,9 @@ public class CaisseBeans {
 	}
 
 	public void handleChangeemployee(ValueChangeEvent event) {
-		System.out.println("here " + event.getNewValue());
 		// System.out.println("statut "+depense.getId());
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codes" + codes + "\n\n");
 		employee = serviceemployees.getEmployeeBycode((Integer) event.getNewValue());
 		avance = listAvances.get(codes);
 		avance.setEmployee(employee);
@@ -1689,7 +1626,6 @@ public class CaisseBeans {
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
 		depense = listdepense.get(codes);
-		System.out.println("\n\n codes" + codes + "\n\n");
 		familledepense = serviceFamilleDepense.getFamilebyeid(id);
 		depense.setFamilledepense(familledepense);
 		listdepense.set(codes, depense);
@@ -1699,11 +1635,9 @@ public class CaisseBeans {
 	}
 
 	public void handleChange(ValueChangeEvent event) {
-		System.out.println("here " + event.getNewValue());
 
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codes" + codes + "\n\n");
 		familledepense = serviceFamilleDepense.getFamilebyeid((Integer) event.getNewValue());
 		depense = listdepense.get(codes);
 		depense.setFamilledepense(familledepense);
@@ -1715,7 +1649,6 @@ public class CaisseBeans {
 	public void handleChangeindex2(ValueChangeEvent event) {
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codes" + codes + "\n\n");
 		lignindex = ligneindex.get(codes);
 		lignindex.setIndexfermuture((Double) event.getNewValue());
 		lignindex.setQuantite(lignindex.getIndexfermuture() - lignindex.getIndexouverture());
@@ -1893,7 +1826,6 @@ public class CaisseBeans {
 			}
 		}
 
-		System.out.println("save credit");
 		for (Clientgestat c : lc2) {
 			double mnt = 0;
 			for (Creditanterieur cr : lc)
@@ -1985,7 +1917,6 @@ public class CaisseBeans {
 				serviceCreditclient.update(d);
 			}
 		}
-		System.out.println("save credit");
 		for (Clientgestat c : lc) {
 			double mnt = 0;
 			for (Credit cr : lc2)
@@ -2088,12 +2019,10 @@ public class CaisseBeans {
 		total = 0;
 		for (Retourcuve d : retourcuves) {
 			if (serviceRetourcuve.getRetourcuvebyid(d.getId()) != null) {
-				System.out.println("\n\n\n" + d.getMontant() + "\n\n\n");
 				total = total + d.getMontant();
 			}
 		}
 
-		System.out.println("\n\n\n" + total + "\n\n\n");
 		caisse.setRetourcuve(total);
 		double tc = 0;
 		double tcs = 0;
@@ -3026,17 +2955,14 @@ public class CaisseBeans {
 			reponseServeur(ftpClient);
 			int reponse = ftpClient.getReplyCode();
 			if (!FTPReply.isPositiveCompletion(reponse)) {
-				System.out.println("Operation echoue. Reponse Serveur: " + reponse);
 				return;
 			}
 			boolean etat = ftpClient.login(username, password);
 			reponseServeur(ftpClient);
 			if (!etat) {
-				System.out.println("Impossible d'acceder au serveur");
 				return;
 
 			} else {
-				System.out.println("Identification reussie");
 
 				ftpClient.enterLocalPassiveMode();
 				ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
@@ -3057,7 +2983,6 @@ public class CaisseBeans {
 					if (files1[i].getName().equals("000" + ss + ".P"))
 						// obtenir la taille du fichier
 						size = files1[i].getSize();
-					System.out.println(" s" + size);
 				}
 				OutputStream outputStream2 = new BufferedOutputStream(new FileOutputStream(fichierlocal));
 
@@ -3075,7 +3000,6 @@ public class CaisseBeans {
 
 					transfere += bytesRead;
 					pourcentage = (int) (transfere * 100 / size);
-					System.out.println(pourcentage + "%");
 				} // outputStream3.write();
 
 				// fermer les flux de lecture de d'ecriture
@@ -3084,8 +3008,6 @@ public class CaisseBeans {
 
 			}
 		} catch (IOException ex) {
-			System.out.println("Une erreur lors de la connexion a ete detecte");
-			ex.printStackTrace();
 		} finally {
 			try {
 				if (ftpClient.isConnected()) {
@@ -3094,7 +3016,6 @@ public class CaisseBeans {
 					ftpClient.disconnect();
 				}
 			} catch (IOException ex) {
-				ex.printStackTrace();
 			}
 
 		}
@@ -3104,7 +3025,6 @@ public class CaisseBeans {
 		String[] reponses = ftpClient.getReplyStrings();
 		if (reponses != null && reponses.length > 0) {
 			for (String reponse : reponses) {
-				System.out.println("SERVEUR :" + reponse);
 			}
 		}
 	}

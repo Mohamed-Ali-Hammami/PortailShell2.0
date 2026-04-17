@@ -88,10 +88,8 @@ public class CreditPassationDaoImpl implements CreditpassationDao {
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 
 		if (CreditpassationclientListem.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return CreditpassationclientListem;
 		} else {
-			System.out.println("\n\nl  objet Creditpassationclient n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -105,12 +103,10 @@ public class CreditPassationDaoImpl implements CreditpassationDao {
 				.getResultList();
 
 		if (result.size() > 0) {
-			System.out.println("" + result.get(0).getClientpassation().getId());
 			return result;
 		}
 
 		else {
-			System.out.println("\n\npas de crdit" + c.getId());
 			return result;
 		}
 	}
@@ -126,12 +122,10 @@ public class CreditPassationDaoImpl implements CreditpassationDao {
 				.setParameter("code", cl.getId()).getResultList();
 
 		if (result.size() > 0) {
-			System.out.println("" + result.get(0).getClientpassation().getId());
 			return result.get(0);
 		}
 
 		else {
-			System.out.println("\n\npas de crdit" + cl.getId());
 			return null;
 		}
 	}
@@ -144,10 +138,8 @@ public class CreditPassationDaoImpl implements CreditpassationDao {
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 
 		if (CreditpassationclientListem.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return CreditpassationclientListem.get(0);
 		} else {
-			System.out.println("\n\nl  objet Creditpassationclient n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -160,10 +152,8 @@ public class CreditPassationDaoImpl implements CreditpassationDao {
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 
 		if (CreditpassationclientListem.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return CreditpassationclientListem.get(0);
 		} else {
-			System.out.println("\n\nl  objet Creditpassationclient n exsite pas\n\n");
 			return null;
 		}
 	}

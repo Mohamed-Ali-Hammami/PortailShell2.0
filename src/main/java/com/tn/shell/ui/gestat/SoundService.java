@@ -22,7 +22,6 @@ public class SoundService implements LineListener {
 	}
    
 	public void sound(String path2) { 
-		System.out.println("\n\n path"+path2);
 		//System.out.println("\n\n path2"+path2);
 			
 				try {
@@ -30,7 +29,6 @@ public class SoundService implements LineListener {
 					soundFile = new File(path2);
 					if(path2!=null) {
 				//	File audioFile2 = new File(path2);
-					System.out.println(soundFile.getName());
 					/*AudioInputStream audioStream2 = AudioSystem.getAudioInputStream(audioFile2);
 					AudioFormat format2 = audioStream2.getFormat();
 					DataLine.Info info2 = new DataLine.Info(Clip.class, format2);
@@ -61,14 +59,8 @@ public class SoundService implements LineListener {
 					}*/
 					
 				 } catch (UnsupportedAudioFileException ex) {
-					System.out.println("The specified audio file is not supported.");
-					ex.printStackTrace();
 				} catch (LineUnavailableException ex) {
-					System.out.println("Audio line for playing back is unavailable.");
-					ex.printStackTrace();
 				} catch (IOException ex) {
-					System.out.println("Error playing the audio file.");
-					ex.printStackTrace();
 				}
 
 			

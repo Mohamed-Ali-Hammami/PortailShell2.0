@@ -37,7 +37,6 @@ public class ChequereglementDaoImpl implements ChequeredlementDao {
 		    return result;
 			else {
 				
-				System.out.println("erreur de chargemnt list en cours");
 				return result;}
 	 }
 	 @Transactional
@@ -76,10 +75,8 @@ public class ChequereglementDaoImpl implements ChequeredlementDao {
 		 List<Chequereglement> ChequeListem=em.createQuery("SELECT c FROM  Chequereglement c where c.numero = :nom and c.statut = :statut",Chequereglement.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (ChequeListem.size() > 0){
-	        	System.out.println("objet trouvé "+"\n\n\n");
 	            return ChequeListem;}
 	        else{
-	        	System.out.println("\n\nl  objet Cheque n exsite pas\n\n");
 	            return null;}   
 	}
 	 
@@ -88,10 +85,8 @@ public class ChequereglementDaoImpl implements ChequeredlementDao {
 			 List<Chequereglement> ChequeListem=em.createQuery("SELECT c FROM  Chequereglement c where c.id = :nom and c.statut = :statut",Chequereglement.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 		        
 		        if (ChequeListem.size() > 0){
-		        	System.out.println("objet trouvé "+"\n\n\n");
 		            return ChequeListem.get(0);}
 		        else{
-		        	System.out.println("\n\nl  objet Cheque n exsite pas\n\n");
 		            return null;}   
 		}
  
@@ -100,10 +95,8 @@ public class ChequereglementDaoImpl implements ChequeredlementDao {
 		 List<Chequereglement> ChequeListem=em.createQuery("SELECT c FROM  Chequereglement c where c.mf = :nom and c.statut = :statut",Chequereglement.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (ChequeListem.size() > 0){
-	        	System.out.println("objet trouvé "+"\n\n\n");
 	            return ChequeListem.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet Cheque n exsite pas\n\n");
 	            return null;}   
 	}
 	 @Transactional

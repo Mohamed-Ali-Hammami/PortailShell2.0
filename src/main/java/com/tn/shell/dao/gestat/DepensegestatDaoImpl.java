@@ -89,10 +89,8 @@ public class DepensegestatDaoImpl implements DepensegestatDAO {
 				 
 				 .getResultList();
 		 if (result.size() > 0){
-	     	System.out.println("objet trouvé "+"\n\n\n");
 	         return result.get(0);}
 	     else{
-	     	System.out.println("\n\nl  objet Pointageconge n exsite pas\n\n");
 	         return null;} 
 	}
 

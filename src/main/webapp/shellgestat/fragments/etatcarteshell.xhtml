@@ -1,0 +1,110 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+	<h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+
+			<h:form id="f">
+				<h:panelGroup layout="block" style="text-align:center;">
+					<b><h:outputText value=" ETAT CARTE SHELL" /></b><br />
+					<h:panelGrid columns="6">
+						<h:outputLabel value="DATE" />
+						<p:calendar value="#{AvoirBean.date}" id="pupop" >
+						<p:ajax 
+										event="dateSelect"  />
+						</p:calendar>
+						<h:outputLabel value="Solde" />
+						<h:inputText value="#{AvoirBean.solde.soldes}"  id="soldes"/>
+						<h:outputLabel value="DATE" />
+						<p:calendar value="#{AvoirBean.date2}" id="pupop2">
+							<p:ajax listener="#{AvoirBean.getavorirbydate}"
+								update="imprimer soldes"  event="dateSelect"/>
+						</p:calendar>
+					</h:panelGrid>
+					<br />
+					<br />
+               <p:outputPanel id="imprimer">
+					<h:panelGrid columns="2" >
+
+
+						<p:dataTable id="caisse" var="c" value="#{AvoirBean.listpcaisses}"
+							rowKey="#{c.id}" emptyMessage="aucune ligne dans la base">
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Date" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{c.dates}"
+									id="dates" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Poste" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{c.poste}"
+									id="poste" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Monatnt" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{c.carteShells}"
+									id="montant" />
+							</p:column>
+						</p:dataTable>
+
+						<p:dataTable id="avoir" var="c" value="#{AvoirBean.listavoir}"
+							rowKey="#{c.id}" emptyMessage="aucune ligne dans la base">
+							
+						 
+
+                         <p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Date" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{c.dates}"
+									id="dates" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Numero" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{c.numero}"
+									id="numero" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px ;color:#483d8b"
+										value="Monatnt" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{c.montants}"
+									id="montants" />
+							</p:column>
+							
+							 
+						</p:dataTable>
+
+					</h:panelGrid>
+					</p:outputPanel>
+				</h:panelGroup>
+			</h:form>
+		 </h:panelGroup>
+		 </h:panelGroup>
+		 
+    </h:panelGroup>
+</ui:composition>

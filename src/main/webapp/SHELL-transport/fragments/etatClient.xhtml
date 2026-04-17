@@ -1,0 +1,145 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout transport-shell-fragment"
+        style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+		 
+		
+        <h:panelGroup layout="block"
+            style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">	
+				<br/> <br/><br/><br/>
+				 
+					<h:form>
+					<h:panelGroup layout="block" style="text-align:left;">
+				<h:panelGrid columns="2">
+				<h:commandLink title="imprimer">
+									<p:graphicImage url="/images/imprimante-icone.png"
+										style="width:25px" />
+									<p:printer target="imprimer"></p:printer>
+								</h:commandLink>
+			 </h:panelGrid>
+				<table>
+		<tr>
+		<td><h:outputText value="à partir du :" style="font-size:12px "/></td>
+		<td> <p:calendar id="popup" value="#{EtattransportBean.date1}" size="10" pattern="dd-MM-yyyy" mask="true" >
+		 
+		</p:calendar>
+		</td>
+		
+		<td><h:outputText value="jusqu'au :" style="font-size:12px "/></td>
+		<td> <p:calendar id="popup2" value="#{EtattransportBean.date2}" size="10" pattern="dd-MM-yyyy" mask="true">
+		 
+		</p:calendar>
+		</td>
+		</tr>
+		 
+		<tr>
+		<td><h:outputText value="Client" style="font-size:12px "/></td>
+		<td>
+		<p:selectOneMenu  value="#{EtattransportBean.clients}"  
+						style="width:200px;font-size:12px "   filter="true" filterMatchMode="contains">
+							 <f:selectItem itemLabel="selectionner client"  />
+							<f:selectItems value="#{EtattransportBean.listeclient}"   />
+							 
+						    </p:selectOneMenu>
+		
+		</td>
+		 
+		 </tr>
+		 
+										
+		<tr>
+		<td/>
+		 <td><p:commandButton styleClass="ui-priority-primary"
+		  value="Recherche" action="#{EtattransportBean.getetatclient2}" style="width:150px;font-size:12px;height:30;color:#0000ff;background-color:#abc8e2;"/></td>
+		 </tr>
+		</table>				
+				
+				</h:panelGroup>
+				<p:outputPanel id="imprimer" style="width:99%;background-color: #F5F4F0;" >
+				<table><tr><td>
+				<p:panel style="width:400px;">
+				<b><h:outputText value="ETAT DES VENTES PAR CLIENT du :"  style=" font-style: italic;font-size: large;font-size:20px;"/>
+				</b></p:panel></td>
+				<td> <h:outputText value="#{EtattransportBean.date1s } "  style=" font-style: italic;font-size: large;"/></td>
+				<td colspan="2"/>
+				<td><h:outputText value=" #{ EtattransportBean.date2s}"  style=" font-style: italic;font-size: large;"/></td>
+				</tr></table>
+				 <br/> 
+				 <h:outputText value=" #{EtattransportBean.clients}   "  style=" font-style: italic;font-size: large;"/>
+				
+				<br/> <br/><br/><br/>
+				 
+								<table border="1" style="width: 100%">
+								<tr style="background-color: #FAED94;">
+								<td>
+								<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Identifiant" />
+								</td>
+								<td><h:outputText style="font-size:12px ;color:#483d8b"
+											value="Date" /></td>
+								<td><h:outputText style="font-size:12px ;color:#483d8b"
+											value="Heure" /></td>
+								 
+							    <td><h:outputText style="font-size:12px ;color:#483d8b"
+											value="Prix TRS" /></td>
+							  <td><h:outputText style="font-size:12px ;color:#483d8b"
+											value="Gasoil" /></td>
+							<td><h:outputText style="font-size:12px ;color:#483d8b"
+											value="Petrole" /></td>
+							<td><h:outputText style="font-size:12px ;color:#483d8b"
+											value="SSP" /></td>
+							<td><h:outputText style="font-size:12px ;color:#483d8b"
+											value="G 50" /></td>
+								 
+								</tr>
+								<ui:repeat var="bl" value="#{EtattransportBean.listBonlivraison}">
+								<tr>
+								<td> <h:outputText style="font-size:12px " value="#{bl.codes}" /></td>
+								<td>
+								  <h:outputText style="font-size:12px " value="#{bl.dates}" />
+								</td>
+								<td><h:outputText style="font-size:12px " value="#{bl.heure}" /></td>
+								 
+								<td>
+								<h:outputText style="font-size:12px " value="#{bl.transport}" />
+								</td>
+								  
+									<td><h:outputText style="font-size:12px "
+													value="#{bl.gasoil}"   /></td>
+											<td><h:outputText style="font-size:12px "
+													value="#{bl.petrole}"   /></td>
+											<td><h:outputText style="font-size:12px "
+													value="#{bl.ssp}"   /></td>
+											<td><h:outputText style="font-size:12px "
+													value="#{bl.g50}"   /></td>
+								</tr>
+								</ui:repeat>
+								<tr>
+								<td>
+								<h:outputText style="font-size:12px " value="#{EtattransportBean.listBonlivraison.size()}" />
+								</td>
+								<td colspan="2"/>
+								<td><h:outputText style="font-size:12px " value="#{EtattransportBean.totaltransport}" /></td>
+								<td><h:outputText style="font-size:12px " value="#{EtattransportBean.gasoil}" /></td>
+								<td><h:outputText style="font-size:12px " value="#{EtattransportBean.petrole}" /></td>
+								
+								<td><h:outputText style="font-size:12px " value="#{EtattransportBean.ssp}" /></td>
+								<td><h:outputText style="font-size:12px " value="#{EtattransportBean.g50}" /></td>
+								 
+								</tr>
+								</table>
+									 
+								   
+					
+				</p:outputPanel>
+				
+				
+				 
+				</h:form>
+        </h:panelGroup>
+    </h:panelGroup>
+			 
+</ui:composition>

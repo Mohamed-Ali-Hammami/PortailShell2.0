@@ -150,7 +150,7 @@ public class StockProduitBean {
 
 	public void onRowEdit(RowEditEvent event) {
 
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "fournisseur chang�",
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "fournisseur changÃ©",
 				((Produit) event.getObject()).getNom());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		updateProduit((Produit) event.getObject());
@@ -162,7 +162,6 @@ public class StockProduitBean {
 			//getServiceProduit().update(produit);
 			return SUCCESS;
 		} catch (DataAccessException e) {
-			e.printStackTrace();
 		}
 		return ERROR;
 	}

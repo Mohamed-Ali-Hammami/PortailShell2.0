@@ -1,237 +1,131 @@
-
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:head>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8"
-		charset="UTF-8"></meta>
-	<link type="text/css" rel="stylesheet" href="style.css" />
-	<title>Shell-Sejoumi</title>
-
-</h:head>
-<h:body>
-
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/style.css" />
 
 	<h:form>
 		<p:growl id="messages" />
 
-		<p:menubar
-			style="height:30px; margin-left: 50px;margin-right: 50px ;background-image:linear-gradient( #FAF281, #FAF292);"
-			autoDisplay="true">
-			<p:menuitem icon="ui-icon-home" action=" " style="font-size:12px" />
-			<p:submenu label="TIERS" style="font-size:12px;"
-				icon="ui-icon-document">
-				<p:submenu label="1.CLIENTS" style="font-size:12px;width:150px"
-					icon="ui-icon-document">
-					<p:menuitem value="1.MISE A JOUR" url="#{request.contextPath}/shellgestat/gestion/listeclient.xhtml" ajax="false"
+		<p:menubar styleClass="shell-module-menubar" autoDisplay="true">
+			<p:menuitem icon="ui-icon-home" url="#{request.contextPath}/shellgestat/index.xhtml" style="font-size:12px" />
+			<p:submenu label="TIERS" style="font-size:12px;" icon="ui-icon-document">
+				<p:submenu label="1.CLIENTS" style="font-size:12px;width:150px" icon="ui-icon-document">
+					<p:menuitem value="1.MISE A JOUR" url="#{request.contextPath}/shellgestat/index.xhtml?view=listeclient" ajax="false"
 						style="font-size:12px;width:150px" icon="ui-icon-document" />
-					<p:menuitem value="2.FACTURATION" url="#{request.contextPath}/shellgestat/gestion/facturationClient.xhtml"  ajax="false"
+					<p:menuitem value="2.FACTURATION" url="#{request.contextPath}/shellgestat/index.xhtml?view=facturationClient" ajax="false"
 						style="font-size:12px;width:150px" icon="ui-icon-document" />
-					 <p:menuitem value="3.Credit Passation" url="#{request.contextPath}/shellgestat/gestion/gestioncreditPassation.xhtml"  ajax="false"
-						style="font-size:12px;width:180px" icon="ui-icon-document" /> 
-					<!-- <p:menuitem value="4.IMPRESSION BON CREDIT" action=" "
+					<p:menuitem value="3.Credit Passation" url="#{request.contextPath}/shellgestat/index.xhtml?view=gestioncreditPassation" ajax="false"
 						style="font-size:12px;width:180px" icon="ui-icon-document" />
-					<p:menuitem value="5.FACTURATION PASSAGER" action=" "
+					<p:menuitem value="4.Carte Client" url="#{request.contextPath}/shellgestat/index.xhtml?view=carteClient" ajax="false"
 						style="font-size:12px;width:180px" icon="ui-icon-document" />
-					<p:menuitem value="6.REIMP.FACT PASSAGER" action=" "
-						style="font-size:12px;width:180px" icon="ui-icon-document" /> -->
+					<p:menuitem value="5.Affecter Carte" url="#{request.contextPath}/shellgestat/index.xhtml?view=affectercarteClient" ajax="false"
+						style="font-size:12px;width:180px" icon="ui-icon-document" />
+					<p:menuitem value="6.Historique Cartes" url="#{request.contextPath}/shellgestat/index.xhtml?view=HistoriquecarteClient" ajax="false"
+						style="font-size:12px;width:180px" icon="ui-icon-document" />
 				</p:submenu>
 				<p:submenu label="2.OUVRIERS" style="font-size:12px">
-					<p:menuitem value="1.MISE A JOUR"
-						url="#{request.contextPath}/shellgestat/gestion/listemplyee.xhtml" />
-					<p:menuitem value="2.ACCOMPTE"
-						url="#{request.contextPath}/shellgestat/gestion/nouvelleAvance.xhtml" />
-					<p:menuitem value="3.ETAT" url="#{request.contextPath}/shellgestat/gestion/etatAvance.xhtml" />
-					<p:menuitem value="4.MAJ ACCOMPTE ET MANQUE"
-						url="#{request.contextPath}/shellgestat/gestion/gestion_des_avances.xhtml" style="width:200px" />
+					<p:menuitem value="1.MISE A JOUR" url="#{request.contextPath}/shellgestat/index.xhtml?view=listemplyee" />
+					<p:menuitem value="2.ACCOMPTE" url="#{request.contextPath}/shellgestat/index.xhtml?view=nouvelleAvance" />
+					<p:menuitem value="3.ETAT" url="#{request.contextPath}/shellgestat/index.xhtml?view=etatAvance" />
+					<p:menuitem value="4.MAJ ACCOMPTE ET MANQUE" url="#{request.contextPath}/shellgestat/index.xhtml?view=gestion_des_avances" style="width:200px" />
 				</p:submenu>
 				<p:submenu label="3.FOURNISSEURS" style="font-size:12px">
-					<p:menuitem value="1.MISE A JOUR"
-						url="#{request.contextPath}/shellgestat/gestion/AjouterFournisseur.xhtml" />
-					<p:menuitem value="2.ACHATS CARBURANTS"
-						url="#{request.contextPath}/shellgestat/gestion/achat.xhtml" />
-					<p:menuitem value="3.REGLEMENTS"
-						url="#{request.contextPath}/shellgestat/gestion/reglementFactureAchat.xhtml" />
-					<p:menuitem value="4.ETAT" url="#{request.contextPath}/shellgestat/gestion/etatFactureachat.xhtml" />
+					<p:menuitem value="1.MISE A JOUR" url="#{request.contextPath}/shellgestat/index.xhtml?view=AjouterFournisseur" />
+					<p:menuitem value="2.ACHATS CARBURANTS" url="#{request.contextPath}/shellgestat/index.xhtml?view=achat" />
+					<p:menuitem value="3.REGLEMENTS" url="#{request.contextPath}/shellgestat/index.xhtml?view=reglementFactureAchat" />
+					<p:menuitem value="4.ETAT" url="#{request.contextPath}/shellgestat/index.xhtml?view=etatFactureachat" />
 					<p:submenu label="5.HISTORIQUE" style="font-size:12px">
-						<p:menuitem value="1.CARBURANTS" ajax="false"
-							url="#{request.contextPath}/shellgestat/gestion/historiqueCarburant.xhtml" />
-						<p:menuitem value="3.PAR FOURNISSEUR" ajax="false"
-							url="#{request.contextPath}/shellgestat/gestion/historiqueParfournisseur.xhtml" />
+						<p:menuitem value="1.CARBURANTS" ajax="false" url="#{request.contextPath}/shellgestat/index.xhtml?view=historiqueCarburant" />
+						<p:menuitem value="3.PAR FOURNISSEUR" ajax="false" url="#{request.contextPath}/shellgestat/index.xhtml?view=historiqueParfournisseur" />
 					</p:submenu>
 				</p:submenu>
 				<p:submenu label="4.Article Carburant" style="font-size:12px">
-					<p:menuitem value="1.MAJ Article Carburant" ajax="false"
-						url="#{request.contextPath}/shellgestat/gestion/fichearticle.xhtml" />
-						
-						<p:menuitem value="7.MISE A JOUR POMPES" ajax="false"
-						url="#{request.contextPath}/shellgestat/gestion/MAJpompe.xhtml" style="width:200px" />
+					<p:menuitem value="1.MAJ Article Carburant" ajax="false" url="#{request.contextPath}/shellgestat/index.xhtml?view=fichearticle" />
+					<p:menuitem value="7.MISE A JOUR POMPES" ajax="false" url="#{request.contextPath}/shellgestat/index.xhtml?view=MAJpompe" style="width:200px" />
 				</p:submenu>
-				 
-					<p:menuitem value="5.FAM DEPENSES"
-						url="#{request.contextPath}/shellgestat/gestion/listetypedep.xhtml"
-						style="width:200px" />
-			 
-				 
-
-				<p:menuitem value="7.RECHERCHE CHEQUE"
-					url="#{request.contextPath}/shellgestat/gestion/rechercheCheque.xhtml" style="width:180px" />
-					
-			<p:menuitem value="8.Depense Cheque" ajax="false"
-					url="#{request.contextPath}/shellgestat/gestion/ajouterDepenseCheque.xhtml" style="width:180px" />
-					
-			<p:menuitem value="9.CERTIFICAT DE RETENUE D'IMPOT"
-					url="#{request.contextPath}/shellgestat/gestion/retenue.xhtml" style="font-size:11px" />
-					
-			<p:menuitem value="10.Devis" ajax="false"
-					url="#{request.contextPath}/shellgestat/gestion/nouveaudevis.xhtml" style="font-size:11px" />
+				<p:menuitem value="5.FAM DEPENSES" url="#{request.contextPath}/shellgestat/index.xhtml?view=listetypedep" style="width:200px" />
+				<p:menuitem value="7.RECHERCHE CHEQUE" url="#{request.contextPath}/shellgestat/index.xhtml?view=rechercheCheque" style="width:180px" />
+				<p:menuitem value="8.Depense Cheque" ajax="false" url="#{request.contextPath}/shellgestat/index.xhtml?view=ajouterDepenseCheque" style="width:180px" />
+				<p:menuitem value="9.CERTIFICAT DE RETENUE D'IMPOT" url="#{request.contextPath}/shellgestat/index.xhtml?view=retenue" style="font-size:11px" />
+				<p:menuitem value="10.Devis" ajax="false" url="#{request.contextPath}/shellgestat/index.xhtml?view=nouveaudevis" style="font-size:11px" />
 			</p:submenu>
 
 			<p:submenu label="VENTE" style="font-size:12px">
-				<p:menuitem value="1.SAISIE CAISSE" url="#{request.contextPath}/shellgestat/gestion/avantcaisse.xhtml" ajax="false"/>
-				 
-				<p:menuitem value="2.IMPRESSION CAISSE" url="#{request.contextPath}/shellgestat/gestion/impressioncaisse.xhtml" />
-				<p:menuitem value="3.MODIFICATION CAISSE" url="#{request.contextPath}/shellgestat/gestion/Modificationcaisse.xhtml"
-					style="width:180px" />
-					
-			<p:submenu label="4.Historique Fuel Pose" style="font-size:12px">
-				<p:menuitem value="1.Saisie Credit Client" url="#{request.contextPath}/shellgestat/gestion/creditfuelpose.xhtml"
-					style="width:180px" />
-					
-					<p:menuitem value="2.Saisie Depense Station" url="#{request.contextPath}/shellgestat/gestion/depensefuelpose.xhtml" ajax="false"
-					style="width:180px" />
-		    </p:submenu>
-				<p:menuitem value="5.SAISIE AVOIR CARTE SHELL"
-					url="#{request.contextPath}/shellgestat/gestion/saiseavoir.xhtml" style="width:180px" />
-					
-					<p:menuitem value="6.SAISIE AV.CARTE BANCAIRE"
-					url="#{request.contextPath}/shellgestat/gestion/saiseavoirbancaire.xhtml" style="width:180px" />
-
+				<p:menuitem value="1.SAISIE CAISSE" url="#{request.contextPath}/shellgestat/index.xhtml?view=avantcaisse" ajax="false" />
+				<p:menuitem value="2.IMPRESSION CAISSE" url="#{request.contextPath}/shellgestat/index.xhtml?view=impressioncaisse" />
+				<p:menuitem value="3.MODIFICATION CAISSE" url="#{request.contextPath}/shellgestat/index.xhtml?view=Modificationcaisse" style="width:180px" />
+				<p:submenu label="4.Historique Fuel Pose" style="font-size:12px">
+					<p:menuitem value="1.Saisie Credit Client" url="#{request.contextPath}/shellgestat/index.xhtml?view=creditfuelpose" style="width:180px" />
+					<p:menuitem value="2.Saisie Depense Station" url="#{request.contextPath}/shellgestat/index.xhtml?view=depensefuelpose" ajax="false" style="width:180px" />
+				</p:submenu>
+				<p:menuitem value="5.SAISIE AVOIR CARTE SHELL" url="#{request.contextPath}/shellgestat/index.xhtml?view=saiseavoir" style="width:180px" />
+				<p:menuitem value="6.SAISIE AV.CARTE BANCAIRE" url="#{request.contextPath}/shellgestat/index.xhtml?view=saiseavoirbancaire" style="width:180px" />
 			</p:submenu>
 
 			<p:submenu label="STOCK" style="font-size:12px">
-
-				<p:menuitem value="1.INVENTAIRES CARBURANT" ajax="false"
-					url="#{request.contextPath}/shellgestat/gestion/inventairecarburant.xhtml" />
-
-				<p:menuitem value="2.REGULARISATION D'INVENTAIRE" url="#{request.contextPath}/shellgestat/gestion/regulationinventairecarburant.xhtml"
-					style="width:220px" />
+				<p:menuitem value="1.INVENTAIRES CARBURANT" ajax="false" url="#{request.contextPath}/shellgestat/index.xhtml?view=inventairecarburant" />
+				<p:menuitem value="2.REGULARISATION D'INVENTAIRE" url="#{request.contextPath}/shellgestat/index.xhtml?view=regulationinventairecarburant" style="width:220px" />
 				<p:submenu label="3.JEAUGEAGE" style="font-size:12px">
-					<p:menuitem value="6.JEAUGE ELECTRONIQUE" action=" "
-						style="width:200px" />
+					<p:menuitem value="6.JEAUGE ELECTRONIQUE" action=" " style="width:200px" />
 					<p:menuitem value="1.SAISIE JEAUGEAGE" action=" " />
 					<p:menuitem value="2.ETAT COMPARATIF" action=" " />
-					<p:menuitem value="3.COURBE COMPARATIF" action=" "
-						style="width:200px" />
+					<p:menuitem value="3.COURBE COMPARATIF" action=" " style="width:200px" />
 				</p:submenu>
-				<p:menuitem value="4.CHANGEMENT INDEX" url="#{request.contextPath}/shellgestat/gestion/miseajourindex.xhtml" ajax="false"/>
-				 
+				<p:menuitem value="4.CHANGEMENT INDEX" url="#{request.contextPath}/shellgestat/index.xhtml?view=miseajourindex" ajax="false" />
 			</p:submenu>
 
 			<p:submenu label="ETAT" style="font-size:12px">
-				<p:menuitem value="1.SITUATION JOURNALIERE"
-					url="#{request.contextPath}/shellgestat/gestion/situationJournalieres.xhtml" style="width:200px" />
-
+				<p:menuitem value="1.SITUATION JOURNALIERE" url="#{request.contextPath}/shellgestat/index.xhtml?view=situationJournalieres" style="width:200px" />
 				<p:menuitem value="2.ETAT FISCAL" action=" " />
-				  <p:menuitem value="3.ETAT DE PROFIL" url="#{request.contextPath}/shellgestat/gestion/etatdeprofil.xhtml" /> 
-				  <p:menuitem value="4.ETAT DE PROFIL CT" url="#{request.contextPath}/shellgestat/gestion/etatdeprofilcomtable.xhtml" style="width:280px"/>
-				<!-- <p:menuitem value="6.ETAT DES ARTICLES VENDUS" action=" " style="width:200px"/> 
-				<p:menuitem value="5.COURBE D'EVOLUTIONS DES VENTES " action=" "
-					style="width:280px" />
-					
-					<p:menuitem value="5.ETAT DES VENTES AU COMPTANT" action=" "
-					style="width:280px" />
-				-->
-				
-				
-				<p:menuitem value="5.ETAT DES FACTURES D'ACHATS" url="#{request.contextPath}/shellgestat/gestion/etatFactureachat.xhtml"
-					style="width:280px" />
-				<p:menuitem value="6.ETAT DES DEPENSES"
-					url="#{request.contextPath}/shellgestat/gestion/etatDepenses.xhtml" style="width:280px" />
-				<!-- <p:menuitem value="7.FACTURATION AU COMPTANT" action=" "
-					style="width:280px" /> 
-					
-					<p:menuitem value="8.R. FACTURE AU COMPTANT" action=" "
-					style="width:280px" />
-					-->
-				
-				<!-- <p:menuitem value="13.ETAT DES VENTES ET ACHATS "
-					action="#{EtatBean.etatdesventes}" style="width:280px" /> -->
-				<p:menuitem value="7.ETAT BANQUE  "
-					url="#{request.contextPath}/shellgestat/gestion/etatdebanque.xhtml" />
-				<p:menuitem value="8.ETAT CHEQUES  "
-					url="#{request.contextPath}/shellgestat/gestion/etatdescheques.xhtml" />
-					
-					<p:menuitem value="9.CIRCULATIONS DES CHEQUES"
-					url="#{request.contextPath}/shellgestat/gestion/etatdeschequeparjour.xhtml" />
-
-				 
-			 
-				<p:menuitem value="10.ETAT ACHATS ESP  "
-					url="#{request.contextPath}/shellgestat/gestion/etatachatesp.xhtml" />
-					<p:menuitem value="11.ETAT DES CARTES SHELL"
-					url="#{request.contextPath}/shellgestat/gestion/etatcarteshell.xhtml" style="width:200px" />
-					
-					<p:menuitem value="12.ETAT DES CARTES BANCAIRES"
-					url="#{request.contextPath}/shellgestat/gestion/etatcartebancaires.xhtml" style="width:200px" />
+				<p:menuitem value="3.ETAT DE PROFIL" url="#{request.contextPath}/shellgestat/index.xhtml?view=etatdeprofil" />
+				<p:menuitem value="4.ETAT DE PROFIL CT" url="#{request.contextPath}/shellgestat/index.xhtml?view=etatdeprofilcomtable" style="width:280px" />
+				<p:menuitem value="5.ETAT DES FACTURES D'ACHATS" url="#{request.contextPath}/shellgestat/index.xhtml?view=etatFactureachat" style="width:280px" />
+				<p:menuitem value="6.ETAT DES DEPENSES" url="#{request.contextPath}/shellgestat/index.xhtml?view=etatDepenses" style="width:280px" />
+				<p:menuitem value="7.ETAT BANQUE" url="#{request.contextPath}/shellgestat/index.xhtml?view=etatdebanque" />
+				<p:menuitem value="8.ETAT CHEQUES" url="#{request.contextPath}/shellgestat/index.xhtml?view=etatdescheques" />
+				<p:menuitem value="9.CIRCULATIONS DES CHEQUES" url="#{request.contextPath}/shellgestat/index.xhtml?view=etatdeschequeparjour" />
+				<p:menuitem value="10.ETAT ACHATS ESP" url="#{request.contextPath}/shellgestat/index.xhtml?view=etatachatesp" />
+				<p:menuitem value="11.ETAT DES CARTES SHELL" url="#{request.contextPath}/shellgestat/index.xhtml?view=etatcarteshell" style="width:200px" />
+				<p:menuitem value="12.ETAT DES CARTES BANCAIRES" url="#{request.contextPath}/shellgestat/index.xhtml?view=etatcartebancaires" style="width:200px" />
 			</p:submenu>
 
-
 			<p:submenu label="Cahiers" style="font-size:12px">
-				<p:menuitem value="1.CAHIER CREDIT CLIENT"
-					url="#{request.contextPath}/shellgestat/gestion/cahiercredit.xhtml" style="width:200px" />
-
-				<p:menuitem value="2.CAHIER DE STOCK"
-					url="#{request.contextPath}/shellgestat/gestion/cahierstock.xhtml" />
-				<p:menuitem value="3.CAHIER OUVRIERS  "
-					url="#{request.contextPath}/shellgestat/gestion/cahierouvrier.xhtml" />
-				<p:menuitem value="4.CAHIER DE LITRAGE" url="#{request.contextPath}/shellgestat/gestion/cahierLitrage.xhtml" />
-				<p:menuitem value="4.CAHIER DE LITRAGE Réel" url="#{request.contextPath}/shellgestat/gestion/cahierLitrageAvecRetour.xhtml" />
+				<p:menuitem value="1.CAHIER CREDIT CLIENT" url="#{request.contextPath}/shellgestat/index.xhtml?view=cahiercredit" style="width:200px" />
+				<p:menuitem value="2.CAHIER DE STOCK" url="#{request.contextPath}/shellgestat/index.xhtml?view=cahierstock" />
+				<p:menuitem value="3.CAHIER OUVRIERS" url="#{request.contextPath}/shellgestat/index.xhtml?view=cahierouvrier" />
+				<p:menuitem value="4.CAHIER DE LITRAGE" url="#{request.contextPath}/shellgestat/index.xhtml?view=cahierLitrage" />
+				<p:menuitem value="4.CAHIER DE LITRAGE REEL" url="#{request.contextPath}/shellgestat/index.xhtml?view=cahierLitrageAvecRetour" />
 			</p:submenu>
 
 			<f:facet name="options">
-				<p:commandLink id="nonAjax" action="#{LoginBean.logout}"
-					ajax="false">
+				<p:commandLink id="nonAjax" action="#{LoginBean.logout}" ajax="false" styleClass="shell-logout-link">
 					<p:graphicImage url="/images/logout.png" />
-					<h:outputText value="#{msg['logout.user']}"
-						style="color:#db0b32;font-size:12px;" />
+					<h:outputText value="#{msg['logout.user']}" />
 				</p:commandLink>
 			</f:facet>
 		</p:menubar>
 
-		<br />
-		<p:outputPanel style="margin-left: 50px;margin-right: 50px ;">
-			<p:toolbar>
+		<div class="shell-module-toolbar">
+			<p:toolbar styleClass="shell-module-toolbar">
 				<f:facet name="left">
-					<p:commandButton value="CARBURANT"
-						type="button" onclick="window.location.href='#{request.contextPath}/shellgestat/gestion/caisse.xhtml'"
-						style="background-image:linear-gradient( #FAF281, red);width:100px;height:50px;font-size:12px;font-color:#fcfafa" />
-
-					<p:commandButton value="IMPRESSION CAISSE"
-						type="button" onclick="window.location.href='#{request.contextPath}/shellgestat/gestion/impressioncaisse.xhtml'"
-						style="background-image:linear-gradient( #FAF281, red);width:150px;height:50px;font-size:12px;font-color:#fcfafa" />
-
-                           <!-- action="#{VenteBean.impressionVente}" -->
-					<p:commandButton value="INVENTAIRE" type="button" onclick="window.location.href='#{request.contextPath}/shellgestat/gestion/inventairecarburant.xhtml'"
-						
-						style="background-image:linear-gradient( #FAF281, red);width:140px;height:50px;font-size:12px;font-color:#fcfafa" />
-				<!-- action="#{VenteBean.clotureCaisse}" -->	<p:commandButton value="JAUGEAGE"
-						
-						style="background-image:linear-gradient( #FAF281, red);width:140px;height:50px;font-size:12px;font-color:#fcfafa" />
-                    <p:commandButton value="RAPPORT" type="button" onclick="window.location.href='#{request.contextPath}/shellgestat/gestion/rapportpiste.xhtml'" rendered="#{LoginBean.user.isAdmin()==true}"
-						
-						style="background-image:linear-gradient( #FAF281, red);width:140px;height:50px;font-size:12px;font-color:#fcfafa" />
-
-                    
+					<p:commandButton value="CARBURANT" type="button"
+						onclick="window.location.href='#{request.contextPath}/shellgestat/index.xhtml?view=caisse'"
+						styleClass="shell-action-button" />
+					<p:commandButton value="IMPRESSION CAISSE" type="button"
+						onclick="window.location.href='#{request.contextPath}/shellgestat/index.xhtml?view=impressioncaisse'"
+						styleClass="shell-action-button" />
+					<p:commandButton value="INVENTAIRE" type="button"
+						onclick="window.location.href='#{request.contextPath}/shellgestat/index.xhtml?view=inventairecarburant'"
+						styleClass="shell-action-button" />
+					<p:commandButton value="JAUGEAGE" styleClass="shell-action-button" />
+					<p:commandButton value="RAPPORT" type="button"
+						onclick="window.location.href='#{request.contextPath}/shellgestat/index.xhtml?view=rapportpiste'"
+						rendered="#{not empty LoginBean.user and LoginBean.user.isAdmin()==true}"
+						styleClass="shell-action-button" />
 				</f:facet>
 			</p:toolbar>
-		</p:outputPanel>
-
+		</div>
 	</h:form>
-
-
-
-</h:body>
-</html>
+</ui:composition>

@@ -3,12 +3,179 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	template="/WEB-INF/templates/app.xhtml">
 	<ui:define name="title">Shell-Transport</ui:define>
 	<ui:define name="moduleNav">
 		<ui:include src="/SHELL-transport/ModuleNav.xhtml" />
 	</ui:define>
 	<ui:define name="content">
-		<ui:include src="/SHELL-transport/indextr.xhtml" />
+		<c:choose>
+			<c:when test="#{param.view eq 'administrercompte'}">
+				<ui:include src="/SHELL-transport/fragments/administrercompte.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'ajouterchauffeur'}">
+				<ui:include src="/SHELL-transport/fragments/ajouterchauffeur.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'ajouterclient'}">
+				<ui:include src="/SHELL-transport/fragments/ajouterclient.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'ajouterdepense'}">
+				<ui:include src="/SHELL-transport/fragments/ajouterdepense.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'ajouterfamilledepense'}">
+				<ui:include src="/SHELL-transport/fragments/ajouterfamilledepense.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'ajouterproduit'}">
+				<ui:include src="/SHELL-transport/fragments/ajouterproduit.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'ajoutervhecule'}">
+				<ui:include src="/SHELL-transport/fragments/ajoutervhecule.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'bondelivraisonnonfacturee'}">
+				<ui:include src="/SHELL-transport/fragments/bondelivraisonnonfacturee.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'bonlivraison'}">
+				<ui:include src="/SHELL-transport/fragments/bonlivraison.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'nouveaubonlivraison'}">
+				<ui:include src="/SHELL-transport/fragments/facturetransport.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'courbe'}">
+				<ui:include src="/SHELL-transport/fragments/courbe.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'depensecamion'}">
+				<ui:include src="/SHELL-transport/fragments/depensecamion.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatBl'}">
+				<ui:include src="/SHELL-transport/fragments/etatBl.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatChauffeur'}">
+				<ui:include src="/SHELL-transport/fragments/etatChauffeur.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatChauffeurs'}">
+				<ui:include src="/SHELL-transport/fragments/etatChauffeurs.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatClient'}">
+				<ui:include src="/SHELL-transport/fragments/etatClient.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatDepenses'}">
+				<ui:include src="/SHELL-transport/fragments/etatDepenses.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatProduits'}">
+				<ui:include src="/SHELL-transport/fragments/etatProduits.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatVehicules'}">
+				<ui:include src="/SHELL-transport/fragments/etatVehicules.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatventes'}">
+				<ui:include src="/SHELL-transport/fragments/etatventes.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'facture'}">
+				<ui:include src="/SHELL-transport/fragments/facture.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'facture2'}">
+				<ui:include src="/SHELL-transport/fragments/facture2.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'factureListBl'}">
+				<ui:include src="/SHELL-transport/fragments/factureListBl.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'nouveaufactureListBl'}">
+				<ui:include src="/SHELL-transport/fragments/factureListBl.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'facturemodifier'}">
+				<ui:include src="/SHELL-transport/fragments/facturemodifier.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'facturemodifierpass'}">
+				<ui:include src="/SHELL-transport/fragments/facturemodifierpass.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'facturepass'}">
+				<ui:include src="/SHELL-transport/fragments/facturepass.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'facturepassager'}">
+				<ui:include src="/SHELL-transport/fragments/facturepassager.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'nouveaufacture'}">
+				<ui:include src="/SHELL-transport/fragments/facturepassager.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'facturepassagers'}">
+				<ui:include src="/SHELL-transport/fragments/facturepassagers.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'facturetransport'}">
+				<ui:include src="/SHELL-transport/fragments/facturetransport.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'facturetransports'}">
+				<ui:include src="/SHELL-transport/fragments/facturetransports.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'gerersociete'}">
+				<ui:include src="/SHELL-transport/fragments/gerersociete.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'imprimeretatventes'}">
+				<ui:include src="/SHELL-transport/fragments/imprimeretatventes.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'listechauffeur'}">
+				<ui:include src="/SHELL-transport/fragments/listechauffeur.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'listeclient'}">
+				<ui:include src="/SHELL-transport/fragments/listeclient.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'listedepense'}">
+				<ui:include src="/SHELL-transport/fragments/listedepense.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'listefacture'}">
+				<ui:include src="/SHELL-transport/fragments/listefacture.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'listeproduit'}">
+				<ui:include src="/SHELL-transport/fragments/listeproduit.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'listetypedep'}">
+				<ui:include src="/SHELL-transport/fragments/listetypedep.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'listevhecule'}">
+				<ui:include src="/SHELL-transport/fragments/listevhecule.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'modifierFacture'}">
+				<ui:include src="/SHELL-transport/fragments/modifierFacture.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'modifierFacturepass'}">
+				<ui:include src="/SHELL-transport/fragments/modifierFacturepass.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'pochainedate'}">
+				<ui:include src="/SHELL-transport/fragments/pochainedate.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'rapportcamion'}">
+				<ui:include src="/SHELL-transport/fragments/rapportcamion.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'reaffichefacture'}">
+				<ui:include src="/SHELL-transport/fragments/reaffichefacture.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'reaffichefacture2'}">
+				<ui:include src="/SHELL-transport/fragments/reaffichefacture2.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'reaffichefacture3'}">
+				<ui:include src="/SHELL-transport/fragments/reaffichefacture3.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'reaffichefacturepass'}">
+				<ui:include src="/SHELL-transport/fragments/reaffichefacturepass.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'rendementcarburant'}">
+				<ui:include src="/SHELL-transport/fragments/rendementcarburant.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'rendementchauffeur'}">
+				<ui:include src="/SHELL-transport/fragments/rendementchauffeur.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'test'}">
+				<ui:include src="/SHELL-transport/fragments/test.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'timbre'}">
+				<ui:include src="/SHELL-transport/fragments/timbre.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'tva'}">
+				<ui:include src="/SHELL-transport/fragments/tva.xhtml" />
+			</c:when>
+			<c:otherwise>
+				<ui:include src="/SHELL-transport/fragments/home.xhtml" />
+			</c:otherwise>
+		</c:choose>
 	</ui:define>
 </ui:composition>

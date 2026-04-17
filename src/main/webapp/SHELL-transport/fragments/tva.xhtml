@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div class="shell-module-layout">
+		<p:panel styleClass="shell-home-panel">
+			<h2 class="shell-page-title">TVA</h2>
+			<p class="shell-page-subtitle">Parametrage des taux de TVA utilises par le module Transport.</p>
+
+			<h:form id="form3">
+				<p:growl showDetail="true" id="msgs" />
+
+				<p:dataTable id="tvae"
+					var="v"
+					value="#{ParametrageBean.listtvas}"
+					styleClass="shell-home-table"
+					paginator="true"
+					editable="true"
+					rows="6"
+					paginatorPosition="bottom"
+					selectionMode="single"
+					selection="#{ParametrageBean.tva}"
+					rowKey="#{v.id}">
+					<p:ajax event="rowEdit" listener="#{ParametrageBean.onRowEdit4}" />
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="TVA" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{v.valeur}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText id="tvainput" value="#{v.valeur}" style="width:96%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column style="width:40px">
+						<f:facet name="header">
+							<h:outputText value="Modifier" />
+						</f:facet>
+						<p:rowEditor />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+	</div>
+</ui:composition>
+</ui:composition>

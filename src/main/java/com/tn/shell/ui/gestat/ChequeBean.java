@@ -172,10 +172,8 @@ public class ChequeBean {
 		listcheques = serviceCheque.getListchequeetat(Enumcheque.Entree);
 		listcheques2 = new ArrayList<Cheque>();
 		listcheques2 = serviceCheque.getListchequeetat(Enumcheque.Encours);
-		System.out.println("selecredcheques size"+selecredcheques.size());
 		}
 		else {
-			System.out.println("selecredcheques size"+selecredcheques.size());
 		}
 		return SUCCESS;
 	}
@@ -372,7 +370,6 @@ public class ChequeBean {
 					}
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
 
 				listcheques = new ArrayList<Cheque>();

@@ -81,7 +81,7 @@ public class TicketBean {
 		}
 		}
 		else {
-			String message = "Journée cloturé Impossible de supprimer ce Ticket";
+			String message = "JournÃ©e cloturÃ© Impossible de supprimer ce Ticket";
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(message));
 		}

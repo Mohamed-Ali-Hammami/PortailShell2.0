@@ -35,7 +35,7 @@ import javax.swing.JPanel;
 public class PrintRectangle extends JPanel  implements Printable {
    Ticket ticket;
    
-   /** Constructeur par d�faut de PrintRectangle */
+   /** Constructeur par dÃ©faut de PrintRectangle */
    public PrintRectangle() {
 	  
    }
@@ -49,12 +49,12 @@ public class PrintRectangle extends JPanel  implements Printable {
 
 
 public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-      // Par d�faut, retourne NO_SUCH_PAGE => la page n'existe pas
+      // Par dÃ©faut, retourne NO_SUCH_PAGE => la page n'existe pas
     /*  int retValue = Printable.NO_SUCH_PAGE;
       switch(pageIndex){
          case 0 : {
-            // Dessin de la premi�re page
-            // R�cup�re la dimension de la zone imprimable
+            // Dessin de la premiÃ¨re page
+            // RÃ©cupÃ¨re la dimension de la zone imprimable
             float x  =  (float) pageFormat.getImageableX();
             float y   =(float)   pageFormat.getImageableY();
             float w  =(float)  pageFormat.getImageableWidth();
@@ -74,14 +74,13 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
     		fh=ascent+fm.getDescent();
     		int space=fm.stringWidth(" ");	
            Font fonte = new Font("TimesRoman ",Font.CENTER_BASELINE,10);
-          System.out.println("x"+x); System.out.println("y"+y);
           g.setFont(fonte); 
          
          g.drawString(text,x,y+fh);
          y=y+fh;
-         g.drawString("Ticket N� "+ticket.getId(),x,y+20); 
+         g.drawString("Ticket NÂ° "+ticket.getId(),x,y+20); 
          y=y+fh;
-         g.drawString("Date "+ticket.getDates()+"�"+ticket.getHeure(),x,y+20); 
+         g.drawString("Date "+ticket.getDates()+"Ã "+ticket.getHeure(),x,y+20); 
          y=y+fh;
          g.drawString("Nom    Qte    Prix U   Montant",x,y+20); 
          y=y+fh;
@@ -126,18 +125,18 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
     Font font = new Font("Arial",Font.PLAIN, 12);    
     g2d.setFont(font);
     String text="SHOP SHELL SIJOUMI";
-           /* + "\nTicket N� "+ticket.getId()
-            + "\nDate "+ticket.getDates()+"�"+ticket.getHeure()
+           /* + "\nTicket NÂ° "+ticket.getId()
+            + "\nDate "+ticket.getDates()+"Ã "+ticket.getHeure()
             + "\nNom    Qte    Prix U   Montant";*/
     
     drawString(graphics,text  , 20, 20);
     Font font2 = new Font("Arial",Font.ITALIC, 11);    
     g2d.setFont(font2);
-    text="\n  Ticket N� "+ticket.getId();
+    text="\n  Ticket NÂ° "+ticket.getId();
     drawString(graphics,text  , 20, 22);
      font2 = new Font("TimesRoman",Font.ROMAN_BASELINE, 11);
      g2d.setFont(font2);
-     text="\n Date    "+ticket.getDates()+"     �"+ticket.getHeure();
+     text="\n Date    "+ticket.getDates()+"     Ã "+ticket.getHeure();
      drawString(graphics,text  , 20, 35);
      font2 = new Font("TimesRoman",Font.ROMAN_BASELINE, 10);
      text="\nNom                         Qte  Prix-U   Montant";

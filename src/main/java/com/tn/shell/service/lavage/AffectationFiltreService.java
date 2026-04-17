@@ -1,5 +1,6 @@
 package com.tn.shell.service.lavage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class AffectationFiltreService {
 		return AffectationFiltreDAO.getAffectationFiltrebyid(id);
 	}
 	public List<AffectationFiltre> getAffectationFiltrebyModel(Model f){
+		if (f == null || f.getId() == null) {
+			return new ArrayList<AffectationFiltre>();
+		}
 		return AffectationFiltreDAO.getAffectationFiltrebyModel(f);
 	}
 	 

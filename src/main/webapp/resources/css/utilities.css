@@ -1,0 +1,15 @@
+.u-hidden {
+	display: none !important;
+}
+
+.u-text-center {
+	text-align: center;
+}
+
+.u-text-right {
+	text-align: right;
+}
+
+.u-w-full {
+	width: 100%;
+}

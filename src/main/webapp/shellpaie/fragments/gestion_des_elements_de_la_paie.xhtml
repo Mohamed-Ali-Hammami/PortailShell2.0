@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout paie-shell-fragment">
+        <p:panel styleClass="shell-home-panel paie-shell-panel">
+				<h:form>
+				<h:panelGroup layout="block" style="text-align:right;"> 
+				<table>
+							<tr> 
+								 	<td><p:commandButton value="Nouveau"
+										action="#{PaieBean.nouvelleGestion}" ajax="false"
+										style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);" /></td>
+                       
+
+							</tr>
+							</table></h:panelGroup>
+							</h:form>
+							
+							<br/><br/>
+					<h:form>
+                      <p:dataTable id="emp" var="g"  
+								  value="#{PaieBean.listGestion}"
+								widgetVar="articleTable"  	selectionMode="single" editable="true"							 
+								rowKey="#{g.id}" style="margin-bottom:10px" selection="#{PaieBean.selectedgestion}"
+								emptyMessage="aucun element dans la base" paginator="true"
+								rows="100" paginatorPosition="bottom" resizableColumns="true"
+								liveResize="true">
+								 <p:ajax event="rowEdit" listener="#{PaieBean.onRowEdit}"
+									 />
+								<p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Libelle" />
+									</f:facet>
+									<h:outputText style="font-size:12px "
+										value="#{g.libelle}" />
+								</p:column>
+
+								 <p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Signe" />
+									</f:facet>
+									<h:outputText style="font-size:12px "
+										value="#{g.signe}" />
+								</p:column>
+								
+								
+								 <p:column>
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="Valeur" />
+									</f:facet>
+									
+										<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText style="font-size:12px " value="#{g.valeurdeprime}" />
+										</f:facet>
+										<f:facet name="input">
+											<h:inputText style="font-size:12px "
+										value="#{g.valeurdeprime}" />
+										</f:facet>
+
+									</p:cellEditor>
+								</p:column>
+								
+                           <p:column style="width:40px">
+									<f:facet name="header">
+										<h:outputText style="font-size:9px;color:#483d8b"
+											value="modifier" />
+									</f:facet>
+									<p:rowEditor />
+								</p:column>
+								 
+							</p:dataTable>
+                                   
+                          
+					</h:form>
+        </p:panel>
+    </h:panelGroup>
+</ui:composition>

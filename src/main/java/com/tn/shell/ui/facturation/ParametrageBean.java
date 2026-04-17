@@ -97,7 +97,6 @@ try {
     getServiceTva().update(p) ;
     return SUCCESS;       
 } catch (DataAccessException e) {
-    e.printStackTrace();       
 }    
 return ERROR;
 }
@@ -298,7 +297,6 @@ try {
     getServiceParamettre().update(p) ;
     return SUCCESS;       
 } catch (DataAccessException e) {
-    e.printStackTrace();       
 }    
 return ERROR;
 } 
@@ -317,7 +315,6 @@ try {
     //getServiceSociete().update(p) ;
     return SUCCESS;       
 } catch (DataAccessException e) {
-    e.printStackTrace();       
 }    
 return ERROR;
 } 

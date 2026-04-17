@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:panelGroup layout="block" styleClass="shell-module-layout transport-shell-fragment"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+		 
+		
+		<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+				<br/> <br/><br/><br/>
+				 
+					<h:form>
+					<h:panelGroup layout="block" style="text-align:left;">
+				<h:panelGrid columns="2">
+				<h:commandLink title="imprimer">
+									<p:graphicImage url="/images/imprimante-icone.png"
+										style="width:25px" />
+									<p:printer target="imprimer"></p:printer>
+								</h:commandLink>
+								
+			 
+								</h:panelGrid>
+				</h:panelGroup>
+				
+				<p:outputPanel id="imprimer" style="width:99%">
+				<h:outputText value="ETAT_Table_Produit"  style=" font-style: italic;font-size: large;"/>
+				<br/> <br/><br/><br/>
+				
+								<p:dataTable id="Produit" var="Produit"
+									value="#{EtattransportBean.listProduit}" widgetVar="articleTable"
+									 
+									rowKey="#{Produit.id}" style="margin-bottom:10px"
+									emptyMessage="aucun produit dans la base" >								 
+									  
+									  
+									  <p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Code" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{Produit.id}" />
+									</p:column>
+
+									<p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Designation" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{Produit.designation}" />
+									</p:column>
+
+								 
+
+									
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Prix de vente" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{Produit.prixvente}" />
+									</p:column>
+									
+									<p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="tva" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{Produit.tva}" />
+
+									</p:column>
+
+
+								</p:dataTable>
+				</p:outputPanel>
+				</h:form>
+				 
+		 </h:panelGroup>
+		 </h:panelGroup>
+		 
+</ui:composition>

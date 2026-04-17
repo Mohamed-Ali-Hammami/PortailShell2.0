@@ -1,27 +1,32 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:head>
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/style.css" />
 
-</h:head>
-<h:body>
-	<p:commandButton value="Fermer" onclick="PF('produitss').hide();"
+	<p:commandButton value="Fermer"
+		onclick="PF('produitss').hide();"
 		oncomplete="init();"
-		style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
-		update="ff:emp" actionListener="#{AchatshopBean.saveselection}" />
-		 
-	<p:remoteCommand name="updateCarDialog"  oncomplete=" PF('carDialog').hide();init();"
-		  update="ff:emp" actionListener="#{AchatshopBean.saveselection}" />
-	 
-	  <br/><br/>
-	<div tabindex="1" id="table_div">
-		<p:dataTable widgetVar="table" var="d"
-			value="#{AchatshopBean.listProduit}" selectionMode="single"
-			selection="#{AchatshopBean.selectedProduit}" id="dataTable"
-			rowKey="#{d.id}" filteredValue="#{AchatshopBean.filteredProduit}">
+		styleClass="shell-action-button"
+		update="ff:emp"
+		actionListener="#{AchatshopBean.saveselection}" />
 
+	<p:remoteCommand name="updateCarDialog"
+		oncomplete=" PF('carDialog').hide();init();"
+		update="ff:emp"
+		actionListener="#{AchatshopBean.saveselection}" />
+
+	<div tabindex="1" id="table_div" style="margin-top: 18px;">
+		<p:dataTable widgetVar="table"
+			var="d"
+			value="#{AchatshopBean.listProduit}"
+			selectionMode="single"
+			selection="#{AchatshopBean.selectedProduit}"
+			id="dataTable"
+			rowKey="#{d.id}"
+			filteredValue="#{AchatshopBean.filteredProduit}"
+			styleClass="shell-home-table">
 			<f:facet name="header">
 				<p:outputPanel>
 					<h:outputText value="Search:" />
@@ -29,44 +34,17 @@
 						style="width:150px" placeholder="Enter code" />
 				</p:outputPanel>
 			</f:facet>
-			<p:column headerText="Code" filterBy="#{d.code}"
-				filterMatchMode="contains">
+			<p:column headerText="Code" filterBy="#{d.code}" filterMatchMode="contains">
 				<h:outputText value="#{d.code}" />
 			</p:column>
-			<p:column headerText="Nom" filterBy="#{d.nom}"
-				filterMatchMode="contains">
+			<p:column headerText="Nom" filterBy="#{d.nom}" filterMatchMode="contains">
 				<h:outputText value="#{d.nom}" />
 			</p:column>
-			<p:column headerText="Vente" filterBy="#{d.vente}"
-				filterMatchMode="contains">
+			<p:column headerText="Vente" filterBy="#{d.vente}" filterMatchMode="contains">
 				<h:outputText value="#{d.prixventes}" />
 			</p:column>
 		</p:dataTable>
 	</div>
 
-	<!--           
-           <p:dialog id="dialog" header="Car Detail" widgetVar="carDialog" resizable="false"  
-                      showEffect="fade" hideEffect="explode">  
-
-                <h:panelGrid id="display" columns="2" cellpadding="4">  
-
-                    <h:outputText value="Model:" />  
-               
-
-                    <h:outputText value="Year:" />  
-                  
-
-                    <h:outputText value="Manufacturer:" />  
-                     
-                    <h:outputText value="Color:" />  
-                     
-                </h:panelGrid>  
-            </p:dialog>  
-           -->
-
-
-
 	<h:outputScript library="js" name="keyboard_navigation.js" />
-
-</h:body>
-</html>
+</ui:composition>

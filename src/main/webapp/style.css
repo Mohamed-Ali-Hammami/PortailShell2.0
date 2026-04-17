@@ -1,15 +1,202 @@
-.inputs{padding:8px;display:none;border:none;border-bottom:1px solid #ccc;width:100%}
-.borders{border:1px solid #ccc!important}
+.inputs {
+	padding: 8px;
+	display: none;
+	border: none;
+	border-bottom: 1px solid #ccc;
+	width: 100%;
+}
+
+.borders {
+	border: 1px solid #ccc !important;
+}
 
 td {
-  border: 1px solid #ddd;
-  padding: 1em;
+	border: 1px solid #ddd;
+	padding: 1em;
 }
 
 input:focus {
-  background:yellow
+	background: yellow;
 }
 
 table:focus {
-  background:yellow
+	background: yellow;
+}
+
+.shell-module-menubar.ui-menubar {
+	margin: 0;
+	border: 1px solid rgba(110, 48, 0, 0.16);
+	border-radius: 18px;
+	background: linear-gradient(180deg, rgba(255, 244, 188, 0.95), rgba(255, 228, 133, 0.92));
+	box-shadow: 0 12px 26px rgba(82, 37, 4, 0.16);
+	padding: 8px 14px;
+}
+
+.shell-module-menubar.ui-menubar .ui-menuitem-link,
+.shell-module-menubar.ui-menubar .ui-submenu-link {
+	border-radius: 999px;
+	color: #6d1400;
+	font-size: 12px;
+	font-weight: bold;
+	text-shadow: none;
+}
+
+.shell-module-menubar.ui-menubar .ui-menuitem-link:hover,
+.shell-module-menubar.ui-menubar .ui-submenu-link:hover,
+.shell-module-menubar.ui-menubar .ui-menuitem-link:focus,
+.shell-module-menubar.ui-menubar .ui-submenu-link:focus {
+	background: rgba(214, 36, 0, 0.12);
+	box-shadow: none;
+}
+
+.shell-module-menubar.ui-menubar .ui-menu-child {
+	border: 1px solid rgba(110, 48, 0, 0.14);
+	border-radius: 14px;
+	background: rgba(255, 249, 231, 0.98);
+	box-shadow: 0 14px 28px rgba(82, 37, 4, 0.18);
+	padding: 8px;
+}
+
+.shell-module-menubar .ui-menu-child .ui-menuitem-link,
+.shell-module-menubar .ui-menu-child .ui-submenu-link {
+	border-radius: 12px;
+}
+
+.shell-module-toolbar {
+	margin-top: 16px;
+}
+
+.shell-module-toolbar.ui-toolbar {
+	border: 1px solid rgba(110, 48, 0, 0.12);
+	border-radius: 18px;
+	background: rgba(255, 249, 231, 0.92);
+	box-shadow: 0 10px 22px rgba(82, 37, 4, 0.12);
+}
+
+.shell-action-button.ui-button {
+	border: 1px solid rgba(120, 32, 0, 0.18);
+	border-radius: 999px;
+	background: linear-gradient(180deg, #d72f0d 0%, #ad1400 52%, #7f0b00 100%);
+	box-shadow: 0 8px 18px rgba(82, 37, 4, 0.16);
+	color: #fff4cf;
+	font-size: 12px;
+	font-weight: bold;
+	text-shadow: none;
+}
+
+.shell-action-button.ui-button .ui-button-text {
+	padding: 12px 18px;
+}
+
+.shell-module-layout {
+	padding: 24px 0 4px 0;
+}
+
+.shell-home-panel.ui-panel {
+	border: 1px solid rgba(110, 48, 0, 0.14);
+	border-radius: 20px;
+	background: linear-gradient(180deg, rgba(255, 251, 239, 0.98), rgba(255, 245, 216, 0.95));
+	box-shadow: 0 18px 38px rgba(82, 37, 4, 0.14);
+	overflow: hidden;
+}
+
+.shell-home-panel .ui-panel-content {
+	border: none;
+	background: transparent;
+	padding: 28px;
+}
+
+.shell-page-tools {
+	display: flex;
+	justify-content: flex-start;
+	margin-bottom: 20px;
+}
+
+.shell-page-title {
+	margin: 0;
+	font-size: 26px;
+	font-weight: bold;
+	color: #8a1200;
+	text-align: center;
+}
+
+.shell-page-subtitle {
+	margin: 10px 0 24px 0;
+	font-size: 13px;
+	color: #6b562e;
+	text-align: center;
+}
+
+.shell-empty-state {
+	margin: 18px 0 24px 0;
+	padding: 18px 20px;
+	border: 1px solid rgba(110, 48, 0, 0.12);
+	border-radius: 16px;
+	background: rgba(255, 248, 220, 0.86);
+	color: #6d1400;
+	font-size: 13px;
+	text-align: center;
+}
+
+.shell-audio-hint {
+	margin-bottom: 12px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #8a1200;
+}
+
+.shell-home-table.ui-datatable {
+	margin-top: 10px;
+}
+
+.shell-home-table.ui-datatable .ui-datatable-header,
+.shell-home-table.ui-datatable .ui-datatable-footer {
+	background: transparent;
+	border: none;
+}
+
+.shell-home-table.ui-datatable thead th {
+	background: linear-gradient(180deg, rgba(255, 239, 171, 0.98), rgba(255, 225, 126, 0.95));
+	border: 1px solid rgba(110, 48, 0, 0.12);
+	color: #7d1200;
+	font-size: 12px;
+	padding: 12px;
+}
+
+.shell-home-table.ui-datatable tbody td {
+	border: 1px solid rgba(110, 48, 0, 0.08);
+	background: rgba(255, 252, 244, 0.94);
+	color: #2f2417;
+	font-size: 12px;
+	padding: 12px;
+}
+
+.shell-logout-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	color: #b41100;
+	font-size: 12px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.shell-logout-link img {
+	display: block;
+}
+
+@media (max-width: 960px) {
+	.shell-module-menubar.ui-menubar,
+	.shell-module-toolbar.ui-toolbar {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	.shell-home-panel .ui-panel-content {
+		padding: 18px;
+	}
+
+	.shell-page-title {
+		font-size: 22px;
+	}
 }

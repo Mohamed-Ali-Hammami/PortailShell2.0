@@ -28,10 +28,8 @@ List<Pointageconge> result = em.createQuery("SELECT a FROM Pointageconge a  wher
 				 
 				 .getResultList();
 		 if (result.size() > 0){
-	     	System.out.println("objet trouvé "+"\n\n\n");
 	         return result.get(0);}
 	     else{
-	     	System.out.println("\n\nl  objet Pointageconge n exsite pas\n\n");
 	         return null;} 
 		 }
 	 
@@ -43,10 +41,8 @@ List<Pointageconge> result = em.createQuery("SELECT a FROM Pointageconge a  wher
 				 .setParameter("mois",mois)
 				 .getResultList();
 		 if (result.size() > 0){
-	     	System.out.println("objet trouvé "+"\n\n\n");
 	         return result;}
 	     else{
-	     	System.out.println("\n\nl  objet Pointageconge n exsite pas\n\n");
 	         return null;} 
 		 }
 	 @Transactional
@@ -58,10 +54,8 @@ List<Pointageconge> result = em.createQuery("SELECT a FROM Pointageconge a  wher
 			 
 			 .getResultList();
 	 if (result.size() > 0){
-     	System.out.println("pontage "+result.get(0).getNb_jour()+"\n\n\n");
          return result.get(0);}
      else{
-     	System.out.println("\n\nl  objet Pointageconge n exsite pas\n\n");
          return null;} 
 	 }
 	 @Transactional
@@ -71,10 +65,8 @@ List<Pointageconge> result = em.createQuery("SELECT a FROM Pointageconge a  wher
 				  
 				 .getResultList();
 		 if (result.size() > 0){
-	     	System.out.println("objet trouvé "+"\n\n\n");
 	         return result;}
 	     else{
-	     	System.out.println("\n\nl  objet Pointageconge n exsite pas\n\n");
 	         return null;} 
 		 
 	 }
@@ -86,10 +78,8 @@ List<Pointageconge> result = em.createQuery("SELECT a FROM Pointageconge a  wher
 				  
 				 .getResultList();
 		 if (result.size() > 0){
-	     	System.out.println("objet trouvé  "+annee+" \n\n\n");
 	         return result;}
 	     else{
-	     	System.out.println("\n\nl  objet Pointageconge by "+annee +" n exsite pas\n\n");
 	         return null;} 
 	 }
 	 @Transactional

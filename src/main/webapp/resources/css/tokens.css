@@ -1,0 +1,33 @@
+:root {
+	--shell-font-base: "Trebuchet MS", Verdana, sans-serif;
+	--shell-text: #2f2417;
+	--shell-text-soft: #6c5330;
+	--shell-text-strong: #7d1200;
+	--shell-accent: #c61d00;
+	--shell-accent-strong: #8f0d00;
+	--shell-gold: #f7ca48;
+	--shell-gold-soft: #fff0b5;
+	--shell-cream: rgba(255, 248, 220, 0.94);
+	--shell-cream-strong: #fff8db;
+	--shell-surface: rgba(255, 251, 236, 0.9);
+	--shell-surface-strong: rgba(255, 247, 214, 0.96);
+	--shell-border: rgba(110, 48, 0, 0.18);
+	--shell-border-strong: rgba(110, 48, 0, 0.28);
+	--shell-blue: #2368c9;
+	--shell-blue-soft: #83c7ff;
+	--shell-shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.22);
+	--shell-shadow-md: 0 12px 30px rgba(82, 37, 4, 0.16);
+	--shell-shadow-sm: 0 8px 18px rgba(82, 37, 4, 0.12);
+	--shell-radius-xl: 22px;
+	--shell-radius-lg: 16px;
+	--shell-radius-md: 12px;
+	--shell-radius-pill: 999px;
+	--shell-space-1: 8px;
+	--shell-space-2: 12px;
+	--shell-space-3: 16px;
+	--shell-space-4: 20px;
+	--shell-space-5: 24px;
+	--shell-space-6: 32px;
+	--shell-space-7: 40px;
+	--shell-space-8: 48px;
+}

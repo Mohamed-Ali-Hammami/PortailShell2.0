@@ -2,6 +2,7 @@ package com.tn.shell.ui.paie;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class PretBean {
 	private Date date_debut;
 	private Integer nb_jour_travail;
 	private List<Pret> listpret;
-	private List<Pret> selectedPret;
+	private Pret selectedPret;
 	private List<Pret> filtredPret;
 	private List<String> listeEmployee;
 	private String nom;
@@ -73,6 +74,13 @@ public class PretBean {
 	/*****
 	 * nouvelle avance
 	 * *****/
+
+	@PostConstruct
+	public void init() {
+		mois();
+		Annee();
+		moi = getMoisbyIntger(resolveDefaultPretMonth());
+	}
 
 	public String nouveauPret() {
 		listeEmployee = new ArrayList<String>();
@@ -175,8 +183,7 @@ public class PretBean {
 		}
 		Annee();
 		mois();
-		Date d=new Date();
-		moi=getMoisbyIntger(d.getMonth()+1);
+		moi=getMoisbyIntger(resolveDefaultPretMonth());
 		return SUCCESS;
 	}
 	public void onCellEdit(CellEditEvent event) {
@@ -205,13 +212,12 @@ public class PretBean {
 		return SUCCESS;
 	}
 	public void GetMoisByAnnee(AjaxBehaviorEvent event) {
-		Date date = new Date();		 
 		listMois = new ArrayList<String>();
 		List<Pointage> lp = new ArrayList<Pointage>();
 		lp = servicePointage.getPointageByAnnee(annee);
 		for (Pointage a : lp)
 			listMois.add(getMoisbyIntger(a.getMois()));
-		listMois.add(getMoisbyIntger(date.getMonth() + 1));
+		listMois.add(getMoisbyIntger(resolveDefaultPretMonth()));
 	}
 
 	private String getMoisbyIntger(Integer moi) {
@@ -244,9 +250,12 @@ public class PretBean {
 	}
 
 	public void mois() {
-		Date d = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, resolveDefaultPretYear());
+		calendar.set(Calendar.MONTH, resolveDefaultPretMonth() - 1);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		dates = s.format(d);
+		dates = s.format(calendar.getTime());
 		listMois = new ArrayList<String>();
 		listMois.add("Janvier");
 		listMois.add("Fevrier");
@@ -260,15 +269,13 @@ public class PretBean {
 		listMois.add("Octobre");
 		listMois.add("Novembre");
 		listMois.add("Decembre");
-		mois = d.getMonth() + 1;
+		mois = resolveDefaultPretMonth();
 	}
 
 	private void Annee() {
 		List<Annee> l = new ArrayList<Annee>();
 		listannee = new ArrayList<String>();
-		Date d = new Date();
-		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		annees = s.format(d).substring(6);
+		annees = String.valueOf(resolveDefaultPretYear());
 		Annee a = serviceAnnee.findbyDesignation(annees);
 		if (a == null) {
 			Annee e = new Annee();
@@ -282,6 +289,22 @@ public class PretBean {
 		Integer aa = Integer.parseInt(annees);
 		listannee.add(aa + 1 + "");
 		annee = Integer.parseInt(annees);
+	}
+
+	private int resolveDefaultPretYear() {
+		Pointage latestPointage = servicePointage.getMaxPointage();
+		if (latestPointage != null && latestPointage.getAnnee() != null) {
+			return latestPointage.getAnnee();
+		}
+		return Calendar.getInstance().get(Calendar.YEAR);
+	}
+
+	private int resolveDefaultPretMonth() {
+		Pointage latestPointage = servicePointage.getMaxPointage();
+		if (latestPointage != null && latestPointage.getMois() != null) {
+			return latestPointage.getMois();
+		}
+		return Calendar.getInstance().get(Calendar.MONTH) + 1;
 	}
 
 	/*
@@ -380,11 +403,11 @@ public class PretBean {
 		this.listpret = listpret;
 	}
 
-	public List<Pret> getSelectedPret() {
+	public Pret getSelectedPret() {
 		return selectedPret;
 	}
 
-	public void setSelectedPret(List<Pret> selectedPret) {
+	public void setSelectedPret(Pret selectedPret) {
 		this.selectedPret = selectedPret;
 	}
 

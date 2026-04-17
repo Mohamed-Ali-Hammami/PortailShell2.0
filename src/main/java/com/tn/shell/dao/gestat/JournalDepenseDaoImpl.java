@@ -38,11 +38,9 @@ public class JournalDepenseDaoImpl implements JournalDepenseDAO {
 						TransactionDepense.class)
 				.setParameter("d", d) .getResultList();
 		if(result.size()>0) {
-			System.out.println("objet trouver ");
 		return result.get(0);
 		}
 		else {
-			System.out.println("\n\n\n\n objet n existe pas  \n\n ");
 		return null;
 		}
 	}
@@ -120,7 +118,6 @@ public class JournalDepenseDaoImpl implements JournalDepenseDAO {
 				.createQuery("SELECT a FROM TransactionDepense a where   a.affecte = :aff", TransactionDepense.class)
 				 .setParameter("aff",false ).getResultList();
 		if(result.size()>0) {
-			System.out.println("\n\n\n resultat journal " +result.size());
 		return result;
 		}
 		return null;

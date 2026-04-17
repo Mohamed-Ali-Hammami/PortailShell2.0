@@ -171,7 +171,7 @@ public class ProduitBean {
 
 	public void onRowEdit(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Depense chang�", ((Produit) event.getObject()).getNom());
+				"Depense changÃ©", ((Produit) event.getObject()).getNom());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		updateproduit((Produit) event.getObject());
 
@@ -185,7 +185,6 @@ public class ProduitBean {
 
 			return SUCCESS;
 		} catch (DataAccessException e) {
-			e.printStackTrace();
 		}
 		return ERROR;
 	}

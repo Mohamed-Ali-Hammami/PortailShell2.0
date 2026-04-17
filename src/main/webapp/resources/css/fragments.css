@@ -1,0 +1,227 @@
+.shell-module-layout {
+	max-width: 1320px;
+	margin: 0 auto;
+	padding: var(--shell-space-4) 0;
+	color: var(--shell-text);
+}
+
+.shell-module-layout > .ui-panel,
+.shell-module-layout > form > .ui-panel,
+.shell-module-layout > .ui-panel:first-child,
+.shell-module-layout .ui-panel#basic2,
+.shell-module-layout .shell-home-panel.ui-panel {
+	border: 1px solid var(--shell-border) !important;
+	border-radius: var(--shell-radius-xl) !important;
+	background:
+		linear-gradient(180deg, rgba(255, 252, 244, 0.98), rgba(255, 245, 216, 0.94)) !important;
+	box-shadow: var(--shell-shadow-md);
+	overflow: hidden;
+}
+
+.shell-module-layout .ui-panel .ui-panel-titlebar {
+	border: none !important;
+	background:
+		linear-gradient(180deg, rgba(255, 239, 171, 0.96), rgba(255, 225, 126, 0.92)) !important;
+	color: var(--shell-text-strong) !important;
+	font-weight: bold;
+	padding: 12px 16px !important;
+}
+
+.shell-module-layout .ui-panel .ui-panel-content {
+	border: none !important;
+	background: transparent !important;
+	padding: 20px !important;
+}
+
+.shell-module-layout h1,
+.shell-module-layout h2,
+.shell-module-layout h3,
+.shell-module-layout h4,
+.shell-module-layout .shell-page-title {
+	margin: 0 0 12px 0;
+	color: var(--shell-text-strong);
+	letter-spacing: 0.01em;
+}
+
+.shell-module-layout h1 {
+	font-size: 28px;
+}
+
+.shell-module-layout h2 {
+	font-size: 22px;
+}
+
+.shell-module-layout h3 {
+	font-size: 18px;
+}
+
+.shell-module-layout h\:form,
+.shell-module-layout form {
+	display: block;
+}
+
+.shell-module-layout table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	background: rgba(255, 253, 246, 0.72);
+	border-radius: var(--shell-radius-lg);
+	overflow: hidden;
+}
+
+.shell-module-layout table table {
+	background: transparent;
+	border-radius: 0;
+}
+
+.shell-module-layout th,
+.shell-module-layout td {
+	border: 1px solid rgba(110, 48, 0, 0.08);
+	padding: 10px 12px;
+	vertical-align: middle;
+}
+
+.shell-module-layout th,
+.shell-module-layout tr:first-child > td {
+	background: rgba(255, 242, 191, 0.78);
+	color: var(--shell-text-strong);
+	font-weight: bold;
+}
+
+.shell-module-layout .ui-datatable table,
+.shell-module-layout .ui-datagrid table {
+	background: transparent;
+}
+
+.shell-module-layout .ui-datatable thead th {
+	background:
+		linear-gradient(180deg, rgba(255, 239, 171, 0.98), rgba(255, 225, 126, 0.94)) !important;
+	border: 1px solid rgba(110, 48, 0, 0.14) !important;
+	color: var(--shell-text-strong) !important;
+	font-size: 12px;
+}
+
+.shell-module-layout .ui-datatable tbody td,
+.shell-module-layout .ui-datagrid .ui-panel-content,
+.shell-module-layout .ui-datagrid-column {
+	background: rgba(255, 252, 244, 0.94);
+}
+
+.shell-module-layout .ui-inputfield,
+.shell-module-layout input[type="text"],
+.shell-module-layout input[type="password"],
+.shell-module-layout textarea,
+.shell-module-layout select {
+	border: 1px solid rgba(110, 48, 0, 0.18) !important;
+	border-radius: 12px !important;
+	background: rgba(255, 255, 255, 0.94) !important;
+	box-shadow: inset 0 1px 2px rgba(82, 37, 4, 0.06);
+	color: var(--shell-text) !important;
+	padding: 10px 12px !important;
+	transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.shell-module-layout .ui-inputfield:focus,
+.shell-module-layout input[type="text"]:focus,
+.shell-module-layout input[type="password"]:focus,
+.shell-module-layout textarea:focus,
+.shell-module-layout select:focus {
+	border-color: rgba(198, 29, 0, 0.42) !important;
+	box-shadow: 0 0 0 3px rgba(198, 29, 0, 0.12);
+	outline: none;
+}
+
+.shell-module-layout .ui-selectonemenu,
+.shell-module-layout .ui-calendar,
+.shell-module-layout .ui-spinner,
+.shell-module-layout .ui-autocomplete,
+.shell-module-layout .ui-inputnumber {
+	min-width: 180px;
+}
+
+.shell-module-layout .ui-selectonemenu {
+	border-radius: 12px !important;
+}
+
+.shell-module-layout .ui-selectonemenu .ui-selectonemenu-label {
+	background: transparent !important;
+	border: none !important;
+	padding: 9px 12px !important;
+	color: var(--shell-text) !important;
+}
+
+.shell-module-layout .ui-button,
+.shell-module-layout .ui-commandlink,
+.shell-module-layout .ui-menubutton .ui-button {
+	border-radius: var(--shell-radius-pill) !important;
+	text-shadow: none !important;
+}
+
+.shell-module-layout .ui-button {
+	border: 1px solid rgba(120, 32, 0, 0.18) !important;
+	background: linear-gradient(180deg, #d72f0d 0%, #ad1400 52%, #7f0b00 100%) !important;
+	box-shadow: var(--shell-shadow-sm);
+	color: #fff4cf !important;
+	font-weight: bold;
+}
+
+.shell-module-layout .ui-button:hover {
+	filter: brightness(1.04);
+}
+
+.shell-module-layout .ui-button .ui-button-text {
+	padding: 10px 16px !important;
+}
+
+.shell-module-layout .ui-messages,
+.shell-module-layout .ui-growl-item-container,
+.shell-module-layout .ui-message {
+	border-radius: var(--shell-radius-lg);
+}
+
+.shell-module-layout .ui-tabs .ui-tabs-nav,
+.shell-module-layout .ui-accordion .ui-accordion-header,
+.shell-module-layout .ui-toolbar {
+	border: 1px solid rgba(110, 48, 0, 0.12) !important;
+	border-radius: var(--shell-radius-lg) !important;
+	background: rgba(255, 248, 220, 0.86) !important;
+	box-shadow: var(--shell-shadow-sm);
+}
+
+.shell-module-layout div[align="center"],
+.shell-module-layout div[align="left"],
+.shell-module-layout div[align="right"] {
+	margin-bottom: 12px;
+}
+
+.shell-module-layout img {
+	max-width: 100%;
+	height: auto;
+}
+
+.shell-module-layout .ui-panelgrid td,
+.shell-module-layout .ui-panelgrid tr {
+	border: none;
+	background: transparent;
+}
+
+.shell-module-layout .ui-dialog-content table,
+.shell-module-layout .ui-outputpanel table {
+	background: transparent;
+}
+
+@media (max-width: 960px) {
+	.shell-module-layout {
+		padding-top: 12px;
+	}
+
+	.shell-module-layout .ui-panel .ui-panel-content {
+		padding: 16px !important;
+	}
+
+	.shell-module-layout table,
+	.shell-module-layout .ui-datatable table {
+		display: block;
+		overflow-x: auto;
+	}
+}

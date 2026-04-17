@@ -41,9 +41,7 @@ public class FacturepassagerDaoImpl implements FacturepassagerDAO {
 				.setParameter("statut", Statut.ACTIF).setParameter("d1", d1).setParameter("d2", d2)
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouve \n\n\n");
 		} else {
-			System.out.println("\n\nl objet facture n exsite pas\n\n");
 		}
 		return result;
 	}
@@ -54,10 +52,8 @@ public class FacturepassagerDaoImpl implements FacturepassagerDAO {
 				"SELECT a FROM Facturepassager a where a.statut = :statut and a.numero=(select MAX(b.numero) from Facturepassager b)",
 				Facturepassager.class).setParameter("statut", Statut.ACTIF).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouve \n\n\n");
 			return result.get(0);
 		} else {
-			System.out.println("\n\nl objet Pointageconge n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -75,7 +71,6 @@ public class FacturepassagerDaoImpl implements FacturepassagerDAO {
 			}
 		}
 		if (filtered.isEmpty()) {
-			System.out.println("\n\nl objet Facturepassager n exsite pas\n\n");
 		}
 		return filtered;
 	}
@@ -88,9 +83,7 @@ public class FacturepassagerDaoImpl implements FacturepassagerDAO {
 						Facturepassager.class)
 				.setParameter("statut", Statut.ACTIF).setParameter("id", 0).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouve \n\n\n");
 		} else {
-			System.out.println("\n\nl objet Facturepassager n exsite pas\n\n");
 		}
 		return result;
 	}
@@ -126,9 +119,7 @@ public class FacturepassagerDaoImpl implements FacturepassagerDAO {
 				.setParameter("d1", d1).setParameter("d2", d2).setParameter("statut", Statut.ACTIF)
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("\n\n\n\nFacturepassager bydate trouve\n\n\n\n");
 		} else {
-			System.out.println("l objet n exsite pas");
 		}
 		return result;
 	}
@@ -140,10 +131,8 @@ public class FacturepassagerDaoImpl implements FacturepassagerDAO {
 				.setParameter("code", code).setParameter("statut", Statut.ACTIF).getResultList();
 
 		if (result.size() > 0) {
-			System.out.println("\n\n\n\nFacturepassager bydate trouve\n\n\n\n");
 			return result.get(0);
 		} else {
-			System.out.println("l objet n exsite pas");
 			return null;
 		}
 	}
@@ -155,10 +144,8 @@ public class FacturepassagerDaoImpl implements FacturepassagerDAO {
 				.setParameter("code", code).setParameter("statut", Statut.ACTIF).getResultList();
 
 		if (result.size() > 0) {
-			System.out.println("objet trouve\n");
 			return result.get(0);
 		} else {
-			System.out.println("l objet n exsite pas");
 			return null;
 		}
 	}
@@ -177,10 +164,8 @@ public class FacturepassagerDaoImpl implements FacturepassagerDAO {
 				.setParameter("code", code).setParameter("statut", Statut.ACTIF).getResultList();
 
 		if (result.size() > 0) {
-			System.out.println("objet trouve\n");
 			return result.get(0);
 		} else {
-			System.out.println("l objet n exsite pas");
 			return null;
 		}
 	}

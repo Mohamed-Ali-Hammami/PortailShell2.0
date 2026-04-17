@@ -120,7 +120,6 @@ public class LoginBean {
 		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "utilisateur change",
 				((Utilisateur) event.getObject()).getLogin());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
-		System.out.println("\n\n\n" + ((Utilisateur) event.getObject()).getLogin() + "n\n\n");
 		((Utilisateur) event.getObject()).setRole(servicerole.getRolebyprifil(profil));
 		updateUtilisateur((Utilisateur) event.getObject());
 	}
@@ -133,7 +132,6 @@ public class LoginBean {
 				return SUCCESS;
 			}
 		} catch (DataAccessException e) {
-			e.printStackTrace();
 		}
 		return ERROR;
 	}
@@ -165,7 +163,6 @@ public class LoginBean {
 		} catch (AuthenticationException e) {
 			String message = "Login ou mot de passe incorrecte";
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
-			e.printStackTrace();
 			return "incorrect";
 		}
 
@@ -193,7 +190,6 @@ public class LoginBean {
 		} catch (AuthenticationException e) {
 			String message = "Login ou mot de passe incorrecte";
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
-			e.printStackTrace();
 			return "incorrect";
 		}
 		listProduit=new ArrayList<Produit>();
@@ -206,7 +202,6 @@ public class LoginBean {
 				file = Paths.get(res.toURI()).toFile();
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		      String absolutePath = file.getAbsolutePath();
 		      s.sound(absolutePath);
@@ -223,7 +218,6 @@ public class LoginBean {
 		} catch (AuthenticationException e) {
 			String message = "Login ou mot de passe incorrecte";
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
-			e.printStackTrace();
 			return "incorrect";
 		}
 		listBanque=new ArrayList<Banque>();
@@ -240,7 +234,6 @@ public class LoginBean {
 		} catch (AuthenticationException e) {
 			String message = "Login ou mot de passe incorrecte";
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
-			e.printStackTrace();
 			return "incorrect";
 		}
 

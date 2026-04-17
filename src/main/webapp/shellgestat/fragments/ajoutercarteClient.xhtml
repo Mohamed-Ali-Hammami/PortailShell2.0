@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+
+        <h:form id="addCarteForm">
+
+            <h:panelGroup layout="block"
+                style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+
+                <h:panelGroup layout="block"
+                    style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+                    <h:panelGroup layout="block" style="text-align:center;">
+                        <h3>Nouvelle Carte Client</h3>
+                    </h:panelGroup>
+
+                    <br />
+
+                    <p:messages autoUpdate="true" closable="true" />
+
+                    <h:panelGrid columns="2" cellpadding="8">
+
+                        <h:outputText value="Client:" />
+                        <p:selectOneMenu value="#{CarteClientBean.codeclient}"
+                            style="width:280px"
+                            filter="true"
+                            filterMatchMode="contains"
+                            required="true"
+                            requiredMessage="Client obligatoire">
+                            <f:selectItem itemLabel="selectionner client" itemValue="#{null}" />
+                            <f:selectItems value="#{CarteClientBean.listclients}"
+                                var="cl"
+                                itemLabel="#{cl.nom}"
+                                itemValue="#{cl.code}" />
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Plafond:" />
+                        <p:inputText value="#{CarteClientBean.plafond}"
+                            required="true"
+                            requiredMessage="Plafond obligatoire">
+                            <f:validateDoubleRange minimum="0.001" />
+                        </p:inputText>
+
+                        <h:outputText value="Date Affectation:" />
+                        <p:calendar value="#{CarteClientBean.dateaffectation}"
+                            pattern="dd/MM/yyyy"
+                            required="true"
+                            requiredMessage="Date d'affectation obligatoire" />
+
+                        <h:outputText value="Chauffeur:" />
+                        <p:inputText value="#{CarteClientBean.chauffeur}" />
+
+                        <h:outputText value="Vehicule:" />
+                        <p:inputText value="#{CarteClientBean.vehicule}" />
+
+                    </h:panelGrid>
+
+                    <br />
+
+                    <h:panelGroup layout="block" style="text-align:center;">
+                        <p:commandButton value="Valider"
+                            action="#{CarteClientBean.savecarteClient}"
+                            ajax="false"
+                            style="width:170px; font-size:12px; height:30px; color:white; background-image:linear-gradient(#FAF281, red);" />
+
+                        <p:commandButton value="Retour"
+                            action="#{CarteClientBean.getcarteClient}"
+                            ajax="false"
+                            style="width:170px; font-size:12px; height:30px; color:white; background-image:linear-gradient(#FAF281, red);" />
+                    </h:panelGroup>
+
+                </h:panelGroup>
+            </h:panelGroup>
+
+        </h:form>
+
+    </h:panelGroup>
+</ui:composition>

@@ -30,10 +30,8 @@ public class DegreeDaoImpl implements DegreeDAO {
 		 List<Degree> AnneeListem=em.createQuery("SELECT u FROM  Degree u where u.valeur = :designation",Degree.class).setParameter("designation", designation).getResultList();
 	        
 	        if (AnneeListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return AnneeListem.get(0);}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}   
 	}
 	@Transactional

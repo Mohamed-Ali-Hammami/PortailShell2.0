@@ -1,0 +1,136 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+
+        <h:form id="etatAvanceForm">
+
+            <h:panelGroup layout="block"
+                style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+
+                <h:panelGroup layout="block"
+                    style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+                    <h:panelGroup layout="block" style="text-align:center;">
+                        <b><h:outputText value="Etat des Accomptes et Manques" /></b>
+                    </h:panelGroup>
+
+                    <br />
+                    <br />
+
+                    <h:panelGrid columns="4">
+                        <b><h:outputText value="Date Debut" style="font-size:12px;" /></b>
+                        <p:calendar id="d1" value="#{AvancegestatBean.date1}">
+                            <f:ajax event="dateSelect" render="imprimer" />
+                        </p:calendar>
+
+                        <b><h:outputText value="Date Fin" style="font-size:12px;" /></b>
+                        <p:calendar id="d2" value="#{AvancegestatBean.date2}">
+                            <f:ajax event="dateSelect" render="imprimer" />
+                        </p:calendar>
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="3">
+                        <h:outputText value="Code Ouvrier : " style="font-size:12px;" />
+
+                        <p:selectOneMenu id="emp"
+                            value="#{AvancegestatBean.nom}"
+                            style="width:200px; font-size:12px;"
+                            filter="true"
+                            filterMatchMode="contains">
+
+                            <f:selectItem itemLabel="Veuillez choisir un employer" />
+                            <f:selectItems value="#{AvancegestatBean.listeEmployee}"
+                                var="e"
+                                itemValue="#{e.nom}"
+                                itemLabel="#{e.nom}" />
+
+                            <p:ajax listener="#{AvancegestatBean.getEmployeeByNom2}"
+                                update="imprimer mat nom" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+
+                    <br />
+
+                    <h:panelGroup layout="block" style="text-align:left;">
+                        <p:commandButton title="imprimer" value="Valider">
+                            <p:printer target="imprimer" />
+                        </p:commandButton>
+                    </h:panelGroup>
+
+                    <p:outputPanel id="imprimer">
+
+                        <h:panelGroup layout="block" style="text-align:center;">
+                            <b><h:outputText value="ETAT DES ACCOMPTES ET MANQUES" /></b>
+                            <br />
+
+                            <h:panelGrid columns="4">
+                                <b><h:outputText value="Du :" /></b>
+                                <h:outputText value="#{AvancegestatBean.dates1}" />
+
+                                <b><h:outputText value="AU :" /></b>
+                                <h:outputText value="#{AvancegestatBean.dates2}" />
+                            </h:panelGrid>
+
+                            <br />
+
+                            <h:panelGrid columns="4">
+                                <b><h:outputText value="Code Ouvrier :" /></b>
+                                <h:outputText id="mat" value="#{AvancegestatBean.employee.matricule}" />
+
+                                <b><h:outputText value="Nom  :" /></b>
+                                <h:outputText id="nom" value="#{AvancegestatBean.employee.nom}" />
+                            </h:panelGrid>
+                        </h:panelGroup>
+
+                        <br />
+
+                        <p:dataTable id="paie"
+                            var="avance"
+                            value="#{AvancegestatBean.listAvenc}"
+                            style="margin-bottom:10px;"
+                            emptyMessage="aucune avance en cours">
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Date" style="font-size:12px; color:#483d8b" />
+                                </f:facet>
+                                <h:outputText id="dates" value="#{avance.dates}" style="font-size:12px;" />
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Poste" style="font-size:12px; color:#483d8b" />
+                                </f:facet>
+                                <h:outputText id="poste" value="#{avance.caisse.poste}" style="font-size:12px;" />
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Manque" style="font-size:12px; color:#483d8b" />
+                                </f:facet>
+                                <h:outputText id="montant_manque" value="#{avance.montant_avances}" style="font-size:12px;" />
+                            </p:column>
+
+                            <p:columnGroup type="footer" style="border:0;">
+                                <p:row styleClass="table">
+                                    <p:column />
+                                    <p:column />
+                                    <p:column footerText="#{AvancegestatBean.total}" />
+                                </p:row>
+                            </p:columnGroup>
+
+                        </p:dataTable>
+
+                    </p:outputPanel>
+
+                </h:panelGroup>
+            </h:panelGroup>
+
+        </h:form>
+
+    </h:panelGroup>
+</ui:composition>

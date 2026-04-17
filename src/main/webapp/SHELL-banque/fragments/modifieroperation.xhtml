@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div class="shell-module-layout">
+		<p:growl id="msgs" showDetail="true" />
+		<p:panel id="basic" styleClass="shell-home-panel">
+			<h2 class="shell-page-title">Modifier Operation</h2>
+			<p class="shell-page-subtitle">Mise a jour de l'etat et de la date d'un cheque selectionne.</p>
+
+			<h:form>
+				<h:panelGroup rendered="#{BanqueBean.selectedTranaction != null}">
+					<h:panelGrid columns="2" columnClasses="label,value">
+						<h:outputText value="Numero Cheque" style="font-size:14px;color:#483d8b"/>
+						<h:inputText value="#{BanqueBean.selectedTranaction.reference}" id="num"/>
+						<h:outputText value="Etat de Cheque" style="font-size:14px;color:#483d8b"/>
+						<p:selectOneMenu value="#{BanqueBean.etatcheque}" filter="true" filterMatchMode="contains"
+							style="width:200px;font-size:12px" id="type">
+							<f:selectItem itemLabel="Selectionner type d'operation"/>
+							<f:selectItems value="#{BanqueBean.etatcheques}"/>
+						</p:selectOneMenu>
+						<h:outputText value="Date" style="font-size:14px;color:#483d8b"/>
+						<p:calendar id="popup3" value="#{BanqueBean.date3}" size="10"/>
+					</h:panelGrid>
+				</h:panelGroup>
+				<br/><br/>
+				<p:commandButton value="Valider"
+					styleClass="shell-action-button"
+					action="#{BanqueBean.updateoperation}" ajax="false"/>
+			</h:form>
+		</p:panel>
+	</div>
+</ui:composition>

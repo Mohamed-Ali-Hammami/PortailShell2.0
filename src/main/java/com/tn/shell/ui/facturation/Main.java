@@ -13,6 +13,5 @@ public class Main {
 		double irpp=0;
 		double ir=0;
 		Date d=new Date();
-		System.out.println(""+d.getDate());
 	}
 }

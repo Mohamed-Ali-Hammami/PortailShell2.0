@@ -53,10 +53,8 @@ public class TvaDAOImpl  implements TvaDAO{
 		 List<Tva> TvaListem=em.createQuery("SELECT u FROM  Tva u where u.valeur = :valeur",Tva.class).setParameter("valeur", t).getResultList();
 	        
 	        if (TvaListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return TvaListem.get(0);}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}
 	}
 

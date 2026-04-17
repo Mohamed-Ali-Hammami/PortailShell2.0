@@ -83,17 +83,12 @@ public boolean verifPompe(String pome,List<String>listpompes) {
                   
                   statement = connection.createStatement();
                   resultSet = statement.executeQuery(sql);
-                  if(resultSet!=null)
-                 System.out.println("  connexion");
-                  SimpleDateFormat f2 = new SimpleDateFormat("dd-MM-yyyy");
-    		
     		 int i=1;
     			while (resultSet.next()) {
     				String[] requetes;
     				TransactionCredit j = new TransactionCredit();    
     				 j.setId2(i);
     				String journal = resultSet.getString("Journaltext");
-    				System.out.println("\n\n\njournal"+journal);
     				j.setRequete(journal);
     				String time = resultSet.getString("Time");
     				requetes = journal.split(" ");    			 
@@ -124,18 +119,13 @@ public boolean verifPompe(String pome,List<String>listpompes) {
     			
                   }
                   catch(SQLException sqlex){
-                      sqlex.printStackTrace();
-                      System.out.println("  connexion erreur de connexion"+sqlex.getErrorCode());
                   }
-                  if(listjournal!=null)
+                  if(listjournal!=null) {
     			for (TransactionCredit e : listjournal) {
-    				System.out.println("  Time  " + e.getTime() + "  " + e.getPompe() + " " + e.getPistolet()
-    						+ "  Article  " + e.getArticle() + "  Qte " + e.getQuantite() + " Montant " + e.getMontant()
-    						+ "  Prix  " + e.getPrix());
+    			}
     			}
     		 
 	} catch(Exception e) {
-                	 System.out.println("erreur");
                  }
 
                 return listjournal; 
@@ -162,10 +152,6 @@ public boolean verifPompe(String pome,List<String>listpompes) {
                   
                   statement = connection.createStatement();
                   resultSet = statement.executeQuery(sql);
-                  if(resultSet!=null)
-                 System.out.println("  connexion");
-                  SimpleDateFormat f2 = new SimpleDateFormat("dd-MM-yyyy");
-    		
     		 int i=1;
     			while (resultSet.next()) {
     				String[] requetes;
@@ -179,7 +165,6 @@ public boolean verifPompe(String pome,List<String>listpompes) {
     				j.setTime(time);
     				j.setDates(f.format(new Date()));
     				j.setDate(new Date());
-    			 System.out.println(requetes[2]);
     				if (requetes[2].contains("PMP") && listpompes.contains(requetes[2]) ) {    					
     					 //-0 PAYABLE PMP:6 CMD:2 NZL:4 FUEL:3 VOL:17.57000 AMT:26.00400 ID:527 FLW:40 PRC:1.480000 PID:20 STRT:0227.000709
     					j.setPompe( requetes[2]);
@@ -201,18 +186,13 @@ public boolean verifPompe(String pome,List<String>listpompes) {
     			
                   }
                   catch(SQLException sqlex){
-                      sqlex.printStackTrace();
-                      System.out.println("  connexion erreur de connexion"+sqlex.getErrorCode());
                   }
-                  if(listjournalDep!=null)
+                  if(listjournalDep!=null) {
     			for (TransactionDepense e : listjournalDep) {
-    				System.out.println("  Time  " + e.getTime() + "  " + e.getPompe() + " " + e.getPistolet()
-    						+ "  Article  " + e.getArticle() + "  Qte " + e.getQuantite() + " Montant " + e.getMontant()
-    						+ "  Prix  " + e.getPrix());
+    			}
     			}
     		 
 		/*} catch(Exception e) {
-                	 System.out.println("erreur");
                  }
 */
                 return listjournalDep; 
@@ -248,17 +228,14 @@ public boolean verifPompe(String pome,List<String>listpompes) {
 			reponseServeur(ftpClient);
 			int reponse = ftpClient.getReplyCode();
 			if (!FTPReply.isPositiveCompletion(reponse)) {
-				System.out.println("Operation echouee. Reponse Serveur: " + reponse);
 				return;
 			}
 			 boolean etat = ftpClient.login(username, password);
 			reponseServeur(ftpClient);
 			if (!etat) {
-				System.out.println("Impossible d'acceder au serveur");
 				return;
 
 			} else { 
-				System.out.println("Identification reussie");
 
 				ftpClient.enterLocalPassiveMode();
 				ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
@@ -282,7 +259,6 @@ public boolean verifPompe(String pome,List<String>listpompes) {
 					if (files2[i].getName().equals(dates + ".db3"))
 						// obtenir la taille du fichier
 						size2 = files2[i].getSize();
-					System.out.println(" s" + size2);
 				}
 
 				OutputStream outputStream1 = new BufferedOutputStream(new FileOutputStream(fichierlocal2));
@@ -299,7 +275,7 @@ public boolean verifPompe(String pome,List<String>listpompes) {
 				int pourcentage2 = 0;
 
 				while ((bytesRead2 = inputStream1.read(bytesArray2)) != -1) {
-					// on écrit les octets dans l'emplacement précisé
+					// on ÃƒÂ©crit les octets dans l'emplacement prÃƒÂ©cisÃƒÂ©
 					outputStream1.write(bytesArray2, 0, bytesRead2);
 
 					transfere += bytesRead2;
@@ -307,15 +283,13 @@ public boolean verifPompe(String pome,List<String>listpompes) {
 
 				} //
 
-				// fermer les flux de lecture de d'écriture
+				// fermer les flux de lecture de d'ÃƒÂ©criture
 
 				inputStream1.close();
 				outputStream1.close();
 
 			 }
 		} catch (IOException ex) {
-			System.out.println("Une erreur lors de la connexion a été détecté");
-			ex.printStackTrace();
 		} finally {
 			try {
 				if (ftpClient.isConnected()) {
@@ -324,7 +298,6 @@ public boolean verifPompe(String pome,List<String>listpompes) {
 					ftpClient.disconnect();
 				}
 			} catch (IOException ex) {
-				ex.printStackTrace();
 			}
 
 		}
@@ -334,7 +307,6 @@ public boolean verifPompe(String pome,List<String>listpompes) {
 		String[] reponses = ftpClient.getReplyStrings();
 		if (reponses != null && reponses.length > 0) {
 			for (String reponse : reponses) {
-				System.out.println("SERVEUR :" + reponse);
 			}
 		}
 	}

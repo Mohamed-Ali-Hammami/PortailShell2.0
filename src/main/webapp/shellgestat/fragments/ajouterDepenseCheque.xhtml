@@ -1,0 +1,270 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+
+        <ui:insert name="menu" />
+
+        <h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+
+            <h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92); text-align:center;">
+
+                <fieldset style="margin-bottom:20px; background-color:#eeeec6;">
+                    <legend>
+                        <b>
+                            <h:outputText value="Ajouter depense"
+                                style="font-size:12px; color:#2e8b57;" />
+                        </b>
+                    </legend>
+
+                    <br />
+
+                    <h:form id="depenseChequeForm">
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <h:outputText value="Reglement  :" style="font-size:12px;" />
+                                    </b>
+                                </td>
+                                <td>
+                                    <p:selectOneMenu id="type"
+                                        value="#{DepenseChequeBean.typeDepense}"
+                                        required="true"
+                                        requiredMessage="entrer reglement"
+                                        filter="true"
+                                        filterMatchMode="contains"
+                                        style="width:200px; font-size:12px;">
+                                        <f:selectItem itemLabel="selectionner type" />
+                                        <f:selectItems value="#{DepenseChequeBean.listtypeDepense}"
+                                            var="s"
+                                            itemLabel="#{s}"
+                                            itemValue="#{s}" />
+                                        <f:ajax render="dtypees" />
+                                    </p:selectOneMenu>
+                                    <p:messages for="type" closable="true" autoUpdate="true" />
+                                </td>
+                                <td>
+                                    <h:inputText id="dtypees"
+                                        value="#{DepenseChequeBean.typeDepense}"
+                                        size="30"
+                                        style="font-size:12px;" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <b>
+                                        <h:outputText value="Famille depense :" style="font-size:12px;" />
+                                    </b>
+                                </td>
+                                <td>
+                                    <p:selectOneMenu id="dep"
+                                        value="#{DepenseChequeBean.famille}"
+                                        required="true"
+                                        requiredMessage="entrer libelle"
+                                        filter="true"
+                                        filterMatchMode="contains"
+                                        style="width:200px; font-size:12px;">
+                                        <f:selectItem itemLabel="selectionner famille" />
+                                        <f:selectItems value="#{DepenseChequeBean.listesdepense}"
+                                            var="s"
+                                            itemLabel="#{s.libelle}"
+                                            itemValue="#{s.libelle}" />
+                                        <f:ajax render="des" />
+                                    </p:selectOneMenu>
+                                    <p:messages for="dep" closable="true" autoUpdate="true" />
+                                </td>
+                                <td>
+                                    <h:inputText id="des"
+                                        value="#{DepenseChequeBean.famille}"
+                                        size="30"
+                                        style="font-size:12px;" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="111">
+                                    <b>
+                                        <h:outputText value="Numero:" style="font-size:12px;" />
+                                    </b>
+                                </td>
+                                <td width="111">
+                                    <h:inputText id="reference"
+                                        value="#{DepenseChequeBean.reference}"
+                                        size="22"
+                                        style="font-size:12px;" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="111">
+                                    <b>
+                                        <h:outputText value="Banque:" style="font-size:12px;" />
+                                    </b>
+                                </td>
+                                <td width="111">
+                                    <h:inputText id="banque"
+                                        value="#{DepenseChequeBean.banque}"
+                                        size="22"
+                                        style="font-size:12px;" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="111">
+                                    <b>
+                                        <h:outputText value="Libelle" style="font-size:12px;" />
+                                    </b>
+                                </td>
+                                <td width="111">
+                                    <h:inputText id="libelle"
+                                        value="#{DepenseChequeBean.libelle}"
+                                        size="22"
+                                        style="font-size:12px;" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="111">
+                                    <b>
+                                        <h:outputText value="Montant:" style="font-size:12px;" />
+                                    </b>
+                                </td>
+                                <td width="111">
+                                    <h:inputText id="montant"
+                                        value="#{DepenseChequeBean.montant}"
+                                        size="22"
+                                        style="font-size:12px;" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="111">
+                                    <b>
+                                        <h:outputText value="Date:" style="font-size:12px;" />
+                                    </b>
+                                </td>
+                                <td width="111">
+                                    <p:calendar id="date"
+                                        value="#{DepenseChequeBean.date}"
+                                        size="22"
+                                        required="true"
+                                        requiredMessage="entrer la date"
+                                        pattern="dd-MM-yyyy"
+                                        mask="true"
+                                        style="font-size:12px;" />
+                                    <p:messages id="mesgs" for="date" />
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h:panelGroup layout="block" style="text-align:center; margin-top:20px;">
+                            <p:commandButton value="Ajouter depense"
+                                action="#{DepenseChequeBean.saveDepense}"
+                                ajax="false"
+                                style="width:150px; font-size:12px; height:30px; color:white; background-image:linear-gradient(#FAF281, red);" />
+                        </h:panelGroup>
+
+                    </h:form>
+                </fieldset>
+
+                <h:form id="rechercheDepenseChequeForm">
+
+                    <h:panelGrid columns="5">
+                        <h:outputLabel value="DU" />
+                        <p:calendar id="pupop"
+                            value="#{DepenseChequeBean.date1}">
+                            <p:ajax event="dateSelect" />
+                        </p:calendar>
+
+                        <h:outputLabel value="AU" />
+                        <p:calendar id="pupop2"
+                            value="#{DepenseChequeBean.date2}" />
+
+                        <p:commandButton value="Recherche"
+                            action="#{DepenseChequeBean.getByDate}"
+                            style="width:150px; font-size:12px; height:30px; color:#0000ff; background-color:#abc8e2;" />
+                    </h:panelGrid>
+
+                    <br />
+                    <br />
+
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <p:dataTable id="cheque"
+                        var="cheque"
+                        value="#{DepenseChequeBean.listDepense}"
+                        widgetVar="ArticleTable"
+                        rowKey="#{cheque.id}"
+                        emptyMessage="aucun cheque dans le stock"
+                        paginator="true"
+                        rows="10"
+                        paginatorPosition="bottom">
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Numero" style="font-size:12px; color:#483d8b;" />
+                            </f:facet>
+                            <h:outputText value="#{cheque.reference}" style="font-size:12px;" />
+                        </p:column>
+
+                        <p:column filterBy="#{cheque.banque}"
+                            filterStyle="font-size:14px; color:blue"
+                            filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="Banque" style="font-size:12px; color:#483d8b;" />
+                            </f:facet>
+                            <h:outputText value="#{cheque.banque}" style="font-size:12px;" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Libellé" style="font-size:12px; color:#483d8b;" />
+                            </f:facet>
+                            <h:outputText value="#{cheque.libelle}" style="font-size:12px;" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Date" style="font-size:12px; color:#483d8b;" />
+                            </f:facet>
+                            <h:outputText value="#{cheque.dates}" style="font-size:12px;" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Montant" style="font-size:12px; color:#483d8b;" />
+                            </f:facet>
+                            <h:outputText value="#{cheque.montant}" style="font-size:12px;" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Famille Depense" style="font-size:12px; color:#483d8b;" />
+                            </f:facet>
+                            <h:outputText value="#{cheque.familledepense.libelle}" style="font-size:12px;" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Reglement" style="font-size:12px; color:#483d8b;" />
+                            </f:facet>
+                            <h:outputText value="#{cheque.typeDepense}" style="font-size:12px;" />
+                        </p:column>
+
+                    </p:dataTable>
+
+                </h:form>
+
+            </h:panelGroup>
+        </h:panelGroup>
+
+    </h:panelGroup>
+</ui:composition>

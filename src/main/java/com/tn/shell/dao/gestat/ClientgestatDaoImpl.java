@@ -65,14 +65,12 @@ public class ClientgestatDaoImpl implements ClientgestatDao {
 				 .getResultList();
 	        
 	        if (ClientListem.size() > 0){
-	        	System.out.println("objet trouvé "+ClientListem.get(0).getNom()+"\n\n\n");
 	        	for (Clientgestat c:ClientListem) {
 	        		if(c.getReste()>=0)
 	        			l.add(c);
 	        	}
 	            return l ;}
 	        else{
-	        	System.out.println("\n\nl  objet client n exsite pas\n\n");
 	            return null;}   
 	 }
 	 @Transactional
@@ -81,14 +79,12 @@ public class ClientgestatDaoImpl implements ClientgestatDao {
 		 List<Clientgestat> ClientListem=em.createQuery("SELECT c FROM  Clientgestat c where     c.statut = :statut",Clientgestat.class).setParameter("statut", Statut.ACTIF) .getResultList();
 	        
 		 if (ClientListem.size() > 0){
-	        	System.out.println("objet trouvé "+ClientListem.get(0).getNom()+"\n\n\n");
 	        	for (Clientgestat c:ClientListem) {
 	        		if(c.getReste()<0)
 	        			l.add(c);
 	        	}
 	            return l ;}
 	        else{
-	        	System.out.println("\n\nl  objet client n exsite pas\n\n");
 	            return null;}   
 	 }
 	 @Transactional
@@ -96,10 +92,8 @@ public class ClientgestatDaoImpl implements ClientgestatDao {
 		 List<Clientgestat> ClientListem=em.createQuery("SELECT c FROM  Clientgestat c where c.nom = :nom and c.statut = :statut",Clientgestat.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (ClientListem.size() > 0){
-	        	System.out.println("objet trouvé "+ClientListem.get(0).getNom()+"\n\n\n");
 	            return ClientListem.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet client n exsite pas\n\n");
 	            return null;}   
 	}
 	 
@@ -108,10 +102,8 @@ public class ClientgestatDaoImpl implements ClientgestatDao {
 			 List<Clientgestat> ClientListem=em.createQuery("SELECT c FROM  Clientgestat c where c.code = :nom and c.statut = :statut",Clientgestat.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 		        
 		        if (ClientListem.size() > 0){
-		        	System.out.println("objet trouvé "+ClientListem.get(0).getNom()+"\n\n\n");
 		            return ClientListem.get(0);}
 		        else{
-		        	System.out.println("\n\nl  objet client n exsite pas\n\n");
 		            return null;}   
 		}
 	 
@@ -120,10 +112,8 @@ public class ClientgestatDaoImpl implements ClientgestatDao {
 		 List<Clientgestat> ClientListem=em.createQuery("SELECT c FROM  Clientgestat c where c.mf = :nom and c.statut = :statut",Clientgestat.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (ClientListem.size() > 0){
-	        	System.out.println("objet trouvé "+ClientListem.get(0).getNom()+"\n\n\n");
 	            return ClientListem.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet client n exsite pas\n\n");
 	            return null;}   
 	}
 	 @Transactional

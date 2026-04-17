@@ -27,11 +27,9 @@ public class RappelDaoImpl  implements RappelDAO{
 				 .getResultList();
 		 
 		 if (result.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	        	 
 	            return result;}
 	        else{
-	        	System.out.println(" \n\n\n\n l  objet n exsite pas  " +annee+"  "+" \n\n\n\n");
 	            return null;}
 		     
 	}
@@ -43,10 +41,8 @@ List<Rappel> result = em.createQuery("SELECT a FROM Rappel a  where a.statut = :
 				 
 				 .getResultList();
 		 if (result.size() > 0){
-	     	System.out.println("objet trouvé "+"\n\n\n");
 	         return result.get(0);}
 	     else{
-	     	System.out.println("\n\nl  objet Rappel n exsite pas\n\n");
 	         return null;} 
 		 }
 	 @Transactional
@@ -58,10 +54,8 @@ List<Rappel> result = em.createQuery("SELECT a FROM Rappel a  where a.statut = :
 				 
 				 .getResultList();
 		 if (result.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return result.get(0);}
 	        else{
-	        	System.out.println("l  objet Rappel n exsite pas"+e.getMatricule() +annee );
 	            return null;}  
 		     
 	 }
@@ -73,10 +67,8 @@ List<Rappel> result = em.createQuery("SELECT a FROM Rappel a  where a.statut = :
 				 
 				 .getResultList();
 		 if (result.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return result;}
 	        else{
-	        	System.out.println("l  objet Rappel n exsite pas"+e.getMatricule()   );
 	            return null;}  
 	 }
 	 @Transactional

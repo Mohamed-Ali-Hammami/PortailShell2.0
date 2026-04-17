@@ -84,6 +84,9 @@ public class PaisBeans {
 	private boolean tous;
 	private String test;
 	private List<Avancegestat> listAvenc;
+	private Avancegestat selectedAvenc;
+	private List<Avancegestat> filtredAvenc;
+	private Avancegestat selectedAvance;
 
 	private double nbjour;
 	private double avance;
@@ -93,22 +96,68 @@ public class PaisBeans {
 
 	@PostConstruct
 	public void init() {
-		societe = serviceSociete.getAll().get(0);
-		annees = null;
-		mois = null;
+		try {
+			societe = serviceSociete.getAll().get(0);
+			applyDefaultPeriod();
+		} catch (Exception e) {
+			System.err.println("PaisBeans.init(): " + e.getMessage());
+		}
+	}
+
+	private Pointage resolveLatestPointage() {
+		return servicePointage.getMaxPointage();
+	}
+
+	private int resolveDefaultPaieYear() {
+		Pointage pointage = resolveLatestPointage();
+		if (pointage != null && pointage.getAnnee() != null) {
+			return pointage.getAnnee();
+		}
+		return Calendar.getInstance().get(Calendar.YEAR);
+	}
+
+	private int resolveDefaultPaieMonth() {
+		Pointage pointage = resolveLatestPointage();
+		if (pointage != null && pointage.getMois() != null) {
+			return pointage.getMois();
+		}
+		return Calendar.getInstance().get(Calendar.MONTH) + 1;
+	}
+
+	private void applyDefaultPeriod() {
+		annees = String.valueOf(resolveDefaultPaieYear());
+		mois = getMoisbyIntger(resolveDefaultPaieMonth());
+	}
+
+	private Pointage getLatestPointageOrMessage() {
+		Pointage pointage = resolveLatestPointage();
+		if (pointage == null) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Aucun pointage disponible", ""));
+		}
+		return pointage;
 	}
 
 	public String etat() {
 		Annee();
 		mois();
+		applyDefaultPeriod();
+		return SUCCESS;
+	}
+
+	public String initializeEtatAvance() {
+		Annee();
+		mois();
+		applyDefaultPeriod();
+		refreshEtatAvance();
 		return SUCCESS;
 	}
 	
 	public String etatPresence() {
 		 
-		annees = "";
 		societe = serviceSociete.getAll().get(0);
-		Annee(); 		 
+		Annee();
+		applyDefaultPeriod();
 		return SUCCESS;
 	}
    public void getetatPresence(AjaxBehaviorEvent  event) {
@@ -124,48 +173,39 @@ public class PaisBeans {
 
 	public String modifierfiche() {
 		avance = 0;
-		Date date1 = new Date();
-		Date date2 = new Date();
-		Pointage p = servicePointage.getMaxPointage();
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.MONTH, p.getMois() - 1);
-		cal.set(Calendar.YEAR, p.getAnnee());
-		int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		date1.setYear(+1900);
-		date2.setYear(cal.getWeekYear() + 1900);
-		date1.setMonth(p.getMois() - 1);
-		date2.setMonth(p.getMois() - 1);
-		date1.setDate(1);
-		date2.setDate(maxDay);
-
-		if (!employer.equals("") || employer.equals(null)) {
-
-			societe = serviceSociete.getAll().get(0);
-			Annee();
-			Employee e = serviceEmployee.getEmployeeByNom(employer);
-			date1.setDate(1);
-			date1.setMonth(p.getMois());
-			date2.setMonth(p.getMois());
-			// nbjour=servicePointage.getPointageByEmployee(e, p.getAnnee(),
-			// p.getMois()).getNb_jour();
-			// List<Avance> lista = serviceAvance.getAvancesByEmployee(e, p.getAnnee(),
-			// p.getMois());
-			List<Avancegestat> lista = serviceAvance.getAvancesByEmployeebetweendate(e, date1, date2);
-			for (Avancegestat a : lista) {
-				avance = avance + a.getMontant_avance();
-			}
-			listMois = new ArrayList<String>();
-
-			listPaie = new ArrayList<Paie>();
-			annees = "" + p.getAnnee();
-			mois = getMoisbyIntger(p.getMois());
-
-		} else {
-
+		Pointage p = getLatestPointageOrMessage();
+		if (p == null) {
+			return ERROR;
+		}
+		if (employer == null || employer.trim().isEmpty()) {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "chooisir un employer ", "");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			return ERROR;
 		}
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.MONTH, p.getMois() - 1);
+		cal.set(Calendar.YEAR, p.getAnnee());
+		int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		Date date1 = new Date(p.getAnnee() - 1900, p.getMois() - 1, 1, 0, 0, 0);
+		Date date2 = new Date(p.getAnnee() - 1900, p.getMois() - 1, maxDay, 23, 0, 0);
+
+		societe = serviceSociete.getAll().get(0);
+		Annee();
+		Employee e = serviceEmployee.getEmployeeByNom(employer);
+		if (e == null) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "chooisir un employer ", "");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+			return ERROR;
+		}
+		List<Avancegestat> lista = serviceAvance.getAvancesByEmployeebetweendate(e, date1, date2);
+		for (Avancegestat a : lista) {
+			avance = avance + a.getMontant_avance();
+		}
+		listMois = new ArrayList<String>();
+
+		listPaie = new ArrayList<Paie>();
+		annees = "" + p.getAnnee();
+		mois = getMoisbyIntger(p.getMois());
 		// listPaie = servicePaie.getPaieByAnneeAndMois(p.getAnnee(),
 		// p.getMois());
 
@@ -287,7 +327,6 @@ public class PaisBeans {
 				}
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			addMessage("erreur de chargement!!");
 		}
 
@@ -403,22 +442,29 @@ public class PaisBeans {
 	}
 
 	public void etat2(AjaxBehaviorEvent event) {
-		Date date1 = new Date();
-		Date date2 = new Date();
-		Pointage p = servicePointage.getMaxPointage();
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.MONTH, p.getMois() - 1);
-		cal.set(Calendar.YEAR, p.getAnnee());
-		int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		date1.setYear(+1900);
-		date2.setYear(cal.getWeekYear() + 1900);
-		date1.setMonth(p.getMois() - 1);
-		date2.setMonth(p.getMois() - 1);
-		date1.setDate(1);
-		date2.setDate(maxDay);
-		listAvenc = new ArrayList<Avancegestat>();
-		listAvenc = serviceAvance.getAvancesBybetweendate(date1, date2);
+		refreshEtatAvance();
+	}
 
+	private void refreshEtatAvance() {
+		if (annees == null || annees.trim().isEmpty()) {
+			annees = String.valueOf(resolveDefaultPaieYear());
+		}
+		if (mois == null || mois.trim().isEmpty()) {
+			mois = getMoisbyIntger(resolveDefaultPaieMonth());
+		}
+		int selectedYear = Integer.parseInt(annees);
+		int selectedMonth = getMoisbyString(mois);
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, selectedYear);
+		cal.set(Calendar.MONTH, selectedMonth - 1);
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+		int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		Date date1 = new Date(selectedYear - 1900, selectedMonth - 1, 1, 0, 0, 0);
+		Date date2 = new Date(selectedYear - 1900, selectedMonth - 1, maxDay, 23, 59, 59);
+		listAvenc = serviceAvance.getAvancesBybetweendate(date1, date2);
+		if (listAvenc == null) {
+			listAvenc = new ArrayList<Avancegestat>();
+		}
 	}
 
 	public String Visualiser() {
@@ -429,14 +475,17 @@ public class PaisBeans {
 		listPaie = new ArrayList<Paie>();
 		listEmployee = new ArrayList<Employee>();
 		listEmployee = serviceEmployee.getEmployeeparnature("Virement");
-		Pointage p = servicePointage.getMaxPointage();
+		Pointage p = getLatestPointageOrMessage();
+		if (p == null) {
+			return ERROR;
+		}
 		annees = p.getAnnee() + "";
 		mois = getMoisbyIntger(p.getMois());
 		for (Employee e : listEmployee) {
-			List<Paie> listPaies = new ArrayList<Paie>();
 			Paie ee = servicePaie.getPaieByAnneeAndMoisEmployee(e, p.getAnnee(), p.getMois());
-
-			listPaie.add(ee);
+			if (ee != null) {
+				listPaie.add(ee);
+			}
 
 		}
 		return SUCCESS;
@@ -463,7 +512,6 @@ public class PaisBeans {
 		listAvenc = serviceAvance.getAvancesByEmployeebetweendate(e, date1, date2);
 
 		for (Avancegestat a : listAvenc) {
-			System.out.println("\n\n\n" + a.getEmployee().getNom() + " " + a.getMontant_avance() + "\n\n\n");
 		}
 		if (listAvenc != null)
 			return listAvenc;
@@ -471,13 +519,16 @@ public class PaisBeans {
 	}
 
 	public String getAllPai() {
-		annees = "";
-
 		societe = serviceSociete.getAll().get(0);
 		Annee();
 		listMois = new ArrayList<String>();
 
-		Pointage p = servicePointage.getMaxPointage();
+		Pointage p = getLatestPointageOrMessage();
+		if (p == null) {
+			listPaie = new ArrayList<Paie>();
+			test = "notok";
+			return ERROR;
+		}
 
 		listPaie = new ArrayList<Paie>();
 		annees = "" + p.getAnnee();
@@ -538,7 +589,6 @@ public class PaisBeans {
 
 					}
 				} catch (Exception ee) {
-					ee.printStackTrace();
 				}
 
 				double sommeprimes = 0;
@@ -554,7 +604,6 @@ public class PaisBeans {
 					} else
 						avances = 0;
 				} catch (Exception ee) {
-					ee.printStackTrace();
 				}
 				Formule_Paie f = new Formule_Paie();
 				if (po != null) {
@@ -710,7 +759,6 @@ public class PaisBeans {
 	 * 
 	 * e.setSalaire_journalier(c.getPrix_heur()); serviceEmployee.update(e); }
 	 * 
-	 * } } catch (Exception ee) { ee.printStackTrace(); }
 	 * 
 	 * double sommeprimes = 0;
 	 * 
@@ -986,22 +1034,27 @@ public class PaisBeans {
 	public String getAllFicchePaie() {
 		employer = null;
 		societe = serviceSociete.getAll().get(0);
-		Date d = new Date();
-		Integer a = d.getYear() + 1900;
-		Integer m = d.getMonth() + 1;
-		annees = a + "";
 		Annee();
 		mois();
+		applyDefaultPeriod();
 		listEmployees = new ArrayList<String>();
 		listEmployee = new ArrayList<Employee>();
 		listEmployee = serviceEmployee.getEmployeeparstats(Status.Declare);
 
 		tous = true;
 		listPaie = new ArrayList<Paie>();
-		Pointage p = servicePointage.getMaxPointage();
-		listPaie = servicePaie.getPaieByAnneeAndMois(p.getAnnee(), p.getMois());
-		if (listPaie == null)
+		Pointage p = resolveLatestPointage();
+		if (p != null) {
+			listPaie = servicePaie.getPaieByAnneeAndMois(p.getAnnee(), p.getMois());
+			annees = String.valueOf(p.getAnnee());
+			mois = getMoisbyIntger(p.getMois());
+		}
+		if (listPaie == null) {
 			listPaie = servicePaie.getPaieByAnnee(Integer.parseInt(annees));
+		}
+		if (listPaie == null) {
+			listPaie = new ArrayList<Paie>();
+		}
 
 		for (Paie p1 : listPaie) {
 			p1.getEmployee().setLignegestion(ligneGestion.getlistbyemplyee(p1.getEmployee()));
@@ -1016,29 +1069,34 @@ public class PaisBeans {
 	 ****************************************/
 	public String traixiemeMoi() {
 		listPai = new ArrayList<Recapulatif>();
-		Date d = new Date();
-
 		societe = serviceSociete.getAll().get(0);
 		Annee();
+		applyDefaultPeriod();
 		listPaie = new ArrayList<Paie>();
 		return SUCCESS;
 	}
 
-	public String journal() {
-		listPai = new ArrayList<Recapulatif>();
-		annees = "";
-		societe = serviceSociete.getAll().get(0);
-		Annee();
-		listPaie = new ArrayList<Paie>();
-		listMois = new ArrayList<String>();
-		return SUCCESS;
+public String journal() {
+		try {
+			listPai = new ArrayList<Recapulatif>();
+			societe = serviceSociete.getAll().get(0);
+			Annee();
+			applyDefaultPeriod();
+			listPaie = new ArrayList<Paie>();
+			listMois = new ArrayList<String>();
+			return SUCCESS;
+		} catch (Exception e) {
+			System.err.println("Error in PaisBeans.journal(): " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public String journaltotal() {
 		listPai = new ArrayList<Recapulatif>();
-		annees = "";
 		societe = serviceSociete.getAll().get(0);
 		Annee();
+		applyDefaultPeriod();
 		listPaie = new ArrayList<Paie>();
 		listMois = new ArrayList<String>();
 		return SUCCESS;
@@ -1177,20 +1235,20 @@ public class PaisBeans {
 	}
 
 	public String journalNondeclare() {
-		annees = "";
 		listPai = new ArrayList<Recapulatif>();
 		societe = serviceSociete.getAll().get(0);
 		Annee();
+		applyDefaultPeriod();
 		listPaie = new ArrayList<Paie>();
 		listMois = new ArrayList<String>();
 		return SUCCESS;
 	}
 
 	public String journalNondeclareparrendement() {
-		annees = "";
 		listPai = new ArrayList<Recapulatif>();
 		societe = serviceSociete.getAll().get(0);
 		Annee();
+		applyDefaultPeriod();
 		listPaie = new ArrayList<Paie>();
 		listMois = new ArrayList<String>();
 		return SUCCESS;
@@ -1199,11 +1257,13 @@ public class PaisBeans {
 		listPaie = new ArrayList<Paie>();
 		listPaie = servicePaie.getPaieNondeclare2ByAnneeAndMois(Integer.parseInt(annees), getMoisbyString(mois));
 	 
-		Pointage pp = servicePointage.getMaxPointage();
-		System.out.println("\n\n\n"+ "01-"+pp.getMois()+"-"+annees);
-		String d1= "01-"+pp.getMois()+"-"+annees;
-		String d2=getNbJourbyString(pp.getMois())+"-"+pp.getMois()+"-"+annees;
-		System.out.println("\n\n\n"+getNbJourbyString(pp.getMois())+"-"+pp.getMois()+"-"+annees);
+		Pointage pp = resolveLatestPointage();
+		int selectedMonth = getMoisbyString(mois);
+		if (selectedMonth == 0) {
+			selectedMonth = resolveDefaultPaieMonth();
+		}
+		String d1= "01-"+selectedMonth+"-"+annees;
+		String d2=getNbJourbyString(selectedMonth)+"-"+selectedMonth+"-"+annees;
 		if (listPaie != null) {
 			test = "ok";
 
@@ -1219,7 +1279,7 @@ public class PaisBeans {
 					po.setEmployee(e);
 					po.setNb_jour(servicerendement.getnbvbetwendate(d1, d2, e));
 					po.setAnnee(Integer.parseInt(annees));
-					po.setMois(pp.getMois());
+					po.setMois(selectedMonth);
 					 servicePointage.save(po);
 					// Pointage po = servicePointage.getPointageByEmployee(e,
 					// Integer.parseInt(annees), getMoisbyString(mois));
@@ -1250,11 +1310,10 @@ public class PaisBeans {
 	
 
 	public String getAllPai3() {
-		annees = "";
 		test = "notok";
-		mois = "";
 		societe = serviceSociete.getAll().get(0);
 		Annee();
+		applyDefaultPeriod();
 		listPaie = new ArrayList<Paie>();
 
 		return SUCCESS;
@@ -1336,34 +1395,41 @@ public class PaisBeans {
 
 	public void getPaiebyEmployer(AjaxBehaviorEvent event) {
 		avance = 0;
-		Date d = new Date();
-		Integer a = d.getYear() + 1900;
-		Integer m = d.getMonth() + 1;
 		employee = serviceEmployee.getEmployeeByNom(employer);
-		Pointage p = servicePointage.getMaxPointage();
+		Pointage p = resolveLatestPointage();
 
 		listPaie = new ArrayList<Paie>();
 		if (employee == null) {
 			String message = "Veuillez choisir un employe";
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+			return;
 		}
 
-		if (!mois.equals(null)) {
-			Paie pp = servicePaie.getPaieByAnneeAndMoisEmployee(employee, p.getAnnee(), getMoisbyString(mois));
-			listPaie.add(pp);
-			for (Paie p1 : listPaie) {
-				p1.getEmployee().setLignegestion(ligneGestion.getlistbyemplyee(p1.getEmployee()));
-				p1.setListGestion(serviceLigneGestionpaie.getlistbypaie(p1));
-
+		int targetYear = p != null ? p.getAnnee() : Calendar.getInstance().get(Calendar.YEAR);
+		if (annees != null && !annees.trim().isEmpty()) {
+			try {
+				targetYear = Integer.parseInt(annees);
+			} catch (NumberFormatException ex) {
+				// Keep fallback year from latest pointage/current year.
 			}
 		}
-		if (mois.equals(null)) {
-			listPaie = servicePaie.getPaieByAnneeAndEmployee(employee, a);
-			for (Paie p1 : listPaie) {
-				p1.getEmployee().setLignegestion(ligneGestion.getlistbyemplyee(p1.getEmployee()));
-				p1.setListGestion(serviceLigneGestionpaie.getlistbypaie(p1));
 
+		if (mois != null && !mois.trim().isEmpty()) {
+			Paie pp = servicePaie.getPaieByAnneeAndMoisEmployee(employee, targetYear, getMoisbyString(mois));
+			if (pp != null) {
+				listPaie.add(pp);
 			}
+		}
+		if (mois == null || mois.trim().isEmpty()) {
+			listPaie = servicePaie.getPaieByAnneeAndEmployee(employee, targetYear);
+			if (listPaie == null) {
+				listPaie = new ArrayList<Paie>();
+			}
+		}
+		for (Paie p1 : listPaie) {
+			p1.getEmployee().setLignegestion(ligneGestion.getlistbyemplyee(p1.getEmployee()));
+			p1.setListGestion(serviceLigneGestionpaie.getlistbypaie(p1));
+
 		}
 
 	}
@@ -1372,11 +1438,16 @@ public class PaisBeans {
 
 		listPaie = new ArrayList<Paie>();
 
-		System.out.println("\n\n\n" + employee.getNom() + "\n\n\n");
-		Pointage p = servicePointage.getMaxPointage();
-		listPaie = servicePaie.getPaieByAnneeAndMois(p.getAnnee(), p.getMois());
-		if (listPaie == null)
+		Pointage p = resolveLatestPointage();
+		if (p != null) {
+			listPaie = servicePaie.getPaieByAnneeAndMois(p.getAnnee(), p.getMois());
+		}
+		if (listPaie == null) {
 			listPaie = servicePaie.getPaieByAnnee(Integer.parseInt(annees));
+		}
+		if (listPaie == null) {
+			listPaie = new ArrayList<Paie>();
+		}
 
 		for (Paie p1 : listPaie) {
 
@@ -1388,9 +1459,9 @@ public class PaisBeans {
 	}
 
 	public String recapulatif() {
-		annees = "";
 		societe = serviceSociete.getAll().get(0);
 		Annee();
+		applyDefaultPeriod();
 		listPaie = new ArrayList<Paie>();
 		listMois = new ArrayList<String>();
 		return SUCCESS;
@@ -1666,9 +1737,12 @@ public class PaisBeans {
 
 	public void mois() {
 		listMois = new ArrayList<String>();
-		Date d = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, resolveDefaultPaieYear());
+		calendar.set(Calendar.MONTH, resolveDefaultPaieMonth() - 1);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		dates = s.format(d);
+		dates = s.format(calendar.getTime());
 		listMois.add("Janvier");
 		listMois.add("Fevrier");
 		listMois.add("Mars");
@@ -1686,18 +1760,19 @@ public class PaisBeans {
 	private void Annee() {
 		List<Annee> l = new ArrayList<Annee>();
 		listannee = new ArrayList<String>();
-		Date d = new Date();
-		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		String annees = s.format(d).substring(6);
-		Annee a = serviceAnnee.findbyDesignation(annees);
+		String defaultYear = String.valueOf(resolveDefaultPaieYear());
+		Annee a = serviceAnnee.findbyDesignation(defaultYear);
 		if (a == null) {
 			Annee e = new Annee();
-			e.setAnnee(annees);
+			e.setAnnee(defaultYear);
 			serviceAnnee.save(e);
 		}
 		l = serviceAnnee.getAll();
 		for (Annee aa : l)
 			listannee.add(aa.getAnnee());
+		if (annees == null || annees.trim().isEmpty()) {
+			annees = defaultYear;
+		}
 	}
 
 	public ServiceAnnee getServiceAnnee() {
@@ -1942,6 +2017,30 @@ public class PaisBeans {
 
 	public void setListAvenc(List<Avancegestat> listAvenc) {
 		this.listAvenc = listAvenc;
+	}
+
+	public Avancegestat getSelectedAvenc() {
+		return selectedAvenc;
+	}
+
+	public void setSelectedAvenc(Avancegestat selectedAvenc) {
+		this.selectedAvenc = selectedAvenc;
+	}
+
+	public List<Avancegestat> getFiltredAvenc() {
+		return filtredAvenc;
+	}
+
+	public void setFiltredAvenc(List<Avancegestat> filtredAvenc) {
+		this.filtredAvenc = filtredAvenc;
+	}
+
+	public Avancegestat getSelectedAvance() {
+		return selectedAvance;
+	}
+
+	public void setSelectedAvance(Avancegestat selectedAvance) {
+		this.selectedAvance = selectedAvance;
 	}
 
 	public void setSociete(Societe societe) {

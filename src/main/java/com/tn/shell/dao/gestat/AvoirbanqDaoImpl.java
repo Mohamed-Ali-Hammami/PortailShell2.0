@@ -34,10 +34,8 @@ public class AvoirbanqDaoImpl implements AvoirbanqDAO {
 				.setParameter("d2",d2)
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet Avoir n exsite pas\n\n");
 			return result;
 		}
 	}
@@ -51,10 +49,8 @@ public class AvoirbanqDaoImpl implements AvoirbanqDAO {
 				.setParameter("dates",date)
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet Avoir n exsite pas\n\n");
 			return result;
 		}
 	}
@@ -73,10 +69,8 @@ public class AvoirbanqDaoImpl implements AvoirbanqDAO {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0).getId();
 		} else {
-			System.out.println("\n\nl  objet Avoir n exsite pas\n\n");
 			return 0;
 		}
 	}
@@ -88,10 +82,8 @@ public class AvoirbanqDaoImpl implements AvoirbanqDAO {
 				.setParameter("id", id)
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0);
 		} else {
-			System.out.println("\n\nl  objet Avoir n exsite pas\n\n");
 			return null;
 		}
 	}

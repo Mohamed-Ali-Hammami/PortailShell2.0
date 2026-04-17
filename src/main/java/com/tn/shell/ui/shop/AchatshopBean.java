@@ -150,17 +150,19 @@ public class AchatshopBean {
 		codeproduit = null;
 		return SUCCESS;
 	}
+
+	public String nouveauavoir() {
+		return nouveauachat();
+	}
 	public void getCodefocus(AjaxBehaviorEvent event) {
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n\n\n" + "codes getCodefocus  " + codes + "\n\n\n");
 
 	}
 	
 	public void saveselection(ActionEvent event) {
 		  
 			Integer index = verifierarticle(selectedProduit, codes);
-			 	System.out.println("\n\n\n\n index" +index);
 			 	DecimalFormat df = new DecimalFormat("0.000");
 			if (index == codes) {
 				lignealimentation = listeLigne.get(codes);
@@ -195,7 +197,6 @@ public class AchatshopBean {
 				listeLigne.set(index,lignealimentation);
 			}
 			selectedProduit = null;
-			System.out.println("\n\n\n" + listeLigne.get(codes).getLibelle() + "\n\n\n");
 			 
 		 
 			lignealimentation= null;
@@ -223,20 +224,17 @@ public class AchatshopBean {
 
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codes" + codes + "\n\n");
 		produit = listproduit.get(codes);
 
 		DecimalFormat df = new DecimalFormat("0.000");
 		Integer index = verifierarticle(produit, codes);
 
 		if (index == codes) {
-			System.out.println("\n\n not contains" + "\n\n");
 			produit.setQuantites(1);
 			produit.setMontant(produit.getQuantites() * produit.getVente());
 			produit.setMontants(df.format(produit.getMontant()));
 			listproduit.set(codes, produit);
 		} else {
-			System.out.println("\n\n  contains" + listproduit.get(index).getQuantites() + "\n\n");
 			listproduit.get(index).setQuantites(listproduit.get(index).getQuantites() + 1);
 			listproduit.get(index)
 					.setMontant(listproduit.get(index).getQuantites() * listproduit.get(index).getVente());
@@ -281,11 +279,9 @@ public class AchatshopBean {
 		UIComponent component = event.getComponent();
 		DecimalFormat df = new DecimalFormat("0.000");
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codesupdate code" + codes + "\n\n");
 		lignealimentation = listeLigne.get(codes);
 		Produit p = serviceProduit.Findbycodes(lignealimentation.getLibelle());
 		 
-		System.out.println("\n\n id produit" + p.getId());
 		
 		Integer index = verifierarticle(p, codes);
 		if (index == codes) {	 
@@ -344,7 +340,6 @@ public class AchatshopBean {
 		try {
 			number = format.parse(prixvente);
 		} catch (ParseException e) {			
-			e.printStackTrace();
 		}		 		 
 		return number.doubleValue() ;
 	}
@@ -362,7 +357,6 @@ public class AchatshopBean {
 		totalquantite=0;
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codes" + codes + "\n\n");
 		lignealimentation = listeLigne.get(codes);
 		serviceProduit.update(lignealimentation.getProduit());
 		DecimalFormat df = new DecimalFormat("0.000"); 
@@ -529,6 +523,10 @@ public void verifnumfact(AjaxBehaviorEvent event) {
  		servicetrace.save(t); 
          return SUCCESS;
 		 
+	}
+
+	public String saveavoir() {
+		return saveAchat();
 	}
 
 	public void updateCode(AjaxBehaviorEvent event) {

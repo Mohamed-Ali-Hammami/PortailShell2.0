@@ -1,5 +1,6 @@
 package com.tn.shell.dao.banque;
  
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +29,9 @@ public class TransactionDaoImpl implements TransactionDao {
 
 	@Transactional
 	public List<Transaction> getAll(Compte compte) {
+		if (compte == null || compte.getId() == null) {
+			return Collections.emptyList();
+		}
 		List<Transaction> result = em.createQuery("SELECT c FROM Transaction c where c.statut = :statut and c.compte.id = :compte", Transaction.class)
 				.setParameter("statut", Statut.ACTIF).setParameter("compte",compte.getId()).getResultList();
 		return result;
@@ -40,10 +44,8 @@ public class TransactionDaoImpl implements TransactionDao {
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 
 		if (TransactionListem.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return TransactionListem;
 		} else {
-			System.out.println("\n\nl  objet Transaction n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -55,10 +57,8 @@ public class TransactionDaoImpl implements TransactionDao {
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", reference).getResultList();
 
 		if (TransactionListem.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return TransactionListem.get(0);
 		} else {
-			System.out.println("\n\nl  objet Transaction n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -81,22 +81,29 @@ public class TransactionDaoImpl implements TransactionDao {
 	}
 
 	public List<Transaction> findbyDate(Date date1, Date date2,Compte compte) {
-	
+		if (compte == null || compte.getId() == null) {
+			return Collections.emptyList();
+		}
 		List<Transaction> result = em.createQuery("SELECT c FROM Transaction c where c.statut = :statut and  c.date between :date1 and :date2 and c.compte.id = :compte", Transaction.class)
-				.setParameter("statut", Statut.ACTIF).setParameter("date1", date1).setParameter("dte2", date2).setParameter("compte",compte.getId()).getResultList();
+				.setParameter("statut", Statut.ACTIF).setParameter("date1", date1).setParameter("date2", date2).setParameter("compte",compte.getId()).getResultList();
 		return result;
 	}
 
 	public List<Transaction> findbyMonth(int monht,Compte compte) {
-         System.out.println("\n\n\nmont "+monht);
+		if (compte == null || compte.getId() == null) {
+			return Collections.emptyList();
+		}
 		List<Transaction> result = em.createQuery("SELECT c FROM Transaction c where c.statut = :statut and month(c.date) =:m and c.compte.id = :compte", Transaction.class)
 				.setParameter("statut", Statut.ACTIF).setParameter("m", monht).setParameter("compte",compte.getId()).getResultList();
 		return result;
 	}
 
 	public List<Transaction> findByEnumarationCeque(Enumcheque cheque,Compte compte) {
+		if (compte == null || compte.getId() == null) {
+			return Collections.emptyList();
+		}
 		List<Transaction> result = em.createQuery("SELECT c FROM Transaction c where c.statut = :statut and c.etatcheque = :etatcheque and c.compte.id = :compte", Transaction.class)
-				.setParameter("statut", Statut.ACTIF)	.setParameter("etatcheque",cheque).setParameter("compte",compte.getId()).getResultList();
+				.setParameter("statut", Statut.ACTIF).setParameter("etatcheque",cheque).setParameter("compte",compte.getId()).getResultList();
 		return result;
 	}
 

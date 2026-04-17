@@ -49,6 +49,8 @@ public class Facture {
 	@Transient
 	private List<Lignecommande> listelc;
 	@Transient
+	private List<Bonlivraison> listebl;
+	@Transient
 	private String totalhts;
 	 
 	private double totaltva;
@@ -214,6 +216,14 @@ public class Facture {
 
 	public void setListelc(List<Lignecommande> listelc) {
 		this.listelc = listelc;
+	}
+
+	public List<Bonlivraison> getListebl() {
+		return listebl;
+	}
+
+	public void setListebl(List<Bonlivraison> listebl) {
+		this.listebl = listebl;
 	}
 
 	public String getBanque() {

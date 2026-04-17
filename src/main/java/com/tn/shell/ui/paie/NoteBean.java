@@ -2,9 +2,11 @@ package com.tn.shell.ui.paie;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -69,6 +71,17 @@ public class NoteBean {
 	private double taux = 0.0918;
 	private Note notes;
 
+	@PostConstruct
+	public void init() {
+		try {
+			Annee();
+			mois();
+			moi = getMoisbyIntger(resolveDefaultNoteMonth());
+		} catch (Exception e) {
+			System.err.println("NoteBean.init(): " + e.getMessage());
+		}
+	}
+
 	public String note() {
 
 		listeEmployee = new ArrayList<String>();
@@ -77,9 +90,8 @@ public class NoteBean {
 
 		Annee();
 		mois();
-		Date d = new Date();
-		moi = getMoisbyIntger(d.getMonth() + 1);
-		annee = null;
+		moi = getMoisbyIntger(resolveDefaultNoteMonth());
+		annee = resolveDefaultNoteYear();
 		employer = null;
 		note = 0;
 		return SUCCESS;
@@ -93,7 +105,6 @@ public class NoteBean {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
 		}
 
-		System.out.println("\n\n\n" + employee.getNom() + "\n\n\n");
 		Note p = new Note();
 		p.setAnnee(annee);
 		p.setEmployee(employee);
@@ -183,6 +194,18 @@ List<Lignepaiegestionprime> llg=new ArrayList<Lignepaiegestionprime>();
 		return SUCCESS;
 	}
 
+	public void verifierpointage(AjaxBehaviorEvent event) {
+		Employee employee = serviceEmployee.getEmployeeByNom(employer);
+		if (employee == null) {
+			return;
+		}
+		Note noteExistante = serviceNote.getNotesByEmployee(employee, annee);
+		if (noteExistante != null) {
+			String message = "vous avez deja noter " + employer + " pour l'annee " + annee + "!!!!!!!!!!!!!!";
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+		}
+	}
+
 	public String supprimerpaie() {
 		Note nn = serviceNote.getMaxPointageconge();
 		for (Paieprime p : listpaie) {
@@ -234,10 +257,6 @@ List<Lignepaiegestionprime> llg=new ArrayList<Lignepaiegestionprime>();
 
 	public void getPaiebyEmployer(AjaxBehaviorEvent event) {
 		test = "notok";
-
-		Date d = new Date();
-		Integer a = d.getYear() + 1900;
-		Integer m = d.getMonth() + 1;
 		listpaie = new ArrayList<Paieprime>();
 		// try {
 
@@ -245,13 +264,12 @@ List<Lignepaiegestionprime> llg=new ArrayList<Lignepaiegestionprime>();
 		if (employee == null) {
 			String message = "Veuillez choisir un employe";
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+			return;
 		}
 
-		System.out.println("\n\n\n" + employee.getNom() + "\n\n\n");
-
 		Note p = serviceNote.getMaxPointageconge();
-
-		listpaie = servicepaieprime.getPaieByAnneeAndEmployee(employee, p.getAnnee());
+		int targetYear = p != null && p.getAnnee() != null ? p.getAnnee() : resolveDefaultNoteYear();
+		listpaie = servicepaieprime.getPaieByAnneeAndEmployee(employee, targetYear);
 		if (listpaie != null)
 			for (Paieprime p1 : listpaie) {
 				p1.getEmployee().setLignegestion(ligneGestion.getlistbyemplyee(p1.getEmployee()));
@@ -282,7 +300,7 @@ List<Lignepaiegestionprime> llg=new ArrayList<Lignepaiegestionprime>();
 
 	public String journalprime() {
 
-		annees = "";
+		annees = String.valueOf(resolveDefaultNoteYear());
 		societe = serviceSociete.getAll().get(0);
 		Annee();
 		listpaie = new ArrayList<Paieprime>();
@@ -361,21 +379,20 @@ List<Lignepaiegestionprime> llg=new ArrayList<Lignepaiegestionprime>();
 		test = "";
 		employer = null;
 		annee = null;
-		Date d = new Date();
 		listpaie = new ArrayList<Paieprime>();
 		listEmployees = new ArrayList<String>();
 		listEmployee = new ArrayList<Employee>();
 		listEmployee = serviceEmployee.getEmployeeparstats(Status.Declare);
 
 		Annee();
-		annees = "";
+		annees = String.valueOf(resolveDefaultNoteYear());
 		societe = serviceSociete.getAll().get(0);
 		listpaie = servicepaieprime.getAll();
 
 		Note p = serviceNote.getMaxPointageconge();
 		if (p != null) {
 			listpaie = servicepaieprime.getPaieByAnnee(p.getAnnee());
-			if (listpaie != null && (d.getYear() - 1 + 1900) == p.getAnnee()) {
+			if (listpaie != null) {
 				for (Paieprime p1 : listpaie) {
 
 					p1.getEmployee().setLignegestion(ligneGestion.getlistbyemplyee(p1.getEmployee()));
@@ -447,9 +464,12 @@ List<Lignepaiegestionprime> llg=new ArrayList<Lignepaiegestionprime>();
 	}
 
 	public void mois() {
-		Date d = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, resolveDefaultNoteYear());
+		calendar.set(Calendar.MONTH, resolveDefaultNoteMonth() - 1);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		dates = s.format(d);
+		dates = s.format(calendar.getTime());
 		listMois = new ArrayList<String>();
 		listMois.add("Janvier");
 		listMois.add("Fevrier");
@@ -463,15 +483,13 @@ List<Lignepaiegestionprime> llg=new ArrayList<Lignepaiegestionprime>();
 		listMois.add("Octobre");
 		listMois.add("Novembre");
 		listMois.add("Decembre");
-		mois = d.getMonth() + 1;
+		mois = resolveDefaultNoteMonth();
 	}
 
 	private void Annee() {
 		List<Annee> l = new ArrayList<Annee>();
 		listannee = new ArrayList<String>();
-		Date d = new Date();
-		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		annees = s.format(d).substring(6);
+		annees = String.valueOf(resolveDefaultNoteYear());
 		Annee a = serviceAnnee.findbyDesignation(annees);
 		if (a == null) {
 			Annee e = new Annee();
@@ -485,6 +503,22 @@ List<Lignepaiegestionprime> llg=new ArrayList<Lignepaiegestionprime>();
 		Integer aa = Integer.parseInt(annees);
 		listannee.add(aa + 1 + "");
 		annee = Integer.parseInt(annees);
+	}
+
+	private int resolveDefaultNoteYear() {
+		Note latestNote = serviceNote.getMaxPointageconge();
+		if (latestNote != null && latestNote.getAnnee() != null) {
+			return latestNote.getAnnee();
+		}
+		return Calendar.getInstance().get(Calendar.YEAR);
+	}
+
+	private int resolveDefaultNoteMonth() {
+		Note latestNote = serviceNote.getMaxPointageconge();
+		if (latestNote != null && latestNote.getMois() != null) {
+			return latestNote.getMois();
+		}
+		return Calendar.getInstance().get(Calendar.MONTH) + 1;
 	}
 
 	public ServiceAnnee getServiceAnnee() {

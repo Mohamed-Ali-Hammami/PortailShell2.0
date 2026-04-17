@@ -1,5 +1,6 @@
 package com.tn.shell.dao.lavage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -39,10 +40,8 @@ public class ModelDaoImpl implements ModelDAO {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0).getId();
 		} else {
-			System.out.println("\n\nl  objet Model n exsite pas\n\n");
 			return 0;
 		}
 	}
@@ -60,6 +59,9 @@ public class ModelDaoImpl implements ModelDAO {
 
 	@Transactional
 	public List<Model> getModelbyMarque(Marque f) {
+		if (f == null || f.getId() == null) {
+			return new ArrayList<Model>();
+		}
 		List<Model> result = em.createQuery(
 				"SELECT b FROM Model  b  where b.statut = :statut  and b.marque.id = :numero order by b.id Desc",
 				Model.class).setParameter("statut", Statut.ACTIF).setParameter("numero", f.getId()).getResultList();
@@ -67,6 +69,9 @@ public class ModelDaoImpl implements ModelDAO {
 	}
 	@Transactional
 	public List<Model> getModelbyArticle(Produit f){
+		if (f == null || f.getCode() == null) {
+			return new ArrayList<Model>();
+		}
 		List<Model> result = em.createQuery(
 				"SELECT b FROM Model  b  where b.statut = :statut  and b.fournisseur.code = :numero order by b.id Desc",
 				Model.class).setParameter("statut", Statut.ACTIF).setParameter("numero", f.getCode()).getResultList();

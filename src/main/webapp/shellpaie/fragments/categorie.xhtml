@@ -1,0 +1,109 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout paie-shell-fragment">
+        <p:panel styleClass="shell-home-panel paie-shell-panel">
+					<h:form>
+					<br/><br/>
+					<p:commandButton value="modifier tableau" action="#{PaieBean.modifiertableau}"/>
+                           <br/><br/>
+								 <p:dataTable id="emp" var="p" editable="true"
+								  value="#{PaieBean.listCategorie}" editMode="cell"
+								widgetVar="articleTable" 								 
+								rowKey="#{p.id}"  
+								emptyMessage="aucun categorie dans la base"  
+								   >
+								   <p:ajax event="cellEdit" listener="#{PaieBean.onCellEdit}" /> 
+								 <p:columnGroup type="header">
+								 <p:row>
+								
+								 <p:column headerText="Degree" width="150" colspan="2"/>
+								  <ui:repeat var="c" value="#{PaieBean.listDegree}">
+								    <p:column headerText="#{c.valeur}"/>
+								 </ui:repeat>
+								  </p:row>
+								   <p:row>
+								  <p:column headerText="Periode" colspan="2"/>
+								  <ui:repeat var="c" value="#{PaieBean.listDegree}">
+								    <p:column headerText="#{c.periode}"/>
+								 </ui:repeat>
+								 </p:row>
+								<p:row>
+								  <p:column headerText="Categorie" colspan="2"/>
+								   <p:column headerText=""  colspan="15"/>
+								</p:row>
+								 
+								 
+								 
+								  <p:row>
+								   <p:column headerText="Implementation" rowspan="8" />
+								   <ui:repeat var="c" value="#{PaieBean.listCat2}"> 
+								    <p:row>
+								   <p:column headerText="#{c.valeur}"   />  
+								    <ui:repeat var="d" value="#{c.listcategories}">
+								    <p:column  headerText="#{d.prixheur}" /><!-- headerText="#{d.prix_heur}"  -->
+								   
+								     
+								 </ui:repeat>
+								 	
+                                   
+								   </p:row>
+								  </ui:repeat>
+								  </p:row>
+								  
+								    <p:row>
+								   <p:column headerText="Manegement" rowspan="5" />
+								   <ui:repeat var="c" value="#{PaieBean.listCat3}"> 
+								    <p:row>
+								   <p:column headerText="#{c.valeur}"  />
+								    <ui:repeat var="d" value="#{c.listcategories}">
+								    <p:column headerText="#{d.prix_heur}"  />
+								 </ui:repeat>
+								   
+								    </p:row>
+								  </ui:repeat>
+								  </p:row>
+								  
+								    <p:row>
+								   <p:column headerText="Cadre" rowspan="6" />
+								   <ui:repeat var="c" value="#{PaieBean.listCat4}"> 
+								    <p:row>
+								   <p:column headerText="#{c.valeur}"  /> 
+								    <ui:repeat var="d" value="#{c.listcategories}">
+								    <p:column headerText="#{d.prix_heur}"  />
+								 </ui:repeat>
+								   </p:row>
+								   
+								  </ui:repeat>
+								  </p:row>
+								  
+								 </p:columnGroup>
+									<!-- <p:column >
+									<f:facet name="header">
+										<h:outputText style="font-size:12px ;color:#483d8b"
+											value="NOMBRE DE JOURS TRAVAILLÉS" />
+									</f:facet>
+									<p:cellEditor>
+										<f:facet name="output">
+											<b><h:outputText style="font-size:12px ;"
+													value="#{p.nb_jour}"
+													 /></b>
+													  
+										</f:facet>
+										<f:facet name="input">
+											 
+											<h:inputText id="qteInput" value="#{p.nb_jour}"
+												style="width:96%"   >
+												 	 
+												</h:inputText>
+										</f:facet>
+									</p:cellEditor>
+								</p:column> -->
+								</p:dataTable>
+                          
+					</h:form>
+        </p:panel>
+    </h:panelGroup>
+</ui:composition>

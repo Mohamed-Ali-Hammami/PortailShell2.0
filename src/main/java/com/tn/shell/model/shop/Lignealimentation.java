@@ -248,7 +248,6 @@ private double tauxtva;
 		Lignealimentation f = (Lignealimentation) o; 
 		 return (int) (this.getProduit().getCodeshop()-f.getProduit().getCodeshop()) ;		 
 		}catch(Exception e) {
-			e.printStackTrace();
 			return 0;
 		}
 	}

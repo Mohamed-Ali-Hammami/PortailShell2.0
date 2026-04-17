@@ -3,9 +3,221 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	template="/WEB-INF/templates/app.xhtml">
+	<f:metadata>
+		<f:event type="preRenderView" listener="#{AccueilBean.bootstrapPaieView}" />
+	</f:metadata>
 	<ui:define name="title">Shell-Paie</ui:define>
+	<ui:define name="moduleNav">
+		<ui:include src="/shellpaie/HeaderpaieNav.xhtml" />
+	</ui:define>
 	<ui:define name="content">
-		<ui:include src="/shellpaie/indexpaie.xhtml" />
+		<c:choose>
+			<c:when test="#{param.view eq 'index'}">
+				<ui:include src="/shellpaie/fragments/home.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'employees'}">
+				<ui:include src="/shellpaie/fragments/listemplyee.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'avances'}">
+				<ui:include src="/shellpaie/fragments/gestion_des_avances.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'pointage'}">
+				<ui:include src="/shellpaie/fragments/pointage.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'paie-declaree'}">
+				<ui:include src="/shellpaie/fragments/paie.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'paie-non-declaree'}">
+				<ui:include src="/shellpaie/fragments/paieNondeclaree.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'fiche-paie'}">
+				<ui:include src="/shellpaie/fragments/fiche_de_paie.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'gestion-elements'}">
+				<ui:include src="/shellpaie/fragments/gestion_des_elements_de_la_paie.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'edition'}">
+				<ui:include src="/shellpaie/fragments/edition.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'historique'}">
+				<ui:include src="/shellpaie/fragments/historique.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'journal-declare'}">
+				<ui:include src="/shellpaie/fragments/journal.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'journal-non-declare'}">
+				<ui:include src="/shellpaie/fragments/journalNondeclaree.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'journal-total'}">
+				<ui:include src="/shellpaie/fragments/journaltotal.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'ordre-virement'}">
+				<ui:include src="/shellpaie/fragments/ordre_virement.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'administration'}">
+				<ui:include src="/shellpaie/fragments/categorie.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'conge-pointage'}">
+				<ui:include src="/shellpaie/fragments/pointageconge.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'conge-etat'}">
+				<ui:include src="/shellpaie/fragments/etatconge.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'conge-journal'}">
+				<ui:include src="/shellpaie/fragments/journalconge.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'prime-note'}">
+				<ui:include src="/shellpaie/fragments/note_annuaire.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'prime-etat'}">
+				<ui:include src="/shellpaie/fragments/etatprime.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'prime-journal'}">
+				<ui:include src="/shellpaie/fragments/journalprime.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'EtatPresence'}">
+				<ui:include src="/shellpaie/fragments/EtatPresence.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'ajouter_element_de_la_paie'}">
+				<ui:include src="/shellpaie/fragments/ajouter_element_de_la_paie.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'categorie'}">
+				<ui:include src="/shellpaie/fragments/categorie.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'edition'}">
+				<ui:include src="/shellpaie/fragments/edition.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etat_avance'}">
+				<ui:include src="/shellpaie/fragments/etat_avance.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatannuel'}">
+				<ui:include src="/shellpaie/fragments/etatannuel.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatconge'}">
+				<ui:include src="/shellpaie/fragments/etatconge.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatprime'}">
+				<ui:include src="/shellpaie/fragments/etatprime.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'fiche_de_avance'}">
+				<ui:include src="/shellpaie/fragments/fiche_de_avance.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'fiche_de_paie'}">
+				<ui:include src="/shellpaie/fragments/fiche_de_paie.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'fiche_de_paieemployee'}">
+				<ui:include src="/shellpaie/fragments/fiche_de_paieemployee.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'gestion_des_avances'}">
+				<ui:include src="/shellpaie/fragments/gestion_des_avances.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'gestion_des_elements_de_la_paie'}">
+				<ui:include src="/shellpaie/fragments/gestion_des_elements_de_la_paie.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'gestion_des_prets'}">
+				<ui:include src="/shellpaie/fragments/gestion_des_prets.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'historique'}">
+				<ui:include src="/shellpaie/fragments/historique.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'historique_employee'}">
+				<ui:include src="/shellpaie/fragments/historique_employee.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'historiquevetement'}">
+				<ui:include src="/shellpaie/fragments/historiquevetement.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'impressionphotos'}">
+				<ui:include src="/shellpaie/fragments/impressionphotos.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'journal'}">
+				<ui:include src="/shellpaie/fragments/journal.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'journalNondeclaree'}">
+				<ui:include src="/shellpaie/fragments/journalNondeclaree.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'journalNondeclaree2'}">
+				<ui:include src="/shellpaie/fragments/journalNondeclaree2.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'journalconge'}">
+				<ui:include src="/shellpaie/fragments/journalconge.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'journalprime'}">
+				<ui:include src="/shellpaie/fragments/journalprime.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'journalrappel'}">
+				<ui:include src="/shellpaie/fragments/journalrappel.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'journaltotal'}">
+				<ui:include src="/shellpaie/fragments/journaltotal.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'listemplyee'}">
+				<ui:include src="/shellpaie/fragments/listemplyee.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'modifierEmployee'}">
+				<ui:include src="/shellpaie/fragments/modifierEmployee.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'modifierPaie'}">
+				<ui:include src="/shellpaie/fragments/modifierPaie.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'modifiertableauSalaire'}">
+				<ui:include src="/shellpaie/fragments/modifiertableauSalaire.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'note_annuaire'}">
+				<ui:include src="/shellpaie/fragments/note_annuaire.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'note_employee'}">
+				<ui:include src="/shellpaie/fragments/note_employee.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'nouveauEmployee'}">
+				<ui:include src="/shellpaie/fragments/nouveauEmployee.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'nouvelPret'}">
+				<ui:include src="/shellpaie/fragments/nouvelPret.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'nouvelleAvance'}">
+				<ui:include src="/shellpaie/fragments/nouvelleAvance.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'ordre_virement'}">
+				<ui:include src="/shellpaie/fragments/ordre_virement.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'paie'}">
+				<ui:include src="/shellpaie/fragments/paie.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'paieNondeclaree'}">
+				<ui:include src="/shellpaie/fragments/paieNondeclaree.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'paieNondeclareeRendement'}">
+				<ui:include src="/shellpaie/fragments/paieNondeclareeRendement.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'pointage'}">
+				<ui:include src="/shellpaie/fragments/pointage.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'pointageconge'}">
+				<ui:include src="/shellpaie/fragments/pointageconge.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'pointageemployee'}">
+				<ui:include src="/shellpaie/fragments/pointageemployee.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'rappel'}">
+				<ui:include src="/shellpaie/fragments/rappel.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'test'}">
+				<ui:include src="/shellpaie/fragments/test.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'traixiememois'}">
+				<ui:include src="/shellpaie/fragments/traixiememois.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'validation'}">
+				<ui:include src="/shellpaie/fragments/validation.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'validerrappel'}">
+				<ui:include src="/shellpaie/fragments/validerrappel.xhtml" />
+			</c:when>
+			<c:otherwise>
+				<ui:include src="/shellpaie/fragments/home.xhtml" />
+			</c:otherwise>
+		</c:choose>
 	</ui:define>
 </ui:composition>

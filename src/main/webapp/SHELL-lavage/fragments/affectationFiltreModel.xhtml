@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout lavage-shell-fragment">
+            <fieldset style="margin-bottom: 20px; background-color: #eeeec6;">
+                <legend>
+                    <b>
+                        <h:outputText value="Fiche Filtre" style="font-size:14px; color:white; background-image:linear-gradient(#FAF281, red);" />
+                    </b>
+                </legend>
+
+                <!-- Back Button -->
+                <div align="right" style="margin-bottom:10px;">
+                    <p:commandButton value="Retour" styleClass="bespece"
+                                     style="width:150px; font-size:12px; height:30px; color:white; background-image:linear-gradient(#FAF281, red);"
+                                     action="#{LavageBean.nouveauModel}" ajax="true" />
+                </div>
+
+                <!-- Selected Model Display -->
+                <div align="center" style="margin-bottom:20px;">
+                    <h:outputText value="Model:" style="font-size:14px; color:#483d8b" />
+                    <h:inputText value="#{LavageBean.selctedModel.model}" readonly="true"/>
+                </div>
+
+                <h:form id="filtreForm">
+
+                    <!-- Filtre Selection -->
+                    <h:panelGrid columns="2" columnClasses="label,value" style="margin-bottom:15px;">
+                        <h:outputText value="Filtre" style="font-size:14px; color:#483d8b" />
+                        <p:selectOneMenu value="#{LavageBean.filtre}" required="true" 
+                                         requiredMessage="Sélectionner un filtre" filter="true" filterMatchMode="contains"
+                                         style="width:200px; font-size:12px;" id="filtre">
+                            <f:selectItem itemLabel="Sélectionner Filtre" />
+                            <f:selectItems value="#{LavageBean.listProduit}" var="s" itemValue="#{s.nom}" itemLabel="#{s.nom}" />
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Type" style="font-size:14px; color:#483d8b" />
+                        <p:selectOneMenu value="#{LavageBean.typefiltre}" required="true"
+                                         requiredMessage="Sélectionner un type" filter="true" filterMatchMode="contains"
+                                         style="width:200px; font-size:12px;" id="type">
+                            <f:selectItem itemLabel="Sélectionner Type" />
+                            <f:selectItems value="#{LavageBean.typefiltres}" var="t" itemValue="#{t}" itemLabel="#{t}" />
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Marque" style="font-size:14px; color:#483d8b" />
+                        <h:inputText value="#{LavageBean.fournisseur}" />
+
+                        <h:outputText value="Emplacement" style="font-size:14px; color:#483d8b" />
+                        <h:inputText value="#{LavageBean.emplacement}" />
+                    </h:panelGrid>
+
+                    <!-- Submit Button -->
+                    <div style="text-align:center; margin-top:10px;">
+                        <p:commandButton value="Valider" styleClass="bespece"
+                                         style="width:150px; font-size:12px; height:30px; color:white; background-image:linear-gradient(#FAF281, red);"
+                                         action="#{LavageBean.saveaffecterFilterToModel}" ajax="false" />
+                    </div>
+
+                    <br/>
+
+                    <!-- Data Table of Assigned Filters -->
+                    <p:dataTable id="emp2" var="tr" value="#{LavageBean.listAffectaionFiltre}"
+                                 style="margin-bottom:0;" emptyMessage="Aucune ligne dans le serveur" 
+                                 styleClass="datatable">
+                        <p:column headerText="Référence">
+                            <h:outputText value="#{tr.produit.nom}" />
+                        </p:column>
+
+                        <p:column headerText="Type">
+                            <h:outputText value="#{tr.typefiltre}" />
+                        </p:column>
+
+                        <p:column headerText="Marque">
+                            <h:outputText value="#{tr.fournisseur}" />
+                        </p:column>
+
+                        <p:column headerText="Emplacement">
+                            <h:outputText value="#{tr.emplacement}" />
+                        </p:column>
+                    </p:dataTable>
+
+                </h:form>
+
+            </fieldset>
+        
+    </h:panelGroup>
+</ui:composition>

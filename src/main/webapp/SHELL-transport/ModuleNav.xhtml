@@ -3,85 +3,83 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/style.css" />
 	<h:form>
 		<p:growl id="messages" />
 
-		<p:menubar
-			style="height:30px; margin-left: 50px;margin-right: 50px ;background-image:linear-gradient( #FAF281, #FAF292);"
-			autoDisplay="true">
+		<p:menubar styleClass="shell-module-menubar" autoDisplay="true">
 			<p:menuitem icon="ui-icon-home"
 				url="#{request.contextPath}/SHELL-transport/index.xhtml"
 				style="font-size:12px" />
 
 			<p:menuitem value="Chauffeur" style="font-size:12px"
-				url="#{request.contextPath}/SHELL-transport/gestion/listechauffeur.xhtml" />
+				url="#{request.contextPath}/SHELL-transport/index.xhtml?view=listechauffeur" />
 
 			<p:menuitem value="Client" style="font-size:12px"
-				url="#{request.contextPath}/SHELL-transport/gestion/listeclient.xhtml" />
+				url="#{request.contextPath}/SHELL-transport/index.xhtml?view=listeclient" />
 
 			<p:menuitem value="Depense" style="font-size:12px"
-				url="#{request.contextPath}/SHELL-transport/gestion/listedepense.xhtml" />
+				url="#{request.contextPath}/SHELL-transport/index.xhtml?view=listedepense" />
 
 			<p:submenu label="Reception" style="font-size:12px">
 				<p:menuitem value="Facture Transport"
-					url="#{request.contextPath}/SHELL-transport/gestion/facturetransport.xhtml"
+					url="#{request.contextPath}/SHELL-transport/index.xhtml?view=facturetransport"
 					style="font-size:12px" styleClass="ui-priority-primary" />
 				<p:menuitem value="Facture Passager"
-					url="#{request.contextPath}/SHELL-transport/gestion/facturepassager.xhtml"
+					url="#{request.contextPath}/SHELL-transport/index.xhtml?view=facturepassager"
 					style="font-size:12px" />
 				<p:menuitem value="Liste Facture transport"
-					url="#{request.contextPath}/SHELL-transport/gestion/facturetransports.xhtml"
+					url="#{request.contextPath}/SHELL-transport/index.xhtml?view=facturetransports"
 					style="font-size:12px" />
 				<p:menuitem value="Liste Facture passager"
-					url="#{request.contextPath}/SHELL-transport/gestion/facturepassagers.xhtml"
+					url="#{request.contextPath}/SHELL-transport/index.xhtml?view=facturepassagers"
 					style="font-size:12px" />
 			</p:submenu>
 
 			<p:menuitem value="Produit" style="font-size:12px"
-				url="#{request.contextPath}/SHELL-transport/gestion/listeproduit.xhtml" />
+				url="#{request.contextPath}/SHELL-transport/index.xhtml?view=listeproduit" />
 
 			<p:menuitem value="Typedep" style="font-size:12px"
-				url="#{request.contextPath}/SHELL-transport/gestion/listetypedep.xhtml" />
+				url="#{request.contextPath}/SHELL-transport/index.xhtml?view=listetypedep" />
 
 			<p:menuitem value="Vehicule" style="font-size:12px"
-				url="#{request.contextPath}/SHELL-transport/gestion/listevhecule.xhtml" />
+				url="#{request.contextPath}/SHELL-transport/index.xhtml?view=listevhecule" />
 
 			<p:submenu label="Etats" style="font-size:12px"
-				rendered="#{LoginBean.user.isAdmin()==true || LoginBean.user.isAgentTransport()==true}">
+				rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isAgentTransport()==true)}">
 				<p:menuitem value="Etat des Chauffeurs"
-					url="#{request.contextPath}/SHELL-transport/gestion/etatChauffeurs.xhtml" />
+					url="#{request.contextPath}/SHELL-transport/index.xhtml?view=etatChauffeurs" />
 				<p:menuitem value="Etat des Vehicule"
-					url="#{request.contextPath}/SHELL-transport/gestion/etatVehicules.xhtml" />
+					url="#{request.contextPath}/SHELL-transport/index.xhtml?view=etatVehicules" />
 				<p:menuitem value="Etat des depenses"
-					url="#{request.contextPath}/SHELL-transport/gestion/etatDepenses.xhtml" />
+					url="#{request.contextPath}/SHELL-transport/index.xhtml?view=etatDepenses" />
 				<p:menuitem value="Etat des livraisons"
-					url="#{request.contextPath}/SHELL-transport/gestion/etatBl.xhtml" />
+					url="#{request.contextPath}/SHELL-transport/index.xhtml?view=etatBl" />
 				<p:menuitem value="Etat par Chauffeurs"
-					url="#{request.contextPath}/SHELL-transport/gestion/etatChauffeur.xhtml" />
+					url="#{request.contextPath}/SHELL-transport/index.xhtml?view=etatChauffeur" />
 				<p:menuitem value="Etat par CLIENTS"
-					url="#{request.contextPath}/SHELL-transport/gestion/etatClient.xhtml" />
+					url="#{request.contextPath}/SHELL-transport/index.xhtml?view=etatClient" />
 				<p:menuitem value="Etat de Facturation P/Comptable"
-					url="#{request.contextPath}/SHELL-transport/gestion/etatventes.xhtml" />
+					url="#{request.contextPath}/SHELL-transport/index.xhtml?view=etatventes" />
 				<p:menuitem value="Rapport Camion"
-					url="#{request.contextPath}/SHELL-transport/gestion/rapportcamion.xhtml"
+					url="#{request.contextPath}/SHELL-transport/index.xhtml?view=rapportcamion"
 					style="font-size:12px" />
 			</p:submenu>
 
 			<p:submenu label="Rapports" style="font-size:12px"
-				rendered="#{LoginBean.user.isAdmin()==true || LoginBean.user.isAgentTransport()==true}">
+				rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isAgentTransport()==true)}">
 				<p:menuitem value="Rendement des Chauffeurs"
-					url="#{request.contextPath}/SHELL-transport/gestion/rendementchauffeur.xhtml" />
+					url="#{request.contextPath}/SHELL-transport/index.xhtml?view=rendementchauffeur" />
 				<p:menuitem value="Vente Carburant"
-					url="#{request.contextPath}/SHELL-transport/gestion/rendementcarburant.xhtml" />
+					url="#{request.contextPath}/SHELL-transport/index.xhtml?view=rendementcarburant" />
 				<p:menuitem value="Depense/Camion"
-					url="#{request.contextPath}/SHELL-transport/gestion/depensecamion.xhtml" />
+					url="#{request.contextPath}/SHELL-transport/index.xhtml?view=depensecamion" />
 			</p:submenu>
 
 			<f:facet name="options">
-				<p:commandLink id="nonAjax" action="#{LoginBean.logout}" ajax="false">
+				<p:commandLink id="nonAjax" action="#{LoginBean.logout}" ajax="false" styleClass="shell-logout-link">
 					<p:graphicImage url="/images/logout.png" />
-					<h:outputText value="#{msg['logout.user']}"
-						style="color:#db0b32;font-size:12px;" />
+					<h:outputText value="#{msg['logout.user']}" />
 				</p:commandLink>
 			</f:facet>
 		</p:menubar>

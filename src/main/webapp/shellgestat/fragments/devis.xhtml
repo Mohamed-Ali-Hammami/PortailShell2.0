@@ -1,0 +1,282 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+
+        <h:form id="devisPrintForm">
+
+            <h:panelGroup layout="block"
+                style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+
+                <h:panelGroup layout="block"
+                    style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+                    <h:panelGroup layout="block" style="text-align:left;">
+                        <h:panelGrid columns="2">
+                            <h:commandLink title="imprimer">
+                                <p:graphicImage url="/images/imprimante-icone.png"
+                                    style="width:25px;" />
+                                <p:printer target="imprimer" />
+                            </h:commandLink>
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+                    <p:outputPanel id="imprimer" style="width:99%;">
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <h:panelGroup layout="block" style="width:400px; text-align:left;">
+                                        <b><h:outputText value="STE Fathi Mahmoud SASSI" style="font-size:20px;" /></b><br />
+                                        <b><h:outputText value="SIDI HASSINE" style="font-size:20px;" /></b><br />
+                                        <b><h:outputText value="TVA : 1716134/Z/P/M/000" style="font-size:20px;" /></b>
+                                    </h:panelGroup>
+                                </td>
+
+                                <td>
+                                    <p:graphicImage url="/images/im.png" style="width:200px;" />
+                                </td>
+
+                                <td>
+                                    <h:panelGroup layout="block" style="width:400px; text-align:left;">
+                                        <b><h:outputText value="TEL : 71 590 360 / 92 519 816" style="font-size:20px;" /></b><br />
+                                        <b><h:outputText value="FAX : 71 934 700" style="font-size:20px;" /></b>
+                                    </h:panelGroup>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <br />
+                        <br />
+
+                        <h:panelGroup layout="block" style="text-align:center;">
+                            <table style="width:60%; text-align:center;">
+                                <tr>
+                                    <td style="text-align:left;">
+                                        <h:outputText value="Devis Client" style="font-size:20px;" />
+                                    </td>
+                                    <td width="100" />
+                                    <td style="text-align:right;">
+                                        <h:outputText value="DATE :" style="font-size:20px;" />
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <h:outputText value="#{DevisBena.facturepassager.dates}" style="font-size:20px;" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:panelGroup>
+
+                        <br />
+
+                        <h:panelGroup layout="block" style="text-align:left;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <h:panelGroup layout="block" style="width:170px;">
+                                            <h:outputText value="Client :" style="font-size:20px;" />
+                                        </h:panelGroup>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="#{DevisBena.client.nom}" style="font-size:20px;" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <h:panelGroup layout="block" style="width:170px;">
+                                            <h:outputText value="Code TVA :" style="font-size:20px;" />
+                                        </h:panelGroup>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="#{DevisBena.client.mf}" style="font-size:20px;" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <h:panelGroup layout="block" style="width:170px;">
+                                            <h:outputText value="ADRESSE :" style="font-size:20px;" />
+                                        </h:panelGroup>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="#{DevisBena.client.adresse}" style="font-size:20px;" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:panelGroup>
+
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+
+                        <h:panelGroup layout="block" style="text-align:center;">
+                            <table style="width:100%; text-align:center;" border="1">
+                                <tr style="background-color:#FAED94;">
+                                    <td><b><h:outputText value="LIBELLE" style="font-size:20px;" /></b></td>
+                                    <td><b><h:outputText value="QUANTITE" style="font-size:20px;" /></b></td>
+                                    <td><b><h:outputText value="P.U HT" style="font-size:20px;" /></b></td>
+                                    <td><b><h:outputText value="MONTANT HT" style="font-size:20px;" /></b></td>
+                                    <td><b><h:outputText value="TVA" style="font-size:20px;" /></b></td>
+                                </tr>
+
+                                <tr>
+                                    <td style="border-color:#ffffff; text-align:left;">
+                                        <h:panelGroup layout="block" style="border-color:#ffffff; height:400px;">
+                                            <ui:repeat var="lc" value="#{DevisBena.listelignefacturepass}">
+                                                <h:outputText value="#{lc.produit.nom}"
+                                                    rendered="#{lc.produit != null}"
+                                                    style="font-size:20px;" />
+                                                <h:outputText value="Transport"
+                                                    rendered="#{lc.produit == null}"
+                                                    style="font-size:20px;" />
+                                                <br />
+                                            </ui:repeat>
+                                        </h:panelGroup>
+                                    </td>
+
+                                    <td style="border-color:#ffffff; text-align:center;">
+                                        <h:panelGroup layout="block" style="border-color:#ffffff; height:400px;">
+                                            <ui:repeat var="lc" value="#{DevisBena.listelignefacturepass}">
+                                                <b><h:outputText value="#{lc.quantites}" style="font-size:20px;" /></b>
+                                                <br />
+                                            </ui:repeat>
+                                        </h:panelGroup>
+                                    </td>
+
+                                    <td style="border-color:#ffffff; text-align:center;">
+                                        <h:panelGroup layout="block" style="border-color:#ffffff; height:400px;">
+                                            <ui:repeat var="lc" value="#{DevisBena.listelignefacturepass}">
+                                                <b>
+                                                    <h:outputText value="#{lc.prixs}"
+                                                        rendered="#{lc.produit != null}"
+                                                        style="font-size:20px;" />
+                                                </b>
+                                                <b>
+                                                    <h:outputText value="#{lc.mantanthts}"
+                                                        rendered="#{lc.produit == null}"
+                                                        style="font-size:20px;" />
+                                                </b>
+                                                <br />
+                                            </ui:repeat>
+                                        </h:panelGroup>
+                                    </td>
+
+                                    <td style="border-color:#ffffff; text-align:center;">
+                                        <h:panelGroup layout="block" style="border-color:#ffffff; height:400px;">
+                                            <ui:repeat var="lc" value="#{DevisBena.listelignefacturepass}">
+                                                <b><h:outputText value="#{lc.mantanthts}" style="font-size:20px;" /></b>
+                                                <br />
+                                            </ui:repeat>
+                                        </h:panelGroup>
+                                    </td>
+
+                                    <td style="border-color:#ffffff; text-align:center;">
+                                        <h:panelGroup layout="block" style="border-color:#ffffff; height:400px;">
+                                            <ui:repeat var="lc" value="#{DevisBena.listelignefacturepass}">
+                                                <b>
+                                                    <h:outputText value="#{lc.produit.tva}"
+                                                        rendered="#{lc.produit != null}"
+                                                        style="font-size:20px;" />
+                                                </b>
+                                                <b>
+                                                    <h:outputText value="#{lc.tva}"
+                                                        rendered="#{lc.produit == null}"
+                                                        style="font-size:20px;" />
+                                                </b>
+                                                <br />
+                                            </ui:repeat>
+                                        </h:panelGroup>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <br />
+
+                            <table style="width:100%; text-align:center;" border="1">
+                                <tr style="background-color:#FAED94;">
+                                    <td>
+                                        <h:outputText value="Nombre de ligne: #{DevisBena.listelignefacturepass.size()}" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:panelGroup>
+
+                        <br />
+                        <br />
+                        <br />
+
+                        <h:panelGroup layout="block" style="text-align:center;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <table border="1">
+                                            <tr>
+                                                <td width="165px" align="center">
+                                                    <h:panelGroup layout="block" style="text-align:right;">
+                                                        <b><h:outputText value="Total HT:" style="font-size:20px;" /></b>
+                                                    </h:panelGroup>
+                                                </td>
+                                                <td width="165px">
+                                                    <h:panelGroup layout="block" style="text-align:right;">
+                                                        <b><h:outputText value="#{DevisBena.facturepassager.totalhts} DT" style="font-size:20px;" /></b>
+                                                    </h:panelGroup>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td width="165px">
+                                                    <h:panelGroup layout="block" style="text-align:right;">
+                                                        <b><h:outputText value="Total TVA:" style="font-size:20px;" /></b>
+                                                    </h:panelGroup>
+                                                </td>
+                                                <td width="165px">
+                                                    <h:panelGroup layout="block" style="text-align:right;">
+                                                        <b><h:outputText value="#{DevisBena.facturepassager.totaltvas} DT" style="font-size:20px;" /></b>
+                                                    </h:panelGroup>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td width="165px">
+                                                    <h:panelGroup layout="block" style="text-align:right;">
+                                                        <b><h:outputText value="Timbres:" style="font-size:20px;" /></b>
+                                                    </h:panelGroup>
+                                                </td>
+                                                <td width="165px">
+                                                    <h:panelGroup layout="block" style="text-align:right;">
+                                                        <b><h:outputText value="#{DevisBena.facturepassager.timbress} DT" style="font-size:20px;" /></b>
+                                                    </h:panelGroup>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td width="165px">
+                                                    <h:panelGroup layout="block" style="text-align:right;">
+                                                        <b><h:outputText value="Total TTC:" style="font-size:20px;" /></b>
+                                                    </h:panelGroup>
+                                                </td>
+                                                <td width="165px">
+                                                    <h:panelGroup layout="block" style="text-align:right;">
+                                                        <b><h:outputText value="#{DevisBena.facturepassager.totalttcs} DT" style="font-size:20px;" /></b>
+                                                    </h:panelGroup>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:panelGroup>
+
+                    </p:outputPanel>
+
+                </h:panelGroup>
+            </h:panelGroup>
+
+        </h:form>
+
+    </h:panelGroup>
+</ui:composition>

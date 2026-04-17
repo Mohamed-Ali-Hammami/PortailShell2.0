@@ -1,0 +1,164 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout paie-shell-fragment">
+        <p:panel styleClass="shell-home-panel paie-shell-panel">
+			<h:form>
+				<table>
+					<tr>
+
+						<td style="text-align: left"><h:selectBooleanCheckbox value="#{PaieBean.actif}"
+								style="width:100px;height:20px" /> <h:commandLink
+								actionListener="#{PaieBean.listemployeractif}">
+								<h:outputText value="liste des employés actifs"
+									style="font-size:12px " />
+							</h:commandLink></td>
+
+						<td><h:selectBooleanCheckbox value="#{PaieBean.inactif}"
+								style="width:100px;height:20px" /> <h:commandLink
+								actionListener="#{PaieBean.listemployerinactif}">
+								<h:outputText value="liste des employés inactifs"
+									style="font-size:12px " />
+							</h:commandLink></td>
+					</tr>
+					<tr>
+						<td><h:selectBooleanCheckbox value="#{PaieBean.declaree}"
+								style="width:100px;height:20px" /> <h:commandLink
+								actionListener="#{PaieBean.listemployerdeclaree}">
+								<h:outputText value="liste des employés Déclarées"
+									style="font-size:12px " />
+							</h:commandLink></td>
+
+						<td><h:selectBooleanCheckbox value="#{PaieBean.nondeclaree}"
+								style="width:100px;height:20px" /> <h:commandLink
+								actionListener="#{PaieBean.listemployernondeclaree}">
+								<h:outputText value="liste des employés  Non Déclarées"
+									style="font-size:12px " />
+							</h:commandLink></td>
+					</tr>
+					<tr>
+						<td style="text-align: left"><p:commandButton value="Nouveau"
+								action="#{PaieBean.nouvemployee}" ajax="false"
+								style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);" /></td>
+
+                         <td style="text-align: left"><p:commandButton value="Imprimer"
+								 ajax="false"
+								style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);" >
+								<p:printer target="imprimer" />
+								</p:commandButton>
+								
+								
+								</td>
+                         
+
+						<td><p:commandButton value="Tableau des salaires"
+								action="#{PaieBean.tableauSalaires}" ajax="false"
+								style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);" /></td>
+
+
+                        <td><p:commandButton value="Impression Photos"
+								action="#{PaieBean.impressionPhotos}" ajax="false"
+								style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);" /></td>
+
+
+
+					</tr>
+				</table>
+			</h:form>
+
+			<br />
+			<br />
+			
+			 <p:outputPanel  id="imprimer"  >
+			<h:form>
+				<p:dataTable id="emp" var="emp" value="#{PaieBean.listEmp}"
+					widgetVar="articleTable" selectionMode="single" 
+					selection="#{PaieBean.selectedEmp}"
+					filteredValue="#{PaieBean.filtredEmp}" rowKey="#{emp.matricule}"
+					style="margin-bottom:10px;"
+					emptyMessage="aucun employer dans la base" paginator="true"
+					rows="100" paginatorPosition="bottom" resizableColumns="true"
+					liveResize="true">
+					<!-- 
+								 <p:ajax event="rowSelect" listener="#{PaieBean.onRowSelect}"   />
+                                 <p:ajax event="rowUnselect" listener="#{PaieBean.onRowUnselect}"  />
+								  -->
+					<p:column width="5%">
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="MAT" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{emp.code}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="CIN" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{emp.cin}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="CODE CNSS" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{emp.code_cnss}" />
+					</p:column>
+
+					<p:column filterBy="#{emp.nom}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="NOM" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{emp.nom}" />
+					</p:column>
+
+
+					 
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="Salaire" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{emp.salaire_journalier}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="Tel" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{emp.tel}" />
+					</p:column>
+					
+					 <p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="Date d'embauche" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{emp.dateembauche}" />
+					</p:column>
+					
+					 <p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="Date de fin de contrat" />
+						</f:facet>
+						<h:outputText style="font-size:12px " value="#{emp.datecontrat}" />
+					</p:column>
+
+					<p:column style="width:32px;text-align: center">
+						<p:commandButton icon="ui-icon-search" title="View" ajax="false"
+							action="#{PaieBean.succes}">
+							<f:setPropertyActionListener value="#{emp}"
+								target="#{PaieBean.selectedEmp}" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+
+
+			</h:form>
+</p:outputPanel>
+        </p:panel>
+    </h:panelGroup>
+</ui:composition>

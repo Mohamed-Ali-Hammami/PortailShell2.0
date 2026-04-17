@@ -76,7 +76,6 @@ public class DepenseDaoImpl implements DepenseDAO {
 			 }}
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 
 		if (l != null)
@@ -108,7 +107,6 @@ public class DepenseDaoImpl implements DepenseDAO {
 				 }}
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
 			}
 
 			if (l != null)

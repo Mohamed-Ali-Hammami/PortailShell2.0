@@ -49,6 +49,9 @@ public class Bonlivraison {
 	@Enumerated(EnumType.STRING)
 	private Statut statut = Statut.ACTIF;
 
+	@Enumerated(EnumType.STRING)
+	private Status status = Status.NonFacturee;
+
 	@ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "chauffeurid")
 	private Chauffeur chauffeur;
@@ -118,6 +121,14 @@ public class Bonlivraison {
 
 	public void setStatut(Statut statut) {
 		this.statut = statut;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	public void setMontants(String montants) {

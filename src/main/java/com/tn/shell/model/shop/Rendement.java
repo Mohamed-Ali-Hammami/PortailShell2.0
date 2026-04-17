@@ -219,7 +219,6 @@ public class Rendement  implements Comparable<Object>, Serializable {
 			Rendement f = (Rendement) o;
 			return (int) (this.nbvoiture - f.nbvoiture);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return 0;
 		}
 	}
@@ -340,7 +339,6 @@ public class Rendement  implements Comparable<Object>, Serializable {
 		try {
 
 			        File file =  new File(destinationFile);
-			        System.out.println(file.getPath());
 		            FileInputStream fileInputStreamReader = new FileInputStream(file);
 		          //  byte[] bytes = new byte[(int)file.length()];
 		           // fileInputStreamReader.read(bytes);
@@ -351,7 +349,6 @@ public class Rendement  implements Comparable<Object>, Serializable {
 		        
 			 
 		} catch (Exception e) {
-			System.out.println("erreur d' encodage  " + e.getMessage());
 			 
 		}
 		 return null;

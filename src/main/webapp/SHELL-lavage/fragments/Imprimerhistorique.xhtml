@@ -1,0 +1,170 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout lavage-shell-fragment">
+	
+				<h:form id="f">
+
+				<h:panelGroup layout="block" style="text-align:center;">				
+					 
+                    
+				 	<p:commandButton title="imprimer" value="imprimer"   ajax="false" >
+							  <p:printer target="imprimer"></p:printer>
+							 
+						 
+					</p:commandButton> 
+					<br />
+					<br />
+                     
+					<p:outputPanel id="imprimer" >
+					<div style="background-color: lightblue;">
+						  <h:panelGroup layout="block" style="text-align:right;">
+						  <h:outputText
+									value="  #{ServiceLavageBean.dates1}"
+									style="font-size:10px" /> 
+						  </h:panelGroup>
+						<h:panelGroup layout="block" style="text-align:center;">
+							<b><h:outputText
+									value="Détails rapport de : #{ServiceLavageBean.typalavage}"
+									style="font-size:20px" />   </b>
+
+
+						</h:panelGroup>
+						<br /> 
+						</div>
+						
+						<h:panelGroup layout="block" style="text-align:right;">
+						<p:dataTable id="produit" var="p" style="background-color: lightblue;"   
+							value="#{ServiceLavageBean.listRendement}"  
+							emptyMessage="aucune ligne dans la base">
+							 
+								<p:column width="20%" style="border: 0.5px #000000 solid;">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000"
+											value="Date" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.dates}"  />
+								</p:column>
+
+								<p:column style="border: 0.5px #000000 solid;">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000"
+											value="Heure" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000" value="De #{p.heure_entree} A #{p.heure_sortie}"
+										  />
+								</p:column>
+
+								 
+								
+								<p:column  width="10%" style="border: 0.5px #000000 solid;text-aligh:right">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000;text-aligh:right"
+											value="Personnel"    />
+											
+											 
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.laveur}"   />
+								</p:column>
+								
+								<p:column width="10%" style="border: 0.5px #000000 solid;text-aligh:right">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000;text-aligh:right"
+											value="Service" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.service}"   />
+								</p:column>
+								
+								<p:column width="10%" style="border: 0.5px #000000 solid;text-aligh:right">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000;text-aligh:right"
+											value="Durée" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.duree}"   />
+								</p:column>
+								
+								
+
+								<p:column width="15%" style="border: 0.5px #000000 solid;text-aligh:right">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000;text-aligh:right"
+											value="Ecart" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.ecart}"  />
+								</p:column>
+								
+								<p:column width="15%" style="border: 0.5px #000000 solid;text-aligh:right">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000;text-aligh:right"
+											value="Model" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.marque}/#{p.model}"  />
+								</p:column>
+								
+								 
+								
+								 
+								
+								 
+								
+								
+								<p:column width="10%" style="border: 0.5px #000000 solid;text-aligh:right">
+									<f:facet name="header">
+										<h:outputText style="font-size:14px ;color:#000000;text-aligh:right"
+											value="Montant" />
+									</f:facet>
+
+
+									<h:outputText style="font-size:14px ;color:#000000"
+										value="#{p.montantv}"   />
+								</p:column>
+								
+								
+								
+						  		 
+				      	<p:columnGroup type="footer">
+									<p:row>
+										<p:column colspan="7" style="text-align:right"
+											footerText="Totals: #{ServiceLavageBean.listRendement.size()}" />
+										<p:column footerText="#{ServiceLavageBean.total}" style="text-align:left" />
+										  
+									</p:row>
+								</p:columnGroup>	
+				  
+						</p:dataTable></h:panelGroup><br/>
+						
+					 
+                              
+						 <br/>
+						 
+						 	 
+						
+						<br/>
+					</p:outputPanel>
+				</h:panelGroup>
+			</h:form>
+	 
+    </h:panelGroup>
+</ui:composition>

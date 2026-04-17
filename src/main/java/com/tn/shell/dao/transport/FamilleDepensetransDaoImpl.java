@@ -30,10 +30,8 @@ public Familledepensetransport getFamilebyeibelle(String libelle){
 	 List<Familledepensetransport> VheculeListem=em.createQuery("SELECT c FROM  Familledepensetransport c where c.libelle = :nom and c.statut = :statut",Familledepensetransport.class).setParameter("statut", Statut.ACTIF).setParameter("nom", libelle).getResultList();
      
      if (VheculeListem.size() > 0){
-     	System.out.println("objet trouvé "+VheculeListem.get(0).getId()+"\n\n\n");
          return VheculeListem.get(0);}
      else{
-     	System.out.println("\n\nl  objet Vhecule n exsite pas\n\n");
          return null;}   
 }
 

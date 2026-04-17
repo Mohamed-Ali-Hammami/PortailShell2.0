@@ -187,7 +187,6 @@ public class CerteficatBean {
             getServiceFournisseur().update(fournisseur);
             return SUCCESS;       
         } catch (DataAccessException e) {
-            e.printStackTrace();       
         }    
         return ERROR;
     } 
@@ -233,7 +232,6 @@ public class CerteficatBean {
 		  etab=matricule.substring(matricule.length()-3, matricule.length());		 
 		}catch(Exception e){
 			matricule="";
-			System.out.println("");
 		}
 		
 	}
@@ -247,7 +245,6 @@ public class CerteficatBean {
 		  categorie=matricule.substring(matricule.length()-4, matricule.length()-3); 
 		  etab=matricule.substring(matricule.length()-3, matricule.length());		 
 		}catch(Exception e){
-			System.out.println("");
 		}
 	}
 	public void verifFournisseur(AjaxBehavior event){

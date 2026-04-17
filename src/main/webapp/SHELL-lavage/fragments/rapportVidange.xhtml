@@ -1,0 +1,134 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout lavage-shell-fragment">
+			
+			<h:form> 
+			
+			<h:panelGroup layout="block" style="text-align:center;">
+					<h:panelGrid columns="2">
+						<p:commandButton title="imprimer">
+							 
+							  <p:printer target="imprimer"></p:printer> 
+						</p:commandButton>
+					</h:panelGrid>
+					<table>
+						<tr>
+							<td><h:outputText value="Date de début:"
+									style="font-size:12px " /></td>
+							<td><p:calendar  value="#{RendementBean.date1}" id="date1"  navigator="true"
+  pattern="dd/MM/yyyy" buttonTabindex="-1" type="tel"
+  mask="99/99/-9999" placeholder="__/__/____" >
+						 
+								</p:calendar></td>
+
+							<td><h:outputText value="Date de fin:"
+									style="font-size:12px " /></td>
+							<td><p:calendar id="popup2" value="#{RendementBean.date2}" navigator="true"
+  pattern="dd/MM/yyyy" buttonTabindex="-1" type="tel"
+									   >
+                                   
+								</p:calendar></td>
+						</tr>
+
+
+
+
+						<tr>
+							<td />
+							<td><p:commandButton value="Valider" ajax="false"
+									action="#{RendementBean.getrapportVidange}"
+									style="width:150px;font-size:12px;height:30;color:#0000ff;background-color:#abc8e2;" /></td>
+						</tr>
+					</table>
+
+				</h:panelGroup>
+				
+					<p:outputPanel id="imprimer" style="width:99%">
+					 <br/><br/>
+					
+					<b><h:outputText value="Rapport Mensuel  Vidange DU #{RendementBean.date1s} AU  #{RendementBean.date2s}" style="font-size:24px ;color:black;"/></b>
+		 <br/><br/> <br/><br/>
+	
+	  <p:dataTable var="sale" value="#{RendementBean.listRappoert}"  >
+        <p:columnGroup type="header">
+            <p:row>
+                <p:column colspan="2" headerText="Recette" width="220:px" style="color:#00008B;font-size:14px "/>
+                <p:column colspan="2" headerText="Listes Des Depenses" style="color:#00008B;font-size:14px "/>
+            </p:row>            
+            <p:row>
+                <p:column headerText="TOTAL" style="color:blue;font-size:14px "/>
+                <p:column headerText="NOMBRE DE VOITURE" style="color:blue;font-size:14px "/>
+                <p:column headerText="Depense" style="color:blue;font-size:14px "/>
+                <p:column headerText="Montant" style="color:blue;font-size:14px "/>              
+            </p:row>
+            
+              <p:row>
+                <p:column  rowspan="5" headerText="#{RendementBean.rapport.recette}" style=" font-size:20px " />
+                <p:column rowspan="5" headerText="#{RendementBean.rapport.totalv}" style=" font-size:20px "  /> 
+                
+                  <p:column   headerText="Déclaration CNSS"  style=" font-size:14px " />
+                <p:column   headerText="#{RendementBean.rapport.declarationCnss}"  style=" font-size:12px " /> 
+            </p:row>
+            
+             <p:row>
+                
+             
+                
+                  <p:column     headerText="Masse Salarial"  style=" font-size:14px " />
+                <p:column   headerText="#{RendementBean.rapport.masseSalarial}"  style=" font-size:12px " /> 
+            </p:row>
+            
+            <p:row>
+   
+                
+                  <p:column     headerText="Famille Vidange"  style=" font-size:14px " />
+                <p:column   headerText="#{RendementBean.rapport.depenseLavage}"  style=" font-size:12px " /> 
+            </p:row>
+            
+            
+             <p:row>
+   
+                
+                  <p:column     headerText="STEG"  style=" font-size:14px " />
+                <p:column   headerText="#{RendementBean.rapport.steg}"  style=" font-size:12px " /> 
+            </p:row>
+             
+            
+             <p:row>               
+                
+                  <p:column     headerText="Total"  style=" font-size:18px ;color:red" />
+                <p:column   headerText="#{RendementBean.rapport.totalDepense}"  style=" font-size:18px;color:red " /> 
+            </p:row>
+        </p:columnGroup>        
+        
+          <f:facet name="footer">
+           
+           BENEFICES Net <b>  <h:outputText value="      #{RendementBean.rapport.benefice}" style="color:#F70D1A;font-size:24px "/></b> 
+        </f:facet>
+        </p:dataTable>
+        
+       
+			</p:outputPanel>
+			
+			
+			 </h:form>
+			 
+			  
+			   <h:form>
+				<p:commandButton value="Print" style="margin:10px;"
+					onclick="$('#output').empty().append(PF('chart').exportAsImage());">
+					<p:printer target="output"></p:printer>
+				</p:commandButton>
+			</h:form>
+		 
+			<p:outputPanel id="output" layout="block"
+				style="position:absolute;height:300px;z-index:1" />
+			<p:chart widgetVar="chart" type="bar"
+				model="#{RendementBean.transportModel}"
+				style="height:300px;z-index:1000;background:#fff"></p:chart>
+		  
+    </h:panelGroup>
+</ui:composition>

@@ -1,0 +1,136 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+
+        <h:form id="factureAchatPrintForm">
+
+            <h:panelGroup layout="block"
+                style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+
+                <h:panelGroup layout="block"
+                    style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+                    <h:panelGroup layout="block" style="text-align:left;">
+
+                        <p:commandButton title="imprimer" value="imprimer">
+                            <p:printer target="imprimer" />
+                        </p:commandButton>
+
+                        <p:outputPanel id="imprimer">
+
+                            <table style="width:100%;">
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <h:outputText
+                                                value="FACTURE Carburant #{AchatcarburantBean.factureAchat.code} #{AchatcarburantBean.fourniseur.nom}"
+                                                style="font-size:12px;" />
+                                        </b>
+                                    </td>
+                                    <td />
+                                </tr>
+                            </table>
+
+                            <br />
+                            <br />
+                            <br />
+
+                            <table border="1" style="width:100%;">
+                                <tr>
+                                    <td>
+                                        <b><h:outputText value="Nom" style="font-size:12px;" /></b>
+                                    </td>
+                                    <td>
+                                        <b><h:outputText value="Quantite" style="font-size:12px;" /></b>
+                                    </td>
+                                    <td>
+                                        <b><h:outputText value="Stock" style="font-size:12px;" /></b>
+                                    </td>
+                                    <td>
+                                        <b><h:outputText value="Achat" style="font-size:12px;" /></b>
+                                    </td>
+                                    <td>
+                                        <b><h:outputText value="Montant" style="font-size:12px;" /></b>
+                                    </td>
+                                </tr>
+
+                                <ui:repeat var="a" value="#{AchatcarburantBean.listeLigne}">
+                                    <tr>
+                                        <td>
+                                            <h:outputText value="#{a.articlecarburant.nom}" style="font-size:12px;" />
+                                        </td>
+                                        <td>
+                                            <h:outputText value="#{a.quantite}" style="font-size:12px;" />
+                                        </td>
+                                        <td>
+                                            <h:outputText value="#{a.articlecarburant.quantites}" style="font-size:12px;" />
+                                        </td>
+                                        <td>
+                                            <h:outputText value="#{a.articlecarburant.achat}" style="font-size:12px;" />
+                                        </td>
+                                        <td>
+                                            <h:outputText value="#{a.montants}" style="font-size:12px;" />
+                                        </td>
+                                    </tr>
+                                </ui:repeat>
+
+                                <tr>
+                                    <td>
+                                        <h:outputText value="Total" style="font-size:12px;" />
+                                    </td>
+                                    <td rowspan="3">
+                                        <h:outputText value="#{AchatcarburantBean.totalquantite}" style="font-size:12px;" />
+                                    </td>
+                                    <td />
+                                    <td />
+                                    <td>
+                                        <h:outputText value="#{AchatcarburantBean.totalttcs}" style="font-size:12px;" />
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table style="width:100%;"></table>
+
+                            <br />
+                            <br />
+
+                            <b>
+                                <h:outputText value="Nombre de ligne : #{AchatcarburantBean.listeLigne.size()}"
+                                    style="font-size:12px;" />
+                            </b>
+
+                            <br />
+                            <br />
+
+                            <h:panelGroup layout="block"
+                                rendered="#{AchatcarburantBean.factureAchat.numerocheck != null}"
+                                style="width:300px;">
+
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="Numero cheque" style="font-size:12px;" />
+                                    <h:outputText value="#{AchatcarburantBean.factureAchat.numerocheck}" style="font-size:12px;" />
+
+                                    <h:outputText value="Banque" style="font-size:12px;" />
+                                    <h:outputText value="#{AchatcarburantBean.factureAchat.banque}" style="font-size:12px;" />
+
+                                    <h:outputText value="Echeance" style="font-size:12px;" />
+                                    <h:outputText value="#{AchatcarburantBean.factureAchat.echeances}" style="font-size:12px;" />
+                                </h:panelGrid>
+
+                            </h:panelGroup>
+
+                        </p:outputPanel>
+
+                    </h:panelGroup>
+
+                </h:panelGroup>
+            </h:panelGroup>
+
+        </h:form>
+
+    </h:panelGroup>
+</ui:composition>

@@ -38,10 +38,8 @@ public class CompteDaoImpl implements CompteDao {
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 
 		if (CompteListem.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return CompteListem.get(0);
 		} else {
-			System.out.println("\n\nl  objet Compte n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -53,21 +51,17 @@ public class CompteDaoImpl implements CompteDao {
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 
 		if (CompteListem.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return CompteListem.get(0);
 		} else {
-			System.out.println("\n\nl  objet Compte n exsite pas\n\n");
 			return null;
 		}
 	}
 
 	@Transactional
 	public void update(Compte d) {
-		System.out.println("\n\n\n update");
 		Compte c = em.find(Compte.class, d.getId());
 		c=d;
 		em.merge(c);
-		System.out.println("\n\n\n apres update" + c.getSolde());
 	}
 
 	@Transactional

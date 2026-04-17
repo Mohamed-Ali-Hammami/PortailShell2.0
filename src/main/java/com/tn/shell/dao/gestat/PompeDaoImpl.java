@@ -45,10 +45,8 @@ public class PompeDaoImpl implements PompeDao {
 		 List<Pompe> PompeListem=em.createQuery("SELECT c FROM  Pompe c where c.libelle = :nom and c.statut = :statut",Pompe.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (PompeListem.size() > 0){
-	        	System.out.println("objet trouvé " );
 	            return PompeListem.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet Pompe n exsite pas\n\n");
 	            return null;}   
 	}
 	 
@@ -57,10 +55,8 @@ public class PompeDaoImpl implements PompeDao {
 			 List<Pompe> PompeListem=em.createQuery("SELECT c FROM  Pompe c where c.id = :nom and c.statut = :statut",Pompe.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 		        
 		        if (PompeListem.size() > 0){
-		        	System.out.println("objet trouvé " );
 		            return PompeListem.get(0);}
 		        else{
-		        	System.out.println("\n\nl  objet Pompe n exsite pas\n\n");
 		            return null;}   
 		}
 	 
@@ -72,7 +68,6 @@ public class PompeDaoImpl implements PompeDao {
 	        	 
 	            return PompeListem.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet Pompe n exsite pas\n\n");
 	            return null;}   
 	}
 	 @Transactional

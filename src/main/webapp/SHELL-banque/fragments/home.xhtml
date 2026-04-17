@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div class="shell-module-layout">
+		<p:growl id="msgs" showDetail="true" />
+
+		<p:panel id="basic" styleClass="shell-home-panel">
+			<h:form id="banqueHomeForm">
+				<div class="shell-page-tools">
+					<p:commandButton value="Nouveau Banque"
+						action="#{BanqueBean.nouveauBanque}"
+						ajax="false"
+						styleClass="shell-action-button" />
+				</div>
+
+				<div class="shell-page-intro">
+					<h2 class="shell-page-title">Selection Banque</h2>
+					<p class="shell-page-subtitle">Choisis la banque active avant d'ouvrir les ecrans de gestion.</p>
+				</div>
+
+				<div class="shell-empty-state" style="max-width: 520px; margin: 0 auto;">
+					<p:selectOneMenu value="#{BanqueBean.nom}"
+						style="width:100%;font-size:16px"
+						filter="true"
+						filterMatchMode="contains">
+						<f:selectItem itemLabel="Selectionner banque" />
+						<f:selectItems value="#{BanqueBean.listBanque}"
+							var="f"
+							itemValue="#{f.nom}"
+							itemLabel="#{f.nom}" />
+					</p:selectOneMenu>
+
+					<div style="margin-top: 18px;">
+						<p:commandButton value="Valider"
+							action="#{BanqueBean.valider}"
+							styleClass="shell-action-button"
+							ajax="false" />
+					</div>
+				</div>
+			</h:form>
+		</p:panel>
+	</div>
+</ui:composition>

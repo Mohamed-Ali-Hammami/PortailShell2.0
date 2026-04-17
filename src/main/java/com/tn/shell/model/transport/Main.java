@@ -15,7 +15,6 @@ public class Main {
 		 Calendar now = Calendar.getInstance();
 		// System.out.println(now.get(Calendar.HOUR_OF_DAY) + ":" + now.get(Calendar.MINUTE));
 		 double x= 92.000-(92.000*19*0.01);
-			 System.out.println("transport "+ x);
 		 
 	}
 

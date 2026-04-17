@@ -145,7 +145,7 @@ public class ProduiBean {
 	      }
 	 public void onRowEdit2(RowEditEvent event) {
 
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "fournisseur chang�",
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "fournisseur changÃ©",
 					((Produit) event.getObject()).getNom());
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 			updateProduit((Produit) event.getObject());
@@ -159,7 +159,7 @@ public class ProduiBean {
 	}
 
 	      public void onRowEdit(RowEditEvent event){			 
-				FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"produit chang�",((Produit)event.getObject()).getNom());
+				FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"produit changÃ©",((Produit)event.getObject()).getNom());
 			     FacesContext.getCurrentInstance().addMessage(null, msg);
 			     updateProduit((Produit)event.getObject());
 			    
@@ -169,7 +169,6 @@ public class ProduiBean {
 	              getServiceProduit().update(produit);
 	              return SUCCESS;       
 	          } catch (DataAccessException e) {
-	              e.printStackTrace();       
 	          }    
 	          return ERROR;
 	      } 

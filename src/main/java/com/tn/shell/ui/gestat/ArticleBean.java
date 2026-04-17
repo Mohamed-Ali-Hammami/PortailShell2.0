@@ -62,7 +62,6 @@ public class ArticleBean {
 		for (Articlecarburant d : listArticlecarburant)
 			total = total +  (d.getValeur());
 
-		System.out.println("total " + total);
 	}
     public String regulationinventaire() {
     	date=new Date();
@@ -72,6 +71,15 @@ public class ArticleBean {
 		dates=f.format(date);
     	return SUCCESS;
     }
+
+	public String validerregulationinventaire() {
+		if (listArticlecarburant != null) {
+			for (Articlecarburant article : listArticlecarburant) {
+				serviceArticleCarburant.update(article);
+			}
+		}
+		return SUCCESS;
+	}
     public void onRowEdit(RowEditEvent event) {
 
 		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,

@@ -242,14 +242,13 @@ public class FamilledepensetransportBean {
 		        serviceTrace.save(t);
 			return SUCCESS;
 		} catch (DataAccessException e) {
-			e.printStackTrace();
 		}
 		return ERROR;
 	}
 
 	public void onRowEdit(RowEditEvent event) {
 
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Depense chang�",
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Depense changÃ©",
 				((Depense) event.getObject()).getLibelle());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		updateDepense((Depense) event.getObject());
@@ -276,12 +275,11 @@ public class FamilledepensetransportBean {
 	 * 
 	 * public String updateVhecule(Familledepense familledepense) { try {
 	 * getServiceFamilledepense().update(familledepense); return SUCCESS; } catch
-	 * (DataAccessException e) { e.printStackTrace(); } return ERROR; }
 	 * 
 	 * public void onRowEdit(RowEditEvent event) {
 	 * 
 	 * FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-	 * "Famille depense chang�", ((Familledepense) event.getObject()).getLibelle());
+	 * "Famille depense changÃ©", ((Familledepense) event.getObject()).getLibelle());
 	 * FacesContext.getCurrentInstance().addMessage(null, msg);
 	 * updateFamilledepense((Familledepense) event.getObject());
 	 * 

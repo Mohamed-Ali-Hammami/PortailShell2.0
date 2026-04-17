@@ -6,17 +6,29 @@
 	<html xmlns="http://www.w3.org/1999/xhtml">
 	<h:head>
 		<title><ui:insert name="title">Portail Shell</ui:insert></title>
+		<h:outputStylesheet library="css" name="tokens.css" />
+		<h:outputStylesheet library="css" name="app.css" />
+		<h:outputStylesheet library="css" name="components.css" />
+		<h:outputStylesheet library="css" name="fragments.css" />
+		<h:outputStylesheet library="css" name="utilities.css" />
 		<ui:insert name="head" />
 	</h:head>
-	<h:body>
-		<p:panel style="min-height:900px;margin-left: 20px;margin-right: 20px;">
-			<ui:include src="/Header.xhtml" />
-			<ui:insert name="moduleNav" />
-			<p:panel id="appContent" closable="true"
-				style="min-height:900px;margin-left: 50px;margin-right: 50px;background-image: url(/2.png)">
-				<ui:insert name="content" />
-			</p:panel>
-		</p:panel>
+	<h:body styleClass="app-page"
+		style="--shell-hero-url:url('#{request.contextPath}/2.png');">
+		<div class="app-shell">
+			<div class="app-shell__backdrop"></div>
+			<div class="app-shell__inner">
+				<div class="app-frame">
+					<ui:include src="/Header.xhtml" />
+					<div class="app-module-nav">
+						<ui:insert name="moduleNav" />
+					</div>
+					<p:panel id="appContent" closable="true" styleClass="app-content-card">
+						<ui:insert name="content" />
+					</p:panel>
+				</div>
+			</div>
+		</div>
 	</h:body>
 	</html>
 </ui:composition>

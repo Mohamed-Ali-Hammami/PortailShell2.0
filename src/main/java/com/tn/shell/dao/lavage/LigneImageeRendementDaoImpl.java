@@ -1,5 +1,6 @@
 package com.tn.shell.dao.lavage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -39,10 +40,8 @@ public class LigneImageeRendementDaoImpl implements LigneImageeRendementDAO {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0).getId();
 		} else {
-			System.out.println("\n\nl  objet LigneImagerendement n exsite pas\n\n");
 			return 0;
 		}
 	}
@@ -60,6 +59,9 @@ public class LigneImageeRendementDaoImpl implements LigneImageeRendementDAO {
 
 	@Transactional
 	public List<LigneImagerendement> getLigneImagerendementbyMarque(Marque f) {
+		if (f == null || f.getId() == null) {
+			return new ArrayList<LigneImagerendement>();
+		}
 		List<LigneImagerendement> result = em.createQuery(
 				"SELECT b FROM LigneImagerendement  b  where b.statut = :statut  and b.marque.id = :numero order by b.id Desc",
 				LigneImagerendement.class).setParameter("statut", Statut.ACTIF).setParameter("numero", f.getId()).getResultList();
@@ -67,6 +69,9 @@ public class LigneImageeRendementDaoImpl implements LigneImageeRendementDAO {
 	}
 	@Transactional
 	public List<LigneImagerendement> getLigneImagerendementbyArticle(Produit f){
+		if (f == null || f.getCode() == null) {
+			return new ArrayList<LigneImagerendement>();
+		}
 		List<LigneImagerendement> result = em.createQuery(
 				"SELECT b FROM LigneImagerendement  b  where b.statut = :statut  and b.fournisseur.code = :numero order by b.id Desc",
 				LigneImagerendement.class).setParameter("statut", Statut.ACTIF).setParameter("numero", f.getCode()).getResultList();
@@ -80,10 +85,8 @@ public class LigneImageeRendementDaoImpl implements LigneImageeRendementDAO {
 				LigneImagerendement.class).setParameter("id", id).setParameter("position", position).getSingleResult();
 		 
 		if (result!=null) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet LigneImagerendement n exsite pas\n\n");
 			return null;
 		}
 		}

@@ -27,10 +27,8 @@ public class SoldetpeDaoImpl implements SoldetpeDAO {
 		List<Soldetpe> result = new ArrayList<Soldetpe>();
 		result = em.createQuery("SELECT a FROM Soldetpe a", Soldetpe.class).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet Soldetpe n exsite pas\n\n");
 			return result;
 		}
 	}
@@ -44,10 +42,8 @@ public class SoldetpeDaoImpl implements SoldetpeDAO {
 	public Soldetpe getmaxcode() {
 		List<Soldetpe> result = em.createQuery("SELECT a FROM Soldetpe a", Soldetpe.class).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0);
 		} else {
-			System.out.println("\n\nl  objet Soldetpe n exsite pas\n\n");
 			return null;
 		}
 	}

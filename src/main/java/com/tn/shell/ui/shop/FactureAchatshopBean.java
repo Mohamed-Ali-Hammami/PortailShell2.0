@@ -129,7 +129,6 @@ public class FactureAchatshopBean {
 	            getServiceFactureAchat().update(factureachat);
 	            return SUCCESS;       
 	        } catch (DataAccessException e) {
-	            e.printStackTrace();       
 	        }    
 	        return ERROR;
 	    } 

@@ -29,10 +29,8 @@ public class CategorieDaoImpl implements CategorieDAO {
 		 List<Categorie> AnneeListem=em.createQuery("SELECT u FROM  Categorie u where u.cat.cat = :designation group by u.cat.id",Categorie.class).setParameter("designation", designation).getResultList();
 	        
 	        if (AnneeListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return AnneeListem;}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}   
 	}
 	@Transactional
@@ -43,10 +41,8 @@ public class CategorieDaoImpl implements CategorieDAO {
 				 getResultList();
 	        
 	        if (AnneeListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return AnneeListem.get(0);}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}  
 	 }
 	 
@@ -55,10 +51,8 @@ public class CategorieDaoImpl implements CategorieDAO {
 		 List<Categorie> AnneeListem=em.createQuery("SELECT u FROM  Categorie u where u.cat.id = :id",Categorie.class).setParameter("id", d.getId()).getResultList();
 	        
 	        if (AnneeListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return AnneeListem;}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}   
 	}
 	 @Transactional
@@ -66,10 +60,8 @@ public class CategorieDaoImpl implements CategorieDAO {
 		 List<Categorie> AnneeListem=em.createQuery("SELECT u FROM  Categorie u where u.cat.id = :id",Categorie.class).setParameter("id", d).getResultList();
 	        
 	        if (AnneeListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return AnneeListem;}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}   
 	 }
 	@Transactional

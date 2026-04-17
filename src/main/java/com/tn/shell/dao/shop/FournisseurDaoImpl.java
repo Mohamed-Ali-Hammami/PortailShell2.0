@@ -38,10 +38,8 @@ public class FournisseurDaoImpl implements FournisseurDAO {
 		 List<Fournisseur> FournisseurListem=em.createQuery("SELECT u FROM  Fournisseur u where u.nom = :fournisseurname and u.statut=:statut",Fournisseur.class).setParameter("fournisseurname", name).setParameter("statut", Statut.ACTIF).getResultList();
 	        
 	        if (FournisseurListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return FournisseurListem.get(0);}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}   
 	}
 @Transactional
@@ -49,10 +47,8 @@ public Fournisseur getbyid(Integer name) {
 	 List<Fournisseur> FournisseurListem=em.createQuery("SELECT u FROM  Fournisseur u where u.code = :fournisseurname and u.statut=:statut",Fournisseur.class).setParameter("fournisseurname", name).setParameter("statut", Statut.ACTIF).getResultList();
      
      if (FournisseurListem.size() > 0){
-     	System.out.println("objet trouvé\n");
          return FournisseurListem.get(0);}
      else{
-     	System.out.println("l  objet n exsite pas");
          return null;}   
 }
 @Transactional
@@ -60,10 +56,8 @@ public Fournisseur getbymf(String name) {
 	 List<Fournisseur> FournisseurListem=em.createQuery("SELECT u FROM  Fournisseur u where u.matriculefiscal = :fournisseurname and u.statut=:statut",Fournisseur.class).setParameter("fournisseurname", name).setParameter("statut", Statut.ACTIF).getResultList();
         
         if (FournisseurListem.size() > 0){
-        	System.out.println("objet trouvé\n");
             return FournisseurListem.get(0);}
         else{
-        	System.out.println("l  objet n exsite pas");
             return null;}   
 }
 @Transactional

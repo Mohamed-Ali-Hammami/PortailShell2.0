@@ -50,10 +50,8 @@ public class VheculeDaoImpl implements VheculeDao {
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 
 		if (VheculeListem.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return VheculeListem.get(0);
 		} else {
-			System.out.println("\n\nl  objet Vhecule n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -65,10 +63,8 @@ public class VheculeDaoImpl implements VheculeDao {
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 
 		if (VheculeListem.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return VheculeListem.get(0);
 		} else {
-			System.out.println("\n\nl  objet Vhecule n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -80,10 +76,8 @@ public class VheculeDaoImpl implements VheculeDao {
 				.setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 
 		if (VheculeListem.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return VheculeListem.get(0);
 		} else {
-			System.out.println("\n\nl  objet Vhecule n exsite pas\n\n");
 			return null;
 		}
 	}

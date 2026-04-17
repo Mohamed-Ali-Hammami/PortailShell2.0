@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 @Entity
 @Table(name = "Pointageconge")
 public class Pointageconge {
@@ -25,6 +28,7 @@ public class Pointageconge {
 	private double avance=0;
 	@ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "employeeid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Employee employee;
 	@Enumerated(EnumType.STRING)
 	private Statut statut= Statut.ACTIF;

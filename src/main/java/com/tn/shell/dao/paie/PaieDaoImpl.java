@@ -30,10 +30,8 @@ public class PaieDaoImpl implements PaieDAO {
 			 Query q=em.createNativeQuery("SELECT SUM(a.retenue_cnss) FROM Paie a  where a.statut = 'ACTIF' "+" and a.annee = "+annee+" and a.mois ="+mois+" and a.employeeid in (select p.matricule from employee p where p.fonction = '"+fonction+"')"); 
 						 try {
 					double result =   (Double) q.getSingleResult();
-	              System.out.println("\n\n\n reult"+result);
 					return result;
 				} catch (Exception e) {
-					 System.out.println("\n\n\n result"+e.toString());
 					return 0;
 				} 
 		}	
@@ -56,10 +54,8 @@ public class PaieDaoImpl implements PaieDAO {
 				Paie.class).setParameter("statut", Statut.ACTIF).setParameter("annee", annee).setParameter("mois", mois)
 				.setParameter("status", Status.ParVoiture).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet client n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -75,10 +71,8 @@ public class PaieDaoImpl implements PaieDAO {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet client n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -90,10 +84,8 @@ public class PaieDaoImpl implements PaieDAO {
 				Paie.class).setParameter("statut", Statut.ACTIF).setParameter("annee", annee)
 				.setParameter("status", Status.Declare).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet client n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -105,10 +97,8 @@ public class PaieDaoImpl implements PaieDAO {
 				Paie.class).setParameter("statut", Statut.ACTIF).setParameter("annee", annee).setParameter("mois", mois)
 				.setParameter("status", Status.Declare).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet client n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -122,10 +112,8 @@ public class PaieDaoImpl implements PaieDAO {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet paie n exsite pas" + mois + "\n\n");
 			return null;
 		}
 	}
@@ -163,10 +151,8 @@ public class PaieDaoImpl implements PaieDAO {
 				Paie.class).setParameter("statut", Statut.ACTIF).setParameter("annee", annee).setParameter("mois", mois)
 				.setParameter("status", Status.NonDeclaree).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet client n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -180,10 +166,8 @@ public class PaieDaoImpl implements PaieDAO {
 				.setParameter("matricule", e.getMatricule()).setParameter("annee", annee).setParameter("mois", mois)
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0);
 		} else {
-			System.out.println("\n\nl  objet client n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -198,10 +182,8 @@ public class PaieDaoImpl implements PaieDAO {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet client n exsite pas\n\n");
 			return null;
 		}
 	}

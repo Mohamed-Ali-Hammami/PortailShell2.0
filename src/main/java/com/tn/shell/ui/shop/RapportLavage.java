@@ -73,7 +73,6 @@ public class RapportLavage {
 					d.setMonth(date1.getMonth());
 					d.setYear(date1.getYear());
 					String ds = sf.format(d);
-					System.out.println(" dates" +ds);
 					ld.add(ds);
 					}
 				for(String s:ld) {
@@ -147,7 +146,6 @@ public class RapportLavage {
 			d.setMonth(date1.getMonth());
 			d.setYear(date1.getYear());
 			String ds = sf.format(d);
-			System.out.println(" dates" +ds);
 			ld.add(ds);
 
 		}
@@ -232,13 +230,13 @@ public class RapportLavage {
 		else if (moi == 8)
 			m = "aout";
 		else if (moi == 9)
-			m = "S�ptembre";
+			m = "SÃ©ptembre";
 		else if (moi == 10)
 			m = "Octobre";
 		else if (moi == 11)
 			m = "Novembre";
 		else if (moi == 12)
-			m = "D�cembre";
+			m = "DÃ©cembre";
 		return m;
 	}
 

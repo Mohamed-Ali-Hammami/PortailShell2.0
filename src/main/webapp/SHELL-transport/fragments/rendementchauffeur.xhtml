@@ -1,0 +1,188 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:panelGroup layout="block" styleClass="shell-module-layout transport-shell-fragment"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+	 
+		
+		<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+			<br />
+			<br />
+			<br />
+			<br />
+			 
+				<h:form>
+					<h:panelGroup layout="block" style="text-align:left;">
+						<h:panelGrid columns="2">
+							<h:commandLink title="imprimer">
+								<p:graphicImage url="/images/imprimante-icone.png"
+									style="width:25px" />
+								<p:printer target="imprimer"></p:printer>
+							</h:commandLink>
+						</h:panelGrid>
+						<table>
+							<tr>
+								<td><h:outputText value="à partir du :"
+										style="font-size:12px " /></td>
+								<td><p:calendar id="popup" pattern="dd-MM-yyyy" mask="true" value="#{RapportBean.date1}"
+										size="10" >
+
+									</p:calendar></td>
+
+								<td><h:outputText value="jusqu'au :"
+										style="font-size:12px " /></td>
+								<td><p:calendar id="popup2" value="#{RapportBean.date2}"
+										size="10" pattern="dd-MM-yyyy" mask="true">
+
+									</p:calendar></td>
+							</tr>
+
+							 
+							<tr>
+								<td />
+								<td><p:commandButton styleClass="ui-priority-primary"
+										value="Recherche" action="#{RapportBean.getrendementchauffeur}"
+										style="width:150px;font-size:12px;height:30;color:#0000ff;background-color:#abc8e2;" /></td>
+							</tr>
+						</table>
+
+					</h:panelGroup>
+					<p:outputPanel id="imprimer"
+						style="width:100%; ">
+						<table>
+							<tr>
+								<td><p:panel style="width:600px;">
+										<b><h:outputText value="Rendement des chauffeurs par jours #{RapportBean.mois} #{RapportBean.annee}"
+												style=" font-style: italic;font-size: large;font-size:20px;" />
+										</b>
+									</p:panel></td>
+								<!-- <td><h:outputText value="#{RapportBean.date1s } "
+										style=" font-style: italic;font-size: large;" /></td>
+								<td colspan="2" />
+								<td><h:outputText value="#{RapportBean.date2s}"
+										style=" font-style: italic;font-size: large;" /></td> -->
+							</tr>
+						</table>
+						 
+						 <style type="text/css">
+				    .ui-dataGrid-no-border>.ui-datagrid-content{
+				    border:none;  
+                       }
+                       
+                       
+                    .ui-datatable {
+                   border :1px solid black;
+                   }
+                   .ui-datatable tbody tr {
+                  border :1px solid black;
+                   }
+ 
+                         .ui-datatable tbody th {
+                         border :1px solid black;
+                        }
+                        .ui-datatable* {
+                        border:0px ! important;  
+                        }
+                   </style>	
+ 
+                   
+			 <p:dataGrid var="c" value="#{RapportBean.listchauffeur}" styleClass="ui-dataGrid-no-border" rowIndexVar="rowid" columns="#{RapportBean.listchauffeur.size()}"  id="produits"  style="width:100%" >              
+            
+               
+		       <p:dataTable  var="b" value="#{c.rendement}" rowIndexVar="s"   >		      
+		        
+		         <p:column  rendered="#{rowid==0}" width="22%"  >
+		      <f:facet name="header" >
+				<p style="width:650px">	<h:outputText value="Date" style="font-size:12px "/></p>
+						</f:facet>
+						
+		 	 
+             <h:outputText value="#{s+1}" style="font-size:10px "  /> 
+		 	   
+		       </p:column>   
+		       
+		         <p:column  rendered="#{rowid!=0}"  width="0%" >
+		      <f:facet name="header" >
+					<h:outputText value="Date" style="font-size:12px "/>
+						</f:facet>
+						
+		 	 
+             <h:outputText value=" " style="font-size:14px "  /> 
+		 	   
+		       </p:column>	
+		 
+		<p:column   >
+		<f:facet name="header" >
+				 <p style="width:5%;height:50px">	<h:outputText value="#{c.nompenom}" style="font-size:9px "    />
+				</p>	<!-- <h:outputText value="Tayssir" style="font-size:12px;width :20px " rendered="#{c.id==10}"  />
+					<h:outputText value="Mondher" style="font-size:12px;width :20px " rendered="#{c.id==6}"  />
+					<h:outputText value="Mohammed" style="font-size:12px ;width :20px" rendered="#{c.id==5}"  /> -->
+						 
+		 </f:facet>
+						
+		 <p style="height:20">	 <h:outputText value="#{b.totalnbvoyage}" style="font-size:14px "/></p>
+		 	   
+		</p:column>			
+		 
+		<p:column    rendered="#{c.id==RapportBean.size}">
+		      <f:facet name="header" >
+					<h:outputText value="TP/JOUR" style="font-size:12px"  />
+						</f:facet>
+						
+		 	 
+             <h:outputText value="#{b.nbtotalnbvoyage}" style="font-size:14px "   /> 
+		 	   
+		</p:column>	
+		
+		<p:column    rendered="#{c.id!=11}" width="0%">
+		      <f:facet name="header" >
+					<h:outputText value="TP/JOUR" style="font-size:12px"  />
+						</f:facet>
+						
+		 	 
+             <h:outputText value=" " style="font-size:14px " rendered="#{c.id!=11}"  /> 
+		 	   
+		</p:column>	 
+		 
+		
+		 <p:columnGroup type="footer" style="border: 0px"  >
+								<p:row styleClass="table">
+							   
+							   
+							   
+							   
+									<p:column footerText="#{c.nbvoyage}" colspan="2"
+										style=" font-size:14px" styleClass="td"/>
+										 
+										<p:column  footerText="#{RapportBean.totalpjpurs}" rendered="#{c.id==RapportBean.size}"
+										style=" font-size:14px" styleClass="td"/>
+									 
+								</p:row>
+							</p:columnGroup>
+		 
+		  	</p:dataTable>
+		  	  
+		  	<style type="text/css">
+		  .table {
+	 border-spacing:0px;
+	  border: 0px;
+} </style>
+
+ 
+            </p:dataGrid>
+ 
+
+					</p:outputPanel>
+
+
+
+				</h:form>
+			 
+		 </h:panelGroup>
+		 </h:panelGroup>
+		 
+</ui:composition>

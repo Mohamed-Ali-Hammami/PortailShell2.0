@@ -40,8 +40,13 @@ public class ServiceLigneindex {
 	public List<Ligneindex> getAllparposte(Caisse c) {
 		return ligneTransfertdao.getAllparposte(c);
 	}
-	public double getmaxcode(Pompe p,Caisse c) {
-		return ligneTransfertdao.getmaxcode(p,c);
+	public double getmaxcode(Pompe p, Caisse c) {
+		try {
+			return ligneTransfertdao.getmaxcode(p, c);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 	public double getquantitebyarticle(Articlecarburant a,Caisse c) {
 		return ligneTransfertdao.getquantitebyarticle(a, c);

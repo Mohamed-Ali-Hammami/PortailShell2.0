@@ -98,7 +98,6 @@ public class FamilledepenseBean {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed",
 					"Old: " + oldValue + ", New:" + newValue);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
-			System.out.println("newValue"+newValue);
 		}
 
 	}
@@ -146,7 +145,6 @@ public class FamilledepenseBean {
 			getServiceDepense().update(depense);
 			return SUCCESS;
 		} catch (DataAccessException e) {
-			e.printStackTrace();
 		}
 		return ERROR;
 	}
@@ -176,7 +174,6 @@ public class FamilledepenseBean {
 	 * 
 	 * public String updateVhecule(Familledepense familledepense) { try {
 	 * getServiceFamilledepense().update(familledepense); return SUCCESS; } catch
-	 * (DataAccessException e) { e.printStackTrace(); } return ERROR; }
 	 * 
 	 * public void onRowEdit(RowEditEvent event) {
 	 * 

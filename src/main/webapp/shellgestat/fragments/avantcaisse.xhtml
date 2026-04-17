@@ -1,0 +1,264 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+
+        <ui:insert name="menu" />
+
+        <h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+
+            <h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92); text-align:center;">
+
+                <fieldset style="margin-bottom:20px; background-color:#eeeec6;">
+                    <legend>
+                        <b>
+                            <h:outputText value="Ajouter Fournisseur"
+                                style="font-size:12px; color:#2e8b57;" />
+                        </b>
+                    </legend>
+
+                    <h:form id="addFournisseurForm">
+
+                        <table>
+                            <tr>
+                                <td width="20%">
+                                    <b>
+                                        <h:outputText value="Fournisseur :" style="font-size:12px;" />
+                                    </b>
+                                </td>
+                                <td>
+                                    <h:inputText id="nom"
+                                        value="#{FournisseursBean.nom}"
+                                        size="30"
+                                        style="font-size:14px;"
+                                        required="true"
+                                        requiredMessage="entrer non fournisseur" />
+                                    <p:messages id="nomMsgs"
+                                        for="nom"
+                                        autoUpdate="true"
+                                        closable="true" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="20%">
+                                    <b>
+                                        <h:outputText value="Matricule Fiscal :" style="font-size:12px;" />
+                                    </b>
+                                </td>
+                                <td>
+                                    <h:inputText id="matriculfisacl"
+                                        value="#{FournisseursBean.matriculfisacl}"
+                                        size="30"
+                                        style="font-size:14px;" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="20%">
+                                    <b>
+                                        <h:outputText value="Tel :" style="font-size:12px;" />
+                                    </b>
+                                </td>
+                                <td>
+                                    <h:inputText id="tel"
+                                        value="#{FournisseursBean.tel}"
+                                        size="30"
+                                        style="font-size:14px;" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="20%">
+                                    <b>
+                                        <h:outputText value="Ca :" style="font-size:12px;" />
+                                    </b>
+                                </td>
+                                <td>
+                                    <h:inputText id="ca"
+                                        value="#{FournisseursBean.ca}"
+                                        size="30"
+                                        style="font-size:14px;" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="20%">
+                                    <b>
+                                        <h:outputText value="Reste :" style="font-size:12px;" />
+                                    </b>
+                                </td>
+                                <td>
+                                    <h:inputText id="reste"
+                                        value="#{FournisseursBean.reste}"
+                                        size="30"
+                                        style="font-size:14px;" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td />
+                                <td width="400px">
+                                    <p:commandButton value="Ajouter"
+                                        action="#{FournisseursBean.savefournisseur}"
+                                        ajax="false"
+                                        style="width:200px; height:30px; color:#0000ff; background-color:#abc8e2; font-size:12px;" />
+                                </td>
+                            </tr>
+                        </table>
+
+                    </h:form>
+                </fieldset>
+
+                <h:form id="fournisseurTableForm">
+
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <p:dataTable id="Fournisseur"
+                        var="fournisseur"
+                        value="#{FournisseursBean.listfournisseur}"
+                        widgetVar="ArticleTable"
+                        editable="true"
+                        filteredValue="#{FournisseursBean.filterfournisseurs}"
+                        selection="#{FournisseursBean.fournisseur2}"
+                        rowKey="#{fournisseur.code}"
+                        selectionMode="single"
+                        emptyMessage="aucun fournisseur dans le stock"
+                        paginator="true"
+                        rows="10"
+                        paginatorPosition="bottom">
+
+                        <p:ajax event="rowEdit"
+                            listener="#{FournisseursBean.onRowEdit}"
+                            update=":fournisseurTableForm:msgs" />
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Code" style="font-size:12px; color:#483d8b;" />
+                            </f:facet>
+                            <h:outputText value="#{fournisseur.code}" style="font-size:12px;" />
+                        </p:column>
+
+                        <p:column filterBy="#{fournisseur.nom}"
+                            filterStyle="font-size:14px; color:blue"
+                            filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="Fournisseur" style="font-size:12px; color:#483d8b;" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{fournisseur.nom}" style="font-size:12px;" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="codeInput"
+                                        value="#{fournisseur.nom}"
+                                        style="width:96%;" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Matriculfisacl" style="font-size:12px; color:#483d8b;" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{fournisseur.matriculfisacl}" style="font-size:12px;" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{fournisseur.matriculfisacl}" style="width:96%;" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Tel" style="font-size:12px; color:#483d8b;" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{fournisseur.tel}" style="font-size:12px;" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{fournisseur.tel}" style="width:96%;" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="adresse" style="font-size:12px; color:#483d8b;" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{fournisseur.address}" style="font-size:12px;" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{fournisseur.address}" style="width:96%;" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Reste" style="font-size:12px; color:#483d8b;" />
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{fournisseur.restes}" style="font-size:12px;" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{fournisseur.reste}" style="width:96%;" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width:40px; text-align:center;">
+                            <f:facet name="header">
+                                <h:outputText value="supprimer" style="font-size:9px; color:#483d8b;" />
+                            </f:facet>
+                            <p:commandLink action="#{FournisseursBean.deletefournisseur}" ajax="false">
+                                <f:setPropertyActionListener
+                                    target="#{FournisseursBean.fournisseur2}"
+                                    value="#{fournisseur}" />
+                                <p:graphicImage url="/images/trash.png" />
+                            </p:commandLink>
+                        </p:column>
+
+                        <p:column style="width:40px;">
+                            <f:facet name="header">
+                                <h:outputText value="modifier" style="font-size:9px; color:#483d8b;" />
+                            </f:facet>
+                            <p:rowEditor />
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <p:confirmDialog global="true"
+                        modal="true"
+                        widgetVar="suppressionDialog"
+                        style="width:150px;">
+                        <h:panelGroup layout="block" style="text-align:center;">
+                            <p:commandButton value="oui"
+                                type="button"
+                                styleClass="ui-confirmdialog-yes"
+                                icon="ui-icon-check" />
+                            <p:commandButton value="Non"
+                                type="button"
+                                styleClass="ui-confirmdialog-no"
+                                icon="ui-icon-close" />
+                        </h:panelGroup>
+                    </p:confirmDialog>
+
+                </h:form>
+
+            </h:panelGroup>
+        </h:panelGroup>
+
+    </h:panelGroup>
+</ui:composition>

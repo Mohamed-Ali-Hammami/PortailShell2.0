@@ -19,6 +19,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 @Entity
 @Table(name = "Lignegestion")
 public class Lignegestion {
@@ -42,11 +45,13 @@ public class Lignegestion {
 
 	 @ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "gestionid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Gestion gestion;
 
  
 	 @ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "employeeid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Employee employee; 
 
 	 @OneToMany(targetEntity = Lignepaiegestion.class, mappedBy = "lignegestion", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

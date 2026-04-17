@@ -117,14 +117,11 @@ public class ClientgestatBean {
 		double total=0;double totalant=0;
 		DecimalFormat df = new DecimalFormat("#,###.000");
 		 
-		System.out.println("\n\n\n\n ooook \\n\\n\\n\\n");
 		for(Factureclient f:selectedsfacture) {
 			if(f.getCredit()!=null)
 		total = total+f.getCredit().getMontant();
-		System.out.println(total);
 		if(f.getCreditant()!=null)
 		totalant=totalant+f.getCreditant().getMontant();
-		System.out.println(totalant);
 		}
 		total2 = df.format(total);
 		totalants2 = df.format(totalant);
@@ -297,7 +294,6 @@ public class ClientgestatBean {
 				listelignefacture.add(l);
 
 			} catch (Exception e) {
-				System.out.println(" erreur verf ligne vente credit");
 			} 
 		}
 
@@ -395,7 +391,6 @@ public class ClientgestatBean {
 			serviceClientgestat.update(client);
 			return SUCCESS;
 		} catch (DataAccessException e) {
-			e.printStackTrace();
 		}
 		return ERROR;
 	}

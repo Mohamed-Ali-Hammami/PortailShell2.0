@@ -219,7 +219,6 @@ try {
     getServiceSociete().update(p) ;
     return SUCCESS;       
 } catch (DataAccessException e) {
-    e.printStackTrace();       
 }    
 return ERROR;
 } 

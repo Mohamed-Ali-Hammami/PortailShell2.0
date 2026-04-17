@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout lavage-shell-fragment">
+			<h:form id="f">
+				<div id="sectionAimprimer" align="center">
+					<h:panelGroup layout="block" style="text-align:center;">
+						<p:commandLink style="font-size:28px"
+							rendered="#{ServiceLavageBean.typerecherche=='Par Poste'}"
+							value="Rapport de #{ServiceLavageBean.typalavage}"
+							action="javascript.void(0);"
+							onclick="print();" />
+						<p:commandLink style="font-size:28px"
+							rendered="#{ServiceLavageBean.typerecherche=='Par Date'}"
+							value="Rapport Journalier de #{ServiceLavageBean.typalavage}"
+							action="javascript.void(0);"
+							onclick="print();" />
+						<br />
+						<p:commandLink style="font-size:24px"
+							value="Periode : Du - #{ServiceLavageBean.dates1}- #{ServiceLavageBean.poste}"
+							action="#{ServiceLavageBean.rapport}" />
+					</h:panelGroup>
+					<br />
+					<p:dataTable id="produit"
+						var="p"
+						value="#{ServiceLavageBean.listRendementLav}"
+						styleClass="shell-home-table"
+						emptyMessage="aucune ligne dans la base">
+						<p:column width="20%"><f:facet name="header"><h:outputText value="Personnel" /></f:facet><h:outputText value="#{p.laveur}" /></p:column>
+						<p:column><f:facet name="header"><h:outputText value="Nombre service" /></f:facet><h:outputText value="#{p.nbvoitures}" /></p:column>
+						<p:column width="12%"><f:facet name="header"><h:outputText value="Duree" /></f:facet><h:outputText value="#{p.heure_entree}" /></p:column>
+						<p:column width="15%"><f:facet name="header"><h:outputText value="Montant" /></f:facet><h:outputText value="#{p.montantv}" /></p:column>
+						<p:column width="15%"><f:facet name="header"><h:outputText value="Moyenne" /></f:facet><h:outputText value="#{p.parouvrier}" /></p:column>
+					</p:dataTable>
+					<h:panelGroup layout="block" style="text-align:center;">
+						<br />
+						<h:outputText value="Total Poste1 : #{ServiceLavageBean.totalPoste1}" rendered="#{ServiceLavageBean.typerecherche=='Par Date'}" /><br />
+						<h:outputText value="Total Poste2 : #{ServiceLavageBean.totalPoste2}" rendered="#{ServiceLavageBean.typerecherche=='Par Date'}" /><br />
+					</h:panelGroup>
+					<br />
+					<p:dataTable id="rendement"
+						var="p"
+						value="#{ServiceLavageBean.listRendement}"
+						styleClass="shell-home-table"
+						emptyMessage="aucune ligne dans la base">
+						<p:column><f:facet name="header"><h:outputText value="Service" /></f:facet><h:outputText value="#{p.service}" /></p:column>
+						<p:column width="12%"><f:facet name="header"><h:outputText value="Nombre service" /></f:facet><h:outputText value="#{p.nbvoitures}" /></p:column>
+						<p:column width="15%"><f:facet name="header"><h:outputText value="Duree" /></f:facet><h:outputText value="#{p.heure_entree}" /></p:column>
+						<p:column width="15%"><f:facet name="header"><h:outputText value="Montant" /></f:facet><h:outputText value="#{p.montantv}" /></p:column>
+					</p:dataTable>
+					<br />
+					<p:growl id="growl" showDetail="true" />
+					<h:panelGrid columns="2" style="width:70%;align:center">
+						<p:panel id="p1">
+							<p:chart id="chart1" type="bar" model="#{ServiceLavageBean.barModellageur}" style="width:400px;height:300px" widgetVar="chart">
+								<p:ajax event="itemSelect" listener="#{ServiceLavageBean.itemSelect}" update="growl" />
+							</p:chart>
+						</p:panel>
+						<p:panel id="p2">
+							<p:chart type="bar" id="chart2" model="#{ServiceLavageBean.barModelservice}" style="width:400px;height:300px" widgetVar="chart2">
+								<p:ajax event="itemSelect" listener="#{ServiceLavageBean.itemSelect}" update="growl" />
+							</p:chart>
+						</p:panel>
+					</h:panelGrid>
+				</div>
+			</h:form>
+		
+    </h:panelGroup>
+</ui:composition>

@@ -17,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 @Entity
 @Table(name = "Paieprime")
 public class Paieprime {
@@ -34,12 +37,14 @@ public class Paieprime {
 	
 	@ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "employeeid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Employee employee;
 	@Embedded
 	private Formule_Paie formulaire_Paie;
 	 
 	@ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "noteid")
+	@NotFound(action = NotFoundAction.IGNORE)
     private Note note;
 	
 
@@ -144,13 +149,13 @@ public class Paieprime {
 		else if (moi == 8)
 			m = "aout";
 		else if (moi == 9)
-			m = "Séptembre";
+			m = "SÃ©ptembre";
 		else if (moi == 10)
 			m = "Octobre";
 		else if (moi == 11)
 			m = "Novembre";
 		else if (moi == 12)
-			m = "Décembre";
+			m = "DÃ©cembre";
 		return m;
 	}
 

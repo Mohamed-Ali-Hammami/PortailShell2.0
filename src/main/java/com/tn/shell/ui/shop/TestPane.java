@@ -19,7 +19,7 @@ public class TestPane extends JPanel implements Printable {
     private String text2;
     public TestPane() {
         text1 = "SHOP SHELL SIJOUMI\n";
-        text2 = "Ticket N° 222285";
+        text2 = "Ticket NÂ° 222285";
     }
     
   

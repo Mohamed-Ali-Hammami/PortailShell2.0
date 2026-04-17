@@ -39,10 +39,8 @@ public class ChauffeurDaoImpl implements ChauffeurDao {
 		 List<Chauffeur> ChauffeurListem=em.createQuery("SELECT c FROM  Chauffeur c where c.nompenom = :nom and c.statut = :statut",Chauffeur.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (ChauffeurListem.size() > 0){
-	        	System.out.println("objet trouvé "+ChauffeurListem.get(0).getNompenom()+"\n\n\n");
 	            return ChauffeurListem.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet Chauffeur n exsite pas\n\n");
 	            return null;}   
 	}
 	 
@@ -51,10 +49,8 @@ public class ChauffeurDaoImpl implements ChauffeurDao {
 			 List<Chauffeur> ChauffeurListem=em.createQuery("SELECT c FROM  Chauffeur c where c.nom = :nom and c.statut = :statut",Chauffeur.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 		        
 		        if (ChauffeurListem.size() > 0){
-		        	System.out.println("objet trouvé "+"\n\n\n");
 		            return ChauffeurListem.get(0);}
 		        else{
-		        	System.out.println("\n\nl  objet Chauffeur n exsite pas\n\n");
 		            return null;}   
 		}
 	 
@@ -63,10 +59,8 @@ public class ChauffeurDaoImpl implements ChauffeurDao {
 		 List<Chauffeur> ChauffeurListem=em.createQuery("SELECT c FROM  Chauffeur c where c.matriculefiscal = :nom and c.statut = :statut",Chauffeur.class).setParameter("statut", Statut.ACTIF).setParameter("nom", nom).getResultList();
 	        
 	        if (ChauffeurListem.size() > 0){
-	        	System.out.println("objet trouvé "+"\n\n\n");
 	            return ChauffeurListem.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet Chauffeur n exsite pas\n\n");
 	            return null;}   
 	}
 	 @Transactional

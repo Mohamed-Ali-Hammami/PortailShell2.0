@@ -1,0 +1,97 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+	<h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+			 		
+				<br/> <br/> 
+				 
+				
+				
+					<h:form>
+					<h:panelGroup layout="block" style="text-align:left;">
+				<h:panelGrid columns="2">
+				<h:commandLink title="imprimer">
+									<p:graphicImage url="/images/imprimante-icone.png"
+										style="width:25px" />
+									<p:printer target="imprimer"></p:printer>
+								</h:commandLink>
+			 </h:panelGrid>
+				<table>
+		 
+		 
+		<tr>
+		<td><h:outputText value="Date 1" style="font-size:12px "/></td>
+		<td>
+		 <p:calendar value="#{EtatBean.date1}" id="popup"/>
+		
+		</td>
+		
+		<td><h:outputText value="Date 2" style="font-size:12px "/></td>
+		<td>
+		 <p:calendar value="#{EtatBean.date2}" id="popup2">
+		 <f:ajax listener="#{EtatBean.getetatFactureAchat}"  event="dateSelect" render="imprimer"/>
+		 </p:calendar>
+		
+		</td>
+		 </tr>
+		  
+		</table>				
+				
+				</h:panelGroup>
+				<p:outputPanel id="imprimer" style="width:99%">
+				<!-- 
+				
+				
+				
+				<h:outputText value="Achats ESP"  style=" font-style: italic;font-size: large;"/> 
+				 <h:panelGrid columns="2">
+				 <h:outputText value="#{EtatBean.dates1}" id="date1" style=" font-style: italic;font-size: large;"/>
+				 <h:outputText value=" #{EtatBean.dates2}" id="date2" style=" font-style: italic;font-size: large;"/>
+				 
+				 </h:panelGrid>
+				<br/> <br/><br/><br/>
+				
+								<p:dataTable id="fd" var="fd"
+									value="#{EtatBean.listAchatESP}" widgetVar="articleTable"
+									 
+									rowKey="#{fd.id}" style="margin-bottom:10px"
+									emptyMessage="aucune depense dans la base"  >
+									
+									<p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Nom" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{fd.libelle}" />
+									</p:column>
+									<p:column  >
+										<f:facet name="header">
+											<h:outputText style="font-size:12px ;color:#483d8b"
+												value="Montant" />
+										</f:facet>
+										<h:outputText style="font-size:12px "
+											value="#{fd.montants}" />
+									</p:column>
+
+								   <f:facet name="footer">
+					   TOTAL  :<h:outputText id="ttc" value="#{EtatBean.totaCA}" 
+							  size="8" />
+					   </f:facet>
+								  
+									</p:dataTable> 
+				 -->
+				 </p:outputPanel>
+				 </h:form>
+			 </h:panelGroup>
+			 </h:panelGroup>
+			 
+    </h:panelGroup>
+</ui:composition>

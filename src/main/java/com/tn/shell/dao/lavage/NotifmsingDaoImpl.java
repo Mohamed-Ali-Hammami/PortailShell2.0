@@ -41,7 +41,6 @@ public class NotifmsingDaoImpl implements NotifSmsingDAO {
 
 				.getResultList();
 	 
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0).getIdNotifmsing();
 		 
 	}

@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+		<h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+			<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+				<h:form id="historyCarteForm">
+					<h:panelGroup layout="block" style="text-align:center;">
+						<h3>Historique Carte Client</h3>
+					</h:panelGroup>
+					<br />
+					<h:panelGrid columns="3" cellpadding="8">
+						<h:outputText value="Filtrer par client:" />
+						<p:selectOneMenu value="#{CarteClientBean.codeclient}" style="width:280px" filter="true" filterMatchMode="contains">
+							<f:selectItem itemLabel="tous les clients" itemValue="#{null}" />
+							<f:selectItems value="#{CarteClientBean.listclients}" var="cl" itemLabel="#{cl.nom}" itemValue="#{cl.code}" />
+						</p:selectOneMenu>
+						<p:commandButton value="Filtrer" action="#{CarteClientBean.filterHistoriqueByClient}" ajax="false" />
+					</h:panelGrid>
+					<br />
+					<p:dataTable id="historiques" var="h" value="#{CarteClientBean.listhistorique}"
+						emptyMessage="aucune ligne dans l'historique">
+						<p:column>
+							<f:facet name="header"><h:outputText value="Code" /></f:facet>
+							<h:outputText value="#{h.id}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header"><h:outputText value="Client" /></f:facet>
+							<h:outputText value="#{h.client.nom}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header"><h:outputText value="Plafond" /></f:facet>
+							<h:outputText value="#{h.plafonds}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header"><h:outputText value="Chauffeur" /></f:facet>
+							<h:outputText value="#{h.chauffeur}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header"><h:outputText value="Vehicule" /></f:facet>
+							<h:outputText value="#{h.vehicule}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header"><h:outputText value="Date Affectation" /></f:facet>
+							<h:outputText value="#{h.dateaffectations}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header"><h:outputText value="Statut" /></f:facet>
+							<h:outputText value="#{h.statut}" />
+						</p:column>
+					</p:dataTable>
+					<br />
+					<p:commandButton value="Retour" action="#{CarteClientBean.getcarteClient}" ajax="false"
+						style="width:170px;font-size:12px;height:30px;color:white;background-image:linear-gradient( #FAF281, red);" />
+				</h:form>
+			</h:panelGroup>
+		</h:panelGroup>
+	</h:panelGroup>
+</ui:composition>

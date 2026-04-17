@@ -28,6 +28,5 @@ public class Main {
 		double marge =2.23654;
 		double ventes = (double)Math.round(x+marge);
 		
-		System.out.println(String.format("%.3f", 4.52185));
 	}
 }

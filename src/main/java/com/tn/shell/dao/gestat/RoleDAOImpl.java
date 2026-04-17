@@ -42,7 +42,6 @@ public class RoleDAOImpl implements RoleDAO {
 	        	 
 	            return list.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet client n exsite pas\n\n");
 	            return null;}  
 		 
 	}

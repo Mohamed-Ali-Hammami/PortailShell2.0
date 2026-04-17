@@ -24,9 +24,7 @@ public class Test {
     public static void main(String[] args) {
         try {
         	int nba=nbOfMonthsBetweenTwoDates("1/5/2017", "1/5/2019") ;
-        	 
-            System.out.println(nba+" mois");
-        	 
-        } catch (Exception e) { e.printStackTrace(); }    
+        } catch (Exception e) {
+        }
     }
 }

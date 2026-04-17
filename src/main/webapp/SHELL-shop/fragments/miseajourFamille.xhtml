@@ -1,0 +1,143 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout shop-shell-fragment">
+ <h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+		<ui:insert name="menu">
+			
+		</ui:insert>
+		<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+			 
+			<p:panel>
+				 
+					<h:panelGroup layout="block" style="text-align:center;">
+						 
+						<fieldset style="margin-bottom: 20px;background-color:#eeeec6;">
+							<legend>
+								<b><h:outputText style="font-size:12px; color:#2e8b57"
+										value="Mise a jour des Familles " name="outTxtcin" /> </b>
+							</legend>
+							 
+							<h:form>
+							 
+								
+								<table>
+									<tr>
+
+										<td width="20%"><b><h:outputText value="Famille :"
+												style="font-size:12px " /></b></td>
+										<td><h:inputText value="#{FamilleBean.famille}" id="nom" rendered="true" size="30"
+												style="font-size:14px " required="true" requiredMessage="entrer libelle de famille">
+												
+											</h:inputText>
+											
+											<p:messages for="nom"  autoUpdate="true" closable="true"   />	
+												</td>
+									</tr>
+									 
+
+									<tr>
+										 <td  /> 
+									  <td  >
+                                    <p:commandButton value="Ajouter"
+												style="width:200px;height:30;color:#0000ff;background-color:#abc8e2;font-size:12px"
+												action="#{FamilleBean.saveFamille}" /> 
+												</td></tr></table>
+								 
+							</h:form>
+						</fieldset>
+						
+						  <h:form id="form">
+						  
+						
+						
+						  <p:growl id="msgs2" showDetail="true"/>
+						 <p:dataTable id="f" var="f"
+							value="#{FamilleBean.listFamille}"
+							widgetVar="ArticleTable"  editable="true" filteredValue="#{FamilleBean.filterFamillearticles}"
+							  selection="#{FamilleBean.selectedFamillearticle}" rowKey="#{f.id}"
+							emptyMessage="aucune famille dans le stock" paginator="true"
+							rows="10" paginatorPosition="bottom"  > 
+                              <p:ajax event="rowEdit" listener="#{FamilleBean.onRowEdit}" update=":form:msgs2"/>
+						
+							
+							<p:column>
+								<f:facet name="header">
+									<h:outputText style="font-size:12px color:#483d8b" value="Code" />
+								</f:facet>
+								<h:outputText style="font-size:12px " value="#{f.code}" />
+							</p:column>
+						
+							<p:column filterBy="#{f.nom}" filterStyle="font-size:14px;color:blue" filterMatchMode="contains" >
+								<f:facet name="header">
+									<h:outputText style="font-size:12px color:#483d8b" value="Nom" />
+								</f:facet>
+								
+									<p:cellEditor>
+								<f:facet name="output"><h:outputText style="font-size:12px "
+									value="#{f.nom}" /></f:facet>
+								<f:facet name="input"><p:inputText  id="codeInput" value="#{f.nom}" style="width:96%"/>	</f:facet>
+								
+								</p:cellEditor>
+							</p:column>
+							 
+
+							<p:column style="width:40px;text-align:center">
+								<f:facet name="header">
+									<h:outputText style="font-size:9px;color:#483d8b" value="supprimer" />
+								</f:facet> 
+								<h:panelGroup layout="block" style="text-align:center;">
+								<p:commandLink action="#{FamilleBean.deletefamille}" onclick="PF('suppressionDialog').show();">									 
+									<p:graphicImage url="/images/trash.png" />
+									
+									<f:setPropertyActionListener
+											target="#{FamilleBean.selectedFamillearticle}"
+											value="#{f}"></f:setPropertyActionListener>
+									
+									<p:confirm header="Confirmation"
+											message="Voulez-vous vraiment supprimer la famille ?"
+											icon="ui-icon-alert" />
+								</p:commandLink>
+								</h:panelGroup>
+							</p:column>
+                              
+							<p:column style="width:40px"  >
+							<f:facet name="header">
+									<h:outputText style="font-size:9px;color:#483d8b"
+										value="modifier" />
+								</f:facet>
+							<p:rowEditor/>
+							</p:column> 
+							 
+						</p:dataTable>
+						
+						
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="width:150px"
+							widgetVar="suppressionDialog">
+							<h:panelGroup layout="block" style="text-align:center;">
+							<p:commandButton value="oui" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="Non" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</h:panelGroup>
+						</p:confirmDialog>
+                          
+                         
+                          
+								
+								
+						
+							 </h:form>	
+
+					</h:panelGroup>
+					
+				 </p:panel>
+				 </h:panelGroup>
+				 </h:panelGroup>
+				 
+    </h:panelGroup>
+</ui:composition>

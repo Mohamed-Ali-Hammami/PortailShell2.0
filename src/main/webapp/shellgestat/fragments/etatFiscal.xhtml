@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+        <h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+            <h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+                <h:form id="f">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <p:commandButton title="imprimer" value="imprimer">
+                            <p:printer target="imprimer" />
+                        </p:commandButton>
+                        <p:commandButton value="Valider" action="#{EtatBean.calculeretatfiscal}" />
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="4" cellpadding="5">
+                        <h:outputText value="Date Debut" style="font-size:12px" />
+                        <p:calendar value="#{EtatBean.date1}" id="d1" pattern="dd/MM/yyyy" />
+                        <h:outputText value="Date Fin" style="font-size:12px" />
+                        <p:calendar value="#{EtatBean.date2}" id="d2" pattern="dd/MM/yyyy" />
+                    </h:panelGrid>
+
+                    <p:outputPanel id="imprimer">
+                        <h3>Profit Fiscal par Famille</h3>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputText value="Du #{EtatBean.dates1}" />
+                            <h:outputText value="Au #{EtatBean.dates2}" />
+                        </h:panelGrid>
+                        <br />
+
+                        <p:dataTable id="familles" var="p" value="#{EtatBean.listFamille}"
+                            emptyMessage="aucune famille disponible">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Famille" />
+                                </f:facet>
+                                <h:outputText value="#{p.nom}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Chiffre Affaires" />
+                                </f:facet>
+                                <h:outputText value="#{p.chiffre_affaires}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Profil Brut" />
+                                </f:facet>
+                                <h:outputText value="#{p.profilbrut}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:outputPanel>
+                </h:form>
+            </h:panelGroup>
+        </h:panelGroup>
+    </h:panelGroup>
+</ui:composition>

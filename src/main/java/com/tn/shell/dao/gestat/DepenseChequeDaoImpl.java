@@ -44,10 +44,8 @@ public class DepenseChequeDaoImpl implements DepenseChequeDAO {
 				  ).setParameter("statut", Statut.ACTIF).setParameter("d1", d1).setParameter("d2", d2); 
 		 try {
 				BigDecimal result = (BigDecimal) q.getSingleResult();
-                System.out.println(result);
 				return result.intValue();
 			} catch (Exception e) {
-				System.out.println("\n\n\n\n exception " + e.getMessage());
 				return 0;
 			}
 	}
@@ -110,10 +108,8 @@ public class DepenseChequeDaoImpl implements DepenseChequeDAO {
 				 
 				 .getResultList();
 		 if (result.size() > 0){
-	     	System.out.println("objet trouvé "+"\n\n\n");
 	         return result.get(0);}
 	     else{
-	     	System.out.println("\n\nl  objet Pointageconge n exsite pas\n\n");
 	         return null;} 
 	}
 

@@ -34,11 +34,9 @@ public class GestionDaoImpl  implements GestionDAO{
 		 List<Gestion> FournisseurListem=em.createQuery("SELECT u FROM  Gestion u where u.libelle = :libelle and u.statut=:statut",Gestion.class).setParameter("libelle", libelle).setParameter("statut", Statut.ACTIF).getResultList();
 	        
 	        if (FournisseurListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return FournisseurListem.get(0);}
 	        else
 	        {
-	        	System.out.println("l  objet n exsite pas");
 	            return null;
 	            
 	        } 

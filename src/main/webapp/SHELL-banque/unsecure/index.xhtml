@@ -2,13 +2,14 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      lang="fr">
 
-<h:head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shell Banque Login</title>
-</h:head>
+</head>
 
 <h:body style="background-color:#CECECE;">
 
@@ -17,7 +18,7 @@
         <!-- Render header only for admin, supervisor, or shop manager -->
         <h:panelGroup rendered="#{LoginBean.user.isAdmin() or LoginBean.user.isResponsableshops() or LoginBean.user.isSuperviseur()}">
             <ui:insert name="menu">
-                <ui:include src="/shellgestat/Header.xhtml"/>
+                <ui:include src="/Header.xhtml"/>
             </ui:insert>
         </h:panelGroup>
         

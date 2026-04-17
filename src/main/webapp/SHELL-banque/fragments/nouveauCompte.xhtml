@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div class="shell-module-layout">
+		<p:growl id="msgs" showDetail="true" />
+		<p:panel id="basic" styleClass="shell-home-panel">
+			<h2 class="shell-page-title">Ajouter Nouveau Compte</h2>
+			<p class="shell-page-subtitle">Rattache un compte bancaire a la banque en cours de creation.</p>
+
+			<h:form>
+				<table class="shell-form-table">
+					<tr>
+						<td><b><h:outputText value="RIB :" style="font-size:12px"/></b></td>
+						<td>
+							<h:inputText id="numerodecompte" tabindex="1" size="30"
+								value="#{BanqueBean.numerodecompte}" style="font-size:14px"
+								styleClass="inpdes" required="true"
+								requiredMessage="Entrer numero de compte"/>
+							<p:messages for="numerodecompte" closable="true" autoUpdate="true"/>
+						</td>
+					</tr>
+					<tr>
+						<td><b><h:outputText value="Solde Initial :" style="font-size:12px"/></b></td>
+						<td>
+							<h:inputText id="soldeinitial" tabindex="2" size="30"
+								value="#{BanqueBean.soleinitial}" style="font-size:14px"/>
+							<p:messages for="soldeinitial" closable="true" autoUpdate="true"/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="text-align:center;">
+							<p:commandButton value="Ajouter" ajax="false"
+								styleClass="shell-action-button"
+								action="#{BanqueBean.saveCompte}"/>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</p:panel>
+	</div>
+</ui:composition>

@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/style.css" />
+
+	<h:form>
+		<p:growl id="messages" showDetail="true" />
+
+		<p:menubar styleClass="shell-module-menubar" autoDisplay="true">
+			<p:menuitem icon="ui-icon-home" action="#{BanqueBean.openIndexCompte}" ajax="false" style="font-size:12px" />
+			<p:menuitem value="Banque" style="font-size:12px" action="#{BanqueBean.openHome}" ajax="false" />
+			<p:menuitem value="Cheques impayes" style="font-size:12px" styleClass="ui-priority-primary" action="#{BanqueBean.getchequeImpayees}" ajax="false" />
+			<p:menuitem value="Cheques antidates" style="font-size:12px" styleClass="ui-priority-primary" action="#{BanqueBean.getchequeAntidatee}" ajax="false" />
+			<p:menuitem value="Cheques entrees" style="font-size:12px" styleClass="ui-priority-primary" action="#{BanqueBean.getchequeEntree}" ajax="false" />
+			<p:menuitem value="Cheques Preavis" style="font-size:12px" styleClass="ui-priority-primary" action="#{BanqueBean.getchequePreavis}" ajax="false" />
+			<p:menuitem value="Cheque en Circulation" style="font-size:12px" action="#{BanqueBean.getchequeCierculations}" ajax="false" />
+			<p:menuitem value="Cheque en Cours" style="font-size:12px" action="#{BanqueBean.getchequeencours}" ajax="false" />
+
+			<f:facet name="options">
+				<p:commandLink id="nonAjax" action="#{LoginBean.logout}" ajax="false" styleClass="shell-logout-link">
+					<p:graphicImage url="/images/logout.png" />
+					<h:outputText value="#{msg['logout.user']}" />
+				</p:commandLink>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+</ui:composition>

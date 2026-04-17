@@ -34,10 +34,8 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0);
 		} else {
-			System.out.println("\n\nl  objet Pointageconge n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -56,7 +54,6 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 				chiffre = chiffre + b.getMontant() + b.getTotaltva();
 			}
 		} else {
-			System.out.println("l  objet n exsite pas");
 		}
 		return chiffre;
 	}
@@ -71,7 +68,6 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 				.setParameter("d2", d2)
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("l  objet n exsite pas");
 		}
 		return result;
 	}
@@ -85,7 +81,6 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 				.setParameter("d2", d2)
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("l  objet n exsite pas");
 		}
 		return result;
 	}
@@ -111,7 +106,6 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 				 }}
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
 			}
 		
 		if (BonlivraisonListem.size() > 0) {
@@ -119,7 +113,6 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 				chiffre = chiffre + b.getTransport();
 			}
 		} else {
-			System.out.println("l  objet n exsite pas");
 		}
 		return chiffre;
 	}
@@ -147,7 +140,6 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 		if (BonlivraisonListem.size() > 0) {
 			// chiffre=BonlivraisonListem.get(0).;
 		} else {
-			System.out.println("l  objet n exsite pas");
 		}
 		return 0;
 	}
@@ -192,10 +184,8 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 				.setParameter("code", code).setParameter("statut", Statut.ACTIF).getResultList();
 
 		if (BonlivraisonListem.size() > 0) {
-			System.out.println("objet trouvé\n");
 			return BonlivraisonListem.get(0);
 		} else {
-			System.out.println("l  objet n exsite pas");
 			return null;
 		}
 	}
@@ -207,9 +197,7 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 				Bonlivraison.class).setParameter("status", s).setParameter("statut", Statut.ACTIF).getResultList();
 
 		if (BonlivraisonListem.size() > 0) {
-			System.out.println("objet trouvé\n");
 		} else {
-			System.out.println("l  objet n exsite pas");
 		}
 		return BonlivraisonListem;
 	}
@@ -220,9 +208,7 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 				.setParameter("nom", a.getId()).getResultList();
 
 		if (BonlivraisonListem.size() > 0) {
-			System.out.println("objet trouvé\n");
 		} else {
-			System.out.println("l  objet n exsite pas");
 		}
 		return BonlivraisonListem;
 	}
@@ -234,9 +220,7 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 				.setParameter("nom", nom).getResultList();
 
 		if (BonlivraisonListem.size() > 0) {
-			System.out.println("objet trouvé\n");
 		} else {
-			System.out.println("l  objet n exsite pas");
 		}
 		return BonlivraisonListem;
 	}
@@ -248,10 +232,8 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 				.setParameter("code", code).setParameter("statut", Statut.ACTIF).getResultList();
 
 		if (BonlivraisonListem.size() > 0) {
-			System.out.println("objet trouvé\n");
 			return BonlivraisonListem.get(0);
 		} else {
-			System.out.println("l  objet n exsite pas");
 			return null;
 		}
 	}
@@ -278,9 +260,7 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 				.getResultList();
 
 		if (BonlivraisonListem.size() > 0) {
-			System.out.println("objet trouvé\n");
 		} else {
-			System.out.println("l  objet n exsite pas");
 		}
 		return BonlivraisonListem;
 	}

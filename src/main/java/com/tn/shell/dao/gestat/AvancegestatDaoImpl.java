@@ -21,7 +21,6 @@ public class AvancegestatDaoImpl implements AvancegestatDAO {
     private EntityManager em;
 
     public double getAvance(String fonction, Date d1, Date d2) {
-        System.out.println("\n\n\n avances" + d1 + " " + d2);
         Query q = em.createQuery("SELECT SUM(a.montant_avance ) FROM Avancegestat a  where a.statut = :statut and a.date between :d1 and :d2  and a.employee.fonction = :f and a.employee.status = :status ")
                 .setParameter("statut", Statut.ACTIF)
                 .setParameter("d1", d1)
@@ -30,10 +29,8 @@ public class AvancegestatDaoImpl implements AvancegestatDAO {
                 .setParameter("status", com.tn.shell.model.paie.Status.ParVoiture);
         try {
             double result = (Double) q.getSingleResult();
-            System.out.println("\n\n\n avances result" + result);
             return result;
         } catch (Exception e) {
-            System.out.println("\n\n\n avances exception" + e.getMessage());
             return 0;
         }
     }
@@ -44,7 +41,6 @@ public class AvancegestatDaoImpl implements AvancegestatDAO {
                 .setParameter("statut", Statut.ACTIF)
                 .getResultList();
         if (result.isEmpty()) {
-            System.out.println(" \n\n\n\n l  objet n exsite pas   \n\n\n\n");
         }
         return result;
     }
@@ -143,7 +139,6 @@ public class AvancegestatDaoImpl implements AvancegestatDAO {
                 .setParameter("mat", e.getMatricule())
                 .getResultList();
         if (result.isEmpty()) {
-            System.out.println("l  objet n exsite pas");
         }
         return result;
     }

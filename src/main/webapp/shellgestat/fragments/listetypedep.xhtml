@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+	<h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+
+
+			<h:form>
+				<h:panelGroup layout="block" style="text-align:right;">
+					<p:commandButton value="Nouveau"
+						action="#{FamilledepenseBean.nouvaufamilledepense}"
+						style="width:150px;font-size:12px;height:30px;color:white;background-image:linear-gradient( #FAF281, red);" />
+
+				</h:panelGroup>
+				<br />
+				<br />
+				<p:dataTable id="Produit" var="fd"  
+					value="#{FamilledepenseBean.listfamilledepense}"
+					widgetVar="articleTable" editable="true" editMode="cell"
+					rowKey="#{fd.id}" style="margin-bottom:10px"
+					emptyMessage="aucune typedep dans la base" paginator="true"
+					rows="20" paginatorPosition="bottom" resizableColumns="true"
+					liveResize="true">
+
+					<p:ajax event="cellEdit"
+						listener="#{FamilledepenseBean.onCellEdit1}" partialSubmit="true"
+						partialSubmitFilter="true" />
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b" value="Code" />
+						</f:facet>
+
+						<h:outputText style="font-size:12px " value="#{fd.id}" />
+					</p:column>
+
+
+
+					<p:column filterBy="#{fd.libelle}"
+						filterStyle="font-size:14px;color:blue" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText style="font-size:12px ;color:#483d8b"
+								value="Designation" />
+						</f:facet>
+						<p:cellEditor>
+							<f:facet name="output">
+								<b><h:outputText style="font-size:12px " id="lib"
+										value="#{fd.libelle}" /></b>
+							</f:facet>
+							<f:facet name="input">
+								<h:inputText style="font-size:12px " value="#{fd.libelle}" >
+								<f:ajax render="lib"/>
+								</h:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+
+
+
+
+
+
+				</p:dataTable>
+			</h:form>
+
+		 </h:panelGroup>
+		 </h:panelGroup>
+		 
+    </h:panelGroup>
+</ui:composition>

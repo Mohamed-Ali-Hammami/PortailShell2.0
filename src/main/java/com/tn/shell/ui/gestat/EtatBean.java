@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,7 @@ import com.tn.shell.service.shop.ServiceFournisseur;
 import com.tn.shell.service.shop.ServiceLignevente;
 import com.tn.shell.service.shop.ServiceProduit;
 import com.tn.shell.service.shop.ServiceFamilleaticle;
+import com.tn.shell.ui.common.UiDateDefaults;
 
 @ManagedBean(name = "EtatBean")
 @SessionScoped
@@ -117,15 +119,13 @@ public class EtatBean {
 	private List<Achatcarburant> listachat;
 
 	public String etatdebanque() {
-		date1 = new Date();
-		date2 = new Date();
+		initializeMonthlyDateRange();
 		return SUCCESS;
 	}
 
 	public String etatfactureAchat() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		date1 = new Date();
-		date2 = new Date();
+		initializeMonthlyDateRange();
 		dates1 = dateFormat.format(date1);
 		dates2 = dateFormat.format(date2);
 		listachat = new ArrayList<Achatcarburant>();
@@ -243,8 +243,7 @@ public class EtatBean {
     	return SUCCESS;
     }
 	public String etatAchat() {
-		date1 = new Date();
-		date2 = new Date();
+		initializeMonthlyDateRange();
 		listAchatESP = new ArrayList<Achatcaisse>();
 		return SUCCESS;
 	}
@@ -293,7 +292,6 @@ public class EtatBean {
 
 		} catch (ParseException e1) {
 			// TODO Autof-generated catch block
-			e1.printStackTrace();
 		}
 		DecimalFormat df = new DecimalFormat("#,###.000");
 		totaltva = df.format(0);
@@ -346,7 +344,6 @@ public class EtatBean {
 
 		} catch (ParseException e1) {
 			// TODO Autof-generated catch block
-			e1.printStackTrace();
 		}
 		for (Achatcaisse f : listAchatESP) {
 
@@ -394,8 +391,7 @@ public class EtatBean {
 		totalmargebrut = null;
 		totaCA = "#,###.000";
 		totalProfilBrut = "#,###.000";
-		date1 = new Date();
-		date2 = new Date();
+		initializeMonthlyDateRange();
 
 		listetatprofil = new ArrayList<Etatprofil>();
 
@@ -417,8 +413,7 @@ public class EtatBean {
 		totalmargebrut = null;
 		totaCA = ("#,###.000");
 		totalProfilBrut = ("#,###.000");
-		date1 = new Date();
-		date2 = new Date();
+		initializeMonthlyDateRange();
 
 		listetatprofil = new ArrayList<Etatprofil>();
 
@@ -457,7 +452,6 @@ public class EtatBean {
 				d.setMonth(date1.getMonth());
 				d.setYear(date1.getYear());
 				String ds = sf.format(d);
-				System.out.println(" dates" + ds);
 				ld.add(ds);
 			}
 			listetatprofil=new ArrayList<Etatprofil>();
@@ -501,7 +495,6 @@ public class EtatBean {
 					totalachat=totalachat+achat;
 				
 			}/*}catch(Exception e) {
-				System.out.println("ereur dans ligne index");
 			}*/
 		 
 		 for (Etatprofil e : listetatprofil) {
@@ -562,7 +555,6 @@ public String calculeretatdeprofil2() {
 			d.setMonth(date1.getMonth());
 			d.setYear(date1.getYear());
 			String ds = sf.format(d);
-			System.out.println(" dates" +ds);
 			ld.add(ds);
 
 		}
@@ -599,7 +591,6 @@ public String calculeretatdeprofil2() {
 					listetatprofil.add(e);
 				
 			}}catch(Exception e) {
-				System.out.println("ereur dans ligne index");
 			}
 		 
 		for (Etatprofil e : listetatprofil) {
@@ -647,7 +638,6 @@ public String calculeretatdeprofil2() {
 	public void handleChange1(ValueChangeEvent event) {
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codes" + codes + "\n\n");
 		Etatprofil e = listetatprofil.get(codes);
 		DecimalFormat dfs = new DecimalFormat("0");
 		DecimalFormat df = new DecimalFormat("#,###.000");
@@ -734,8 +724,7 @@ public String calculeretatdeprofil2() {
 	}
 
 	public String etatCheques() {
-		date1 = new Date();
-		date2 = new Date();
+		initializeMonthlyDateRange();
 		return SUCCESS;
 	}
 
@@ -775,7 +764,6 @@ public String calculeretatdeprofil2() {
 
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		listecheque = new ArrayList<Cheque>();
 
@@ -797,8 +785,7 @@ public String calculeretatdeprofil2() {
 	public String etatFiscal() {
 		totaCA = ("#,###.000");
 		totalProfilBrut = ("#,###.000");
-		date1 = new Date();
-		date2 = new Date();
+		initializeMonthlyDateRange();
 		listProduit = new ArrayList<Produit>();
 		return SUCCESS;
 	}
@@ -850,7 +837,7 @@ public String calculeretatdeprofil2() {
 	}
 
 	public String etatVenteParFamille() {
-		date = new Date();
+		date = UiDateDefaults.startOfDay(resolveLatestGestatDate());
 		postes = Poste.values();
 		listelignevente = new ArrayList<Ligneventecredit>();
 
@@ -878,6 +865,44 @@ public String calculeretatdeprofil2() {
 
 	public String etatdesArticles() {
 		return SUCCESS;
+	}
+
+	private void initializeMonthlyDateRange() {
+		Date latestBusinessDate = resolveLatestGestatDate();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(latestBusinessDate);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		date1 = UiDateDefaults.startOfDay(calendar.getTime());
+		date2 = UiDateDefaults.endOfDay(latestBusinessDate);
+	}
+
+	private Date resolveLatestGestatDate() {
+		Date latestBusinessDate = null;
+		Depensegestat latestDepense = serviceDepense.getmaxdepense();
+		if (latestDepense != null) {
+			latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, latestDepense.getDate());
+		}
+		Caisse latestCaisse = serviceCaisse.getmaxcode();
+		if (latestCaisse != null) {
+			latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, latestCaisse.getDate());
+		}
+		Ligneindex latestIndex = serviceLigneindex.getmaxcode();
+		if (latestIndex != null) {
+			latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, latestIndex.getDate());
+		}
+		List<Achatcarburant> achats = serviceAchat.getAll();
+		if (achats != null) {
+			for (Achatcarburant achat : achats) {
+				latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, achat.getDate());
+			}
+		}
+		List<Cheque> cheques = serviceCheque.getAll();
+		if (cheques != null) {
+			for (Cheque cheque : cheques) {
+				latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, cheque.getDate());
+			}
+		}
+		return UiDateDefaults.coalesce(latestBusinessDate, new Date());
 	}
 
 	/*

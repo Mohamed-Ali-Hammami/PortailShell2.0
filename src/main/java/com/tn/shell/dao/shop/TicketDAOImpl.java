@@ -52,10 +52,8 @@ public class TicketDAOImpl  implements TicketDAO{
 		 List<Ticket> TicketListem=em.createQuery("SELECT u FROM  Ticket u where u.id = :valeur",Ticket.class).setParameter("valeur", t).getResultList();
 	        
 	        if (TicketListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return TicketListem.get(0);}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}
 	}
 

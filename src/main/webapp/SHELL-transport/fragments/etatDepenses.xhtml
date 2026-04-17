@@ -1,0 +1,129 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:panelGroup layout="block" styleClass="shell-module-layout transport-shell-fragment"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+		 
+		
+		<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+			<br />
+			<br />
+			<br />
+			<br />
+
+			<h:form>
+				<h:panelGroup layout="block" style="text-align:left;">
+					<h:panelGrid columns="2">
+						<h:commandLink title="imprimer">
+							<p:graphicImage url="/images/imprimante-icone.png"
+								style="width:25px" />
+							<p:printer target="imprimer"></p:printer>
+						</h:commandLink>
+					</h:panelGrid>
+					<table>
+						<tr>
+							<td><h:outputText value="à partir du :"
+									style="font-size:12px " /></td>
+							<td><p:calendar id="popup" value="#{EtattransportBean.date1}"
+									size="10">
+									<!-- <p:ajax update="etatvente  ttc ht tva timbre" listener="#{EtattransportBean.getetatventebydate1}"   /> -->
+								</p:calendar></td>
+
+							<td><h:outputText value="jusqu'au :" style="font-size:12px " /></td>
+							<td><p:calendar id="popup2" value="#{EtattransportBean.date2}"
+									size="10">
+									<!--  <f:ajax listener="#{EtattransportBean.getetatventebydate}" render="etatvente  ttc ht tva timbre" />-->
+								</p:calendar></td>
+						</tr>
+
+						<tr>
+							<td><h:outputText value="Vehicule" style="font-size:12px " /></td>
+							<td><p:selectOneMenu value="#{EtattransportBean.matricule}"
+									style="width:200px;font-size:12px " id="client" filter="true"
+									filterMatchMode="contains">
+									<f:selectItem itemLabel="selectionner vehicule" />
+									<f:selectItems value="#{EtattransportBean.listVehicules}" />
+
+								</p:selectOneMenu></td>
+						</tr>
+
+
+						<tr>
+							<td />
+							<td><p:commandButton value="Recherche"
+									action="#{EtattransportBean.getetatDepenses1}"
+									style="width:150px;font-size:12px;height:30;color:#0000ff;background-color:#abc8e2;" /></td>
+						</tr>
+					</table>
+
+				</h:panelGroup>
+
+				<p:outputPanel id="imprimer" style="width:99%">
+					<h:outputText
+						value="ETAT des depenses du #{EtattransportBean.date1s} #{EtattransportBean.date2s}           #{EtattransportBean.matricule}"
+						style=" font-style: italic;font-size: large;" />
+
+					<br />
+					<br />
+					<br />
+					<br />
+
+					<p:dataTable id="fd" var="fd" value="#{EtattransportBean.listDepense}"
+						widgetVar="articleTable" rowKey="#{fd.id}"
+						style="margin-bottom:10px"
+						emptyMessage="aucune depense dans la base">
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="Date" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.dates}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Designation" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.libelle}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Montant" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{fd.montants}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="Vehicule" />
+							</f:facet>
+							<h:outputText style="font-size:12px "
+								value="#{fd.vhecule.matricule}" />
+						</p:column>
+
+
+						<p:columnGroup type="footer">
+							<p:row>
+								<p:column style="text-align:right"
+									footerText="Nomre de lignes #{EtattransportBean.listDepense.size()}" />
+								<p:column style="text-align:right" footerText="Totals:" />
+								<p:column footerText="#{EtattransportBean.totaltransports}" />
+
+
+							</p:row>
+						</p:columnGroup>
+
+					</p:dataTable>
+				</p:outputPanel>
+			</h:form>
+
+		</h:panelGroup>
+	</h:panelGroup>
+</ui:composition>

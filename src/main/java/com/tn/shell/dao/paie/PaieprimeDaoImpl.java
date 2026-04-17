@@ -36,10 +36,8 @@ public class PaieprimeDaoImpl implements PaieprimeDAO {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet client n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -51,10 +49,8 @@ public class PaieprimeDaoImpl implements PaieprimeDAO {
 				Paieprime.class).setParameter("statut", Statut.ACTIF).setParameter("annee", annee)
 				.setParameter("status", Status.Declare).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet client n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -69,10 +65,8 @@ public class PaieprimeDaoImpl implements PaieprimeDAO {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet client n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -99,10 +93,8 @@ public class PaieprimeDaoImpl implements PaieprimeDAO {
 				Paieprime.class).setParameter("statut", Statut.ACTIF).setParameter("annee", annee)
 				.setParameter("mois", mois).setParameter("status", Status.NonDeclaree).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet client n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -116,10 +108,8 @@ public class PaieprimeDaoImpl implements PaieprimeDAO {
 				.setParameter("matricule", e.getMatricule()).setParameter("annee", annee).setParameter("mois", mois)
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet client n exsite pas\n\n");
 			return null;
 		}
 	}
@@ -134,10 +124,8 @@ public class PaieprimeDaoImpl implements PaieprimeDAO {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet client n exsite pas\n\n");
 			return null;
 		}
 	}

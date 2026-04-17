@@ -44,10 +44,8 @@ public class LigneCommandeDaoImpl implements LigneCommandedao {
 				 .setParameter("numero", f.getNumero()).getResultList();
 		 
 		 if (result.size() > 0){
-	        	System.out.println("objet trouvé "+result.get(0).getId()+"\n\n\n");
 	            return result.get(0);}
 	        else{
-	        	System.out.println("\n\nl  objet lignecoamanse n exsite pas\n\n");
 	            return null;}   
 		 
 		   
@@ -88,10 +86,8 @@ public class LigneCommandeDaoImpl implements LigneCommandedao {
 					.setParameter("nom", a.getId()).getResultList();
 
 			if (LignecommandeListem.size() > 0) {
-				System.out.println("objet trouvé\n");
 				return LignecommandeListem;
 			} else {
-				System.out.println("l  objet n exsite pas");
 				return null;
 			}
 		}
@@ -103,10 +99,8 @@ public class LigneCommandeDaoImpl implements LigneCommandedao {
 					.getResultList();
 
 			if (LignecommandeListem.size() > 0) {
-				System.out.println("objet trouvé\n");
 				return LignecommandeListem;
 			} else {
-				System.out.println("l  objet n exsite pas");
 				return null;
 			}
 	 }

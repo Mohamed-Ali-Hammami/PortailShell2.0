@@ -30,17 +30,13 @@ public class RendementDaoImpl implements rendementDAO {
 	}
 	 
 	public double getnbvbetwendates(String d1, String d2,TypeLavage typelavage) {
-		System.out.println("\n\n\n\n d1 " + d1);
-		System.out.println("\n\n\n\n d2 " + d2);
 		Query q = em.createNativeQuery(
 				"SELECT SUM(a.nbvoiture+a.nbsemi)  from Rendement a  where a.statut ='ACTIF' and a.typelavage =  '"+typelavage+  "' and a.date BETWEEN '"
 						+ d1 + "' and '" + d2 + " 23:00:00' "); 
 		try {
 			double result = (Double) q.getSingleResult();
-			System.out.println("\n\n\n\n result " + result);
 			return result ;
 		} catch (Exception e2) {
-			System.out.println("\n\n\n\n exception " + e2.getMessage());
 			return 0;
 		}
 	}
@@ -51,26 +47,20 @@ public class RendementDaoImpl implements rendementDAO {
 						+ d1 + "' and '" + d2 + " 23:00:00'" ); 
 		try {
 			double result = (Double) q.getSingleResult();
-			System.out.println("\n\n\n\n result " + result);
 			return result ;
 		} catch (Exception e2) {
-			System.out.println("\n\n\n\n exception " + e2.getMessage());
 			return 0;
 		}
 	}
 	
 	public double getMontantvbetwendate(String d1, String d2, Employee e) {
-		System.out.println("\n\n\n\n d1 " + d1);
-		System.out.println("\n\n\n\n d2 " + d2);
 		Query q = em.createNativeQuery(
 				"SELECT SUM(CAST(a.parouvrier AS decimal(3,2)))  from Rendement a  where a.statut ='ACTIF'   and a.dates BETWEEN '"
 						+ d1 + "' and '" + d2 + "'  and a.employeeid =" + e.getMatricule()); 
 		try {
 			BigDecimal result = (BigDecimal) q.getSingleResult();
-			System.out.println("\n\n\n\n result " + result);
 			return result.doubleValue();
 		} catch (Exception e2) {
-			System.out.println("\n\n\n\n exception " + e2.getMessage());
 			return 0;
 		}
 	}
@@ -84,7 +74,6 @@ public class RendementDaoImpl implements rendementDAO {
 
 			return result;
 		} catch (Exception e2) {
-			System.out.println("\n\n\n\n exception " + e2.getMessage());
 			return 0;
 		}
 	}
@@ -109,7 +98,6 @@ public class RendementDaoImpl implements rendementDAO {
 
 			return result;
 		} catch (Exception e2) {
-			System.out.println("\n\n\n\n exception " + e2.getMessage());
 			return 0;
 		}
 	}
@@ -122,7 +110,6 @@ public class RendementDaoImpl implements rendementDAO {
 
 			return result;
 		} catch (Exception e2) {
-			System.out.println("\n\n\n\n exception " + e2.getMessage());
 			return 0;
 		}
 	}
@@ -136,7 +123,6 @@ public class RendementDaoImpl implements rendementDAO {
 
 			return result;
 		} catch (Exception e2) {
-			System.out.println("\n\n\n\n exception " + e2.getMessage());
 			return 0;
 		}
 	}
@@ -149,7 +135,6 @@ public class RendementDaoImpl implements rendementDAO {
 
 			return result;
 		} catch (Exception e2) {
-			System.out.println("\n\n\n\n exception " + e2.getMessage());
 			return 0;
 		}
 	}
@@ -158,13 +143,11 @@ public class RendementDaoImpl implements rendementDAO {
 		 List<Rendement> result = em.createQuery("SELECT a FROM Rendement a  where a.statut = :statut   and a.date BETWEEN :d1 and :d2 and a.typelavage = :typelavage and a.poste=:poste and a.nbvoiture >= 0", Rendement.class)
 				 .setParameter("statut", Statut.ACTIF) .setParameter("d1", d1).setParameter("d2", d2).setParameter("typelavage", typelavage).setParameter("poste", poste).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet caisse trouvé " + "\n\n\n");
 		return 
 				
 				result;}
 		else {
 			
-			System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 			return null;}
 	}
 	
@@ -172,13 +155,11 @@ public class RendementDaoImpl implements rendementDAO {
 		 List<Rendement> result = em.createQuery("SELECT a FROM Rendement a  where a.statut = :statut   and a.date BETWEEN :d1 and :d2 and a.typelavage = :typelavage and a.nbvoiture >= 0", Rendement.class)
 					 .setParameter("statut", Statut.ACTIF) .setParameter("d1", d1).setParameter("d2", d2).setParameter("typelavage", typelavage).getResultList();
 			if (result.size() > 0) {
-				System.out.println("objet caisse trouvé " + "\n\n\n");
 			return 
 					
 					result;}
 			else {
 				
-				System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 				return null;}
 	}
 	
@@ -187,13 +168,11 @@ public class RendementDaoImpl implements rendementDAO {
 					
 					.setParameter("statut", Statut.ACTIF) .setParameter("d1", d1).setParameter("d2", d2).setParameter("employee", e.getMatricule()).getResultList();
 			if (result.size() > 0) {
-				System.out.println("objet caisse trouvé " + "\n\n\n");
 			return 
 					
 					result;}
 			else {
 				
-				System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 				return null;}
 	 }
 	 public List<Rendement> getbetwendates(Date d1,Date d2,TypeLavage typelavage,Statuss statuss){
@@ -201,13 +180,11 @@ public class RendementDaoImpl implements rendementDAO {
 					
 					.setParameter("statut", Statut.ACTIF) .setParameter("d1", d1).setParameter("d2", d2).setParameter("typelavage", typelavage).setParameter("statuss", statuss).getResultList();
 			if (result.size() > 0) {
-				System.out.println("objet caisse trouvé " + "\n\n\n");
 			return 
 					
 					result;}
 			else {
 				
-				System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 				return null;}
 	 }
 	 
@@ -216,13 +193,11 @@ public class RendementDaoImpl implements rendementDAO {
 					
 					.setParameter("statut", Statut.ACTIF) .setParameter("d1", d1).setParameter("d2", d2).setParameter("poste", poste).setParameter("typelavage", typelavage).setParameter("statuss", statuss).getResultList();
 			if (result.size() > 0) {
-				System.out.println("objet caisse trouvé " + "\n\n\n");
 			return 
 					
 					result;}
 			else {
 				
-				System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 				return null;} 
 	 }
 	 
@@ -231,13 +206,11 @@ public class RendementDaoImpl implements rendementDAO {
 					
 					.setParameter("statut", Statut.ACTIF).setParameter("typelavage", typelavage).setParameter("statuss", statuss).getResultList();
 			if (result.size() > 0) {
-				System.out.println("objet caisse trouvé " + "\n\n\n");
 			return 
 					
 					result;}
 			else {
 				
-				System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 				return null;} 
 	 }
 	 public List<Rendement> getbetwendateandemployee(Date d1,Date d2,Employee e){
@@ -245,13 +218,11 @@ public class RendementDaoImpl implements rendementDAO {
 					
 					.setParameter("statut", Statut.ACTIF) .setParameter("d1", d1).setParameter("d2", d2).setParameter("mat", e.getMatricule()).getResultList();
 			if (result.size() > 0) {
-				System.out.println("objet caisse trouvé " + "\n\n\n");
 			return 
 					
 					result;}
 			else {
 				
-				System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 				return null;}
 	 }
 	@Transactional
@@ -287,10 +258,8 @@ public class RendementDaoImpl implements rendementDAO {
 					.setParameter("generation", TypeGeneration.Cloture)
 					.getResultList();
 			if (result.size() > 0) {
-				System.out.println("objet trouvé " + "\n\n\n");
 				return result.get(0);
 			} else {
-				System.out.println("\n\nl  objet Rendement n exsite pas\n\n");
 				return null;
 			}
 	 }
@@ -432,13 +401,11 @@ public class RendementDaoImpl implements rendementDAO {
 					
 					.setParameter("statut", Statut.ACTIF) .setParameter("statuss", statuss) .setParameter("typelavage", typelavage).getResultList();
 			if (result.size() > 0) {
-				System.out.println("objet caisse trouvé " + "\n\n\n");
 			return 
 					
 					result;}
 			else {
 				
-				System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 				return null;}
 	}
 
@@ -455,13 +422,11 @@ public class RendementDaoImpl implements rendementDAO {
 					
 					.setParameter("statut", Statut.ACTIF) .setParameter("d1", d).setParameter("employee", e.getMatricule()).setParameter("poste", poste).setParameter("statuss", Statuss.Cloture).getResultList();
 			if (result.size() > 0) {
-				System.out.println("objet caisse trouvé " + "\n\n\n");
 			return 
 					
 					result;}
 			else {
 				
-				System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 				return null;}
 	}
 	
@@ -470,11 +435,9 @@ public class RendementDaoImpl implements rendementDAO {
 					
 					.setParameter("statut", Statut.ACTIF) .setParameter("d1", d).setParameter("produit", e.getId()).setParameter("poste", poste).setParameter("statuss", Statuss.Cloture).getResultList();
 			if (result.size() > 0) {
-				System.out.println("objet caisse trouvé " + "\n\n\n");
 			return 					
 					result;}
 			else {				
-				System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 				return null;}
 	}
 	
@@ -501,12 +464,10 @@ public class RendementDaoImpl implements rendementDAO {
 				 .setParameter("statut", Statut.ACTIF) .setParameter("d1", d1).setParameter("d2", d2).getResultList();
 		}
 		if (result.size() > 0) {
-			System.out.println("objet caisse trouvé " + "\n\n\n");
 		return 				
 				result;}
 		else {
 			
-			System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 			return null;} 
 	}
 	 
@@ -534,12 +495,10 @@ public class RendementDaoImpl implements rendementDAO {
             		   .setParameter("fonction", "VIDANGEUR") .setParameter("statut", Statut.ACTIF) .setParameter("d1", d1).setParameter("d2", d2).getResultList();
 		}
 		if (result.size() > 0) {
-			System.out.println("objet caisse trouvé " + "\n\n\n");
 		return 				
 				result;}
 		else {
 			
-			System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 			return null;} 
 	}
 	
@@ -548,13 +507,11 @@ public class RendementDaoImpl implements rendementDAO {
 		 Rendement result = em.createQuery("SELECT a FROM Rendement a  where a.statut = 'ACTIF' and a.id  =(select MAX(b.id ) from Rendement b where b.statuss = 'Cloture' and b.typelavage = :typelavage)", Rendement.class)
 					 	.setParameter("typelavage", typelavage)  .getSingleResult();
 			if (result!=null) {
-				System.out.println("objet caisse trouvé " + "\n\n\n");
 			return 
 					
 					result;}
 			else {
 				
-				System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 				return null;
 				
 			}
@@ -564,13 +521,11 @@ public class RendementDaoImpl implements rendementDAO {
 		 List<Rendement> result = em.createQuery("SELECT a FROM Rendement a  where a.statut = :statut   and a.dates = :d1   and a.employee.matricule = :employee and a.nbvoiture >= 0 and a.statuss = :statuss", Rendement.class)
 					 	.setParameter("statut", Statut.ACTIF) .setParameter("d1", d).setParameter("employee", e.getMatricule()).setParameter("statuss", Statuss.Cloture).getResultList();
 			if (result.size() > 0) {
-				System.out.println("objet caisse trouvé " + "\n\n\n");
 			return 
 					
 					result;}
 			else {
 				
-				System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 				return null;
 				
 			}
@@ -615,13 +570,11 @@ public class RendementDaoImpl implements rendementDAO {
 					
 					.setParameter("statut", Statut.ACTIF) .setParameter("d1", d).setParameter("produit", e.getId()).setParameter("statuss", Statuss.Cloture).getResultList();
 			if (result.size() > 0) {
-				System.out.println("objet caisse trouvé " + "\n\n\n");
 			return 
 					
 					result;}
 			else {
 				
-				System.out.println("pas de ligne de vente avec ces critères" +" "+ "\n\n\n");
 				return null;}
 	}
 

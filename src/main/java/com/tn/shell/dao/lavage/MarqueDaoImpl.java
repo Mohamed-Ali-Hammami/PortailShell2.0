@@ -40,10 +40,8 @@ public class MarqueDaoImpl implements MarqueDAO {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0).getId();
 		} else {
-			System.out.println("\n\nl  objet Marque n exsite pas\n\n");
 			return 0;
 		}
 	}

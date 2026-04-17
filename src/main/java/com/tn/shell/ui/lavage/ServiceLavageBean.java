@@ -51,6 +51,7 @@ import com.tn.shell.service.paie.ImageEmployeeService;
 import com.tn.shell.service.paie.ServiceEmployee;
 import com.tn.shell.service.shop.ServiceProduit;
 import com.tn.shell.service.shop.ServiceRendement;
+import com.tn.shell.ui.common.UiDateDefaults;
 
 @ManagedBean(name = "ServiceLavageBean")
 @SessionScoped
@@ -137,6 +138,7 @@ public class ServiceLavageBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		createBarModels();
+		ensureDefaultReportContext();
 	}
 
 	public String imprimer() {
@@ -156,22 +158,15 @@ public class ServiceLavageBean implements Serializable {
 		if (FacesContext.getCurrentInstance() != null && FacesContext.getCurrentInstance().isPostback()) {
 			return SUCCESS;
 		}
-		postes = Poste.values();
-		typalavages = TypeLavage.values();
-		poste = null;
-		typalavage = null;
-		listRendement = new ArrayList<Rendement>();
-		listRendementLav = new ArrayList<Rendement>();
-		listProduit = new ArrayList<Produit>();
+		ensureDefaultReportContext();
 
 		return SUCCESS;
 	}
 
 	public String getrapport() {
-		//try {
-			date1.setHours(0);
-			date2.setHours(23);
-			date2.setMinutes(59);
+		ensureDefaultReportContext();
+		date1 = UiDateDefaults.startOfDay(date1);
+		date2 = UiDateDefaults.endOfDay(date2);
 			double totalPoste1s = 0;
 			double totalPoste2s = 0;
 			nblavage = 0;
@@ -206,7 +201,7 @@ public class ServiceLavageBean implements Serializable {
 					long tm = 0;
 					String dates = s.format(date1);
 
-					if (typerecherche.equals("Par Date")) {
+					if ("Par Date".equals(typerecherche)) {
 						poste = null;
 						ll = new ArrayList<Rendement>();
 						ll = serviceRendement.getAllventeparDate3(dates, e);
@@ -218,12 +213,10 @@ public class ServiceLavageBean implements Serializable {
 					}
 					try {
 						if (heure != null)
-							System.out.println("\n\n size" + heure.size());
 						if (heure.size() > 0)
 							for (String sh : heure) {
 								// if(!s.equals("") ||s.equals(null) ) {
 								int h = Integer.parseInt(sh.substring(0, sh.indexOf(":")));
-								System.out.println("\n\n\n" + h);
 								th = th + h;
 								int m = Integer.parseInt(sh.substring(sh.indexOf(":") + 1));
 								tm = tm + m;
@@ -566,13 +559,64 @@ public class ServiceLavageBean implements Serializable {
 			    SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
 			    Date parsedDate = dateFormat.parse(ch);
 			    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-			    System.out.println("time"+timestamp);
 			    return timestamp;
 			} catch(Exception e) { //this generic but you can control another types of exception
-			   System.out.println(e.getMessage());
 			   return null;
 			   
 			}
+	}
+
+	private void ensureDefaultReportContext() {
+		postes = Poste.values();
+		typalavages = TypeLavage.values();
+		if (typerecherche == null || typerecherche.trim().isEmpty()) {
+			typerecherche = "Par Date";
+		}
+		if (typalavage == null) {
+			typalavage = resolveLatestTypeLavage();
+		}
+		Date latestBusinessDate = resolveLatestRendementDate();
+		date1 = UiDateDefaults.startOfDay(date1 == null ? latestBusinessDate : date1);
+		date2 = UiDateDefaults.endOfDay(date2 == null ? latestBusinessDate : date2);
+		if (listRendement == null) {
+			listRendement = new ArrayList<Rendement>();
+		}
+		if (listRendementLav == null) {
+			listRendementLav = new ArrayList<Rendement>();
+		}
+		if (listProduit == null) {
+			listProduit = new ArrayList<Produit>();
+		}
+	}
+
+	private Date resolveLatestRendementDate() {
+		if (serviceRendement == null) {
+			return new Date();
+		}
+		try {
+			Rendement latestRendement = serviceRendement.getmaxRendement();
+			if (latestRendement != null && latestRendement.getDate() != null) {
+				return latestRendement.getDate();
+			}
+		} catch (Exception ignored) {
+			return new Date();
+		}
+		return new Date();
+	}
+
+	private TypeLavage resolveLatestTypeLavage() {
+		if (serviceRendement == null) {
+			return TypeLavage.Lavage;
+		}
+		try {
+			Rendement latestRendement = serviceRendement.getmaxRendement();
+			if (latestRendement != null && latestRendement.getTypelavage() != null) {
+				return latestRendement.getTypelavage();
+			}
+		} catch (Exception ignored) {
+			return TypeLavage.Lavage;
+		}
+		return TypeLavage.Lavage;
 	}
 
 	public String getLavageEcours() {
@@ -592,7 +636,6 @@ public class ServiceLavageBean implements Serializable {
 				  Date duree = new Date (); //Pour calculer la difference
 				  duree.setTime (dateFin.getTime () - uDate.getTime ());				  
 				  long secondes = duree.getTime () / 1000;
-				  System.out.println("\n\n seconds"+secondes);
 				 long min = secondes / 60;
 				 long heures = min / 60;		 
 				 secondes %= 60;

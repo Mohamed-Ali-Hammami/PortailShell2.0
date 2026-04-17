@@ -1,0 +1,127 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+	<h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+
+			<h:form id="f">
+
+				<h:panelGroup layout="block" style="text-align:center;">
+					<b><h:outputText value="Historique des Achats Carburants" /></b>
+				</h:panelGroup>
+
+
+
+
+				<p:dataTable id="emp" var="p" value="#{AchatcarburantBean.listeLigne}"
+					selection="#{AchatcarburantBean.seelctedLigne}"    selectionMode="single" 
+					rowKey="#{p.id}" widgetVar="articleTable"
+					emptyMessage="aucune ligne dans la base">
+
+					<p:ajax listener="#{AchatcarburantBean.getFacturebyAchat}" event="rowSelect" update=":f:facture"  />
+
+					 
+					<p:column>
+
+						<f:facet name="header">
+							<h:outputText style="font-size:16px ;color:#483d8b" value="Nom" />
+						</f:facet>
+
+
+						<b><h:outputText style="font-size:16px ;"
+								value="#{p.produit.nom}" id="des" /></b>
+
+
+
+
+
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:16px ;color:#483d8b"
+								value="QUANTITE" />
+						</f:facet>
+
+
+						<b><h:outputText style="font-size:16px ;"
+								value="#{p.produit.quantitestock}" id="qte2" /></b>
+
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:16px ;color:#483d8b" value="Achat" />
+						</f:facet>
+						<h:outputText style="font-size:16px "
+							value="#{p.produit.prixachats}" id="prix" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:16px ;color:#483d8b" value="Vente" />
+						</f:facet>
+						<h:outputText style="font-size:16px "
+							value="#{p.produit.prixventes}" id="prixv" />
+					</p:column>
+
+
+				</p:dataTable>
+
+				<br />
+				<br />
+
+
+
+				<p:dataTable id="facture" var="p" value="#{AchatcarburantBean.listeLigne2}"
+					  emptyMessage="aucune ligne dans la base">
+
+ 
+					<p:column>
+
+						<f:facet name="header">
+							<h:outputText style="font-size:16px ;color:#483d8b" value="Date" />
+						</f:facet>
+
+
+						<b><h:outputText style="font-size:16px ;" value="#{p.dates}"
+								id="date" /></b>
+ 
+					</p:column>
+ 
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:16px ;color:#483d8b"
+								value="QUANTITE" />
+						</f:facet>
+
+
+						<b><h:outputText style="font-size:16px ;"
+								value="#{p.quantite}" id="qte" /></b>
+
+					</p:column>
+
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText style="font-size:16px ;color:#483d8b"
+								value="Num Facture" />
+						</f:facet>
+						<h:outputText style="font-size:16px "
+							value="#{p.achat.factureachat.code}" id="fact" />
+					</p:column>
+ 
+				</p:dataTable>
+ 
+
+			</h:form>
+	 </h:panelGroup>
+	 </h:panelGroup>
+	 
+    </h:panelGroup>
+</ui:composition>

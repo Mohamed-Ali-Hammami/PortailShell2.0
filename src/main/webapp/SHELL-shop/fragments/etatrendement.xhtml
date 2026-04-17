@@ -1,0 +1,312 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout shop-shell-fragment">
+ <h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+ 
+
+		<ui:insert name="menu">
+			
+		</ui:insert> 
+		<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);"> 
+			 
+					<h:form id="form">
+				<h:panelGroup layout="block" style="text-align:center;"> 
+				<h:panelGrid columns="7" cellpadding="5">
+
+					<h:outputText value="DE: " style="font-weight: bold" />
+					 <p:calendar value="#{RendementBean.date1}" navigator="true"
+  pattern="dd/MM/yyyy" buttonTabindex="-1" type="tel"
+  mask="99/99/?9999" placeholder="__/__/____" >
+					 <p:ajax   event="dateSelect" listener="#{RendementBean.getdates1}" 	  /> 
+					 </p:calendar>
+					 
+					 	<h:outputText value="A : " style="font-weight: bold" />
+					 <p:calendar value="#{RendementBean.date2}" navigator="true"
+  pattern="dd/MM/yyyy" buttonTabindex="-1" type="tel"
+  mask="99/99/?9999" placeholder="__/__/____" >
+					 <p:ajax   event="dateSelect" listener="#{RendementBean.getdates2}" 	  /> 
+					 </p:calendar>
+					 
+					  
+					 	<h:outputText value="Ouvriers: " style="font-weight: bold" />
+					 	
+					 	<p:selectOneMenu value="#{RendementBean.nom}"
+												style="width:200px;font-size:12px " id="emp" filter="true"
+												filterMatchMode="contains">
+												<f:selectItem itemLabel="Veuillez choisir un employer" />
+												<f:selectItems value="#{RendementBean.listemployee}"
+													itemValue="#{e.nom}" var="e" itemLabel="#{e.nom}" />
+												 
+											</p:selectOneMenu>
+					 
+											
+											<p:selectOneRadio value="#{RendementBean.lavagvidange}"  id="console">
+											<f:selectItem  itemValue="Lavage" itemLabel="Lavage"/>
+											<f:selectItem itemValue="Vidange" itemLabel="Vidange"/>
+											
+											</p:selectOneRadio>
+					 
+				</h:panelGrid>
+				<br/>
+				
+				<table>
+						<tr>
+
+
+							<td><p:commandButton value="Valider" ajax="false"
+									style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+									action="#{RendementBean.getetatrendementlavage}" /></td>
+									
+									<td>
+									<p:commandButton value="Imprimer"
+					style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px">
+					<p:printer target="imprimer" />
+				</p:commandButton>
+									</td>
+						</tr>
+					</table> 
+	
+				
+				</h:panelGroup>
+				 
+				<p:outputPanel id="imprimer">
+				<h:panelGrid rendered="#{RendementBean.employee==null}">
+				
+				<h:panelGroup layout="block" style="text-align:center;">
+					<H5>
+						<h:outputText value="Rendement Salarial Entre #{RendementBean.date1s} et  #{RendementBean.date2s}" />
+					 
+					</H5> 
+					
+<p:dataGrid var="c" value="#{RendementBean.listemployee}" styleClass="ui-dataGrid-no-border" rowIndexVar="rowid" columns="4"  id="produits"  style="width:100%" >              
+                         
+		       <p:dataTable  var="b" value="#{c.listrendement}" rowIndexVar="s" >    
+		           <p:column  rendered="#{rowid mod 4 ==0}" width="10%"  >
+		         <f:facet name="header" >
+				 <p style="width:5%;height:10px">	<h:outputText value="Date" style="font-size:12px "/></p>
+						</f:facet>
+						
+		 	  <p style="width:5%;height:10px">
+                <h:outputText value="#{b.dates}" style="font-size:10px "  /> 
+                </p>
+		 	   
+		       </p:column>   
+		       
+		         <p:column    rendered="#{rowid mod 4 ==0}"  width="0%" >
+		      <f:facet name="header" >
+					<h:outputText value="Date" style="font-size:12px "/>
+						</f:facet>
+						
+		 	 
+             <h:outputText value=" " style="font-size:14px "  /> 
+		 	   
+		       </p:column>	
+		       
+		         
+		<p:column style="text-align:left" >
+		<f:facet name="header" >
+				<p style="width:140px;test-align:left"><b>	<h:outputText value="#{c.nom}" style="font-size:12px "    />
+				</b> </p>	
+						 
+		 </f:facet>
+				 
+		  <p style="height:10px">
+		 	 <b><h:outputText value="#{b.nbvoitures}" rendered="#{b.nbvoiture !=0}" style="font-size:12px "/> 
+		 	  
+		 	  
+		 	   </b>
+		 	 </p>
+		 	 
+		 	  <h:outputText value=" "   rendered="#{b.test =='true'}" style="font-size:14px "/> 
+		 	   
+		</p:column>	
+		
+		<p:column style="text-align:left"    >
+		<f:facet name="header" >
+				 <p  style="width:140px;test-align:left">	<h:outputText value="Montant" style="font-size:10px "    />
+				</p>	 
+						 
+		 </f:facet>
+				 
+		 <p style=" height:10px">
+		 	 <b><h:outputText value="#{b.montantv}" rendered="#{b.nbvoitures !=0}" style="font-size:10px "/> 
+		  
+		 	     </b>
+		 </p>
+		 	 
+		 	  <h:outputText value=" "   rendered="#{b.test =='true'}" style="font-size:10px "/> 
+		 	   
+		</p:column>			
+		 
+		 
+		 
+		  	</p:dataTable><p style="page-break-before:always"/>
+		  	 
+		  	<style type="text/css">
+		  .table {
+	 border-spacing:0px;
+	  border: 0px;
+} </style>
+
+ 
+            </p:dataGrid>
+
+					</h:panelGroup>
+				</h:panelGrid>
+				
+				
+				<h:panelGrid rendered="#{RendementBean.employee!=null}">
+				
+				<h:panelGroup layout="block" style="text-align:center;">
+					<H2>
+						 <h:outputText value="Rendement Salarial #{RendementBean.employee.nom} Entre #{RendementBean.date1s} et  #{RendementBean.date2s}"  />
+				 
+					</H2>
+					 
+					
+            
+               <h:panelGrid columns="2" >
+		       <p:dataTable id="emp2"   var="b"   selectionMode="multiple" rowKey="#{b.id}" value="#{RendementBean.employee.listrendement}"
+		       selection="#{RendementBean.selectedrendement}"
+		        style="width:70%" rowIndexVar="s" >    
+		        
+		        
+		          <p:ajax event="rowSelect"  update="emp2 :form:montant" listener="#{RendementBean.onRowSelect}"  process="@this" partialSubmit="true"
+							   /> 
+							   
+							   
+							   
+		           <p:column   width="22%"  >
+		      <f:facet name="header" >
+				 	<h:outputText value="Date" style="font-size:18px "/> 
+				 	</f:facet>
+						
+		 	 
+             <h:outputText value="#{b.dates}" style="font-size:12px "  /> 
+		 	   
+		       </p:column>   
+		       
+		         
+		       
+		         
+		 
+		<p:column   >
+		<f:facet name="header" >
+				 	<h:outputText value="#{RendementBean.employee.nom}" style="font-size:14px "    />
+				 	 
+						 
+		 </f:facet>
+						
+		 <p style="height:20">
+		 	 <h:outputText value="#{b.nbvoitures} V/ #{b.nbsemis}  S" rendered="#{b.test !='true'}" style="font-size:12px "/></p>
+		 	 
+		 	  <h:outputText value=" "   rendered="#{b.test =='true'}" style="font-size:12px "/> 
+		 	   
+		</p:column>			
+		 <p:column style="text-align:left"    >
+		<f:facet name="header" >
+				 <p  style="width:140px;test-align:left">	<h:outputText value="Montant" style="font-size:10px "    />
+				</p>	 
+						 
+		 </f:facet>
+				 
+		 <p style=" height:10px">
+		 	 <b><h:outputText value="#{b.montantv}" rendered="#{b.nbvoitures !=0}" style="font-size:10px "/> 
+		  
+		 	     </b>
+		 </p>
+		 	 
+		 	  <h:outputText value=" "   rendered="#{b.test =='true'}" style="font-size:10px "/> 
+		 	   
+		</p:column>				
+		 
+		 
+		 
+		  	</p:dataTable> 
+		  	
+		  	<h:panelGroup id="montant">
+								<p:messages id="msgs" showDetail="true" /> 
+
+								<b><h:outputText value="Total Voiture" /></b>
+								<br />
+								<p:inputText value="#{RendementBean.totalv}" id="montants"
+									size="6" />
+								<br />
+								<br />
+
+
+								<b><h:outputText value="Total semit" /></b>
+								<br />
+								<p:inputText value="#{RendementBean.totals}"
+									id="montants2" size="6" />
+								<br />
+								<br />
+ 
+							</h:panelGroup>
+            </h:panelGrid>
+					</h:panelGroup>
+				</h:panelGrid>
+				</p:outputPanel>
+				<script>
+					function init() {
+						var index = 0;
+						$('.inpdes').eq(index).focus();
+						$('.inpdes').eq(index).select();
+					}
+					
+					function nexts(input) {
+						$(document)
+								.keypress(
+										function(event) {
+											var keycode = (event.keyCode ? event.keyCode
+													: event.which);
+											if (keycode == '13') {
+												if (input.value != "") {
+													//$(input).closest('td').next('td').find('input[type=text]').focus();	 
+													$(input).closest('td').next(
+													'td').find(
+													'input[type=text]')
+													.focus();
+											$(input).closest('td').next(
+													'td').find(
+													'input[type=text]')
+													.select();
+												}
+												return false;
+											}
+
+										});
+					}
+
+					function nexts2(input) {
+						$(document)
+								.keypress(
+										function(event) {
+											var keycode = (event.keyCode ? event.keyCode
+													: event.which);
+											if (keycode == '13') {
+												$(input).closest('tr').next(
+												'tr').find(
+												'input[type=text]')
+												.first().focus();
+										$(input).closest('tr').next(
+												'tr').find(
+												'input[type=text]')
+												.first().select();
+												return false;
+											}
+
+										});
+					}
+				</script>
+
+			</h:form>
+		</h:panelGroup> 
+	</h:panelGroup>
+    </h:panelGroup>
+</ui:composition>

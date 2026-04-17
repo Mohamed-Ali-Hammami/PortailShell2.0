@@ -1,0 +1,359 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout paie-shell-fragment">
+        <p:panel styleClass="shell-home-panel paie-shell-panel">
+				<h:form>
+					<h:panelGroup layout="block" style="text-align:center;">
+						<table>
+							<tr>
+								<td ><p:commandButton value="Retour"
+										style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+										action="#{PaieBean.retourhist}" /></td>
+
+								<td><p:commandButton value="Modifier" ajax="false"
+										style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+										action="#{PaieBean.modifierEmployer}" /></td>
+										<h:panelGroup rendered="#{PaieBean.selectedEmp.statut =='ACTIF'}">
+										<td><p:commandButton value="Supprimer" ajax="true" 
+										style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+										action="#{PaieBean.supprimerEmployer}" /></td>
+										</h:panelGroup>
+										 
+										<h:panelGroup rendered="#{PaieBean.selectedEmp.statut =='DEACTIF'}">
+										<td><p:commandButton value="Activer" ajax="true" 
+										style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+										action="#{PaieBean.activerEmployer}" /></td>
+										</h:panelGroup>
+										
+										<td><p:commandButton value="Historique" ajax="true"
+										style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+										action="#{PaieBean.historique}" /></td>
+										
+											<td><p:commandButton value="Vetement" ajax="true"
+										style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+										action="#{PaieBean.historiquevetement}" /></td>
+										
+										<td><p:commandButton value="Fiche de paie" ajax="true"
+										style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+										action="#{PaieBean.pointageemployee}" /></td>
+										
+										
+							</tr>
+						</table>
+					</h:panelGroup>
+					 
+					<br/><br/>
+					 
+					<p:tabView >
+					<h:outputText value="Consultation " style="font-size:12px" />
+						<p:tab  title="Fiche" titleStyle="font-size:12px">
+							 <table>
+							 <tr>
+								<td><h:outputText value="Code : " style="font-size:12px" /></td>
+								<td><h:inputText style="font-size:12px" value ="#{PaieBean.code}" id="code"   required="true" requiredMessage="entrer nom "/>
+								 <p:messages for="nom"	closable="true" autoUpdate="true" /></td></tr>
+								 
+								 <tr>
+								<td><h:outputText value="Nom : " style="font-size:12px" /></td>
+								<td><h:inputText style="font-size:12px" value ="#{PaieBean.nom}" id="nom"   required="true" requiredMessage="entrer nom "/>
+								 <p:messages for="nom"	closable="true" autoUpdate="true" /></td></tr>
+								 
+							   <tr>	
+							   <td><h:outputText value="CIN : " style="font-size:12px" /></td>
+								<td> <h:inputText style="font-size:12px" value ="#{PaieBean.cin}" id="cin"  required="true" requiredMessage="entrer  cin"/>
+								 <p:messages for="cin"  	closable="true" autoUpdate="true" /></td> </tr>
+							   <tr>
+								<td><h:outputText value="Matricule CNSS : " style="font-size:12px" /> </td>
+								<td><h:inputText style="font-size:12px" value ="#{PaieBean.code_cnss}" id="cnss"  required="true" requiredMessage="entrer code cnss "/>
+								 <p:messages for="cnss"	closable="true" autoUpdate="true" /></td> </tr>
+								<tr>
+								<td><h:outputText value="Adresse : " style="font-size:12px" /></td>
+								<td><h:inputText style="font-size:12px" value ="#{PaieBean.adresse}"  size="50" id="adresse"   />
+								 <p:messages for="adresse"
+												closable="true" autoUpdate="true" /></td></tr>
+												
+												
+							<tr>
+								<td><h:outputText value="TEL : " style="font-size:12px" /></td>
+								<td><h:inputText style="font-size:12px" value ="#{PaieBean.tel}"  size="40" id="tel"   />
+								 <p:messages for="tel"
+												closable="true" autoUpdate="true" /></td></tr>
+												
+									
+								
+						
+							 	</table>
+						</p:tab>
+						<p:tab title="Contrat" titleStyle="font-size:12px">
+							 <table>
+								 <tr>
+								<td>
+								
+								<h:outputText value="Fonction : " style="font-size:12px" /></td>
+							<td>	<h:inputText style="font-size:12px" value ="#{PaieBean.fonction}"  id="fonction"  required="true" requiredMessage="entrer fonction "/>
+								 <p:messages for="fonction"
+												closable="true" autoUpdate="true" /></td></tr>
+								 
+							
+												
+								<tr>
+								<td><h:outputText value="Type de contrat : " style="font-size:12px" /></td>
+								<td> 					        
+								
+								<p:selectOneMenu  value="#{PaieBean.typedecontrat}"  
+						        style="width:200px;font-size:12px " id="typedecontrat" filter="true" filterMatchMode="contains"
+						         required="true" requiredMessage="entrer le type de contrat ">
+							    <f:selectItem itemLabel="Veuillez choisir un element"  />
+							     <f:selectItems value="#{PaieBean.listtypedecontrat}"   />							 
+						    </p:selectOneMenu>
+								
+								 <p:messages for="typedecontrat"
+												closable="true" autoUpdate="true" /></td></tr>	
+												
+ 			
+												
+							
+							<tr>
+								<td><h:outputText value="Déclaration : " style="font-size:12px" /></td>
+								<td> 					        
+								
+								<p:selectOneMenu  value="#{PaieBean.statu}"  
+						        style="width:200px;font-size:12px " id="status" filter="true" filterMatchMode="contains"
+						         required="true" requiredMessage="entrer le status ">
+							    <f:selectItem itemLabel="Veuillez choisir un element"  />
+							     <f:selectItems value="#{PaieBean.status}"   />	
+							         							 
+						    </p:selectOneMenu>
+								
+								 <p:messages for="status"
+												closable="true" autoUpdate="true" /></td></tr>					
+							
+							
+							
+								 <tr>
+								<td><h:outputText value="Categorie : " style="font-size:12px" /></td>
+								<td> 
+						     C<p:selectOneMenu  value="#{PaieBean.cat}"  
+						        style="width:200px;font-size:12px "   filter="true" filterMatchMode="contains"
+						        >
+							    <f:selectItem itemLabel="Veuillez choisir un element"  />
+							     <f:selectItems value="#{PaieBean.listCategoris}"   />	
+							     		<f:ajax render="cat"/>				 
+						    </p:selectOneMenu>	
+								
+								
+								
+								 <p:messages for="contrat"
+												closable="true" autoUpdate="true" /></td>
+												
+									<td>
+									E<p:selectOneMenu  value="#{PaieBean.degree}"  
+						        style="width:200px;font-size:12px "   filter="true" filterMatchMode="contains"
+						        >
+							    <f:selectItem itemLabel="Veuillez choisir un element"  />
+							     <f:selectItems value="#{PaieBean.listDegrees}"   />	
+							      <f:ajax listener="#{PaieBean.getsalairebycategorir}" render="salaire cat"/>					 
+						    </p:selectOneMenu>	
+								
+									</td>	<td><h:outputText value="C#{PaieBean.cat}E#{PaieBean.degree}" id="cat"/></td>		
+												</tr>
+								 <tr>
+								<td><h:outputText value="Salaire journalier : " style="font-size:12px" /></td>
+								<td><h:inputText style="font-size:12px" value ="#{PaieBean.salaire_journalier}" id="salaire"  required="true" requiredMessage="entrer le salaire "/>
+                                      <p:messages for="salaire"
+												closable="true" autoUpdate="true" /></td>
+												
+								
+							 <td><h:outputText value="Salaire hors grille : " style="font-size:12px" /></td>
+								<td><h:inputText style="font-size:12px" value ="#{PaieBean.salaire_sup}" id="salaires"   />
+                                      <p:messages for="salaires"
+												closable="true" autoUpdate="true" /></td>	
+								</tr>
+										<tr>
+								<td><h:outputText value="Date d'embauche : " style="font-size:12px" /></td>
+								<td><h:inputText style="font-size:12px" value ="#{PaieBean.dateembauche}"  size="40" id="dateembauche"   />
+								 <p:messages for="dateembauche"
+												closable="true" autoUpdate="true" /></td></tr>
+												
+							 
+							 <tr>
+								<td><h:outputText value="Date Fin de contrat : " style="font-size:12px" /></td>
+								<td>
+								  <p:calendar id="datefintcontrat" value="#{PaieBean.datefincontrat}"  navigator="true"
+  pattern="dd/MM/yyyy" buttonTabindex="-1" type="tel"
+  mask="99/99/-9999" placeholder="__/__/____" 
+							 >
+
+				 
+						</p:calendar>
+								
+							 
+								 <p:messages for="dateembauche"
+												closable="true" autoUpdate="true" /></td></tr>					
+												
+												
+							 </table>
+						</p:tab>
+						<p:tab title="situation familiale" titleStyle="font-size:12px">
+							 <table>
+							  <tr>
+								<td>
+							
+								<h:outputText value="Etat civile  : " style="font-size:12px" /></td>
+								<td><p:selectOneMenu  value="#{PaieBean.etat}"  
+						        style="width:200px;font-size:12px " id="etat" filter="true" filterMatchMode="contains"
+						         required="true" requiredMessage="entrer etat ">
+							    <f:selectItem itemLabel="Veuillez choisir un element"  />
+							     <f:selectItems value="#{PaieBean.etats}"   />							 
+						    </p:selectOneMenu>
+						     <p:messages for="etat"
+												closable="true" autoUpdate="true" /></td></tr>
+							 <tr>
+								<td>
+						    <h:outputText value="Nombre d'enfants : " style="font-size:12px" /></td>
+						  <td>  <h:inputText style="font-size:12px" value ="#{PaieBean.nb_enfant}" id="nb_enfant"  required="true" requiredMessage="entrer le nombre d enfants "/>
+							 <p:messages for="nb_enfant"
+												closable="true" autoUpdate="true" /></td>	</tr>
+												<tr>
+							<td> <h:outputText value="Nombre d'enfants à charge  : " style="font-size:12px" /></td>
+							<td> <h:inputText style="font-size:12px" value ="#{PaieBean.nb_enfant_enCharge}" id="nb_enfant_en_charge"  required="true" requiredMessage="entrer  le nombre d'enfant en charge"/>
+                               <p:messages for="nb_enfant_en_charge"
+												closable="true" autoUpdate="true" /></td>
+												</tr>
+						 </table>
+						</p:tab>
+						<p:tab title="Réglement" titleStyle="font-size:12px">
+							<table> 
+								 <tr>
+								<td>
+								<h:outputText value="Nature   : " style="font-size:12px" /></td>
+								<td><p:selectOneMenu  value="#{PaieBean.nature}"  
+						        style="width:200px;font-size:12px " id="nature" filter="true" filterMatchMode="contains"
+						         required="true" requiredMessage="entrer la nature ">
+							    <f:selectItem itemLabel="Veuillez choisir un element"  />
+							     <f:selectItems value="#{PaieBean.natures}"   />							 
+						    </p:selectOneMenu>
+						     <p:messages for="nature"
+												closable="true" autoUpdate="true" /></td></tr>
+						    <tr>
+								<td> <h:outputText value="Banque  : " style="font-size:12px" /></td>
+						  <td>  <h:inputText style="font-size:12px" value ="#{PaieBean.banque}" id="banque"   />
+								 </td></tr>
+								  <tr>
+								<td>
+							 <h:outputText value="Agence  : " style="font-size:12px" /></td>
+							<td> <h:inputText style="font-size:12px" value ="#{PaieBean.agence}" id="agance"    />
+							 </td>
+							 </tr>
+							  <tr>
+								<td>
+							 <h:outputText value="RIB  : " style="font-size:12px" /></td>
+							 <td><h:inputText style="font-size:12px" value ="#{PaieBean.RIB}" id="rib"   />
+                              </td></tr>
+                              </table>
+							
+						</p:tab>
+						
+						 <p:tab title="Gains" titleStyle="font-size:12px">
+								  <h:panelGroup rendered="#{PaieBean.selectedEmp.status=='Declare'}"> 
+								<table border="1" style="width: 100%">
+								<tr>
+								<td><h:outputText style="font-size:9px;color:#483d8b"   /></td>
+								<td><h:outputText style="font-size:9px;color:#483d8b" value="LIBELLE" /></td>
+								<td><h:outputText style="font-size:9px;color:#483d8b" value="MONTANT" /></td>
+								<td><h:outputText style="font-size:9px;color:#483d8b"  value="NATURE" /></td>
+								</tr>
+								
+								<ui:repeat var="g"  value="#{PaieBean.selectedEmp.lignegestion}">
+								<tr>
+								<td><h:panelGroup layout="block" style="text-align:center;">
+											<p:commandLink action="#{PaieBean.supprimerGestion}"												 
+												 >
+												<p:graphicImage url="/images/delete.png" />
+											<f:setPropertyActionListener target="#{PaieBean.selectedLigneGestion}"
+												value="#{g}" />	  
+											</p:commandLink>
+											
+											
+										</h:panelGroup></td>
+								<td>
+								 <h:outputText value="#{g.gestion.libelle}"/>
+								</td>
+								<td>
+								<h:outputText value="#{g.gestion.valeurdeprime}"/>
+								</td>
+								<td>
+								 <h:outputText value="#{g.nature}"/>
+								</td>
+								</tr>
+								</ui:repeat>
+								<tr>
+								<td><h:panelGroup layout="block" style="text-align:center;">
+											<p:commandLink action="#{PaieBean.validerGestion}"												 
+												 >
+												<p:graphicImage url="/images/valid.png" style="width:10"/>
+												  
+											</p:commandLink>
+											
+											
+										</h:panelGroup></td>
+								<td>
+								<p:selectOneMenu value="#{PaieBean.libelle}"
+												style="width:200px;font-size:12px " id="etat1" filter="true"
+												filterMatchMode="contains"  >
+												<f:selectItem itemLabel="Veuillez choisir un element" />
+												<f:selectItems value="#{PaieBean.listgestions}" />
+												<f:ajax listener="#{PaieBean.getvaleurPrime}" render="prime"/>
+											</p:selectOneMenu>
+								</td>
+								<td>
+								<h:inputText value="#{PaieBean.prime}" id="prime"/>
+								</td>
+								<td>
+								<p:selectOneMenu value="#{PaieBean.naturee}"
+												style="width:200px;font-size:12px " id="natures" filter="true"
+												filterMatchMode="contains"  >
+												<f:selectItem itemLabel="Veuillez choisir un element" />
+												<f:selectItems value="#{PaieBean.naturess}" />
+											</p:selectOneMenu>
+								</td>
+								</tr>
+                              </table> </h:panelGroup>
+							</p:tab>
+							
+							<p:tab  title="photos" titleStyle="font-size:12px">
+							
+								
+								<br/>
+								<b><h:outputText value="Photos  : " style="font-size:14px" /></b>
+								<table>
+								 
+								<h:panelGroup rendered="#{PaieBean.selectedEmp.imagess!=null}">	 
+								<tr  style="background-color:white;">								 
+								<td width="20%" style="border: thin solid #F2EFEE;"> <h:outputText value="Photos  : " style="font-size:12px" /></td>
+								<td width="20%" style="border: thin solid #F2EFEE;">
+								<h:graphicImage  
+                          value="data:image/jpg;base64,#{PaieBean.selectedEmp.cins}"  
+                          style="width: 150px; height: 150px; border: groove;   padding-right: 1px;"  />
+								 </td>
+								<td style="border: thin solid #F2EFEE;"> <h:outputText value="CIN  : " style="font-size:12px" /></td>
+								 <td width="20%" style="border: thin solid #F2EFEE;">
+								<h:graphicImage  
+                          value="data:image/jpg;base64,#{PaieBean.selectedEmp.photos}"  
+                          style="width: 150px; height: 150px; border: groove;   padding-right: 1px;"  />
+								 </td> 
+								</tr>								 
+								 </h:panelGroup>
+								</table> 
+							
+							</p:tab>
+                            
+					</p:tabView>
+	</h:form>
+				
+        </p:panel>
+    </h:panelGroup>
+</ui:composition>

@@ -122,11 +122,9 @@ public class TransfertBean {
 	 
 	
 	public void handleChange(ValueChangeEvent event) {
-		System.out.println("here " + event.getNewValue());
 		 
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codes" + codes + "\n\n");
 		produit = serviceProduit.Findbycodes((String)event.getNewValue());
 		Lignetransert t = listLignetransfert.get(codes);
 		t.setProduit(produit);
@@ -145,6 +143,14 @@ public class TransfertBean {
 		codes=codes+1;
 
 	}
+
+	public void updateCode(AjaxBehaviorEvent event) {
+		updatenom111(event);
+	}
+
+	public void updatenom(AjaxBehaviorEvent event) {
+		updatenom111(event);
+	}
 	  public void saveselection(ActionEvent event) {
 			  DecimalFormat df = new DecimalFormat("0.000");	
 			  codefamille=selectedProduit.getCode();
@@ -161,7 +167,6 @@ public class TransfertBean {
 
 		for (int j = 0; j < listLignetransfert.size(); j++) {
 			if (libelle.getProduit().getCode().equals(listLignetransfert.get(j).getProduit().getCode()) && i != j) {
-				System.out.println("j" + j);
 				return j;
 
 			}

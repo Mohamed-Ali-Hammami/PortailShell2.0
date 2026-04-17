@@ -63,13 +63,11 @@ List<Lignealimentation> result = em.createQuery("SELECT a FROM Lignealimentation
 				
 				.setParameter("statut", Statut.ACTIF).setParameter("p",p.getId()).setParameter("d1", d1).setParameter("d2", d2).getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet caisse trouvé " + "\n\n\n");
 		return 
 				
 				result;}
 		else {
 			
-			System.out.println("pas de ligne d achat  avec ces critères" +" "+ "\n\n\n");
 			return null;}
 	}
 	@Transactional

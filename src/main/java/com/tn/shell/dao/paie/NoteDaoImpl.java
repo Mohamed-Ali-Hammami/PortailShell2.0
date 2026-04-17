@@ -27,11 +27,9 @@ public class NoteDaoImpl  implements NoteDAO{
 				 .getResultList();
 		 
 		 if (result.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	        	 
 	            return result;}
 	        else{
-	        	System.out.println(" \n\n\n\n l  objet n exsite pas  " +annee+"  "+ mois+" \n\n\n\n");
 	            return null;}
 		     
 	}
@@ -43,10 +41,8 @@ List<Note> result = em.createQuery("SELECT a FROM Note a  where a.statut = :stat
 				 
 				 .getResultList();
 		 if (result.size() > 0){
-	     	System.out.println("objet trouvé "+"\n\n\n");
 	         return result.get(0);}
 	     else{
-	     	System.out.println("\n\nl  objet Note n exsite pas\n\n");
 	         return null;} 
 		 }
 	 @Transactional
@@ -58,10 +54,8 @@ List<Note> result = em.createQuery("SELECT a FROM Note a  where a.statut = :stat
 				 
 				 .getResultList();
 		 if (result.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return result.get(0);}
 	        else{
-	        	System.out.println("l  objet Note n exsite pas"+e.getMatricule() +annee );
 	            return null;}  
 		     
 	 }
@@ -73,10 +67,8 @@ List<Note> result = em.createQuery("SELECT a FROM Note a  where a.statut = :stat
 				 
 				 .getResultList();
 		 if (result.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return result;}
 	        else{
-	        	System.out.println("l  objet Note n exsite pas"+e.getMatricule()   );
 	            return null;}  
 	 }
 	 @Transactional

@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div class="shell-module-layout">
+		<p:growl id="msgs" showDetail="true"/>
+		<p:panel styleClass="shell-home-panel">
+			<h:form>
+				<h:commandLink title="Imprimer">
+					<p:graphicImage url="/images/imprimante-icone.png" style="width:25px"/>
+					<p:printer target="imprimer"/>
+				</h:commandLink>
+
+				<p:outputPanel id="imprimer" style="width:99%">
+					<h2 class="shell-page-title">Extrait des comptes BIAT</h2>
+
+					<h:panelGrid columns="2">
+						<h:outputText value="Solde Compte BIAT"/>
+						<h:outputText value="#{BanqueBean.compteBiat.solde}"/>
+						<h:outputText value="Solde Compte ZAYTOUNA"/>
+						<h:outputText value="#{BanqueBean.compteBZ.solde}"/>
+						<h:outputText value="Solde Reel Biat"/>
+						<h:outputText value="#{BanqueBean.soldeReelBiat}"/>
+						<h:outputText value="Total Cheque En cours"/>
+						<h:outputText value="#{BanqueBean.totalChequeEncours}"/>
+					</h:panelGrid>
+
+					<h:outputText value="Liste des cheques en circulation (BIAT)" style="font-size:18px;font-weight:bold;"/>
+					<p:dataTable var="tr" value="#{BanqueBean.listtChequeCirculationBiat}" styleClass="shell-home-table" emptyMessage="Aucune donnee">
+						<p:column headerText="Date"><h:outputText value="#{tr.dates}"><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText></p:column>
+						<p:column headerText="Intitule"><h:outputText value="#{tr.description}"/></p:column>
+						<p:column headerText="Reference"><h:outputText value="#{tr.reference}"/></p:column>
+						<p:column headerText="Montant"><h:outputText value="#{tr.montant}"><f:convertNumber minFractionDigits="3"/></h:outputText></p:column>
+						<p:columnGroup type="footer"><p:row><p:column colspan="3" style="text-align:right;" footerText="Total:"/><p:column footerText="#{BanqueBean.totalChequeEncoursBiat}"/></p:row></p:columnGroup>
+					</p:dataTable>
+
+					<h:outputText value="Liste des cheques impayes (BIAT)" style="font-size:18px;font-weight:bold;"/>
+					<p:dataTable var="tr" value="#{BanqueBean.listtChequeImpayeeBiat}" styleClass="shell-home-table" emptyMessage="Aucune donnee">
+						<p:column headerText="Date"><h:outputText value="#{tr.dates}"><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText></p:column>
+						<p:column headerText="Intitule"><h:outputText value="#{tr.description}"/></p:column>
+						<p:column headerText="Reference"><h:outputText value="#{tr.reference}"/></p:column>
+						<p:column headerText="Montant"><h:outputText value="#{tr.montant}"><f:convertNumber minFractionDigits="3"/></h:outputText></p:column>
+						<p:columnGroup type="footer"><p:row><p:column colspan="3" style="text-align:right;" footerText="Total:"/><p:column footerText="#{BanqueBean.totalChequeImpayeeBiat}"/></p:row></p:columnGroup>
+					</p:dataTable>
+
+					<h:outputText value="Liste des cheques antidates (BIAT)" style="font-size:18px;font-weight:bold;"/>
+					<p:dataTable var="tr" value="#{BanqueBean.listtChequeAntidateeBiat}" styleClass="shell-home-table" emptyMessage="Aucune donnee">
+						<p:column headerText="Date"><h:outputText value="#{tr.dates}"><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText></p:column>
+						<p:column headerText="Intitule"><h:outputText value="#{tr.description}"/></p:column>
+						<p:column headerText="Reference"><h:outputText value="#{tr.reference}"/></p:column>
+						<p:column headerText="Montant"><h:outputText value="#{tr.montant}"><f:convertNumber minFractionDigits="3"/></h:outputText></p:column>
+						<p:columnGroup type="footer"><p:row><p:column colspan="3" style="text-align:right;" footerText="Total:"/><p:column footerText="#{BanqueBean.totalChequeAntidateBiat}"/></p:row></p:columnGroup>
+					</p:dataTable>
+
+					<h:outputText value="Liste des cheques preavis (BIAT)" style="font-size:18px;font-weight:bold;"/>
+					<p:dataTable var="tr" value="#{BanqueBean.listtChequePreavisBiat}" styleClass="shell-home-table" emptyMessage="Aucune donnee">
+						<p:column headerText="Date"><h:outputText value="#{tr.dates}"><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText></p:column>
+						<p:column headerText="Intitule"><h:outputText value="#{tr.description}"/></p:column>
+						<p:column headerText="Reference"><h:outputText value="#{tr.reference}"/></p:column>
+						<p:column headerText="Montant"><h:outputText value="#{tr.montant}"><f:convertNumber minFractionDigits="3"/></h:outputText></p:column>
+						<p:columnGroup type="footer"><p:row><p:column colspan="3" style="text-align:right;" footerText="Total:"/><p:column footerText="#{BanqueBean.totalChequePreavisBiat}"/></p:row></p:columnGroup>
+					</p:dataTable>
+				</p:outputPanel>
+			</h:form>
+		</p:panel>
+	</div>
+</ui:composition>

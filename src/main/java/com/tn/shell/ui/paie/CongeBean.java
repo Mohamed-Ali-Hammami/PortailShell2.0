@@ -3,6 +3,7 @@ package com.tn.shell.ui.paie;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 
+import javax.annotation.PostConstruct;
 import org.primefaces.event.CellEditEvent;
 
 import com.tn.shell.model.paie.*;
@@ -92,23 +94,33 @@ public class CongeBean {
 		return m;
 	}
 
+	@PostConstruct
+	public void init() {
+		try {
+			Annee();
+			mois();
+		} catch (Exception e) {
+			System.err.println("CongeBean.init(): " + e.getMessage());
+		}
+	}
+
 	public String etatPointage() {
 		test = "";
 		employer = null;
 		annee = null;
-		Date d = new Date();
 		listPaie = new ArrayList<Paieconge>();
 		listEmployees = new ArrayList<String>();
 		listEmployee = new ArrayList<Employee>();
 		listEmployee = serviceEmployee.getEmployeeparstats(Status.Declare);
 		 
 		Annee();
-		annees = "";
+		annees = String.valueOf(resolveDefaultCongeYear());
 		societe = serviceSociete.getAll().get(0);
-		Annee();
 		Pointageconge p = servicePointageconge.getMaxPointage();
 
-		listPaie = servicePaieconge.getPaieByAnnee(p.getAnnee());
+		if (p != null) {
+			listPaie = servicePaieconge.getPaieByAnnee(p.getAnnee());
+		}
 		if (listPaie != null) {
 			for (Paieconge p1 : listPaie) {
 				test = "notok";
@@ -168,10 +180,6 @@ public class CongeBean {
 
 	public void getPaiebyEmployer(AjaxBehaviorEvent event) {
 		test = "notok";
-
-		Date d = new Date();
-		Integer a = d.getYear() + 1900;
-		Integer m = d.getMonth() + 1;
 		listPaie = new ArrayList<Paieconge>();
 		// try {
 		 
@@ -179,13 +187,15 @@ public class CongeBean {
 		if (employee == null) {
 			String message = "Veuillez choisir un employe";
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+			return;
 		}
 
-		System.out.println("\n\n\n" + employee.getNom() + "\n\n\n");
-
 		Pointageconge p = servicePointageconge.getMaxPointage();
-
-		listPaie = servicePaieconge.getPaieByAnneeAndEmployee(employee, p.getAnnee());
+		int targetYear = p != null && p.getAnnee() != null ? p.getAnnee() : resolveDefaultCongeYear();
+		listPaie = servicePaieconge.getPaieByAnneeAndEmployee(employee, targetYear);
+		if (listPaie == null) {
+			listPaie = new ArrayList<Paieconge>();
+		}
 		 double nbjour=0;
 		  
 		  double sdb=0;
@@ -204,7 +214,7 @@ public class CongeBean {
 			nbjour=nbjour+p1.getFormulaire_Paie().getNb_heure();
 		}
 		  Paieconge pc=new Paieconge();
-		  pc.setAnnee(p.getAnnee());
+		  pc.setAnnee(targetYear);
 		  pc.setEmployee(employee);		  
 		  listPaie=new ArrayList<Paieconge>();
 		  Formule_Paie ff =new Formule_Paie();
@@ -277,9 +287,8 @@ public class CongeBean {
 		 
 		Annee();
 		mois();
-		Date d = new Date();
-		moi = getMoisbyIntger(d.getMonth() + 1);
-		annee = null;
+		moi = getMoisbyIntger(resolveDefaultCongeMonth());
+		annee = resolveDefaultCongeYear();
 		employer = null;
 		nb_jour = null;
 		return SUCCESS;
@@ -306,7 +315,6 @@ public class CongeBean {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
 		}
 
-		System.out.println("\n\n\n" + employee.getNom() + "\n\n\n");
 		Pointageconge p = new Pointageconge();
 		p.setAnnee(annee);
 		p.setEmployee(employee);
@@ -378,13 +386,12 @@ public class CongeBean {
 	}
 
 	public void GetMoisByAnnee(AjaxBehaviorEvent event) {
-		Date date = new Date();
 		listMois = new ArrayList<String>();
 		List<Pointageconge> lp = new ArrayList<Pointageconge>();
 		lp = servicePointageconge.getPointageByAnnee(annee);
 		for (Pointageconge a : lp)
 			listMois.add(getMoisbyIntger(a.getMois()));
-		listMois.add(getMoisbyIntger(date.getMonth() + 1));
+		listMois.add(getMoisbyIntger(resolveDefaultCongeMonth()));
 	}
 
 	public void onCellEdit(CellEditEvent event) {
@@ -426,9 +433,12 @@ public class CongeBean {
 	}
 
 	public void mois() {
-		Date d = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, resolveDefaultCongeYear());
+		calendar.set(Calendar.MONTH, resolveDefaultCongeMonth() - 1);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		dates = s.format(d);
+		dates = s.format(calendar.getTime());
 		listMois = new ArrayList<String>();
 		listMois.add("Janvier");
 		listMois.add("Fevrier");
@@ -442,12 +452,12 @@ public class CongeBean {
 		listMois.add("Octobre");
 		listMois.add("Novembre");
 		listMois.add("Decembre");
-		mois = d.getMonth() + 1;
+		mois = resolveDefaultCongeMonth();
 	}
 
 	public String journalconge() {
 
-		annees = "";
+		annees = String.valueOf(resolveDefaultCongeYear());
 		societe = serviceSociete.getAll().get(0);
 		Annee();
 		listPaie = new ArrayList<Paieconge>();
@@ -574,9 +584,7 @@ public class CongeBean {
 	private void Annee() {
 		List<Annee> l = new ArrayList<Annee>();
 		listannee = new ArrayList<String>();
-		Date d = new Date();
-		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		annees = s.format(d).substring(6);
+		annees = String.valueOf(resolveDefaultCongeYear());
 		Annee a = serviceAnnee.findbyDesignation(annees);
 		if (a == null) {
 			Annee e = new Annee();
@@ -590,6 +598,22 @@ public class CongeBean {
 		Integer aa = Integer.parseInt(annees);
 		listannee.add(aa + 1 + "");
 		annee = Integer.parseInt(annees);
+	}
+
+	private int resolveDefaultCongeYear() {
+		Pointageconge latestPointage = servicePointageconge.getMaxPointage();
+		if (latestPointage != null && latestPointage.getAnnee() != null) {
+			return latestPointage.getAnnee();
+		}
+		return Calendar.getInstance().get(Calendar.YEAR);
+	}
+
+	private int resolveDefaultCongeMonth() {
+		Pointageconge latestPointage = servicePointageconge.getMaxPointage();
+		if (latestPointage != null && latestPointage.getMois() != null) {
+			return latestPointage.getMois();
+		}
+		return Calendar.getInstance().get(Calendar.MONTH) + 1;
 	}
 
 	public ServicePointageconge getServicePointageconge() {

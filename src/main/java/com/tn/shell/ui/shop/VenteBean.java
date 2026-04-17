@@ -56,6 +56,7 @@ import com.tn.shell.model.transport.Bonlivraison;
 import com.tn.shell.service.gestat.UserService;
 import com.tn.shell.service.shop.*;
 import com.tn.shell.service.transport.ServiceBonLivraison;
+import com.tn.shell.ui.common.UiDateDefaults;
 
 @ManagedBean(name = "VenteBean")
 @SessionScoped
@@ -191,6 +192,7 @@ public class VenteBean {
 	public void init() {
 		listProduit = new ArrayList<Produit>();
 		listProduit = serviceProduit.getAll();
+		initializeShopBusinessDate();
 
 	}
 
@@ -208,7 +210,6 @@ public class VenteBean {
 		IN.close();
 		String ch=null;
 		
-		System.out.println(s);
 		BufferedReader IN2 = new BufferedReader(new FileReader("M:/FTP_E00/000" + (s) + ".P"));
 		String ligne;
 		while ((ligne = IN2.readLine()) != null) {
@@ -222,8 +223,6 @@ public class VenteBean {
 			}
 		}
 		} catch (IOException ex) {
-			System.out.println("erreur de lecture du fichier");
-			ex.printStackTrace();
 
 		}
 
@@ -316,7 +315,6 @@ public class VenteBean {
 
 			for (PrintService printService : printServices) {
 				if (printService.getName().contains("PETIT")) {
-					System.out.println("\n\n\nimpremante par defaut" + printService.getName() + "\n\n\n");
 					FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, printService.getName(), "");
 					this.codefamille = printService.getName();
 					FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -331,7 +329,6 @@ public class VenteBean {
 				printerJob.print(aset);
 
 			} catch (Exception e) {
-				System.out.println("\n\n\ni" + e.getMessage() + "\n\n\n" + e.getStackTrace());
 				codefamille = "\n\n\n" + e.getMessage() + "\n\n\n" + e.getStackTrace();
 				for (PrintService printService : printServices) {
 					codefamille = codefamille + printService.getName();
@@ -350,10 +347,8 @@ public class VenteBean {
 			    SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
 			    Date parsedDate = dateFormat.parse(ch);
 			    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-			    System.out.println("time"+timestamp);
 			    return timestamp;
 			} catch(Exception e) { //this generic but you can control another types of exception
-			   System.out.println(e.getMessage());
 			   return null;
 			}
 	}
@@ -379,7 +374,6 @@ public class VenteBean {
 		} catch (AuthenticationException e) {
 			String message = "Login ou mot de passe incorrecte";
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
-			e.printStackTrace();
 			return "incorrect";
 		}
 		if (user.isCaissier()) {
@@ -396,9 +390,7 @@ public class VenteBean {
 	public String impressioninventaire() {
 		listfamile = new ArrayList<Famillearticle>();
 		listfamile = serviceFamilleaticle.getAll();
-		date = new Date();
-		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		dates = s.format(date);
+		initializeShopBusinessDate();
 		stocks = Stock.values();
 		listProduit = new ArrayList<Produit>();
 		totalht = "0.000";
@@ -662,7 +654,6 @@ public class VenteBean {
 			tva = 0;
 			ventes = 0;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return SUCCESS;
 	}
@@ -673,7 +664,6 @@ public class VenteBean {
 		List<Produit> p = new ArrayList<Produit>();
 		p = serviceProduit.getAllbyfamille2(codefamille);
 		codeshop = p.get(p.size() - 1).getCodeshop() + 1;
-		System.out.println("codeshop " + codeshop);
 	}
 
 	public void getmargebyvente(AjaxBehaviorEvent event) {
@@ -699,7 +689,6 @@ public class VenteBean {
 		try {
 			number = format.parse(prixvente);
 		} catch (ParseException e) {
-			e.printStackTrace();
 		}
 		return number.doubleValue();
 	}
@@ -710,7 +699,6 @@ public class VenteBean {
 		ventes = x + (x * parsedouble(marges) / 100);
 		DecimalFormat df = new DecimalFormat("0.000");
 		prixvente = df.format(ventes);
-		System.out.println(ventes);
 	}
 
 	public void updatevente(AjaxBehaviorEvent event) {
@@ -763,7 +751,6 @@ public class VenteBean {
 		marge = (m - 1) * 100;
 		selectedProduit.setMarge(marge);
 		selectedProduit.setMarges(df.format(marge));
-		System.out.println("marge ++++\n\n" + selectedProduit.getMarge() + "\n\n");
 		updateProduit(selectedProduit);
 	}
 
@@ -843,7 +830,6 @@ public class VenteBean {
 
 		for (PrintService printService : printServices) {
 			if (printService.getName().contains("PETIT")) {
-				System.out.println("\n\n\nimpremante par defaut" + printService.getName() + "\n\n\n");
 				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, printService.getName(), "");
 				this.codefamille = printService.getName();
 				FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -858,7 +844,6 @@ public class VenteBean {
 			printerJob.print(aset);
 
 		} catch (Exception e) {
-			System.out.println("\n\n\ni" + e.getMessage() + "\n\n\n" + e.getStackTrace());
 			codefamille = "\n\n\n" + e.getMessage() + "\n\n\n" + e.getStackTrace();
 			for (PrintService printService : printServices) {
 				codefamille = codefamille + printService.getName();
@@ -902,12 +887,10 @@ public class VenteBean {
 	public void getCodefocus(AjaxBehaviorEvent event) {
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n\n\n" + "codes getCodefocus  " + codes + "\n\n\n");
 
 	}
 	public void saveselection(ActionEvent event) {  
 		Integer index = verifierarticle(selectedProduit, codes);
-		 	System.out.println("\n\n\n\n index" +index);
 		 	DecimalFormat df = new DecimalFormat("0.000");
 		if (index == codes) {
 			lignevente = listelignevente.get(codes);
@@ -934,7 +917,6 @@ public class VenteBean {
 			listelignevente.set(index, lignevente);
 		}
 		selectedProduit = null;
-		System.out.println("\n\n\n" + listelignevente.get(codes).getLibelle() + "\n\n\n");
 		 
 		produit = null;
 		lignevente = null;
@@ -944,11 +926,9 @@ public class VenteBean {
 		UIComponent component = event.getComponent();
 		DecimalFormat df = new DecimalFormat("0.000");
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codesupdate code" + codes + "\n\n");
 		lignevente = listelignevente.get(codes);
 		Produit p = serviceProduit.Findbycodes(lignevente.getLibelle());
 		if(p.getFamille().getCode()!=4 && p.getFamille().getCode()!=5 && p.getFamille().getCode()!=9 && p.getQuantitestock()>0) {
-		System.out.println("\n\n id produit" + p.getId());
 		
 		Integer index = verifierarticle(p, codes);
 		if (index == codes) {	 
@@ -972,7 +952,6 @@ public class VenteBean {
 		 
 		
 		else if(p.getFamille().getCode()==4 || p.getFamille().getCode()==5 || p.getFamille().getCode()==9) {
-			System.out.println("\n\n id produit" + p.getId());
 			
 			Integer index = verifierarticle(p, codes);
 			if (index == codes) {	
@@ -1011,7 +990,6 @@ public class VenteBean {
 	public void updatequantite(AjaxBehaviorEvent event) {
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codes" + codes + "\n\n");
 
 		Produit p = serviceProduit.Findbycodes(libelle);
 		DecimalFormat df = new DecimalFormat("0.000");
@@ -1035,7 +1013,6 @@ public class VenteBean {
 		lignevente.setTotalttc(lignevente.getQuantite() * lignevente.getProduit().getVente());
 		lignevente.setTotalttcs(df.format(lignevente.getTotalttc()));
 		listelignevente.set(codes, lignevente);
-		System.out.println(lignevente.getQuantite() + "ttc " + lignevente.getTotalttc());
 		for (Lignevente p : listelignevente) {
 			totalquantite = totalquantite + p.getQuantite();
 			totalttc = totalttc + p.getTotalttc();
@@ -1074,7 +1051,6 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 
 		UIComponent component = event.getComponent();
 		codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codes" + codes + "\n\n");
 	}
 
 	
@@ -1124,9 +1100,7 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 		listtransfert = new ArrayList<Lignetransert>();
 		listtransfertnegatif = new ArrayList<Lignetransert>();
 
-		date = new Date();
-		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		dates = s.format(date);
+		initializeShopBusinessDate();
 		postes = Poste.values();
 		return SUCCESS;
 	}
@@ -1136,20 +1110,14 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 		listtransfert = new ArrayList<Lignetransert>();
 		listtransfertnegatif = new ArrayList<Lignetransert>();
 
-		date = new Date();
-		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		dates = s.format(date);
+		initializeShopBusinessDate();
 		postes = Poste.values();
 		return SUCCESS;
 	}
 
 	public String etatVenteParFamille() {
-		date = new Date();
+		initializeShopBusinessDate();
 		postes = Poste.values();
-
-		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-
-		dates = s.format(date);
 		listelignevente = new ArrayList<Lignevente>();
 		listfamile = new ArrayList<Famillearticle>();
 		totalttc = 0;
@@ -1200,7 +1168,6 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 			}
 
 		} catch (Exception e) {
-			System.out.println("erreur de chargement vente");
 		}
 		for (Famillearticle f : listfamile) {
 			totalquantite = totalquantite + f.getQuantite();
@@ -1465,7 +1432,6 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 			}
 
 		} catch (Exception e) {
-			System.out.println("erreur de chargement vente");
 		}
 
 		listtransfert = new ArrayList<Lignetransert>();
@@ -1559,7 +1525,6 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 			}
 
 		} catch (Exception e) {
-			System.out.println("erreur de chargement vente");
 		}
 
 		listtransfert = new ArrayList<Lignetransert>();
@@ -1630,7 +1595,6 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 			listticketnegtif = serviceLignevente.getAllventeparposteNegatif(dates, poste);
 
 		} catch (Exception e) {
-			System.out.println("");
 		}
 	}
 
@@ -1655,7 +1619,7 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 	}
 
 	public String regenerationDesVentes() {
-		date = new Date();
+		initializeShopBusinessDate();
 		postes = Poste.values();
 		totalttc = 0;
 		listelignevente = new ArrayList<Lignevente>();
@@ -1663,16 +1627,13 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 	}
 
 	public String generationDesVentes() {
-		date = new Date();
+		initializeShopBusinessDate();
 		DecimalFormat df = new DecimalFormat("0.000");
 		totalttc = 0;
 
 		postes = Poste.values();
 
 		totalttc = 0;
-		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		date = new Date();
-		dates = s.format(date);
 		listelignevente = new ArrayList<Lignevente>();
 		try {
 			listelignevente = serviceLignevente.getAllventeparposte(dates);
@@ -1695,7 +1656,6 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 				}
 			totalttcs = df.format(totalttc);
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
 		}
 		return SUCCESS;
 	}
@@ -1722,16 +1682,13 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 	}
 
 	public String clotureCaisse() {
-		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-		date = new Date();
+		initializeShopBusinessDate();
 		Lignevente v = serviceLignevente.getmaxlignevente();
 		if (v != null && v.getPoste().equals(Poste.Poste1))
 			poste = Poste.Poste2;
 		else
 			poste = Poste.Poste1;
-		date = new Date();
 		postes = Poste.values();
-		dates = s.format(date);
 		double qte = 0;
 		double m = 0;
 		totalttc = 0;
@@ -1762,11 +1719,45 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 				totalquantite = totalquantite + qte;
 			}
 		} catch (Exception e) {
-			System.out.println("erreur de chargement");
 		}
 		totalttcs = df.format(totalttc);
 		totalquantites = df2.format(totalquantite);
 		return SUCCESS;
+	}
+
+	private void initializeShopBusinessDate() {
+		Date latestBusinessDate = resolveLatestShopBusinessDate();
+		date = UiDateDefaults.startOfDay(date == null ? latestBusinessDate : date);
+		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
+		dates = s.format(date);
+	}
+
+	private Date resolveLatestShopBusinessDate() {
+		Date latestBusinessDate = null;
+		Lignevente latestLignevente = serviceLignevente.getmaxlignevente();
+		if (latestLignevente != null && latestLignevente.getDate() != null) {
+			latestBusinessDate = latestLignevente.getDate();
+		}
+
+		List<Ticket> tickets = serviceticket.getAll();
+		if (tickets != null) {
+			for (Ticket ticketCourant : tickets) {
+				if (ticketCourant != null && ticketCourant.getDate() != null) {
+					latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, ticketCourant.getDate());
+				}
+			}
+		}
+
+		List<Vente> ventes = servicevente.getAll();
+		if (ventes != null) {
+			for (Vente venteCourante : ventes) {
+				if (venteCourante != null && venteCourante.getDate() != null) {
+					latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, venteCourante.getDate());
+				}
+			}
+		}
+
+		return latestBusinessDate == null ? new Date() : latestBusinessDate;
 	}
 
 	public String ValiderclotureCaisse() {
@@ -2425,7 +2416,7 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 	public void onRowEdit2(RowEditEvent event) {
 
 		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"produit chang�" + " " + ((Produit) event.getObject()).getNom(),
+				"produit changÃ©" + " " + ((Produit) event.getObject()).getNom(),
 				((Produit) event.getObject()).getNom());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		updateProduit((Produit) event.getObject());
@@ -2434,7 +2425,7 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 
 	public void onCEdit(RowEditEvent event) {
 
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "produit chang�",
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "produit changÃ©",
 				((Produit) event.getObject()).getNom());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		updateProduit((Produit) event.getObject());
@@ -2452,7 +2443,6 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 			servicetrace.save(t);
 			return SUCCESS;
 		} catch (DataAccessException e) {
-			e.printStackTrace();
 		}
 
 		return ERROR;
@@ -2648,14 +2638,11 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 //		codefamille = null;
 //		codes = codes + 1;
  	  codes = (Integer) component.getAttributes().get("test");
-		System.out.println("\n\n codesupdate code" + codes + "\n\n");
 		lignetransfert = listLignetransfert.get(codes);
 		Produit p = serviceProduit.Findbycodes(lignetransfert.getLibelle());
 		if(p.getFamille().getCode()!=4 && p.getFamille().getCode()!=5 && p.getFamille().getCode()!=9 && p.getQuantitedepot()>0) {
-		System.out.println("\n\n id produit" + p.getId());
 		
 		Integer index = verifierarticle2(p, codes);
-		System.out.println("\n\n id index" + index);
 		
 		if (index == codes) {	 
 			lignetransfert.setProduit(p);
@@ -2690,7 +2677,6 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 		
 		 
 		Integer index = verifierarticle2(selectedProduit, codes);
-	 	System.out.println("\n\n\n\n index" +index);
 	 	DecimalFormat df = new DecimalFormat("0.000");
 	if (index == codes) {
 		
@@ -2716,7 +2702,6 @@ private Integer verifierarticle2(Produit libelle, Integer i) {
 		listLignetransfert.set(index,  lignetransfert);
 	}
 	selectedProduit = null;
-	System.out.println("\n\n\n" + listLignetransfert.get(codes).getLibelle() + "\n\n\n");
 	 
 	produit = null;
 	 lignetransfert = null;

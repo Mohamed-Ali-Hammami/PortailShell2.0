@@ -3,9 +3,215 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	template="/WEB-INF/templates/app.xhtml">
 	<ui:define name="title">Shell-Shop</ui:define>
+	<ui:define name="moduleNav">
+		<ui:include src="/SHELL-shop/HeadershopNav.xhtml" />
+	</ui:define>
 	<ui:define name="content">
-		<ui:include src="/SHELL-shop/indexshop.xhtml" />
+		<c:choose>
+			<c:when test="#{param.view eq 'fournisseur'}">
+				<ui:include src="/SHELL-shop/fragments/AjouterFournisseur.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'vendeurs'}">
+				<ui:include src="/SHELL-shop/fragments/getVendeur.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'achat'}">
+				<ui:include src="/SHELL-shop/fragments/achat.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'reglement-facture'}">
+				<ui:include src="/SHELL-shop/fragments/reglementFactureAchat.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etat-facture'}">
+				<ui:include src="/SHELL-shop/fragments/etatFactureachat.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'vente'}">
+				<ui:include src="/SHELL-shop/fragments/vente.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'generation-vente'}">
+				<ui:include src="/SHELL-shop/fragments/generationvente.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'stock-cahier'}">
+				<ui:include src="/SHELL-shop/fragments/cahierdestock.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'rapport-lavage'}">
+				<ui:include src="/SHELL-shop/fragments/rapportLavage.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'rapport-vidange'}">
+				<ui:include src="/SHELL-shop/fragments/rapportvidange.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'rendement-lavage'}">
+				<ui:include src="/SHELL-shop/fragments/rendementlavage.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'rendement-vidange'}">
+				<ui:include src="/SHELL-shop/fragments/rendementvidange.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'achat'}">
+				<ui:include src="/SHELL-shop/fragments/achat.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'achat2'}">
+				<ui:include src="/SHELL-shop/fragments/achat2.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'AjouterFournisseur'}">
+				<ui:include src="/SHELL-shop/fragments/AjouterFournisseur.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'annulationticket'}">
+				<ui:include src="/SHELL-shop/fragments/annulationticket.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'articleEnAlerteDeStock'}">
+				<ui:include src="/SHELL-shop/fragments/articleEnAlerteDeStock.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'autorisation'}">
+				<ui:include src="/SHELL-shop/fragments/autorisation.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'avoir'}">
+				<ui:include src="/SHELL-shop/fragments/avoir.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'cahierdestock'}">
+				<ui:include src="/SHELL-shop/fragments/cahierdestock.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'coturercaisse'}">
+				<ui:include src="/SHELL-shop/fragments/coturercaisse.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'edicitionFactAchat'}">
+				<ui:include src="/SHELL-shop/fragments/edicitionFactAchat.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'editionAvoir'}">
+				<ui:include src="/SHELL-shop/fragments/editionAvoir.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'editiondesventes'}">
+				<ui:include src="/SHELL-shop/fragments/editiondesventes.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'editiondesventesparfamille'}">
+				<ui:include src="/SHELL-shop/fragments/editiondesventesparfamille.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatarticleNonVendu'}">
+				<ui:include src="/SHELL-shop/fragments/etatarticleNonVendu.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatarticleNonVenduShop'}">
+				<ui:include src="/SHELL-shop/fragments/etatarticleNonVenduShop.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatarticleVendu'}">
+				<ui:include src="/SHELL-shop/fragments/etatarticleVendu.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatdeprofil'}">
+				<ui:include src="/SHELL-shop/fragments/etatdeprofil.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatdeprofilCT'}">
+				<ui:include src="/SHELL-shop/fragments/etatdeprofilCT.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatdesArticles'}">
+				<ui:include src="/SHELL-shop/fragments/etatdesArticles.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatFactureachat'}">
+				<ui:include src="/SHELL-shop/fragments/etatFactureachat.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatFiscal'}">
+				<ui:include src="/SHELL-shop/fragments/etatFiscal.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatrendement'}">
+				<ui:include src="/SHELL-shop/fragments/etatrendement.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatTransfert'}">
+				<ui:include src="/SHELL-shop/fragments/etatTransfert.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'etatVenteParFamille'}">
+				<ui:include src="/SHELL-shop/fragments/etatVenteParFamille.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'EtatVentesParVenduers'}">
+				<ui:include src="/SHELL-shop/fragments/EtatVentesParVenduers.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'FacturationDesTickets'}">
+				<ui:include src="/SHELL-shop/fragments/FacturationDesTickets.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'FactureAchatEtAvoir'}">
+				<ui:include src="/SHELL-shop/fragments/FactureAchatEtAvoir.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'generationvente'}">
+				<ui:include src="/SHELL-shop/fragments/generationvente.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'getVendeur'}">
+				<ui:include src="/SHELL-shop/fragments/getVendeur.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'impressioninventaire'}">
+				<ui:include src="/SHELL-shop/fragments/impressioninventaire.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'impressionTicket'}">
+				<ui:include src="/SHELL-shop/fragments/impressionTicket.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'imprimeretatdevente'}">
+				<ui:include src="/SHELL-shop/fragments/imprimeretatdevente.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'listarticleparfamille'}">
+				<ui:include src="/SHELL-shop/fragments/listarticleparfamille.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'listeAnnulations'}">
+				<ui:include src="/SHELL-shop/fragments/listeAnnulations.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'listfactureachatbyfour'}">
+				<ui:include src="/SHELL-shop/fragments/listfactureachatbyfour.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'listticket'}">
+				<ui:include src="/SHELL-shop/fragments/listticket.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'MAJSTOCK'}">
+				<ui:include src="/SHELL-shop/fragments/MAJSTOCK.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'miseajourArticle'}">
+				<ui:include src="/SHELL-shop/fragments/miseajourArticle.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'miseajourFamille'}">
+				<ui:include src="/SHELL-shop/fragments/miseajourFamille.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'mouvementArticle'}">
+				<ui:include src="/SHELL-shop/fragments/mouvementArticle.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'rapportLavage'}">
+				<ui:include src="/SHELL-shop/fragments/rapportLavage.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'rapportvidange'}">
+				<ui:include src="/SHELL-shop/fragments/rapportvidange.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'rechercheArticle'}">
+				<ui:include src="/SHELL-shop/fragments/rechercheArticle.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'regenerationvente'}">
+				<ui:include src="/SHELL-shop/fragments/regenerationvente.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'reglementFactureAchat'}">
+				<ui:include src="/SHELL-shop/fragments/reglementFactureAchat.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'remiseazeoStock'}">
+				<ui:include src="/SHELL-shop/fragments/remiseazeoStock.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'rendementlavage'}">
+				<ui:include src="/SHELL-shop/fragments/rendementlavage.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'rendementvidange'}">
+				<ui:include src="/SHELL-shop/fragments/rendementvidange.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'transfertdepotMagasin'}">
+				<ui:include src="/SHELL-shop/fragments/transfertdepotMagasin.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'transfertdepotMagasin2'}">
+				<ui:include src="/SHELL-shop/fragments/transfertdepotMagasin2.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'validation'}">
+				<ui:include src="/SHELL-shop/fragments/validation.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'validationPayment'}">
+				<ui:include src="/SHELL-shop/fragments/validationPayment.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'validerTransfert'}">
+				<ui:include src="/SHELL-shop/fragments/validerTransfert.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'vente'}">
+				<ui:include src="/SHELL-shop/fragments/vente.xhtml" />
+			</c:when>
+			<c:otherwise>
+				<ui:include src="/SHELL-shop/fragments/home.xhtml" />
+			</c:otherwise>
+		</c:choose>
 	</ui:define>
 </ui:composition>

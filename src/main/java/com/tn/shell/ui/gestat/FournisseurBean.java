@@ -124,7 +124,6 @@ public class FournisseurBean {
             getServiceFournisseur().update(fournisseur);
             return SUCCESS;       
         } catch (DataAccessException e) {
-            e.printStackTrace();       
         }    
         return ERROR;
     } 

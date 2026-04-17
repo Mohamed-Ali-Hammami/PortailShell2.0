@@ -3,9 +3,35 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	template="/WEB-INF/templates/app.xhtml">
 	<ui:define name="title">Shell-Banque</ui:define>
+	<ui:define name="moduleNav">
+		<ui:include src="/SHELL-banque/HeaderbanqueNav.xhtml" />
+	</ui:define>
 	<ui:define name="content">
-		<ui:include src="/SHELL-banque/indexbanque.xhtml" />
+		<c:choose>
+			<c:when test="#{param.view eq 'indexCompte'}">
+				<ui:include src="/SHELL-banque/fragments/indexCompte.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'nouveauBanque'}">
+				<ui:include src="/SHELL-banque/fragments/nouveauBanque.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'nouveauCompte'}">
+				<ui:include src="/SHELL-banque/fragments/nouveauCompte.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'saisieoperation'}">
+				<ui:include src="/SHELL-banque/fragments/saisieoperation.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'modifieroperation'}">
+				<ui:include src="/SHELL-banque/fragments/modifieroperation.xhtml" />
+			</c:when>
+			<c:when test="#{param.view eq 'extrait'}">
+				<ui:include src="/SHELL-banque/fragments/extrait.xhtml" />
+			</c:when>
+			<c:otherwise>
+				<ui:include src="/SHELL-banque/fragments/home.xhtml" />
+			</c:otherwise>
+		</c:choose>
 	</ui:define>
 </ui:composition>

@@ -35,6 +35,7 @@ import com.tn.shell.service.shop.ServiceParamettre;
 import com.tn.shell.service.shop.ServiceProduit;
 import com.tn.shell.service.shop.ServiceTva;
 import com.tn.shell.service.transport.*;
+import com.tn.shell.ui.common.UiDateDefaults;
 
 @ManagedBean(name = "FactureBean")
 @SessionScoped
@@ -151,6 +152,7 @@ public class FactureBean implements Serializable {
 
 		listproduits = new ArrayList<Produit>();
 		listproduits = serviceProduit.getAll();
+		initializeTransportDateRange(resolveLatestTransportDate());
 	}
 
 	public void getProduitbydesignation() {
@@ -163,29 +165,31 @@ public class FactureBean implements Serializable {
 		return SUCCESS;
 	}
 
+	public String getBLnonfacturee2() {
+		listbonlivraison = new ArrayList<Bonlivraison>();
+		if (clients != null && !clients.trim().isEmpty() && !"selectionner client".equals(clients)) {
+			listbonlivraison = serviceBonLivraison.getBLbystatutsandclient(Status.NonFacturee, clients);
+		} else {
+			listbonlivraison = serviceBonLivraison.getBLbystatuts(Status.NonFacturee);
+		}
+		return SUCCESS;
+	}
+
 	public String getAllPasager() {
 		listeClients = new ArrayList<Client>();
 		listeClients = serviceclients.getAll();
 		facturepassager = null;
 		listfacturepass = new ArrayList<Facturepassager>();
-		date2=new Date();
-		date=new Date();
-		nom=null;
-		date2.setDate(date2.getDate()+1);
-		 date.setDate(date.getDate()-1);
+		initializeTransportDateRange(resolveLatestPassengerDate());
+		nom = null;
 		listfacturepass = servicefacturepassager.getfacturebetwenndate(date, date2);
-		 date2.setDate(date2.getDate()-1);
-		 date.setDate(date.getDate()+1);
 		return SUCCESS;
 	}
 
 	public String getAllTransport() {
 		selectedfacture = null;
-		date2 = new Date();
-		date = new Date();
+		initializeTransportDateRange(resolveLatestTransportDate());
 		nom = null;
-		date2.setDate(date2.getDate() + 1);
-		date.setDate(date.getDate() - 1);
 		listeClients = new ArrayList<Client>();
 		listeClients = serviceclients.getAll();
 		listfacture = new ArrayList<Facture>();
@@ -193,9 +197,28 @@ public class FactureBean implements Serializable {
 		if (result != null) {
 			listfacture = result;
 		}
-		date2.setDate(date2.getDate() - 1);
-		date.setDate(date.getDate() + 1);
 		return SUCCESS;
+	}
+
+	private void initializeTransportDateRange(Date businessDate) {
+		date = UiDateDefaults.startOfDay(businessDate);
+		date2 = UiDateDefaults.endOfDay(businessDate);
+	}
+
+	private Date resolveLatestTransportDate() {
+		Facture latestFacture = servicefacture.getMaxfacture();
+		if (latestFacture != null && latestFacture.getDate() != null) {
+			return latestFacture.getDate();
+		}
+		return new Date();
+	}
+
+	private Date resolveLatestPassengerDate() {
+		Facturepassager latestFacture = servicefacturepassager.getMaxfacture();
+		if (latestFacture != null && latestFacture.getDate() != null) {
+			return latestFacture.getDate();
+		}
+		return new Date();
 	}
 
 	public String modifierFacture() {
@@ -282,7 +305,6 @@ public class FactureBean implements Serializable {
 		}
 
 		catch (Exception e) {
-			System.out.println();
 		}
 		return SUCCESS;
 	}
@@ -854,6 +876,7 @@ public void setDates(String dates) {
 		facture.setSommes(C.convertt(e) + " dinars et  " + s + " millimes");
 		serviceFacture.save(facture);
 
+		bl.setStatus(Status.Facturee);
 		serviceBonLivraison.update(bl);
 		for (Lignecommande c : listelignefacture) {
 
@@ -869,6 +892,92 @@ public void setDates(String dates) {
 	       t.setAction(user.getNom() +"a creer  la facture  "+facture.getCodes()+" a "+new Date());
 	       t.setDate(new Date());
 	        serviceTrace.save(t);
+		return SUCCESS;
+	}
+
+	public String facturelistbl() {
+		if (selectedsBl == null || selectedsBl.isEmpty()) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Selectionner au moins un BL", null));
+			return ERROR;
+		}
+		Paramettre p = serviceParamettre.getAll().get(0);
+		facture = new Facture();
+		bl = selectedsBl.get(0);
+		facture.setBl(bl);
+		facture.setListebl(new ArrayList<Bonlivraison>(selectedsBl));
+		facture.setDate(bl.getDate());
+		listelignefacture = new ArrayList<Lignecommande>();
+		double totalht = 0;
+		double totaltva = 0;
+		for (Bonlivraison selected : selectedsBl) {
+			List<Lignecommande> lignes = serviceLigneCommande.getLcbyBL(selected);
+			if (lignes != null) {
+				listelignefacture.addAll(lignes);
+			}
+			totalht += selected.getMontant();
+			totaltva += selected.getTotaltva();
+			selected.setStatus(Status.Facturee);
+			serviceBonLivraison.update(selected);
+		}
+		Facture f2 = servicefacture.getMaxfacture();
+		if (f2 == null) {
+			facture.setCode(1);
+		} else if (f2.getDate() != null && facture.getDate() != null
+				&& f2.getDate().getYear() == facture.getDate().getYear()) {
+			facture.setCode(f2.getCode() + 1);
+		} else if (f2.getDate() != null && facture.getDate() != null
+				&& facture.getDate().getYear() > f2.getDate().getYear()) {
+			facture.setCode(1);
+		}
+		codes = facture.getCode();
+		facture.setCodes(codes + "/" + facture.getDates().substring(6));
+		facture.setTimbres(p.getTimbre());
+		facture.setTotalht(totalht);
+		facture.setTotaltva(totaltva);
+		facture.setTotalttc(facture.getTotalht() + facture.getTotaltva() + facture.getTimbres());
+		Convert converter = new Convert();
+		String total = facture.getTotalttcs();
+		int dinars = new Float(facture.getTotalttc()).intValue();
+		int separator = total.indexOf(",");
+		String millimes = separator >= 0 ? total.substring(separator + 1) : "000";
+		facture.setSommes(converter.convertt(dinars) + " dinars et  " + millimes + " millimes");
+		serviceFacture.save(facture);
+		Utilisateur user = userService.getCurrentUser();
+		if (user != null) {
+			Tracetransport trace = new Tracetransport();
+			trace.setAction(user.getNom() + " a creer la facture " + facture.getCodes() + " a " + new Date());
+			trace.setDate(new Date());
+			serviceTrace.save(trace);
+		}
+		return SUCCESS;
+	}
+
+	public String supprimerBL() {
+		if (selectedBL == null) {
+			return ERROR;
+		}
+		List<Lignecommande> lignes = serviceLigneCommande.getLcbyBL(selectedBL);
+		if (lignes != null) {
+			for (Lignecommande ligne : lignes) {
+				serviceLigneCommande.delete(ligne);
+			}
+		}
+		Integer numero = selectedBL.getNumero();
+		serviceBonLivraison.delete(selectedBL);
+		selectedBL = null;
+		getBLnonfacturee();
+		Utilisateur user = userService.getCurrentUser();
+		if (user != null) {
+			Tracetransport trace = new Tracetransport();
+			trace.setAction(user.getNom() + " a supprimer le BL " + numero + " a " + new Date());
+			trace.setDate(new Date());
+			serviceTrace.save(trace);
+		}
+		return SUCCESS;
+	}
+
+	public String validerfacture() {
 		return SUCCESS;
 	}
 
@@ -1047,7 +1156,6 @@ public void setDates(String dates) {
 
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		listfacturepass = new ArrayList<Facturepassager>();
 		if (client != null) {
@@ -1147,7 +1255,14 @@ public void setDates(String dates) {
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		// selectedsBl.add((Bonlivraison) event.getObject());
 		test = true;
-		System.out.println("test" + test);
+	}
+
+	public void onRowSelect(SelectEvent event) {
+		onrowSelect(event);
+	}
+
+	public void onRowUnselect(UnselectEvent event) {
+		test = selectedsBl != null && !selectedsBl.isEmpty();
 	}
 
 	public Date dat;
@@ -1202,7 +1317,6 @@ public void setDates(String dates) {
 			}
 
 		} catch (ParseException e1) {
-			e1.printStackTrace();
 		}
 
 	}

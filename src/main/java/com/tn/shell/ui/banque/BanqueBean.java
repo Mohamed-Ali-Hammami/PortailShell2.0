@@ -9,6 +9,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import com.tn.shell.model.banque.Banque;
 import com.tn.shell.model.banque.Compte;
@@ -24,8 +26,6 @@ import com.tn.shell.service.banque.ServiceTransaction;
 @SessionScoped
 public class BanqueBean {
 	private static final long serialVersionUID = 1L;
-	private static final String SUCCESS = "success";
-	private static final String ERROR = "error";
 	@ManagedProperty(value = "#{ServiceBanque}")
 	ServiceBanque serviceBanque;
 	@ManagedProperty(value = "#{ServiceCompte}")
@@ -81,23 +81,105 @@ public class BanqueBean {
 	private List<Transaction> listtChequeAntidateeBiat;
 	private List<Transaction> listtChequePreavisBiat;
 	private List<Transaction> listtChequeAntidateeBZ;
+	private String currentView = "home";
 	
 	private Compte compteBiat;
 	private Compte compteBZ;
+
+	private String navigateTo(String view) {
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		currentView = view;
+		if (view == null || view.trim().isEmpty() || "home".equals(view)) {
+			return "/SHELL-banque/index.xhtml?faces-redirect=true";
+		}
+		return "/SHELL-banque/index.xhtml?faces-redirect=true&view=" + view;
+	}
+
+	public String getCurrentView() {
+		if (currentView == null || currentView.trim().isEmpty()) {
+			currentView = "home";
+		}
+		// Ensure listBanque is populated for the bank selection dropdown
+		if (listBanque == null || listBanque.isEmpty()) {
+			listBanque = serviceBanque.getAll();
+		}
+		return currentView;
+	}
+
+	public void setCurrentView(String currentView) {
+		this.currentView = currentView;
+	}
+
+	public String openHome() {
+		listBanque = serviceBanque.getAll();
+		return navigateTo("home");
+	}
+
+	public String showHome() {
+		listBanque = serviceBanque.getAll();
+		currentView = "home";
+		return null;
+	}
+
+	public String openIndexCompte() {
+		if (compte == null || compte.getId() == null) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Banque requise",
+							"Selectionnez d'abord une banque."));
+			return navigateTo("home");
+		}
+		return navigateTo("indexCompte");
+	}
+
+	public String showIndexCompte() {
+		if (compte == null || compte.getId() == null) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Banque requise",
+							"Selectionnez d'abord une banque."));
+			currentView = "home";
+			return null;
+		}
+		currentView = "indexCompte";
+		return null;
+	}
+
+	private boolean ensureCompteSelected() {
+		if (compte != null && compte.getId() != null) {
+			return true;
+		}
+
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_WARN, "Compte requis",
+						"Selectionnez d'abord une banque avant de consulter les cheques."));
+		listtransaction = new ArrayList<Transaction>();
+		return false;
+	}
 public String ajouterTransaction() {
+	 if (!ensureCompteSelected()) {
+		return navigateTo("home");
+	 }
 	 description=null; 
 	 montant=null;
 	 reglement=null;
 	 type=null;	 
-	 reference=null;
+	reference=null;
 	listtransaction=serviceTransaction.findbyMonth(date1.getMonth()+1,compte);
-		return SUCCESS;
+		return navigateTo("saisieoperation");
 	}
 	public String success() {
+		if (selectedTranaction == null) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Operation requise",
+							"Selectionnez un cheque avant modification."));
+			return navigateTo("indexCompte");
+		}
 		
-		return SUCCESS;
+		return navigateTo("modifieroperation");
 	}
 	public String extrait() { 
+		if (!ensureCompteSelected()) {
+			return navigateTo("home");
+		}
 		reference="";
 		date=new Date();
 		totalChequeEncours=new BigDecimal(0);
@@ -168,48 +250,126 @@ public String ajouterTransaction() {
 			for(Transaction t:listtChequeEncoursBiat)				 
 				totalChequeEncours.add(t.getMontant());
 		soldeReelBiat=compteBiat.getSolde().subtract(totalChequeEncoursBiat);
-		 return SUCCESS;
+		 return navigateTo("extrait");
 	}
 	
 	
 	public String getchequeImpayees() {		
+		if (!ensureCompteSelected()) {
+			return navigateTo("home");
+		}
 		listtransaction=new ArrayList<Transaction>();
 		listtransaction=serviceTransaction.findByEnumarationCeque(Enumcheque.Impayes,compte);
-		return SUCCESS;
+		return navigateTo("indexCompte");
+	}
+
+	public String showChequeImpayees() {
+		if (!ensureCompteSelected()) {
+			currentView = "home";
+			return null;
+		}
+		listtransaction = serviceTransaction.findByEnumarationCeque(Enumcheque.Impayes, compte);
+		currentView = "indexCompte";
+		return null;
 	}
 	
 	public String getchequeEntree() {
+		if (!ensureCompteSelected()) {
+			return navigateTo("home");
+		}
 		listtransaction=new ArrayList<Transaction>();
 		listtransaction=serviceTransaction.findByEnumarationCeque(Enumcheque.Entree,compte);
-		return SUCCESS;
+		return navigateTo("indexCompte");
+	}
+
+	public String showChequeEntree() {
+		if (!ensureCompteSelected()) {
+			currentView = "home";
+			return null;
+		}
+		listtransaction = serviceTransaction.findByEnumarationCeque(Enumcheque.Entree, compte);
+		currentView = "indexCompte";
+		return null;
 	}
 	
 	public String getchequePreavis() {
+		if (!ensureCompteSelected()) {
+			return navigateTo("home");
+		}
 		listtransaction=new ArrayList<Transaction>();
 		listtransaction=serviceTransaction.findByEnumarationCeque(Enumcheque.Preavis,compte);
-		return SUCCESS;
+		return navigateTo("indexCompte");
+	}
+
+	public String showChequePreavis() {
+		if (!ensureCompteSelected()) {
+			currentView = "home";
+			return null;
+		}
+		listtransaction = serviceTransaction.findByEnumarationCeque(Enumcheque.Preavis, compte);
+		currentView = "indexCompte";
+		return null;
 	}
 	
 	
 	public String getchequeAntidatee() {		
+		if (!ensureCompteSelected()) {
+			return navigateTo("home");
+		}
 		listtransaction=new ArrayList<Transaction>();
 		listtransaction=serviceTransaction.findByEnumarationCeque(Enumcheque.Antidate,compte);
-		return SUCCESS;
+		return navigateTo("indexCompte");
+	}
+
+	public String showChequeAntidatee() {
+		if (!ensureCompteSelected()) {
+			currentView = "home";
+			return null;
+		}
+		listtransaction = serviceTransaction.findByEnumarationCeque(Enumcheque.Antidate, compte);
+		currentView = "indexCompte";
+		return null;
 	}
 	
 	public String getchequeCierculations() {		
+		if (!ensureCompteSelected()) {
+			return navigateTo("home");
+		}
 		listtransaction=new ArrayList<Transaction>();
 		listtransaction=serviceTransaction.findByEnumarationCeque(Enumcheque.EnCirculation,compte);
-		return SUCCESS;
+		return navigateTo("indexCompte");
+	}
+
+	public String showChequeCierculations() {
+		if (!ensureCompteSelected()) {
+			currentView = "home";
+			return null;
+		}
+		listtransaction = serviceTransaction.findByEnumarationCeque(Enumcheque.EnCirculation, compte);
+		currentView = "indexCompte";
+		return null;
 	}
 	
 	
 	
 
 	public String getchequeencours() {		
+		if (!ensureCompteSelected()) {
+			return navigateTo("home");
+		}
 		listtransaction=new ArrayList<Transaction>();
 		listtransaction=serviceTransaction.findByEnumarationCeque(Enumcheque.Encours,compte);
-		return SUCCESS;
+		return navigateTo("indexCompte");
+	}
+
+	public String showChequeEncours() {
+		if (!ensureCompteSelected()) {
+			currentView = "home";
+			return null;
+		}
+		listtransaction = serviceTransaction.findByEnumarationCeque(Enumcheque.Encours, compte);
+		currentView = "indexCompte";
+		return null;
 	}
 	
 	
@@ -218,6 +378,14 @@ public String ajouterTransaction() {
 		
 		try {
 		banque=serviceBanque.Findbynom(nom);
+		if (banque == null || banque.getCompte() == null) {
+			compte = null;
+			listtransaction = new ArrayList<Transaction>();
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Banque invalide",
+							"Aucun compte n'est rattache a la banque selectionnee."));
+			return navigateTo("home");
+		}
 		compte=banque.getCompte();
 		SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");
 		listtransaction=new ArrayList<Transaction>();
@@ -231,12 +399,17 @@ public String ajouterTransaction() {
 			etatcheques=Enumcheque.values();
 			
 		}catch(Exception e) {
-			e.printStackTrace();
 		}
-		return SUCCESS;
+		return navigateTo("indexCompte");
 	}
 	
 	public String updateoperation() {
+		if (selectedTranaction == null) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Operation requise",
+							"Selectionnez un cheque avant validation."));
+			return navigateTo("indexCompte");
+		}
 		//compte=serviceCompte.Findbycode(banque.getCompte().getId());
 		selectedTranaction.setEtatcheque(etatcheque);
 		type=selectedTranaction.getTypetransaction();
@@ -259,10 +432,13 @@ public String ajouterTransaction() {
 		selectedTranaction.setDateOperation(date3);
 		serviceTransaction.update(selectedTranaction);
 		serviceCompte.update(compte);
-		return SUCCESS;
+		return navigateTo("indexCompte");
 	
 	}
 	public String saveoperation() {
+		if (!ensureCompteSelected()) {
+			return navigateTo("home");
+		}
 		SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");
 		Transaction t=new  Transaction();
 		t.setDescription(description);
@@ -293,9 +469,12 @@ public String ajouterTransaction() {
 		
      	serviceTransaction.save(t);
      	listtransaction=serviceTransaction.findbyMonth(date1.getMonth()+1,compte);
-		return SUCCESS;
+		return navigateTo("indexCompte");
 	}
 	public String recherchertransaction() {
+		if (!ensureCompteSelected()) {
+			return navigateTo("home");
+		}
 		 
 		SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");
 		listtransaction=new ArrayList<Transaction>();
@@ -307,20 +486,20 @@ public String ajouterTransaction() {
 		else {
 			listtransaction=serviceTransaction.findbyDate(date1, date2,compte);
 		}
-		return SUCCESS;
+		return navigateTo("indexCompte");
 	}
 	
 	
 	public String getAll() {
 		listBanque=new ArrayList<Banque>();
 		listBanque=serviceBanque.getAll();
-		return SUCCESS;
+		return navigateTo("home");
 	}
 	public String nouveauBanque() {
 		nom=null;
 		agence=null;
 		adresse=null;
-		return SUCCESS;
+		return navigateTo("nouveauBanque");
 	}
 	public String saveBanque() {
 		banque=new Banque();
@@ -335,7 +514,7 @@ public String ajouterTransaction() {
 		soleinitial=new BigDecimal(0);
 		soldecredit=new BigDecimal(0);
 		soldedebit=new BigDecimal(0);
-		return SUCCESS;
+		return navigateTo("nouveauCompte");
 	}
 	
 	public String saveCompte() {		 
@@ -350,13 +529,21 @@ public String ajouterTransaction() {
 		serviceBanque.update(banque);
 		listCompte=new ArrayList<Compte>();
 		listCompte=serviceCompte.getAll();
-		return SUCCESS;
+		date1=new Date();
+		date2=new Date();
+		date3=new Date();
+		dates=new SimpleDateFormat("dd-MM-yyyy").format(date2);
+		listtransaction=serviceTransaction.findbyMonth(date1.getMonth()+1,compte);
+		types=TypeTransaction.values();
+		reglements=Reglement.values();
+		etatcheques=Enumcheque.values();
+		return navigateTo("indexCompte");
 	}
 	
 	
 	
 	public String nouveaunouveauTransaction() {
-		return SUCCESS;
+		return navigateTo("saisieoperation");
 	}
 	
 	

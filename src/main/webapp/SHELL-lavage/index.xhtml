@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    template="/WEB-INF/templates/app.xhtml">
+    <ui:define name="title">Shell-Lavage</ui:define>
+    <ui:define name="moduleNav">
+        <ui:include src="/SHELL-lavage/HeaderlavageNav.xhtml" />
+    </ui:define>
+    <ui:define name="content">
+        <c:choose>
+            <c:when test="#{empty param.view or param.view eq 'indexLavage' or param.view eq 'services-en-cours'}">
+                <h:panelGroup rendered="#{ServiceLavageBean.getLavageEcours() eq 'success'}">
+                    <ui:include src="/SHELL-lavage/fragments/indexLavage.xhtml" />
+                </h:panelGroup>
+            </c:when>
+            <c:when test="#{param.view eq 'allMarque' or param.view eq 'marque-modele'}">
+                <h:panelGroup rendered="#{LavageBean.getAllMArque() eq 'success'}">
+                    <ui:include src="/SHELL-lavage/fragments/allMarque.xhtml" />
+                </h:panelGroup>
+            </c:when>
+            <c:when test="#{param.view eq 'affectationFiltreModel' or param.view eq 'affectation-filtre'}">
+                <h:panelGroup rendered="#{LavageBean.affecterFilterToModel() eq 'success'}">
+                    <ui:include src="/SHELL-lavage/fragments/affectationFiltreModel.xhtml" />
+                </h:panelGroup>
+            </c:when>
+            <c:when test="#{param.view eq 'affectationHuileModel' or param.view eq 'affectation-huile'}">
+                <h:panelGroup rendered="#{LavageBean.affecterHuileToModel() eq 'success'}">
+                    <ui:include src="/SHELL-lavage/fragments/affectationHuileModel.xhtml" />
+                </h:panelGroup>
+            </c:when>
+            <c:when test="#{param.view eq 'historiqueServices' or param.view eq 'historique-services'}">
+                <h:panelGroup rendered="#{ServiceLavageBean.historiqueServices() eq 'success'}">
+                    <ui:include src="/SHELL-lavage/fragments/historiqueServices.xhtml" />
+                </h:panelGroup>
+            </c:when>
+            <c:when test="#{param.view eq 'historiqueDujour' or param.view eq 'historique-jour'}">
+                <h:panelGroup rendered="#{ServiceLavageBean.historiqueDuJour() eq 'success'}">
+                    <ui:include src="/SHELL-lavage/fragments/historiqueDujour.xhtml" />
+                </h:panelGroup>
+            </c:when>
+            <c:when test="#{param.view eq 'rapport'}">
+                <h:panelGroup rendered="#{ServiceLavageBean.rapport() eq 'success'}">
+                    <ui:include src="/SHELL-lavage/fragments/rapport.xhtml" />
+                </h:panelGroup>
+            </c:when>
+            <c:when test="#{param.view eq 'rapportLavage'}">
+                <h:panelGroup rendered="#{RendementBean.rapportLavage() eq 'success'}">
+                    <ui:include src="/SHELL-lavage/fragments/rapportLavage.xhtml" />
+                </h:panelGroup>
+            </c:when>
+            <c:when test="#{param.view eq 'rapportVidange'}">
+                <h:panelGroup rendered="#{RendementBean.rapportVidange() eq 'success'}">
+                    <ui:include src="/SHELL-lavage/fragments/rapportVidange.xhtml" />
+                </h:panelGroup>
+            </c:when>
+            <c:when test="#{param.view eq 'nouveauMarque'}">
+                <h:panelGroup rendered="#{LavageBean.nouveauMarque() eq 'success'}">
+                    <ui:include src="/SHELL-lavage/fragments/nouveauMarque.xhtml" />
+                </h:panelGroup>
+            </c:when>
+            <c:when test="#{param.view eq 'ajouterModel'}">
+                <h:panelGroup rendered="#{LavageBean.nouveauModel() eq 'success'}">
+                    <ui:include src="/SHELL-lavage/fragments/ajouterModel.xhtml" />
+                </h:panelGroup>
+            </c:when>
+            <c:when test="#{param.view eq 'imprimer'}">
+                <ui:include src="/SHELL-lavage/fragments/imprimer.xhtml" />
+            </c:when>
+            <c:when test="#{param.view eq 'imprimer2'}">
+                <ui:include src="/SHELL-lavage/fragments/imprimer2.xhtml" />
+            </c:when>
+            <c:when test="#{param.view eq 'Imprimerhistorique'}">
+                <ui:include src="/SHELL-lavage/fragments/Imprimerhistorique.xhtml" />
+            </c:when>
+            <c:when test="#{param.view eq 'infoService'}">
+                <ui:include src="/SHELL-lavage/fragments/infoService.xhtml" />
+            </c:when>
+            <c:otherwise>
+                <ui:include src="/SHELL-lavage/fragments/indexLavage.xhtml" />
+            </c:otherwise>
+        </c:choose>
+    </ui:define>
+</ui:composition>

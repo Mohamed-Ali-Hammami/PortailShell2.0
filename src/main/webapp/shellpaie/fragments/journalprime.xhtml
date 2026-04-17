@@ -1,0 +1,176 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout paie-shell-fragment">
+        <p:panel styleClass="shell-home-panel paie-shell-panel">
+					<h:form>
+						
+						 	<h:panelGroup layout="block" style="text-align:center;">
+						<table>
+								<tr>
+									 <td/>
+									<td><p:commandButton value="Imprimer"
+											style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+											   >
+											  <p:printer target="imprimer"/>
+											  </p:commandButton>
+											  </td>
+									 </tr>
+									 
+									 <tr>
+									 
+									<td>
+						<h:panelGrid columns="2" cellpadding="5">
+							<h:outputText value="Annee : " style="font-weight: bold" />
+							<p:selectOneMenu value="#{NoteBean.annees}" 
+								style="width:200px;font-size:12px " id="annee" filter="true"
+								filterMatchMode="contains">
+								<!-- 
+								<f:ajax listener="#{NoteBean.getMoisByAnnees}"    />
+								 -->
+								<f:selectItem itemLabel="Veuillez choisir annee"  />
+								<f:selectItems value="#{NoteBean.listannee}" />
+								<p:ajax listener="#{NoteBean.journalconge2}" update="imprimer" partialSubmit="true" process="@this" />
+							</p:selectOneMenu>
+                             <!-- event="onchange" -->
+							 
+
+                         
+						</h:panelGrid></td></tr></table>
+						</h:panelGroup>
+						<br/><br/><br/><br/>
+						 <p:outputPanel  id="imprimer"  >
+						<h:panelGroup layout="block" style="text-align:center;">
+						 <table>
+								<tr>
+									<td width="300px"><p:graphicImage
+											url="/images/shell.jpg" style="width:100px" /><br />
+
+									</td>
+									
+								
+
+									<td style="text-align: center"><b>
+						         	<h:outputText
+													value="STE FETHI MAHMOUD SASSI " style="font-size:18px" /></b>
+						 <br />
+										 <h:outputText value="CARBURANT ET SERVICE" style="font-size:16px" /><br />
+										  <br /></td>
+								</tr>
+							</table>    
+                      <h:panelGroup id="paie" >
+                      <h:outputText value="JOURNAL DES PRIMES   #{NoteBean.annees}" style="font-size:16px" />
+                       <table border="1" style="width: 100%">
+                       <tr>
+                      
+                       <td><h:outputText value="Nom " style="font-size:12px" /></td>
+                         <td><h:outputText value="Note  " style="font-size:12px" /></td>
+                           <td><h:outputText value="Sal base " style="font-size:12px" /></td>
+                              
+                                <td><h:outputText value="Sal Brut " style="font-size:12px" /></td>
+                                  
+                                  <td><h:outputText value="CNSS " style="font-size:12px" /></td>
+                                  	 
+								
+                                
+                                    <td><h:outputText value="Sal Net  " style="font-size:12px" /></td>
+                                     <td style="border: thin solid #F2EFEE;"><h:outputText
+													value="Redevance" style="font-size:12px" /></td>
+													
+										<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="Net à payer" style="font-size:12px" /></td>
+                                       
+                                       <td><h:outputText value="Signature  " style="font-size:12px" /></td>
+                       </tr>
+                        
+						<ui:repeat var="p" value="#{NoteBean.listpaie}" >
+						<tr height="50">
+							  
+							 
+							  <td  > <h:outputText value="#{p.employee.nom}" style="font-size:12px" /></td>
+							   
+								<td  ><h:outputText value="#{p.note.note}"
+									style="font-size:12px" /></td>
+								<td  ><h:outputText value="#{p.formulaire_Paie.salairedebases}"
+									style="font-size:12px" /></td>
+								 
+								  
+								 
+                                
+								 
+								<td  ><h:outputText value="#{p.formulaire_Paie.salaire_bruts}"
+									style="font-size:12px" /></td>	 
+								 
+								<td ><h:outputText value="#{p.formulaire_Paie.retenue_cnsss}"
+									style="font-size:12px" /></td>
+								 
+									 
+								 
+								<td  ><h:outputText value="#{p.formulaire_Paie.salaire_nets}"
+									style="font-size:12px" /></td>
+								 		 
+											
+ 
+											<td style="border: thin solid #F2EFEE;"><h:outputText
+													value="#{p.formulaire_Paie.redevances}" style="font-size:12px" /></td>
+										 
+										 
+								 	 
+								<td  ><h:outputText value="#{p.formulaire_Paie.net_apayers}"
+									style="font-size:12px" /></td>
+								  
+								 
+								 
+								 
+									<td>
+									<h:outputText value=""  
+									style="font-size:12px" />
+									</td>
+								 </tr>
+								 </ui:repeat>
+								 <ui:repeat var="p" value="#{NoteBean.listPai}">								 
+								 <tr>
+								 <td  /><td  /> 
+								 <td  ><h:outputText value="#{p.formul.salairedebases}"
+									style="font-size:12px" /></td>
+								 
+								  
+								 
+                                
+								 
+								<td  ><h:outputText value="#{p.formul.salaire_bruts}"
+									style="font-size:12px" /></td>	 
+								 
+								<td style="border: thin solid#F2EFEE;"><h:outputText value="#{p.formul.retenue_cnsss}"
+									style="font-size:12px" /></td>
+								 
+								 
+								 
+								<td  ><h:outputText value="#{p.formul.salaire_nets}"
+									style="font-size:12px" /></td>
+								  
+								 
+								 
+								 
+								   
+								 
+								  
+							 
+									
+								 </tr>
+								 </ui:repeat>
+						 </table>
+						
+						 
+						 
+                              
+						 
+                         </h:panelGroup>
+                         </h:panelGroup>
+                         </p:outputPanel>
+					</h:form>
+        </p:panel>
+    </h:panelGroup>
+</ui:composition>

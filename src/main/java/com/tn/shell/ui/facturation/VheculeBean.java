@@ -117,7 +117,6 @@ public String nouvauvhecule(){
 			getServiceVhecule().update(vhecule);
 			return SUCCESS;
 		} catch (DataAccessException e) {
-			e.printStackTrace();
 		}
 		return ERROR;
 	}

@@ -1,0 +1,321 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:panelGroup layout="block" styleClass="shell-module-layout transport-shell-fragment"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+		 
+		
+		<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+				
+				<p:panel>
+	 	<h:form> 
+						 
+						<h:panelGroup layout="block" style="text-align:center;">
+							
+						</h:panelGroup>
+						
+
+						
+						<h:panelGroup layout="block" style="text-align:center;">
+						<table><tr>
+						<td>
+										<h:commandLink  >
+								<p:graphicImage url="/images/imprimante-icone.png"
+									style="width:25px" />
+								<p:printer target="imprimer"></p:printer>
+							</h:commandLink>
+										</td>
+						 
+										
+										</tr></table>
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade" style="width:150px"
+								widgetVar="suppressionDialog">
+								<h:panelGroup layout="block" style="text-align:center;">
+									<p:commandButton value="valider" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Annuler" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</h:panelGroup>
+							</p:confirmDialog>
+						</h:panelGroup>
+						<p:separator />
+						<p:outputPanel id="imprimer" >
+							<table>
+					<tr>
+					<td>
+					<p:panel style="width:400px;">
+					 <h:panelGroup layout="block" style="text-align:left;">
+					 <b><h:outputText value="STATION SHELL SEDJOUMI " style="font-size:24px " /></b><br/>
+					 <b><h:outputText value="SIDI HASSINE " style="font-size:24px " /></b><br/>
+					 <b><h:outputText value="TVA : 805781/Q/P/C/000 " style="font-size:24px " /></b>
+					 </h:panelGroup>
+					 </p:panel>
+					</td>
+					<td>
+						<p:graphicImage url="/images/images.png" style="width:200" />
+					</td>
+					<td>
+					<p:panel style="width:400px;">
+					 <h:panelGroup layout="block" style="text-align:left;">
+					 <b><h:outputText value="TEL : 71 590 360 / 92 519 806 " style="font-size:24px " /></b><br/>
+					 <b><h:outputText value="FAX : 71 934 700" style="font-size:24px " /></b><br/>
+					 <b><h:outputText value="RIB : 10002001010839678839 TND" style="font-size:24px " /></b>
+					 </h:panelGroup>
+					 </p:panel>
+					</td>
+					</tr></table>
+							 
+							<br/><br/>
+					<h:panelGroup layout="block" style="text-align:center;">
+					<table style="width: 60%; text-align: center">
+					<tr>
+					<td style="text-align: left;"><h:outputText value="Facture Client N°" style="font-size:24px " /></td>
+					<td style="text-align: left;"> <h:outputText value=" #{FactureBean.facture.codes}" style="font-size:24px " /></td> 
+					<td width="100" />
+					<td style="text-align: right;"> <h:outputText value="DATE : " style="font-size:24px " /></td>
+					<td style="text-align: right;"><h:outputText value=" #{FactureBean.facture.dates}" style="font-size:24px " /></td>
+					</tr>
+					</table></h:panelGroup><br/>
+							<h:panelGroup layout="block" style="text-align:left;">
+					<table>
+					<tr><td>
+					<p:panel style="width:170px;">
+					<h:outputText value="Client :" style="font-size:24px " />
+					</p:panel>
+					</td>
+					<td> <h:outputText value=" #{FactureBean.facture.client.nom}" style="font-size:24px " /></td></tr>
+				    <tr><td>
+					<p:panel style="width:170px;">
+					<h:outputText value="Code TVA :" style="font-size:24px " />
+					</p:panel>
+					</td>
+					<td> <h:outputText value=" #{FactureBean.facture.client.matriculefiscal}" style="font-size:24px " /></td></tr>
+				   <tr><td>
+					<p:panel style="width:170px;">
+					<h:outputText value="ADRESSE :" style="font-size:24px " />
+					</p:panel>
+					</td>
+					<td> <h:outputText value=" #{FactureBean.facture.client.address}" style="font-size:24px " /></td></tr>
+				      
+					</table></h:panelGroup>
+							  
+							  <h:panelGroup layout="block" style="text-align:left;">
+							
+                                 
+                               
+                               
+                               <table>
+								<tr>
+								 <td style="width: 10%"><h:outputText
+												style="font-size:14px" value="B.L : " /></td>
+								<td style="border-color: #ffffff; "> 
+												 
+														 
+														<ui:repeat var="pl"
+													value="#{FactureBean.facture.listebl}">
+													 
+														<b><h:outputText style="font-size:14px"
+															value="#{pl.codes}  " /></b>
+													 
+													 
+												</ui:repeat>
+													 
+											 </td>
+								</tr>
+								</table>
+                                </h:panelGroup>
+
+
+							<h:panelGroup layout="block" style="text-align:center;">
+                                
+								<table style="width: 100%; text-align:center;" border="1" >
+									<tr style="background-color: #FAED94;">
+					 
+					<td> <h:outputText value="LIBELLE " style="font-size:24px " /> </td>
+					<td> <h:outputText value="QUANTITE " style="font-size:24px " /> </td>
+					<td> <h:outputText value="P.U HT " style="font-size:24px " /> </td>
+					
+					<td> <h:outputText value="MONTANT HT " style="font-size:24px " /> </td>
+					<td> <h:outputText value="TVA " style="font-size:24px " /> </td>
+					 					
+					</tr>
+                                    
+							 		<tr style="text-align: left;"> 
+							 		 
+									<td style="border-color: #ffffff;"> 
+									<p:panel style=";border-color: #ffffff;height: 480px">
+									 
+												<ui:repeat var="p" value="#{FactureBean.listelignefacture}">
+													<h:outputText style="font-size:14px" value="#{p.produit.nom}" />
+													<br />
+												</ui:repeat>
+										 
+											 </p:panel>
+                                             </td>
+                                             
+                                             
+										<td style="border-color: #ffffff;">
+											<p:panel style=";border-color: #ffffff;height: 480px">
+										<ui:repeat var="p"
+												value="#{FactureBean.listelignefacture}">
+												 
+													<h:outputText style="font-size:16px" value="#{p.quantites}" />
+													<br />
+											 
+											</ui:repeat>  
+											<br /> </p:panel> </td>
+
+
+										<td  style="border-color: #ffffff;">	<p:panel style=";border-color: #ffffff;height: 480px">
+										<ui:repeat var="p"
+												value="#{FactureBean.listelignefacture}">
+												 
+													<h:outputText style="font-size:16px"
+														value="#{p.prixs}" />
+													<br />
+												 
+											</ui:repeat> 
+											</p:panel> 
+											 </td> 
+
+										<td style="border-color: #ffffff;">	<p:panel style=";border-color: #ffffff;height: 480px">
+										<ui:repeat var="p"
+												value="#{FactureBean.listelignefacture}">
+												 
+													<h:outputText style="font-size:16px" value="#{p.mantanthts}" />
+
+													<br />
+												 
+											</ui:repeat> 
+											</p:panel> 
+										 </td>
+
+										<td  style="border-color: #ffffff;">	
+										<p:panel style=";border-color: #ffffff;height: 480px">
+										<ui:repeat var="p"
+												value="#{FactureBean.listelignefacture}">
+												 
+													<h:outputText style="font-size:16px"
+														value="#{p.tva}%" />
+													<br />
+											 
+											</ui:repeat> 
+											</p:panel> 
+											 </td>
+                                               </tr>
+                                               </table>
+                                                
+										
+									 
+
+							</h:panelGroup>
+							 
+							 
+							<h:panelGroup layout="block" style="text-align:center;">
+								<table>
+
+									 
+									<tr>
+
+										<td width="50%"><b><h:outputText
+													value="ARÊTÉE LA PRÉSENTE FACTURE À LA SOMME DE  :"
+													style="font-size:14px" /></b> <h:outputText
+												value="#{FactureBean.facture.sommes}" /></td>
+										<td>
+											<table border="1">
+												<tr>
+													<td width="165px" align="center">
+														<h:panelGroup layout="block" style="text-align:right;">
+															<b><h:outputText value="Total HT:   "
+																	style="font-size:12px" /></b>
+														</h:panelGroup>
+													</td>
+													<td width="165px">
+														<h:panelGroup layout="block" style="text-align:right;">
+															<b><h:outputText style="font-size:12px"
+																	value="#{FactureBean.facture.totalhts} DT" /></b>
+														</h:panelGroup>
+													</td>
+												</tr>
+                                                
+												 
+
+
+												<tr>
+													<td width="165px">
+														<h:panelGroup layout="block" style="text-align:right;">
+															<b><h:outputText value="Total TVA:   "
+																	style="font-size:12px" /></b>
+														</h:panelGroup>
+													</td>
+													<td width="165px">
+														<h:panelGroup layout="block" style="text-align:right;">
+															<b><h:outputText style="font-size:12px"
+																	value="#{FactureBean.facture.totaltvas} DT" /></b>
+														</h:panelGroup>
+													</td>
+												</tr>
+												<tr>
+													<td width="165px">
+														<h:panelGroup layout="block" style="text-align:right;">
+															<b><h:outputText value="Timbres:   "
+																	style="font-size:12px" /></b>
+														</h:panelGroup>
+													</td>
+													<td width="165px">
+														<h:panelGroup layout="block" style="text-align:right;">
+															<b><h:outputText style="font-size:12px"
+																	value="#{FactureBean.facture.timbres}00 DT" /></b>
+														</h:panelGroup>
+													</td>
+												</tr>
+												<tr>
+													<td width="165px">
+														<h:panelGroup layout="block" style="text-align:right;">
+															<b><h:outputText value="Total TTC:   "
+																	style="font-size:12px" /></b>
+														</h:panelGroup>
+													</td>
+													<td width="165px">
+														<h:panelGroup layout="block" style="text-align:right;">
+															<b><h:outputText style="font-size:12px"
+																	value="#{FactureBean.facture.totalttcs} DT" /></b>
+														</h:panelGroup>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</h:panelGroup>
+							 
+                                  
+							<p:separator />
+
+
+							<h:panelGroup layout="block" style="text-align:center;">
+
+								<b><h:outputText
+										value="  #{FactureBean.societe.address.rue} #{FactureBean.societe.address.num} "
+										style="font-size:14px" /> 
+										<h:outputText
+										value="#{FactureBean.societe.address.ville} "
+										style="font-size:14px" /></b> <br /> <b>
+										<h:outputText
+										value="M.F: #{FactureBean.societe.matricuefiscale} - R.C.N° : #{FactureBean.societe.rcn} - RIB N° : #{FactureBean.societe.rib} "
+										style="font-size:14px" /> </b>
+
+							</h:panelGroup>
+						</p:outputPanel>
+						</h:form>
+
+					  
+            </p:panel>
+            </h:panelGroup>
+            </h:panelGroup>
+            
+</ui:composition>

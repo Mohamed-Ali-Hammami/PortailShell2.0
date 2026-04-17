@@ -65,13 +65,11 @@ public class ServiceFTP {
 	      try {
 	         send("QUIT");
 	      } catch (IOException e) {
-	         e.printStackTrace();
 	      }  finally{
 	         if(socket != null){
 	            try {
 	               socket.close();
 	            } catch (IOException e) {
-	               e.printStackTrace();
 	            }
 	            finally{
 	               socket = null;
@@ -227,6 +225,5 @@ public class ServiceFTP {
 	   }
 	   
 	   private void log(String str){
-	      System.out.println(">> " + str);
 	   }
 }

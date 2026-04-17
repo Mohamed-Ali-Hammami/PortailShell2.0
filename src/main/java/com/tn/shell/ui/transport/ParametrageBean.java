@@ -78,7 +78,7 @@ public class ParametrageBean {
 		 return SUCCESS;
 	 }
 	 public void onRowEdit4(RowEditEvent event){				 
-			FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"utilisateur chang�",((Tva)event.getObject()).getId()+"");
+			FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"utilisateur changÃ©",((Tva)event.getObject()).getId()+"");
 		     FacesContext.getCurrentInstance().addMessage(null, msg);
 		     updateTva((Tva)event.getObject());
 		 
@@ -97,7 +97,6 @@ try {
     getServiceTva().update(p) ;
     return SUCCESS;       
 } catch (DataAccessException e) {
-    e.printStackTrace();       
 }    
 return ERROR;
 }
@@ -286,7 +285,7 @@ return ERROR;
  
 
 public void onRowEdit2(RowEditEvent event){				 
-	FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"utilisateur chang�",((Paramettre)event.getObject()).getId()+"");
+	FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"utilisateur changÃ©",((Paramettre)event.getObject()).getId()+"");
      FacesContext.getCurrentInstance().addMessage(null, msg);
      updateParamettre((Paramettre)event.getObject());
  
@@ -298,14 +297,13 @@ try {
     getServiceParamettre().update(p) ;
     return SUCCESS;       
 } catch (DataAccessException e) {
-    e.printStackTrace();       
 }    
 return ERROR;
 } 
 	
 
 public void onRowEdit3(RowEditEvent event){				 
-	FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"societe chang�",((Societe)event.getObject()).getId()+"");
+	FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"societe changÃ©",((Societe)event.getObject()).getId()+"");
      FacesContext.getCurrentInstance().addMessage(null, msg);
      updateSociete((Societe)event.getObject());
  
@@ -317,7 +315,6 @@ try {
     //getServiceSociete().update(p) ;
     return SUCCESS;       
 } catch (DataAccessException e) {
-    e.printStackTrace();       
 }    
 return ERROR;
 } 

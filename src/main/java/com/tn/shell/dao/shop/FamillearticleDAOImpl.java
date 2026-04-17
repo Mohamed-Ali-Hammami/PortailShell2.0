@@ -48,10 +48,8 @@ public class FamillearticleDAOImpl implements FamillearticleDAO {
 		   List<Famillearticle> FamillearticleListem=em.createQuery("SELECT u FROM  Famillearticle u where u.nom = :designation and u.statut = :statut",Famillearticle.class).setParameter("designation", designation).setParameter("statut", Statut.ACTIF).getResultList();
 	        
 	        if (FamillearticleListem.size() > 0){
-	        	System.out.println("objet trouvé\n");
 	            return FamillearticleListem.get(0);}
 	        else{
-	        	System.out.println("l  objet n exsite pas");
 	            return null;}   
 	}
 	 @Transactional

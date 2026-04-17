@@ -82,12 +82,10 @@ public class LigneVentecreditDaoImpl implements LigneVentecreditDAO {
 				.setParameter("date", date)
 				.getResultList();
 		if(result.size()>0) {
-			System.out.println("getAllcreditbyclientanddates" +result.size());
 			return result;
 			
 		}
 		else { 
-			System.out.println("getAllcreditbyclientanddates null");
 			return null;
  		}
 	}

@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:panelGroup layout="block" styleClass="shell-module-layout transport-shell-fragment"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+		 
+		
+		<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+			 
+				<h:panelGroup layout="block" style="text-align:center;">
+						  <br />
+						<fieldset style="margin-bottom: 20px;background-color:#eeeec6;">
+							<legend>
+								<b><h:outputText style="font-size:12px ;color:#2e8b57"
+										value="Ajouter Produit au stock" name="outTxtcin" /> </b>
+							</legend>
+							<br />
+							<h:form>
+								<table>
+									<tr>
+										<td width="195"><b><h:outputText
+													style="font-size:12px " value="libelle :" /></b></td>
+										 <td width="111"><h:inputText style="font-size:12px " id="des"  
+												value="#{FamilledepensetransportBean.libelle}"   >
+												 
+												</h:inputText>
+												</td>
+									</tr>
+									 
+									 
+
+								</table> 
+								
+								 
+								 <table><tr> <td><p:spacer width="40px"/><p:spacer width="50px"/><p:spacer width="40px"/>
+								 <p:spacer width="60px"/> 
+										 <p:commandButton value="Ajouter type depense"
+												style="width:150px;font-size:12px;height:30;color:white;background-image:linear-gradient( #FAF281, red);" 
+                                                  ajax="false"
+												action="#{FamilledepensetransportBean.savefamilledepense}" /> 
+												
+												</td></tr></table>
+							</h:form>
+						</fieldset>
+					</h:panelGroup>
+			 
+		 </h:panelGroup>
+		 </h:panelGroup>
+		 
+</ui:composition>

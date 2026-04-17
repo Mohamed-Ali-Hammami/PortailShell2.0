@@ -177,14 +177,13 @@ public class ChauffeurBean {
             getServiceChauffeur().update(chauffeur);
             return SUCCESS;       
         } catch (DataAccessException e) {
-            e.printStackTrace();       
         }    
         return ERROR;
     } 
  
 	public void onRowEdit(RowEditEvent event){
 					 
-			FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"chauffeur chang�",((Chauffeur)event.getObject()).getId()+"");
+			FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_INFO,"chauffeur changÃ©",((Chauffeur)event.getObject()).getId()+"");
 		     FacesContext.getCurrentInstance().addMessage(null, msg);
 		     updateChauffeur((Chauffeur)event.getObject());
 		    
@@ -205,7 +204,6 @@ public class ChauffeurBean {
 		  etab=matricule.substring(matricule.length()-3, matricule.length());		 
 		}catch(Exception e){
 			matricule="";
-			System.out.println("");
 		}
 		
 	}
@@ -219,7 +217,6 @@ public class ChauffeurBean {
 		  categorie=matricule.substring(matricule.length()-4, matricule.length()-3); 
 		  etab=matricule.substring(matricule.length()-3, matricule.length());		 
 		}catch(Exception e){
-			System.out.println("");
 		}
 	}
 	 

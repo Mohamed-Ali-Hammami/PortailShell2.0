@@ -24,18 +24,18 @@ import javax.swing.JPanel;
 
 public class PrintRectangle  implements Printable {
    
-   /** Constructeur par défaut de PrintRectangle */
+   /** Constructeur par dÃ©faut de PrintRectangle */
    public PrintRectangle() {
    }
 
 
    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-      // Par défaut, retourne NO_SUCH_PAGE => la page n'existe pas
+      // Par dÃ©faut, retourne NO_SUCH_PAGE => la page n'existe pas
       int retValue = Printable.NO_SUCH_PAGE;
       switch(pageIndex){
          case 0 : {
-            // Dessin de la première page
-            // Récupère la dimension de la zone imprimable
+            // Dessin de la premiÃ¨re page
+            // RÃ©cupÃ¨re la dimension de la zone imprimable
             int x  = (int) pageFormat.getImageableX();
             int y   =(int)  pageFormat.getImageableY();
             int w  =(int)  pageFormat.getImageableWidth();
@@ -46,7 +46,7 @@ public class PrintRectangle  implements Printable {
            // g2d.translate(pageFormat.getOrientation(), pageFormat.getImageableY());
            
             String text   = "SHOP SHELL SIJOUMI\n";
-            String text2   = "Ticket N°  221543"+"\n   ";
+            String text2   = "Ticket NÂ°  221543"+"\n   ";
             String text3   = "Date"+new Date()+"\n   ";
             FontMetrics  fm=graphics.getFontMetrics();
             
@@ -56,7 +56,7 @@ public class PrintRectangle  implements Printable {
              graphics.setColor(Color.BLACK);             
              int marge=fm.getAscent();                       
             // graphics.drawString(text,x,y+fm.getAscent()+fm.getDescent());   
-             drawCenteredString("TICKET N° 220589", x, y, graphics);   
+             drawCenteredString("TICKET NÂ° 220589", x, y, graphics);   
              retValue = Printable.PAGE_EXISTS;
              break;
          }

@@ -1,0 +1,175 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout paie-shell-fragment">
+        <p:panel styleClass="shell-home-panel paie-shell-panel">
+					<h:form>
+						 , 
+						<br />
+						<br />
+						 
+                          <h:panelGroup layout="block" style="text-align:center;">
+							<table>
+								<tr>
+									 <td/>
+									<td><p:commandButton value="Imprimer"
+											style="width:200px;height:30;color:white;background-image:linear-gradient( #FAF281, red);font-size:12px"
+											 >
+											  <p:printer target="imprimer"/>
+											  </p:commandButton>
+											  </td>
+											  								</tr>
+						    </table>
+						    </h:panelGroup>
+						     <p:outputPanel  id="imprimer"  >
+						     <table>
+								<tr>
+									<td width="300px"><p:graphicImage
+											url="/images/shell.jpg" style="width:180px" /><br />
+
+									</td>
+
+									<td style="text-align: center"><b><h:outputText
+												value="FETHI SASSI" style="font-size:24px" /></b> <br />
+										<h:outputText value="SHELL SIJOUMIE" style="font-size:24px" /> <br />
+										  <br /></td>
+								</tr>
+							</table>
+							<p:separator/>	<br/><br/><br/>
+							<h:panelGroup layout="block" style="text-align:center;">
+							 
+							 
+							<h:outputText value="Reçus d'avance "
+											style="font-size:18px" />
+											<br/>	<br/><br/><br/>
+								<table border="1" style="width:100%">
+								<tr>
+								<td><b>	<h:outputText value="Date   " style="font-size:12px" /></b></td>
+								<td><b><h:outputText value="Matricule  " style="font-size:12px" /></b></td>
+								<td><b><h:outputText value="Nom et prénom   "	style="font-size:12px" /></b></td>
+								<td><b><h:outputText value="CIN  " style="font-size:12px" /></b></td>
+								<td><b> <h:outputText value="Montant   " style="font-size:12px" /></b></td>
+								</tr>
+											
+							  <ui:repeat var="avance" value="#{AvanceBean.listAvenc}">
+							 <tr><td>
+							  <h:outputText value="#{avance.dates}" style="font-size:12px" /></td>
+							   
+								<td>
+								<h:outputText value="#{avance.employee.matricule}"
+									style="font-size:12px" />  </td>
+								 
+
+								<td>
+								<h:outputText value="#{avance.employee.nom}"
+									style="font-size:12px" /> </td>
+									
+									<td>
+								<h:outputText value="#{avance.employee.cin}"
+									style="font-size:12px" /></td>
+									
+							    <td>
+							
+							  <h:outputText value="#{avance.montant_avances}" style="font-size:12px" />
+							   
+							 </td></tr>
+							 </ui:repeat>
+							 
+							 </table>
+						</h:panelGroup>
+						<br/> <br/>
+						
+						 <table style="width: 100%" >
+                              <tr>
+                              <td  >
+                               <h:outputText value="Emargement de l'employeur "
+									style="font-size:12px" />
+                              </td>
+                              <td width="30%"/>
+                              <td >
+                               <h:outputText value="Signature de l'employer"
+									style="font-size:12px" />
+                              </td>
+                              </tr>
+                              </table>
+                              <br/> <br/>
+                               <h:outputText value="---------------------------------------------------------------------------------------------------------------------------------------------------------->"
+									style="font-size:12px" />
+									
+									 <table>
+								<tr>
+									<td width="300px"><p:graphicImage
+											url="/images/shell.jpg" style="width:180px" /><br />
+
+									</td>
+
+									<td style="text-align: center"><b><h:outputText
+												value="FETHI SASSI" style="font-size:24px" /></b> <br />
+										<h:outputText value="SHELL SIJOUMIE" style="font-size:24px" /> <br />
+										  <br /></td>
+								</tr>
+							</table>
+							<p:separator/>	<br/><br/><br/>
+							<h:panelGroup layout="block" style="text-align:center;">
+							<h:outputText value="Reçus d'avance "
+											style="font-size:18px" />
+											<br/>	<br/><br/><br/>
+							 
+							 <table border="1" style="width:100%">
+								<tr>
+								<td><b>	<h:outputText value="Date   " style="font-size:12px" /></b></td>
+								<td><b><h:outputText value="Matricule  " style="font-size:12px" /></b></td>
+								<td><b><h:outputText value="Nom et prénom   "	style="font-size:12px" /></b></td>
+								<td><b><h:outputText value="CIN  " style="font-size:12px" /></b></td>
+								<td><b> <h:outputText value="Montant   " style="font-size:12px" /></b></td>
+								</tr>
+											
+							  <ui:repeat var="avance" value="#{AvanceBean.listAvenc}">
+							 <tr><td>
+							  <h:outputText value="#{avance.dates}" style="font-size:12px" /></td>
+							   
+								<td>
+								<h:outputText value="#{avance.employee.matricule}"
+									style="font-size:12px" />  </td>
+								 
+
+								<td>
+								<h:outputText value="#{avance.employee.nom}"
+									style="font-size:12px" /> </td>
+									
+									<td>
+								<h:outputText value="#{avance.employee.cin}"
+									style="font-size:12px" /></td>
+									
+							    <td>
+							
+							  <h:outputText value="#{avance.montant_avances}" style="font-size:12px" />
+							   
+							 </td></tr>
+							 </ui:repeat>
+							 
+							 </table>
+						</h:panelGroup>
+						<br/> <br/>
+						
+						 <table style="width: 100%" >
+                              <tr>
+                              <td  >
+                               <h:outputText value="Emargement de l'employeur "
+									style="font-size:12px" />
+                              </td>
+                              <td width="30%"/>
+                              <td >
+                               <h:outputText value="Signature de l'employer"
+									style="font-size:12px" />
+                              </td>
+                              </tr>
+                              </table>
+						     </p:outputPanel>
+					</h:form>
+			 
+        </p:panel>
+    </h:panelGroup>
+</ui:composition>

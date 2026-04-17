@@ -34,10 +34,8 @@ public class AvoirDaoImpl implements AvoirDAO {
 				.setParameter("d2",d2)
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet Avoir n exsite pas\n\n");
 			return result;
 		}
 	}
@@ -50,10 +48,8 @@ public class AvoirDaoImpl implements AvoirDAO {
 				.setParameter("dates",date)
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result;
 		} else {
-			System.out.println("\n\nl  objet Avoir n exsite pas\n\n");
 			return result;
 		}
 	}
@@ -72,10 +68,8 @@ public class AvoirDaoImpl implements AvoirDAO {
 
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0).getId();
 		} else {
-			System.out.println("\n\nl  objet Avoir n exsite pas\n\n");
 			return 0;
 		}
 	}
@@ -87,10 +81,8 @@ public class AvoirDaoImpl implements AvoirDAO {
 				.setParameter("id", id)
 				.getResultList();
 		if (result.size() > 0) {
-			System.out.println("objet trouvé " + "\n\n\n");
 			return result.get(0);
 		} else {
-			System.out.println("\n\nl  objet Avoir n exsite pas\n\n");
 			return null;
 		}
 	}

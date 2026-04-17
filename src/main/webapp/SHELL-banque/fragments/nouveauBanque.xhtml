@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div class="shell-module-layout">
+		<p:growl id="msgs" showDetail="true" />
+		<p:panel id="basic" styleClass="shell-home-panel">
+			<h2 class="shell-page-title">Ajouter Banque</h2>
+			<p class="shell-page-subtitle">Creation d'une nouvelle banque avant affectation de son compte.</p>
+
+			<h:form>
+				<table class="shell-form-table">
+					<tr>
+						<td><b><h:outputText value="Nom :" style="font-size:12px"/></b></td>
+						<td>
+							<h:inputText id="nom" tabindex="1" size="30"
+								value="#{BanqueBean.nom}" style="font-size:14px"
+								styleClass="inpdes" required="true"
+								requiredMessage="Entrer nom client"/>
+							<p:messages for="nom" closable="true" autoUpdate="true"/>
+						</td>
+					</tr>
+					<tr>
+						<td><b><h:outputText value="Agence :" style="font-size:12px"/></b></td>
+						<td>
+							<h:inputText id="agence" tabindex="2" size="30"
+								value="#{BanqueBean.agence}" style="font-size:14px"/>
+							<p:messages for="agence" closable="true" autoUpdate="true"/>
+						</td>
+					</tr>
+					<tr>
+						<td><b><h:outputText value="Adresse :" style="font-size:12px"/></b></td>
+						<td>
+							<h:inputText id="adresse" tabindex="3" size="30"
+								value="#{BanqueBean.adresse}" style="font-size:14px"/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="text-align:center;">
+							<p:commandButton value="Ajouter" ajax="false"
+								styleClass="shell-action-button"
+								action="#{BanqueBean.saveBanque}"/>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</p:panel>
+	</div>
+</ui:composition>

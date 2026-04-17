@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+	<h:panelGroup layout="block"
+            style="min-height:900px; margin:0 20px; padding:24px; background-image:url(./2.png); background-size:cover; background-repeat:no-repeat;">
+<h:panelGroup layout="block"
+                style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+
+
+			<h:panelGroup layout="block" style="text-align:center;">
+				<b><h:outputText value="Etat des Accomptes et Manques" /> </b>
+			</h:panelGroup>
+			<br />
+			<br />
+			<h:form>
+				 
+				 
+				<br />
+
+				<p:outputPanel id="imprimer">
+					<p:dataTable id="paie" var="avance" editable="true"
+						value="#{AvancegestatBean.listAvenc}" widgetVar="articleTable"
+						selectionMode="single" selection="#{AvancegestatBean.selectedAvenc}"
+						filteredValue="#{AvancegestatBean.filtredAvenc}" rowKey="#{avance.id}"
+						style="margin-bottom:10px" emptyMessage="aucune avance en cours"
+						paginator="true" rows="100" paginatorPosition="bottom"
+						resizableColumns="true" liveResize="true">
+
+						<p:ajax event="rowEdit" listener="#{AvancegestatBean.onRowEdit}" />
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="CODE" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{avance.id}" />
+						</p:column>
+
+						<p:column filterBy="#{avance.employee.nom}"
+							filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="employer" />
+							</f:facet>
+							<h:outputText style="font-size:12px "
+								value="#{avance.employee.nom}" />
+
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="MONTANT" />
+							</f:facet>
+
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText style="font-size:12px "
+										value="#{avance.montant_avances}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="codeInput" value="#{avance.montant_avance}"
+										style="width:96%" />
+								</f:facet>
+
+							</p:cellEditor>
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b" value="MOIS" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{avance.moi}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText style="font-size:12px ;color:#483d8b"
+									value="ANNEE" />
+							</f:facet>
+							<h:outputText style="font-size:12px " value="#{avance.annee}" />
+						</p:column>
+
+						 
+						<p:column style="width:40px">
+							<f:facet name="header">
+								<h:outputText style="font-size:9px;color:#483d8b"
+									value="modifier" />
+							</f:facet>
+							<p:rowEditor />
+						</p:column>
+					</p:dataTable>
+
+				</p:outputPanel>
+			</h:form>
+		 </h:panelGroup>
+		 </h:panelGroup>
+		 
+    </h:panelGroup>
+</ui:composition>

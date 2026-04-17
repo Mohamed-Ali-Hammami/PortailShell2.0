@@ -24,6 +24,9 @@ import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.MediaSizeName;
 import javax.print.attribute.standard.OrientationRequested;
 
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
+
 import com.tn.shell.model.gestat.Clientgestat;
 import com.tn.shell.model.gestat.TransactionCredit;
 import com.tn.shell.model.gestat.TransactionDepense;
@@ -178,14 +181,22 @@ public String saisieDepense() {
 		totalttcs = df.format(total);
 	}
 
+	public void onRowSelect(SelectEvent event) {
+		FacesMessage msg = new FacesMessage("Ligne selectionnee");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onRowUnselect(UnselectEvent event) {
+		FacesMessage msg = new FacesMessage("Ligne deselectionnee");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
 	public String getTransactionBetweenTime() throws ParseException, ClassNotFoundException {
 		ConnextionFTP f = new ConnextionFTP();
 		DecimalFormat df = new DecimalFormat("0.000");
 		 
-		System.out.println("\n\n\n date" + date);
 		f.connexionFTP2(date);
 		SimpleDateFormat sf = new SimpleDateFormat("HH:mm:ss");
-		System.out.println(sf.format(date11) + "  " + sf.format(date12));
 		listjournal = new ArrayList<TransactionCredit>();
 		if (selectedspompes != null)
 			listjournal = f.selectAlljournal(date, sf.format(date11), sf.format(date12), selectedspompes,
@@ -203,10 +214,8 @@ public String saisieDepense() {
 		ConnextionFTP f = new ConnextionFTP();
 		DecimalFormat df = new DecimalFormat("0.000");
 		 
-		System.out.println("\n\n\n date" + date);
 		f.connexionFTP2(date);
 		SimpleDateFormat sf = new SimpleDateFormat("HH:mm:ss");
-		System.out.println(sf.format(date11) + "  " + sf.format(date12));
 		listjournal = new ArrayList<TransactionCredit>();
 		if (selectedspompes != null)
 			listjournaldep = f.selectAlljournalDepense(date, sf.format(date11), sf.format(date12), selectedspompes,
@@ -259,14 +268,12 @@ public String validersaisieDepense() {
 			service = printServices[index];
 		}
 	}	 
-	System.out.println("\n\n\n service" + service.getName());
 	try {
 		printerJob.setPrintService(service);
 	} catch (PrinterException e) {
 		FacesMessage msg2 = new FacesMessage(FacesMessage.SEVERITY_INFO, service.getName(), "");
 
 		FacesContext.getCurrentInstance().addMessage(null, msg2);
-		e.printStackTrace();
 	}		
 	Printable printable = new PrintDepense(selectedlistjournaldep);
 	printerJob.setPrintable(printable);
@@ -275,7 +282,6 @@ public String validersaisieDepense() {
 		printerJob.print(aset);
 		//printerJob.print(aset);
 	} catch (Exception e) {
-		System.out.println("\n\n\ni" + "erreur de connexion" + "\n\n\n" + e.getStackTrace());
 		String codefamille = "\n\n\n" + e.getMessage() + "\n\n\n" + e.getStackTrace();
 		for (PrintService printService : printServices) {
 			codefamille = codefamille + printService.getName();
@@ -320,7 +326,6 @@ public String validersaisieDepense() {
 		 		 
 		 		}
 		 		catch(Exception e) {
-		 			System.out.println("\n\n erreur de parsing");
 		 			addMessage("ce n'est pas un kilometrage");
 		 			return ERROR;
 		 		}
@@ -352,14 +357,12 @@ public String validersaisieDepense() {
 					service = printServices[index];
 				}
 			}	 
-			System.out.println("\n\n\n service" + service.getName());
 			try {
 				printerJob.setPrintService(service);
 			} catch (PrinterException e) {
 				FacesMessage msg2 = new FacesMessage(FacesMessage.SEVERITY_INFO, service.getName(), "");
 
 				FacesContext.getCurrentInstance().addMessage(null, msg2);
-				e.printStackTrace();
 			}		
 			selectedlistjournaldep.setTotalttac(selectedlistjournaldep.getMontant());
 			Printable printable = new PrintDepense(selectedlistjournaldep);
@@ -369,7 +372,6 @@ public String validersaisieDepense() {
 				printerJob.print(aset);
 				 
 			} catch (Exception e) {
-				System.out.println("\n\n\ni" + "erreur de connexion" + "\n\n\n" + e.getStackTrace());
 				String codefamille = "\n\n\n" + e.getMessage() + "\n\n\n" + e.getStackTrace();
 				for (PrintService printService : printServices) {
 					codefamille = codefamille + printService.getName();
@@ -500,7 +502,6 @@ public void addMessage(String summary) {
 			FacesMessage msg2 = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "");
 
 			FacesContext.getCurrentInstance().addMessage(null, msg2);
-			e.printStackTrace();
 		}		
 		Printable printable = new PrintRectangle(selectedlistjournal);
 		printerJob.setPrintable(printable);
@@ -515,7 +516,6 @@ public void addMessage(String summary) {
 		           else printerJob.print(aset);
 			 
 		} catch (Exception e) {
-			System.out.println("\n\n\ni" + "erreur de connexion" + "\n\n\n" + e.getStackTrace());
 			String codefamille = "\n\n\n" + e.getMessage() + "\n\n\n" + e.getStackTrace();
 			for (PrintService printService : printServices) {
 				codefamille = codefamille + printService.getName();

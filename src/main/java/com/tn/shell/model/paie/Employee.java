@@ -1,9 +1,13 @@
 package com.tn.shell.model.paie;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import com.tn.shell.model.gestat.Avancegestat;
 import com.tn.shell.model.gestat.Pompiste;
@@ -13,7 +17,9 @@ import com.tn.shell.model.vetement.Vetement;
  
 @Entity
 @Table(name = "Employee")
-public class Employee implements Comparable<Object>{
+public class Employee implements Comparable<Object>, Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer  matricule;
@@ -38,6 +44,7 @@ public class Employee implements Comparable<Object>{
 	@Enumerated(EnumType.STRING)
 	@ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "categorieid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Categorie contrat;
 	 private Integer nb_enfant_enCharge;
 	@Enumerated(EnumType.STRING)
@@ -273,7 +280,6 @@ public class Employee implements Comparable<Object>{
 		}
 		else return 0;
 		}catch(Exception e) {
-			e.printStackTrace();
 			return 0;
 		}
 	}
