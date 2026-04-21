@@ -1,0 +1,108 @@
+avr. 18, 2026 2:18:02 PM org.apache.coyote.AbstractProtocol init
+INFOS: Initializing ProtocolHandler ["http-bio-8080"]
+avr. 18, 2026 2:18:02 PM org.apache.catalina.core.StandardService startInternal
+INFOS: Starting service Tomcat
+avr. 18, 2026 2:18:02 PM org.apache.catalina.core.StandardEngine startInternal
+INFOS: Starting Servlet Engine: Apache Tomcat/7.0.47
+avr. 18, 2026 2:18:11 PM org.apache.catalina.core.ApplicationContext log
+INFOS: No Spring WebApplicationInitializer types detected on classpath
+avr. 18, 2026 2:18:11 PM org.apache.catalina.core.ApplicationContext log
+INFOS: Initializing Spring root WebApplicationContext
+avr. 18, 2026 2:18:22 PM com.sun.faces.config.ConfigureListener contextInitialized
+INFOS: Initialisation de Mojarra 2.1.6 (SNAPSHOT 20111206) pour le contexte «»
+avr. 18, 2026 2:18:23 PM com.sun.faces.spi.InjectionProviderFactory createInstance
+INFOS: JSF1048 : Présence d’annotations PostConstruct/PreDestroy  Les méthodes de beans gérés marquées avec ces annotations auront des annotations dites traitées.
+avr. 18, 2026 2:18:25 PM org.primefaces.webapp.PostConstructApplicationEventListener processEvent
+INFOS: Running on PrimeFaces 6.0
+avr. 18, 2026 2:18:25 PM com.sun.faces.config.WebConfiguration$DeferredBooleanParameterLoggingAction log
+AVERTISSEMENT: JSF1025 : [] le paramètre d’initialisation du contexte «facelets.SKIP_COMMENTS» est désapprouvé.  Cette option sera toujours configurée, mais à l’avenir, utilisez «javax.faces.FACELETS_SKIP_COMMENTS».
+avr. 18, 2026 2:18:25 PM com.sun.faces.config.WebConfiguration$DeferredBooleanParameterLoggingAction log
+INFOS: JSF1020 : [] option de configuration «javax.faces.FACELETS_SKIP_COMMENTS» réinitialisée sur Activée
+avr. 18, 2026 2:18:26 PM org.apache.catalina.util.SessionIdGenerator createSecureRandom
+INFOS: Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [1,325] milliseconds.
+avr. 18, 2026 2:18:26 PM org.apache.coyote.AbstractProtocol start
+INFOS: Starting ProtocolHandler ["http-bio-8080"]
+avr. 18, 2026 2:18:38 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=listechauffeur clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:18:38 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=listechauffeur
+avr. 18, 2026 2:18:40 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=listeclient clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:18:40 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=listeclient
+avr. 18, 2026 2:18:42 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=listedepense clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:18:42 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=listedepense
+avr. 18, 2026 2:18:43 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=listechauffeur clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:18:43 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=listechauffeur
+avr. 18, 2026 2:19:00 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=listechauffeur clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:19:00 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=listechauffeur
+avr. 18, 2026 2:19:00 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=listeclient clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:19:00 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=listeclient
+avr. 18, 2026 2:19:01 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=listedepense clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:19:01 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=listedepense
+avr. 18, 2026 2:19:02 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=listedepense clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:19:02 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=listedepense
+avr. 18, 2026 2:19:04 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=facturetransport clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:19:04 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=facturetransport
+avr. 18, 2026 2:19:05 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=facturepassagers clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:19:05 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=facturepassagers
+avr. 18, 2026 2:19:07 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=facturetransport clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:19:07 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=facturetransport
+avr. 18, 2026 2:19:09 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=listeproduit clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:19:09 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=listeproduit
+avr. 18, 2026 2:19:12 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=listetypedep clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:19:12 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=listetypedep
+avr. 18, 2026 2:19:12 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=listevhecule clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:19:12 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=listevhecule
+avr. 18, 2026 2:19:14 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=etatChauffeurs clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:19:14 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=etatChauffeurs
+avr. 18, 2026 2:19:16 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=etatDepenses clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:19:16 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=etatDepenses
+avr. 18, 2026 2:19:17 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=etatClient clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:19:17 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=etatClient
+avr. 18, 2026 2:19:19 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=rendementchauffeur clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:19:19 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=rendementchauffeur
+avr. 18, 2026 2:19:41 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=listechauffeur clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:19:41 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=listechauffeur
+avr. 18, 2026 2:24:41 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=listechauffeur clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:24:41 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=listechauffeur
+avr. 18, 2026 2:24:42 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean resolve view=listeclient clientBean=false chauffeurBean=false vheculeBean=false produitBean=false familleBean=false factureBean=false
+avr. 18, 2026 2:24:42 PM com.tn.shell.ui.transport.TransportViewInitBean init
+INFOS: TransportViewInitBean initialized view=listeclient

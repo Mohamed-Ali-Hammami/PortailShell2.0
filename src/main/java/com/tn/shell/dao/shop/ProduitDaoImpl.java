@@ -20,6 +20,9 @@ public class ProduitDaoImpl implements ProduitDAO {
 
 	@Transactional
 	public void save(Produit produit) {
+		if (produit.getCodeshop() == null) {
+			produit.setCodeshop(0);
+		}
 		em.persist(produit);
 
 	}

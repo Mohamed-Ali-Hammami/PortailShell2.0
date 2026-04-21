@@ -20,7 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "Client")
+@Table(name = "client")
 public class Client {
 
 	@Id

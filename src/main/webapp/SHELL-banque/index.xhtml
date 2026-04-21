@@ -12,24 +12,31 @@
 	<ui:define name="content">
 		<c:choose>
 			<c:when test="#{param.view eq 'indexCompte'}">
+				<h:outputText value="#{BanqueBean.getAll()}" style="display:none" />
 				<ui:include src="/SHELL-banque/fragments/indexCompte.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'nouveauBanque'}">
+				<h:outputText value="#{BanqueBean.nouveauBanque()}" style="display:none" />
 				<ui:include src="/SHELL-banque/fragments/nouveauBanque.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'nouveauCompte'}">
+				<h:outputText value="#{BanqueBean.nouveauBanque()}" style="display:none" />
 				<ui:include src="/SHELL-banque/fragments/nouveauCompte.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'saisieoperation'}">
+				<h:outputText value="#{BanqueBean.ajouterTransaction()}" style="display:none" />
 				<ui:include src="/SHELL-banque/fragments/saisieoperation.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'modifieroperation'}">
+				<h:outputText value="#{BanqueBean.success()}" style="display:none" />
 				<ui:include src="/SHELL-banque/fragments/modifieroperation.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'extrait'}">
+				<h:outputText value="#{BanqueBean.extrait()}" style="display:none" />
 				<ui:include src="/SHELL-banque/fragments/extrait.xhtml" />
 			</c:when>
 			<c:otherwise>
+				<h:outputText value="#{BanqueBean.getAll()}" style="display:none" />
 				<ui:include src="/SHELL-banque/fragments/home.xhtml" />
 			</c:otherwise>
 		</c:choose>

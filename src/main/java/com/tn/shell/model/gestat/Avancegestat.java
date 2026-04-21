@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import com.tn.shell.model.paie.Employee;
 
@@ -29,8 +33,9 @@ private double montant_avance;
 private Integer annee;
 private Date date;
  
-@ManyToOne(cascade = { CascadeType.MERGE })
+@ManyToOne(cascade = { CascadeType.MERGE }, fetch = FetchType.LAZY)
 @JoinColumn(name = "caisseid")
+@NotFound(action = NotFoundAction.IGNORE)
 private Caisse caisse;
  
 
@@ -114,6 +119,9 @@ public void setMoi(String moi) {
 }
 
 private String getMoisbyIntger(Integer moi) {
+	if (moi == null) {
+		return "";
+	}
 	String m = "";
 	if (moi == 1)
 		m = "Janvier";

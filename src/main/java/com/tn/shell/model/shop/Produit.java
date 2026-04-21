@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Column;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -31,7 +32,7 @@ public class Produit {
 	private String nom;
 	private String duree;
 	private double stockfinannee = 0;
-    private Integer codeshop;
+    private Integer codeshop = 0;
     @Transient
     private String margebrut;
 	private double stockinitial = 0;
@@ -55,6 +56,8 @@ public class Produit {
 	private Integer tva;
 	private double marge;
 	private double vente;
+	@Column(name = "prix_par_carton")
+	private double prixParCarton = 0;
 	@Transient
 	private String pourcent;
 	private Integer qtemin;
@@ -348,7 +351,7 @@ public class Produit {
 	}
 
 	public void setCodeshop(Integer codeshop) {
-		this.codeshop = codeshop;
+		this.codeshop = (codeshop == null) ? 0 : codeshop;
 	}
 
 	public String getQuantitestocks() {
@@ -490,8 +493,14 @@ public class Produit {
 	public void setStockfinannee(double stockfinannee) {
 		this.stockfinannee = stockfinannee;
 	}
-	
-	
+
+	public double getPrixParCarton() {
+		return prixParCarton;
+	}
+
+	public void setPrixParCarton(double prixParCarton) {
+		this.prixParCarton = prixParCarton;
+	}
 
 	 
 

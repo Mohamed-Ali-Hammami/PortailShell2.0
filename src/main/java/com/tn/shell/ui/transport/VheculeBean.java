@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -33,6 +35,7 @@ public class VheculeBean {
 	private static final long serialVersionUID = 1L;
 	private static final String SUCCESS = "success";
 	private static final String ERROR = "error";
+	private static final Logger LOG = Logger.getLogger(VheculeBean.class.getName());
 
 	 
 	@ManagedProperty(value = "#{ServiceTracetransport}")
@@ -86,6 +89,7 @@ public class VheculeBean {
 	public String getvhecule() {
 		listvhecule=new ArrayList<Vhecule>();
 		listvhecule = serviceVhecule.getAll();date2=null;date1=null;date3=null;
+		LOG.log(Level.INFO, "Transport.VheculeBean#getvhecule loaded {0} vehicules", listvhecule == null ? 0 : listvhecule.size());
 		return SUCCESS;
 	}
 public String nouvauvhecule(){
@@ -104,6 +108,7 @@ public String nouvauvhecule(){
 			serviceVhecule.save(vhecule);
 			listvhecule = new ArrayList<Vhecule>();
 			listvhecule = serviceVhecule.getAll();
+			LOG.log(Level.INFO, "Transport.VheculeBean#savevhecule saved matricule={0}, total now={1}", new Object[] { matricule, listvhecule == null ? 0 : listvhecule.size() });
 				 
 			return SUCCESS;
 		} else {
@@ -119,8 +124,10 @@ public String nouvauvhecule(){
 	public String updateVhecule(Vhecule vhecule) {
 		try {
 			getServiceVhecule().update(vhecule);
+			LOG.log(Level.INFO, "Transport.VheculeBean#updateVhecule updated id={0}, matricule={1}", new Object[] { vhecule.getId(), vhecule.getMatricule() });
 			return SUCCESS;
 		} catch (DataAccessException e) {
+			LOG.log(Level.SEVERE, "Transport.VheculeBean#updateVhecule failed for id=" + (vhecule == null ? null : vhecule.getId()), e);
 		}
 		return ERROR;
 	}
@@ -141,6 +148,7 @@ public String nouvauvhecule(){
 		serviceVhecule.delete(vhecule2);
 		listvhecule = new ArrayList<Vhecule>();
 		listvhecule = serviceVhecule.getAll();
+		LOG.log(Level.INFO, "Transport.VheculeBean#deletevhecule deactivated id={0}, total active now={1}", new Object[] { vhecule2 == null ? null : vhecule2.getId(), listvhecule == null ? 0 : listvhecule.size() });
 		return SUCCESS;
 	}
 
@@ -190,6 +198,9 @@ public String nouvauvhecule(){
 		this.vhecule2 = vhecule2;
 	}
 	public List<Vhecule> getListvhecule() {
+		if ((listvhecule == null || listvhecule.isEmpty()) && serviceVhecule != null) {
+			listvhecule = serviceVhecule.getAll();
+		}
 		return listvhecule;
 	}
 	public void setListvhecule(List<Vhecule> listvhecule) {

@@ -93,12 +93,34 @@ public class CrediClientBean {
 	private String depense;
 	private String typecredit; 
 	private List<Vhecule> listVehecule;
+
+	private void ensureInjectedServices() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		if (context == null) {
+			return;
+		}
+		if (serviceClient == null) {
+			serviceClient = context.getApplication().evaluateExpressionGet(context, "#{ServiceClientgestat}",
+					ServiceClientgestat.class);
+		}
+		if (serviceVhecule == null) {
+			serviceVhecule = context.getApplication().evaluateExpressionGet(context, "#{ServiceVhecule}",
+					ServiceVhecule.class);
+		}
+		if (serviceJournalDep == null) {
+			serviceJournalDep = context.getApplication().evaluateExpressionGet(context, "#{ServiceJournalDep}",
+					ServiceJournalDep.class);
+		}
+	}
 	
 public String saisieDepense() {	
+	ensureInjectedServices();
 	
 	listjournaldep = new ArrayList<TransactionDepense>();
 	listVehecule=new ArrayList<Vhecule>();
-	listVehecule=serviceVhecule.getAll();
+	if (serviceVhecule != null) {
+		listVehecule=serviceVhecule.getAll();
+	}
 	date11 = null;
 	chauffeur = null;
 	vhecule = null;
@@ -127,9 +149,12 @@ public String saisieDepense() {
 		return SUCCESS;
 	}
 	public String saisiecredit() {
+		ensureInjectedServices();
 		listjournal = new ArrayList<TransactionCredit>();
 		listclients = new ArrayList<Clientgestat>();
-		listclients = serviceClient.getAll();
+		if (serviceClient != null) {
+			listclients = serviceClient.getAll();
+		}
 		date11 = null;
 		chauffeur = null;
 		vhecule = null;

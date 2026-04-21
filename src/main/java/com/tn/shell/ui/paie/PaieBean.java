@@ -994,6 +994,9 @@ LigneImageEmployee l= imageEmployeeService.getImagebyEmployeeandpositions(select
 		nondeclaree = false;parrendement=false;
 		listEmp = new ArrayList<Employee>();
 		listEmp = serviceEmployee.getEmployeeparstats(Status.Declare);
+		if (listEmp == null || listEmp.isEmpty()) {
+			listEmp = serviceEmployee.getAll();
+		}
 		/*
 		 * for(Employee e:listEmp) { for(Gestion g:listGestion) { Lignegestion l=new
 		 * Lignegestion(); l.setEmployee(e); l.setGestion(g);

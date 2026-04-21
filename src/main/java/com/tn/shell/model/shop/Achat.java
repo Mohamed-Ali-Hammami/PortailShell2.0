@@ -17,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 @Entity
 @Table(name = "Achat")
 public class Achat {
@@ -35,10 +38,12 @@ public class Achat {
 	
 	@ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "factureachatid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Factureachat factureachat;
 	
 	@ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "fournisseurid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Fournisseur fournisseur;
 	
 	  

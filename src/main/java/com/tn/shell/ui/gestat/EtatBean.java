@@ -869,6 +869,9 @@ public String calculeretatdeprofil2() {
 
 	private void initializeMonthlyDateRange() {
 		Date latestBusinessDate = resolveLatestGestatDate();
+		if (latestBusinessDate == null) {
+			latestBusinessDate = new Date();
+		}
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(latestBusinessDate);
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -878,29 +881,37 @@ public String calculeretatdeprofil2() {
 
 	private Date resolveLatestGestatDate() {
 		Date latestBusinessDate = null;
-		Depensegestat latestDepense = serviceDepense.getmaxdepense();
-		if (latestDepense != null) {
-			latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, latestDepense.getDate());
-		}
-		Caisse latestCaisse = serviceCaisse.getmaxcode();
-		if (latestCaisse != null) {
-			latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, latestCaisse.getDate());
-		}
-		Ligneindex latestIndex = serviceLigneindex.getmaxcode();
-		if (latestIndex != null) {
-			latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, latestIndex.getDate());
-		}
-		List<Achatcarburant> achats = serviceAchat.getAll();
-		if (achats != null) {
-			for (Achatcarburant achat : achats) {
-				latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, achat.getDate());
+		try {
+			Depensegestat latestDepense = serviceDepense.getmaxdepense();
+			if (latestDepense != null) {
+				latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, latestDepense.getDate());
 			}
-		}
-		List<Cheque> cheques = serviceCheque.getAll();
-		if (cheques != null) {
-			for (Cheque cheque : cheques) {
-				latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, cheque.getDate());
+			Caisse latestCaisse = serviceCaisse.getmaxcode();
+			if (latestCaisse != null) {
+				latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, latestCaisse.getDate());
 			}
+			Ligneindex latestIndex = serviceLigneindex.getmaxcode();
+			if (latestIndex != null) {
+				latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, latestIndex.getDate());
+			}
+			List<Achatcarburant> achats = serviceAchat.getAll();
+			if (achats != null) {
+				for (Achatcarburant achat : achats) {
+					if (achat != null) {
+						latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, achat.getDate());
+					}
+				}
+			}
+			List<Cheque> cheques = serviceCheque.getAll();
+			if (cheques != null) {
+				for (Cheque cheque : cheques) {
+					if (cheque != null) {
+						latestBusinessDate = UiDateDefaults.latest(latestBusinessDate, cheque.getDate());
+					}
+				}
+			}
+		} catch (Exception ignored) {
+			// Keep resilient defaults for legacy datasets with partial/null dates.
 		}
 		return UiDateDefaults.coalesce(latestBusinessDate, new Date());
 	}
@@ -1091,6 +1102,9 @@ public String calculeretatdeprofil2() {
 
 	public String getDates1() {
 		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
+		if (date1 == null) {
+			initializeMonthlyDateRange();
+		}
 		dates1 = s.format(date1);
 		return dates1;
 	}
@@ -1101,6 +1115,9 @@ public String calculeretatdeprofil2() {
 
 	public String getDates2() {
 		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
+		if (date2 == null) {
+			initializeMonthlyDateRange();
+		}
 		dates2 = s.format(date2);
 		return dates2;
 	}

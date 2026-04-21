@@ -3,6 +3,7 @@ package com.tn.shell.dao.banque;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Arrays;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -101,6 +102,13 @@ public class TransactionDaoImpl implements TransactionDao {
 	public List<Transaction> findByEnumarationCeque(Enumcheque cheque,Compte compte) {
 		if (compte == null || compte.getId() == null) {
 			return Collections.emptyList();
+		}
+		if (Enumcheque.EnCirculation.equals(cheque) || Enumcheque.Encirculation.equals(cheque)) {
+			return em.createQuery("SELECT c FROM Transaction c where c.statut = :statut and c.etatcheque in :etats and c.compte.id = :compte", Transaction.class)
+					.setParameter("statut", Statut.ACTIF)
+					.setParameter("etats", Arrays.asList(Enumcheque.EnCirculation, Enumcheque.Encirculation))
+					.setParameter("compte",compte.getId())
+					.getResultList();
 		}
 		List<Transaction> result = em.createQuery("SELECT c FROM Transaction c where c.statut = :statut and c.etatcheque = :etatcheque and c.compte.id = :compte", Transaction.class)
 				.setParameter("statut", Statut.ACTIF).setParameter("etatcheque",cheque).setParameter("compte",compte.getId()).getResultList();

@@ -21,8 +21,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Type;
+
 @Entity
-@Table(name = "Facture")
+@Table(name = "facture")
 public class Facture {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)	 
@@ -43,6 +45,7 @@ public class Facture {
 	private Bonlivraison bl;
 	
 	private String vhecules;
+	private boolean affectee;
 	private double timbres;
 	private double totalttc;
    
@@ -63,7 +66,7 @@ public class Facture {
 	private String timbress;
 	 
 	@Enumerated(EnumType.STRING)
-    private Status status ;
+	private Status status;
 	@Enumerated(EnumType.STRING)
 	private Statut statut= Statut.ACTIF;
   
@@ -267,6 +270,14 @@ public class Facture {
 
 	public void setVhecules(String vhecules) {
 		this.vhecules = vhecules;
+	}
+
+	public boolean isAffectee() {
+		return affectee;
+	}
+
+	public void setAffectee(boolean affectee) {
+		this.affectee = affectee;
 	}
 
 	 

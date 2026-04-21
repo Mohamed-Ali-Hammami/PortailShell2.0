@@ -12,66 +12,81 @@
 	<ui:define name="content">
 		<c:choose>
 			<c:when test="#{param.view eq 'fournisseur'}">
+				<h:outputText value="#{FournisseurBean.getAllfournisseur()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/AjouterFournisseur.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'vendeurs'}">
+				<h:outputText value="#{LoginBean.getallUser()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/getVendeur.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'achat'}">
+				<h:outputText value="#{AchatshopBean.nouveauachat()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/achat.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'reglement-facture'}">
+				<h:outputText value="#{AchatshopBean.reglementFacture()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/reglementFactureAchat.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etat-facture'}">
+				<h:outputText value="#{AchatshopBean.etatFactureachat()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/etatFactureachat.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'vente'}">
+				<h:outputText value="#{VenteBean.nouveauvente()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/vente.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'generation-vente'}">
+				<h:outputText value="#{VenteBean.generationDesVentes()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/generationvente.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'stock-cahier'}">
+				<h:outputText value="#{VenteBean.stock()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/cahierdestock.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'rapport-lavage'}">
+				<h:outputText value="#{RapportLavage.rapportlavage()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/rapportLavage.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'rapport-vidange'}">
+				<h:outputText value="#{RapportLavage.rapportvidange()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/rapportvidange.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'rendement-lavage'}">
+				<h:outputText value="#{RendementBean.rendementlavage()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/rendementlavage.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'rendement-vidange'}">
+				<h:outputText value="#{RendementBean.rendementvidange()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/rendementvidange.xhtml" />
-			</c:when>
-			<c:when test="#{param.view eq 'achat'}">
-				<ui:include src="/SHELL-shop/fragments/achat.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'achat2'}">
 				<ui:include src="/SHELL-shop/fragments/achat2.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'AjouterFournisseur'}">
+				<h:outputText value="#{FournisseurBean.getAllfournisseur()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/AjouterFournisseur.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'annulationticket'}">
+				<h:outputText value="#{TicketBean.AnnulationTicket()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/annulationticket.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'articleEnAlerteDeStock'}">
+				<h:outputText value="#{EtatshopBean.articleEnAlerteDeStock()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/articleEnAlerteDeStock.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'autorisation'}">
 				<ui:include src="/SHELL-shop/fragments/autorisation.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'avoir'}">
+				<h:outputText value="#{AchatshopBean.nouveauavoir()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/avoir.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'cahierdestock'}">
+				<h:outputText value="#{AccueilBean.cahierdestock()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/cahierdestock.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'coturercaisse'}">
+				<h:outputText value="#{VenteBean.clotureCaisse()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/coturercaisse.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'edicitionFactAchat'}">
@@ -81,117 +96,155 @@
 				<ui:include src="/SHELL-shop/fragments/editionAvoir.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'editiondesventes'}">
+				<h:outputText value="#{VenteBean.impressionVente()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/editiondesventes.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'editiondesventesparfamille'}">
+				<h:outputText value="#{VenteBean.impressionVente2()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/editiondesventesparfamille.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatarticleNonVendu'}">
+				<h:outputText value="#{EtatshopBean.articleNonVendu()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/etatarticleNonVendu.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatarticleNonVenduShop'}">
+				<h:outputText value="#{EtatshopBean.articleNonVenduShop()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/etatarticleNonVenduShop.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatarticleVendu'}">
+				<h:outputText value="#{EtatshopBean.articleVendu()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/etatarticleVendu.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatdeprofil'}">
+				<h:outputText value="#{EtatshopBean.etatdeprofil()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/etatdeprofil.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatdeprofilCT'}">
+				<h:outputText value="#{EtatshopBean.etatdeprofil2()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/etatdeprofilCT.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatdesArticles'}">
+				<h:outputText value="#{EtatshopBean.etatdesArticles()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/etatdesArticles.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatFactureachat'}">
+				<h:outputText value="#{AchatshopBean.etatFactureachat()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/etatFactureachat.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatFiscal'}">
+				<h:outputText value="#{EtatshopBean.etatFiscal()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/etatFiscal.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatrendement'}">
+				<h:outputText value="#{RendementBean.etatrendementlavage()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/etatrendement.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatTransfert'}">
+				<h:outputText value="#{TransfertBean.etatTransfert()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/etatTransfert.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatVenteParFamille'}">
+				<h:outputText value="#{VenteBean.etatVenteParFamille()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/etatVenteParFamille.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'EtatVentesParVenduers'}">
+				<h:outputText value="#{EtatshopBean.EtatVentesParVenduers()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/EtatVentesParVenduers.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'FacturationDesTickets'}">
+				<h:outputText value="#{EtatshopBean.FacturationDesTickets()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/FacturationDesTickets.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'FactureAchatEtAvoir'}">
+				<h:outputText value="#{EtatshopBean.FactureAchatEtAvoir()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/FactureAchatEtAvoir.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'generationvente'}">
+				<h:outputText value="#{VenteBean.generationDesVentes()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/generationvente.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'getVendeur'}">
+				<h:outputText value="#{LoginBean.getallUser()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/getVendeur.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'impressioninventaire'}">
+				<h:outputText value="#{VenteBean.impressioninventaire()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/impressioninventaire.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'impressionTicket'}">
+				<h:outputText value="#{VenteBean.impressionTicket()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/impressionTicket.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'imprimeretatdevente'}">
+				<h:outputText value="#{VenteBean.imprimeretatventeparDate()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/imprimeretatdevente.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'listarticleparfamille'}">
+				<h:outputText value="#{FamilleBean.getlistarticleParfamille()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/listarticleparfamille.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'listeAnnulations'}">
+				<h:outputText value="#{TicketBean.listeAnnulation()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/listeAnnulations.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'listfactureachatbyfour'}">
+				<h:outputText value="#{AchatshopBean.getAllfournisseur()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/listfactureachatbyfour.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'listticket'}">
+				<h:outputText value="#{TicketBean.listticket()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/listticket.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'MAJSTOCK'}">
+				<h:outputText value="#{VenteBean.majstock()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/MAJSTOCK.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'miseajourArticle'}">
+				<h:outputText value="#{VenteBean.majarticle()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/miseajourArticle.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'miseajourFamille'}">
+				<h:outputText value="#{FamilleBean.getAllFamillearticle()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/miseajourFamille.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'mouvementArticle'}">
+				<h:outputText value="#{FamilleBean.mouvementArticle()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/mouvementArticle.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'rapportLavage'}">
+				<h:outputText value="#{RapportLavage.rapportlavage()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/rapportLavage.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'rapportvidange'}">
+				<h:outputText value="#{RapportLavage.rapportvidange()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/rapportvidange.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'rechercheArticle'}">
+				<h:outputText value="#{VenteBean.getAllarticle()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/rechercheArticle.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'regenerationvente'}">
+				<h:outputText value="#{VenteBean.regenerationDesVentes()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/regenerationvente.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'reglementFactureAchat'}">
+				<h:outputText value="#{AchatshopBean.reglementFacture()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/reglementFactureAchat.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'remiseazeoStock'}">
+				<h:outputText value="#{VenteBean.remiseazeoStock()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/remiseazeoStock.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'rendementlavage'}">
+				<h:outputText value="#{RendementBean.rendementlavage()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/rendementlavage.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'rendementvidange'}">
+				<h:outputText value="#{RendementBean.rendementvidange()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/rendementvidange.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'transfertdepotMagasin'}">
+				<h:outputText value="#{VenteBean.nouveautransfer()}" style="display:none" />
 				<ui:include src="/SHELL-shop/fragments/transfertdepotMagasin.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'transfertdepotMagasin2'}">
@@ -205,9 +258,6 @@
 			</c:when>
 			<c:when test="#{param.view eq 'validerTransfert'}">
 				<ui:include src="/SHELL-shop/fragments/validerTransfert.xhtml" />
-			</c:when>
-			<c:when test="#{param.view eq 'vente'}">
-				<ui:include src="/SHELL-shop/fragments/vente.xhtml" />
 			</c:when>
 			<c:otherwise>
 				<ui:include src="/SHELL-shop/fragments/home.xhtml" />

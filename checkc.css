@@ -1,0 +1,23 @@
+background: linear-gradient(135deg, rgba(195, 0, 0, 0.86), rgba(247, 202, 72, 0.76)), var(--shell-hero-url) center center / cover no-repeat fixed;
+    background-image: linear-gradient(135deg, rgba(195, 0, 0, 0.86), rgba(247, 202, 72, 0.76)), url(/2.png);
+    background-position-x: initial, center;
+    background-position-y: initial, center;
+    background-size: initial, cover;
+    background-repeat: initial, no-repeat;
+    background-attachment: initial, fixed;
+    background-origin: initial, initial;
+    background-clip: initial, initial;
+    background-color: initial;
+}
+
+background: linear-gradient(135deg, rgba(195, 0, 0, 0.86), rgba(247, 202, 72, 0.76)), var(--shell-hero-url) center center / cover no-repeat fixed;
+    background-image: linear-gradient(135deg, rgba(195, 0, 0, 0.86), rgba(247, 202, 72, 0.76)), url(/2.png);
+    background-position-x: initial, center;
+    background-position-y: initial, center;
+    background-size: initial, cover;
+    background-repeat: initial, no-repeat;
+    background-attachment: initial, fixed;
+    background-origin: initial, initial;
+    background-clip: initial, initial;
+    background-color: initial;
+}

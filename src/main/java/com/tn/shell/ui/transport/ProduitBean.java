@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -68,6 +70,7 @@ public class ProduitBean {
 	private static final long serialVersionUID = 1L;
 	private static final String SUCCESS = "success";
 	private static final String ERROR = "error";
+	private static final Logger LOG = Logger.getLogger(ProduitBean.class.getName());
 	 
 	@ManagedProperty(value = "#{ServiceProduit}")
 	ServiceProduit serviceProduit;
@@ -142,6 +145,7 @@ public class ProduitBean {
 	public String getallProduit() {
 		listprosuits = new ArrayList<Produit>();
 		listprosuits = serviceProduit.getAll();
+		LOG.log(Level.INFO, "Transport.ProduitBean#getallProduit loaded {0} produits", listprosuits == null ? 0 : listprosuits.size());
 		 
 		return SUCCESS;
 	}
@@ -163,6 +167,7 @@ public class ProduitBean {
 
 		listprosuit = serviceProduit.getAll();
 		listprosuit = serviceProduit.getAll();
+		LOG.log(Level.INFO, "Transport.ProduitBean#ajouterProduit saved code={0}, nom={1}", new Object[] { codess, nom });
 
 		return SUCCESS;
 	}
@@ -182,9 +187,11 @@ public class ProduitBean {
 	public String updateproduit(Produit produit) {
 		try {
 			serviceProduit.update(produit);
+			LOG.log(Level.INFO, "Transport.ProduitBean#updateproduit updated id={0}, nom={1}", new Object[] { produit.getId(), produit.getNom() });
 
 			return SUCCESS;
 		} catch (DataAccessException e) {
+			LOG.log(Level.SEVERE, "Transport.ProduitBean#updateproduit failed for id=" + (produit == null ? null : produit.getId()), e);
 		}
 		return ERROR;
 	}
@@ -195,6 +202,7 @@ public class ProduitBean {
 		// serviceProduit.delete(produits);
 		 listprosuits=new ArrayList<Produit>();
 		listprosuits = serviceProduit.getAll();
+		LOG.log(Level.INFO, "Transport.ProduitBean#deleteproduit refreshed list, total now={0}", listprosuits == null ? 0 : listprosuits.size());
 		 
 		return SUCCESS;
 	}
@@ -432,6 +440,9 @@ public class ProduitBean {
 	}
 
 	public List<Produit> getListprosuits() {
+		if ((listprosuits == null || listprosuits.isEmpty()) && serviceProduit != null) {
+			listprosuits = serviceProduit.getAll();
+		}
 		return listprosuits;
 	}
 

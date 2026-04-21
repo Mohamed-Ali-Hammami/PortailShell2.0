@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -43,6 +45,7 @@ public class FactureBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final String SUCCESS = "success";
 	private static final String ERROR = "error";
+	private static final Logger LOG = Logger.getLogger(FactureBean.class.getName());
 	@ManagedProperty(value = "#{ServiceChauffeur}")
 	ServiceChauffeur serviceChauffeur;
 	@ManagedProperty(value = "#{ServiceFacture}")
@@ -183,6 +186,8 @@ public class FactureBean implements Serializable {
 		initializeTransportDateRange(resolveLatestPassengerDate());
 		nom = null;
 		listfacturepass = servicefacturepassager.getfacturebetwenndate(date, date2);
+		LOG.log(Level.INFO, "Transport.FactureBean#getAllPasager date=[{0}..{1}] clients={2} factures={3}",
+				new Object[] { date, date2, listeClients == null ? 0 : listeClients.size(), listfacturepass == null ? 0 : listfacturepass.size() });
 		return SUCCESS;
 	}
 
@@ -197,6 +202,8 @@ public class FactureBean implements Serializable {
 		if (result != null) {
 			listfacture = result;
 		}
+		LOG.log(Level.INFO, "Transport.FactureBean#getAllTransport date=[{0}..{1}] clients={2} factures={3}",
+				new Object[] { date, date2, listeClients == null ? 0 : listeClients.size(), listfacture == null ? 0 : listfacture.size() });
 		return SUCCESS;
 	}
 
@@ -219,6 +226,36 @@ public class FactureBean implements Serializable {
 			return latestFacture.getDate();
 		}
 		return new Date();
+	}
+
+	private int resolveNextCode(Integer previousCode, Date previousDate, Date currentDate) {
+		if (previousCode == null) {
+			return 1;
+		}
+		if (previousDate == null || currentDate == null) {
+			return previousCode + 1;
+		}
+		if (previousDate.getYear() == currentDate.getYear()) {
+			return previousCode + 1;
+		}
+		if (currentDate.getYear() > previousDate.getYear()) {
+			return 1;
+		}
+		return previousCode + 1;
+	}
+
+	private List<Produit> ensureListeProduits() {
+		if (listeProduits == null) {
+			listeProduits = new ArrayList<Produit>();
+		}
+		return listeProduits;
+	}
+
+	private List<Lignecommande> ensureListelignefacture() {
+		if (listelignefacture == null) {
+			listelignefacture = new ArrayList<Lignecommande>();
+		}
+		return listelignefacture;
 	}
 
 	public String modifierFacture() {
@@ -336,7 +373,7 @@ public void setDates(String dates) {
 		double mh = 0;
 		double totaltva = 0;
 
-		for (Produit p : listeProduits) {
+		for (Produit p : ensureListeProduits()) {
 			if (p.getCode() != null) {
 				Lignecommande c1 = new Lignecommande();
 				c1.setQuantite(p.getQuantites());
@@ -427,7 +464,7 @@ public void setDates(String dates) {
 		listelignefacturepass = new ArrayList<Lignecommandepass>();
 		double mh = 0;
 		double totaltva = 0;
-		for (Produit p : listeProduits) {
+		for (Produit p : ensureListeProduits()) {
 			if (p.getCode() != null) {
 				Lignecommandepass c1 = new Lignecommandepass();
 				c1.setQuantite(p.getQuantites());
@@ -641,7 +678,7 @@ public void setDates(String dates) {
 		 * p.getNom(), null); FacesContext.getCurrentInstance().addMessage(null, msg);
 		 * return ERROR; } }
 		 */
-		for (Produit p : listeProduits) {
+		for (Produit p : ensureListeProduits()) {
 			if (p.getCode() != null) {
 				Lignecommandepass c1 = new Lignecommandepass();
 				c1.setQuantite(p.getQuantites());
@@ -692,18 +729,10 @@ public void setDates(String dates) {
 		List<Facturepassager> fs = servicefacturepassager.getAll();
 		Facturepassager f2;
 		f2 = servicefacturepassager.getMaxfacture();
-		if (f2 == null) {
-			facturepassager.setCode(1);
-
-		} else if (f2 != null && f2.getDate().getYear() == facturepassager.getDate().getYear()) {
-
-			facturepassager.setCode(f2.getCode() + 1);
-		}
-
-		else if (facturepassager.getDate().getYear() > f2.getDate().getYear()) {
-
-			facturepassager.setCode(1);
-		}
+		facturepassager.setCode(resolveNextCode(
+				f2 == null ? null : f2.getCode(),
+				f2 == null ? null : f2.getDate(),
+				facturepassager.getDate()));
 		codes = facturepassager.getCode();
 		facturepassager.setCodes(codes + "/" + facturepassager.getDates().substring(6));
 		Convert C = new Convert();
@@ -742,30 +771,22 @@ public void setDates(String dates) {
 		bl.setDates(dateFormat.format(bl.getDate()));
 		f2 = serviceBonLivraison.getMaxbl();
 
-		if (f2 == null) {
-
-			bl.setCode(1);
-
-		} else if (f2 != null && f2.getDate().getYear() == bl.getDate().getYear()) {
-
-			bl.setCode(f2.getCode() + 1);
-		}
-
-		else if (bl.getDate().getYear() > f2.getDate().getYear()) {
-
-			bl.setCode(1);
-		}
+		bl.setCode(resolveNextCode(
+				f2 == null ? null : f2.getCode(),
+				f2 == null ? null : f2.getDate(),
+				bl.getDate()));
 		codes = bl.getCode();
 		bl.setCodes(codes + "/" + bl.getDates().substring(6));
 		double mh = 0;
 		double totaltva = 0;
+		ensureListelignefacture().clear();
 		/*
 		 * for (Produit p : listeProduits) { if (p.getNom()!=null && p.getQuantites() ==
 		 * 0) { FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		 * "verifier la qantite du poduit  " + p.getNom(), null);
 		 * FacesContext.getCurrentInstance().addMessage(null, msg); return ERROR; } }
 		 */
-		for (Produit p : listeProduits) {
+		for (Produit p : ensureListeProduits()) {
 			if (p.getCode() != null) {
 				Lignecommande c1 = new Lignecommande();
 				c1.setQuantite(p.getQuantites());
@@ -775,7 +796,7 @@ public void setDates(String dates) {
 				c1.setMantantht(c1.getQuantite() * c1.getPrix());
 				c1.setTauxtva(c1.getMantantht() * c1.getTva() * 0.01);
 				c1.setDates(bl.getDates());
-				listelignefacture.add(c1);
+				ensureListelignefacture().add(c1);
 			}
 		}
 
@@ -789,10 +810,10 @@ public void setDates(String dates) {
 			c1.setMantantht(transport / (100 + c1.getTva()) * 100);
 			c1.setTauxtva(c1.getMantantht() * c1.getTva() * 0.01);
 			c1.setDates(bl.getDates());
-			listelignefacture.add(c1);
+			ensureListelignefacture().add(c1);
 		}
 
-		for (Lignecommande c : listelignefacture) {
+		for (Lignecommande c : ensureListelignefacture()) {
 			mh = mh + c.getMantantht();
 			totaltva = totaltva + c.getTauxtva();
 
@@ -836,18 +857,10 @@ public void setDates(String dates) {
 		//List<Facture> fs = servicefacture.getAll();
 		Facture f2;
 		f2 = servicefacture.getMaxfacture();
-		if (f2 == null) {
-			facture.setCode(1);
-
-		} else if (f2 != null && f2.getDate().getYear() == facture.getDate().getYear()) {
-
-			facture.setCode(f2.getCode() + 1);
-		}
-
-		else if (facture.getDate().getYear() > f2.getDate().getYear()) {
-
-			facture.setCode(1);
-		}
+		facture.setCode(resolveNextCode(
+				f2 == null ? null : f2.getCode(),
+				f2 == null ? null : f2.getDate(),
+				facture.getDate()));
 		codes = facture.getCode();
 		facture.setCodes(codes + "/" + facture.getDates().substring(6));
 		double mht = 0;
@@ -878,7 +891,7 @@ public void setDates(String dates) {
 
 		bl.setStatus(Status.Facturee);
 		serviceBonLivraison.update(bl);
-		for (Lignecommande c : listelignefacture) {
+		for (Lignecommande c : ensureListelignefacture()) {
 
 			c.setBl(bl);
 			c.setDates(bl.getDates());
@@ -1085,6 +1098,8 @@ public void setDates(String dates) {
 				f.setListelc(serviceLigneCommande.getLcbyf(f));
 			}
 		}
+		LOG.log(Level.INFO, "Transport.FactureBean#getfacturebyClientandtypepayement nom={0} date=[{1}..{2}] result={3}",
+				new Object[] { nom, date, date2, listfacture == null ? 0 : listfacture.size() });
 
 		return SUCCESS;
 	}
@@ -1114,6 +1129,8 @@ public void setDates(String dates) {
 				f.setListelc(serviceLigneCommandepass.getLcbyf(f));
 			}
 		}
+		LOG.log(Level.INFO, "Transport.FactureBean#getfacturebyClientandtypepayement3 nom={0} date=[{1}..{2}] source={3} result={4}",
+				new Object[] { nom, date, date2, lbyfacture == null ? 0 : lbyfacture.size(), listfacturepass == null ? 0 : listfacturepass.size() });
 		 
 			
 
@@ -1225,6 +1242,8 @@ public void setDates(String dates) {
 		listfacture = new ArrayList<Facture>();
 
 		listfacture = servicefacture.getAll();
+		LOG.log(Level.INFO, "Transport.FactureBean#listFacture loaded factures={0}, clients={1}",
+				new Object[] { listfacture == null ? 0 : listfacture.size(), listeclient == null ? 0 : listeclient.size() });
 
 		return SUCCESS;
 	}
@@ -1246,6 +1265,8 @@ public void setDates(String dates) {
 		listbonlivraison = new ArrayList<Bonlivraison>();
 
 		listbonlivraison = serviceBonLivraison.getAll();
+		LOG.log(Level.INFO, "Transport.FactureBean#listbls loaded bls={0}, clients={1}",
+				new Object[] { listbonlivraison == null ? 0 : listbonlivraison.size(), listeclient == null ? 0 : listeclient.size() });
 
 		return SUCCESS;
 	}
@@ -1335,6 +1356,9 @@ public void setDates(String dates) {
 	}
 
 	public List<Facture> getListfacture() {
+		if ((listfacture == null || listfacture.isEmpty()) && servicefacture != null) {
+			listfacture = servicefacture.getAll();
+		}
 		return listfacture;
 	}
 
@@ -1423,6 +1447,9 @@ public void setDates(String dates) {
 	}
 
 	public List<Bonlivraison> getListbonlivraison() {
+		if ((listbonlivraison == null || listbonlivraison.isEmpty()) && serviceBonLivraison != null) {
+			listbonlivraison = serviceBonLivraison.getAll();
+		}
 		return listbonlivraison;
 	}
 
@@ -1512,7 +1539,7 @@ public void setDates(String dates) {
 	}
 
 	public List<Lignecommande> getListelignefacture() {
-		return listelignefacture;
+		return ensureListelignefacture();
 	}
 
 	public void setListelignefacture(List<Lignecommande> listelignefacture) {
@@ -1648,6 +1675,15 @@ public void setDates(String dates) {
 	}
 
 	public List<String> getListeclient() {
+		if ((listeclient == null || listeclient.isEmpty()) && serviceclients != null) {
+			List<Client> clientsData = serviceclients.getAll();
+			listeclient = new ArrayList<String>();
+			if (clientsData != null) {
+				for (Client c : clientsData) {
+					listeclient.add(c.getNom());
+				}
+			}
+		}
 		return listeclient;
 	}
 
@@ -1727,7 +1763,7 @@ public void setDates(String dates) {
 	}
 
 	public List<Produit> getListeProduits() {
-		return listeProduits;
+		return ensureListeProduits();
 	}
 
 	public void setListeProduits(List<Produit> listeProduits) {
@@ -1890,6 +1926,9 @@ public void setDates(String dates) {
 	}
 
 	public List<Vhecule> getListeVehicules() {
+		if ((listeVehicules == null || listeVehicules.isEmpty()) && serviceVhecule != null) {
+			listeVehicules = serviceVhecule.getAll();
+		}
 		return listeVehicules;
 	}
 
@@ -1898,6 +1937,9 @@ public void setDates(String dates) {
 	}
 
 	public List<Chauffeur> getListeChauffeurs() {
+		if ((listeChauffeurs == null || listeChauffeurs.isEmpty()) && serviceChauffeur != null) {
+			listeChauffeurs = serviceChauffeur.getAll();
+		}
 		return listeChauffeurs;
 	}
 
@@ -1906,6 +1948,9 @@ public void setDates(String dates) {
 	}
 
 	public List<Produit> getListproduits() {
+		if ((listproduits == null || listproduits.isEmpty()) && serviceProduit != null) {
+			listproduits = serviceProduit.getAll();
+		}
 		return listproduits;
 	}
 
@@ -1921,6 +1966,9 @@ public void setDates(String dates) {
 	}
 
 	public List<Client> getListeClients() {
+		if ((listeClients == null || listeClients.isEmpty()) && serviceclients != null) {
+			listeClients = serviceclients.getAll();
+		}
 		return listeClients;
 	}
 
@@ -1953,6 +2001,9 @@ public void setDates(String dates) {
 	}
 
 	public List<Facturepassager> getListfacturepass() {
+		if ((listfacturepass == null || listfacturepass.isEmpty()) && servicefacturepassager != null) {
+			listfacturepass = servicefacturepassager.getAll();
+		}
 		return listfacturepass;
 	}
 

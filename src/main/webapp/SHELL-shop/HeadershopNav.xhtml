@@ -1,4 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+﻿<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
@@ -11,55 +11,55 @@
 		<p:menubar styleClass="shell-module-menubar" autoDisplay="true">
 			<p:menuitem icon="ui-icon-home" url="#{request.contextPath}/SHELL-shop/index.xhtml" style="font-size:12px" />
 			<p:submenu label="Tiers" style="font-size:12px">
-				<p:menuitem value="Fournisseur" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=AjouterFournisseur" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true)}" />
-				<p:menuitem value="Vendeurs" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=getVendeur" rendered="#{not empty LoginBean.user and LoginBean.user.isAdmin()==true}" />
+				<p:menuitem value="Fournisseur" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=AjouterFournisseur" />
+				<p:menuitem value="Vendeurs" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=getVendeur" />
 			</p:submenu>
 			<p:submenu label="Achat" style="font-size:12px">
-				<p:menuitem value="Saisie Achat" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=achat" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true)}" />
-				<p:menuitem value="Reglement facture" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=reglementFactureAchat" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true)}" />
-				<p:menuitem value="Etat des facture" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatFactureachat" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true)}" />
+				<p:menuitem value="Saisie Achat" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=achat" />
+				<p:menuitem value="Reglement facture" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=reglementFactureAchat" />
+				<p:menuitem value="Etat des facture" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatFactureachat" />
 			</p:submenu>
 			<p:submenu label="Vente" style="font-size:12px">
-				<p:menuitem value="Saisie" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=vente" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isSuperviseur()==true || LoginBean.user.isResponsableshops()==true || LoginBean.user.isCaissier()==true)}" />
-				<p:menuitem value="Generation" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=generationvente" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true || LoginBean.user.isSuperviseur()==true)}" />
-				<p:menuitem value="Etat des ventes" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=editiondesventes" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true || LoginBean.user.isSuperviseur()==true)}" />
-				<p:menuitem value="Impression Tickets" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=impressionTicket" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true || LoginBean.user.isSuperviseur()==true || LoginBean.user.isCaissier()==true)}" />
-				<p:menuitem value="Liste Tickets" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=listticket" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true || LoginBean.user.isSuperviseur()==true)}" />
-				<p:menuitem value="Regeneration des ventes" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=regenerationvente" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true || LoginBean.user.isSuperviseur()==true)}" />
-				<p:menuitem value="Cloture Caisse" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=coturercaisse" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true || LoginBean.user.isSuperviseur()==true)}" />
+				<p:menuitem value="Saisie" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=vente" />
+				<p:menuitem value="Generation" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=generationvente" />
+				<p:menuitem value="Etat des ventes" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=editiondesventes" />
+				<p:menuitem value="Impression Tickets" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=impressionTicket" />
+				<p:menuitem value="Liste Tickets" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=listticket" />
+				<p:menuitem value="Regeneration des ventes" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=regenerationvente" />
+				<p:menuitem value="Cloture Caisse" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=coturercaisse" />
 			</p:submenu>
 			<p:submenu label="Stock" style="font-size:12px">
 				<p:menuitem value="Produit" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=cahierdestock" />
 				<p:menuitem value="Inventaire" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=impressioninventaire" />
-				<p:menuitem value="MAJ Article" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=miseajourArticle" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true)}" />
-				<p:menuitem value="Recherche Article" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=rechercheArticle" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true || LoginBean.user.isSuperviseur()==true)}" />
-				<p:menuitem value="MAJ Famille" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=miseajourFamille" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true)}" />
-				<p:menuitem value="Mouvement Article" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=mouvementArticle" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true)}" />
-				<p:menuitem value="Liste articles/famille" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=listarticleparfamille" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true)}" />
-				<p:menuitem value="Transfert Depot-Magasin" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=transfertdepotMagasin" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true || LoginBean.user.isSuperviseur()==true)}" />
-				<p:menuitem value="MAJ Stock" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=MAJSTOCK" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true)}" />
-				<p:menuitem value="Etat Transfert" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatTransfert" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true || LoginBean.user.isSuperviseur()==true)}" />
+				<p:menuitem value="MAJ Article" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=miseajourArticle" />
+				<p:menuitem value="Recherche Article" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=rechercheArticle" />
+				<p:menuitem value="MAJ Famille" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=miseajourFamille" />
+				<p:menuitem value="Mouvement Article" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=mouvementArticle" />
+				<p:menuitem value="Liste articles/famille" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=listarticleparfamille" />
+				<p:menuitem value="Transfert Depot-Magasin" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=transfertdepotMagasin" />
+				<p:menuitem value="MAJ Stock" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=MAJSTOCK" />
+				<p:menuitem value="Etat Transfert" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatTransfert" />
 			</p:submenu>
 			<p:submenu label="Etat" style="font-size:12px">
-				<p:menuitem value="Alerte de stock" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=articleEnAlerteDeStock" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true || LoginBean.user.isSuperviseur()==true)}" />
-				<p:menuitem value="Etat de profil" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatdeprofil" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true || LoginBean.user.isSuperviseur()==true)}" />
+				<p:menuitem value="Alerte de stock" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=articleEnAlerteDeStock" />
+				<p:menuitem value="Etat de profil" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatdeprofil" />
 				<p:menuitem value="Etat de profil CT" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatdeprofilCT" />
-				<p:menuitem value="Articles non vendus" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatarticleNonVendu" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true || LoginBean.user.isSuperviseur()==true)}" />
+				<p:menuitem value="Articles non vendus" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatarticleNonVendu" />
 				<p:menuitem value="Articles vendus" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatarticleVendu" />
 				<p:menuitem value="Etat stock" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatdesArticles" />
-				<p:menuitem value="Ventes par famille" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatVenteParFamille" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true || LoginBean.user.isSuperviseur()==true)}" />
-				<p:menuitem value="Rendement salarial" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatrendement" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true)}" />
-				<p:menuitem value="Facture Achat + Avoir" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=FactureAchatEtAvoir" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true)}" />
-				<p:menuitem value="Facturation Tickets" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=FacturationDesTickets" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true)}" />
-				<p:menuitem value="Ventes par vendeurs" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=EtatVentesParVenduers" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true || LoginBean.user.isSuperviseur()==true)}" />
-				<p:menuitem value="Etat fiscal" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatFiscal" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isResponsableshops()==true)}" />
+				<p:menuitem value="Ventes par famille" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatVenteParFamille" />
+				<p:menuitem value="Rendement salarial" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatrendement" />
+				<p:menuitem value="Facture Achat + Avoir" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=FactureAchatEtAvoir" />
+				<p:menuitem value="Facturation Tickets" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=FacturationDesTickets" />
+				<p:menuitem value="Ventes par vendeurs" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=EtatVentesParVenduers" />
+				<p:menuitem value="Etat fiscal" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatFiscal" />
 			</p:submenu>
 			<p:submenu label="Rapport" style="font-size:12px">
-				<p:menuitem value="Rapport lavage" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=rapportLavage" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isSuperviseur()==true || LoginBean.user.isResponsablelavage()==true)}" />
-				<p:menuitem value="Rapport vidange" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=rapportvidange" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isSuperviseur()==true || LoginBean.user.isResponsablelavage()==true)}" />
-				<p:menuitem value="Rendement lavage" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=rendementlavage" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isSuperviseur()==true || LoginBean.user.isResponsablelavage()==true)}" />
-				<p:menuitem value="Rendement vidange" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=rendementvidange" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isSuperviseur()==true || LoginBean.user.isResponsablelavage()==true)}" />
-				<p:menuitem value="Rendement salarial" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatrendement" rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true || LoginBean.user.isSuperviseur()==true || LoginBean.user.isResponsablelavage()==true)}" />
+				<p:menuitem value="Rapport lavage" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=rapportLavage" />
+				<p:menuitem value="Rapport vidange" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=rapportvidange" />
+				<p:menuitem value="Rendement lavage" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=rendementlavage" />
+				<p:menuitem value="Rendement vidange" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=rendementvidange" />
+				<p:menuitem value="Rendement salarial" url="#{request.contextPath}/SHELL-shop/index.xhtml?view=etatrendement" />
 			</p:submenu>
 
 			<f:facet name="options">
@@ -71,3 +71,4 @@
 		</p:menubar>
 	</h:form>
 </ui:composition>
+

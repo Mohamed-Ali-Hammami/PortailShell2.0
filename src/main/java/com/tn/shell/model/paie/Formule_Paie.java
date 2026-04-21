@@ -20,6 +20,7 @@ public class Formule_Paie {
 	 private double net_apayer=0;
 	 private double avance=0;
 	 private double redevance;
+	 private double nb_jour_ferrier = 0;
 	 
 	 @Transient 
 	 private String redevances;
@@ -194,6 +195,12 @@ public class Formule_Paie {
 	}
 	public void setSalairesup(double salairesup) {
 		this.salairesup = salairesup;
+	}
+	public double getNb_jour_ferrier() {
+		return nb_jour_ferrier;
+	}
+	public void setNb_jour_ferrier(double nb_jour_ferrier) {
+		this.nb_jour_ferrier = nb_jour_ferrier;
 	}
 	 
 	 

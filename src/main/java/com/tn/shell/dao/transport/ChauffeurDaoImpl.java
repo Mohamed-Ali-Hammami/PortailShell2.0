@@ -14,6 +14,7 @@ import com.tn.shell.model.transport.*;
 public class ChauffeurDaoImpl implements ChauffeurDao {
 	@PersistenceContext
 	 private EntityManager em;
+	private static final String ACTIVE_STATUS_SQL = "(f.statut is null or trim(f.statut) = '' or lower(trim(f.statut)) = 'actif')";
 	 
 	 @Transactional
 	public void save(Chauffeur Chauffeur) {
@@ -23,16 +24,37 @@ public class ChauffeurDaoImpl implements ChauffeurDao {
 	 @Transactional
 	 public List<String> getAllnom(){
 		 List<String> l=new ArrayList<String>();
-		 List<Chauffeur> result = em.createQuery("SELECT c  FROM Chauffeur c where c.statut = :statut ", Chauffeur.class)
-					.setParameter("statut", Statut.ACTIF) 
-					.getResultList();
+		 List<Chauffeur> result = getAll();
 		if(result!=null) for(Chauffeur c:result) l.add(c.getNompenom());
 		    return l  ;
 	 }
-	 @Transactional
+	@Transactional
 	public List<Chauffeur> getAll() {
-		List<Chauffeur> result = em.createQuery("SELECT c FROM Chauffeur c  where c.statut = :statut", Chauffeur.class).setParameter("statut", Statut.ACTIF).getResultList();
-	    return result;
+		try {
+			List<Chauffeur> result = em.createQuery("SELECT c FROM Chauffeur c  where c.statut = :statut", Chauffeur.class)
+					.setParameter("statut", Statut.ACTIF)
+					.getResultList();
+			if (result != null && !result.isEmpty()) {
+				return result;
+			}
+		} catch (RuntimeException ex) {
+		}
+		List<Object[]> rows = em.createNativeQuery(
+				"SELECT id,nompenom,cin,numtel,salaire,statut "
+						+ "FROM chauffeur WHERE " + ACTIVE_STATUS_SQL + " ORDER BY CAST(id AS UNSIGNED) DESC")
+				.getResultList();
+		List<Chauffeur> chauffeurs = new ArrayList<Chauffeur>();
+		for (Object[] row : rows) {
+			Chauffeur chauffeur = new Chauffeur();
+			chauffeur.setId(TransportTsvMapper.asInteger(row[0]));
+			chauffeur.setNompenom(TransportTsvMapper.asString(row[1]));
+			chauffeur.setCin(TransportTsvMapper.asString(row[2]));
+			chauffeur.setNumtel(TransportTsvMapper.asString(row[3]));
+			chauffeur.setSalaire(TransportTsvMapper.asDouble(row[4]));
+			chauffeur.setStatut(TransportTsvMapper.asStatut(row[5]));
+			chauffeurs.add(chauffeur);
+		}
+		return chauffeurs;
 	}
 	 @Transactional
 	public Chauffeur Findbynom(String nom) {

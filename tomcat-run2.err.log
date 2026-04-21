@@ -1,0 +1,22 @@
+avr. 18, 2026 2:25:05 PM org.apache.coyote.AbstractProtocol init
+INFOS: Initializing ProtocolHandler ["http-bio-8080"]
+avr. 18, 2026 2:25:05 PM org.apache.catalina.core.StandardService startInternal
+INFOS: Starting service Tomcat
+avr. 18, 2026 2:25:05 PM org.apache.catalina.core.StandardEngine startInternal
+INFOS: Starting Servlet Engine: Apache Tomcat/7.0.47
+avr. 18, 2026 2:25:14 PM org.apache.catalina.core.ApplicationContext log
+INFOS: No Spring WebApplicationInitializer types detected on classpath
+avr. 18, 2026 2:25:15 PM org.apache.catalina.core.ApplicationContext log
+INFOS: Initializing Spring root WebApplicationContext
+avr. 18, 2026 2:25:25 PM com.sun.faces.config.ConfigureListener contextInitialized
+INFOS: Initialisation de Mojarra 2.1.6 (SNAPSHOT 20111206) pour le contexte «»
+avr. 18, 2026 2:25:26 PM com.sun.faces.spi.InjectionProviderFactory createInstance
+INFOS: JSF1048 : Présence d’annotations PostConstruct/PreDestroy  Les méthodes de beans gérés marquées avec ces annotations auront des annotations dites traitées.
+avr. 18, 2026 2:25:27 PM org.primefaces.webapp.PostConstructApplicationEventListener processEvent
+INFOS: Running on PrimeFaces 6.0
+avr. 18, 2026 2:25:27 PM com.sun.faces.config.WebConfiguration$DeferredBooleanParameterLoggingAction log
+AVERTISSEMENT: JSF1025 : [] le paramètre d’initialisation du contexte «facelets.SKIP_COMMENTS» est désapprouvé.  Cette option sera toujours configurée, mais à l’avenir, utilisez «javax.faces.FACELETS_SKIP_COMMENTS».
+avr. 18, 2026 2:25:27 PM com.sun.faces.config.WebConfiguration$DeferredBooleanParameterLoggingAction log
+INFOS: JSF1020 : [] option de configuration «javax.faces.FACELETS_SKIP_COMMENTS» réinitialisée sur Activée
+avr. 18, 2026 2:25:27 PM org.apache.coyote.AbstractProtocol start
+INFOS: Starting ProtocolHandler ["http-bio-8080"]

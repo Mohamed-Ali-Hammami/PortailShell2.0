@@ -5,7 +5,7 @@ import java.util.Map;
 
 public enum Enumcheque {
 	Entree(1, "Entree"), Impayes(2, "Impayes"), Antidate(3, "Antidate"), Preavis(4, "Preavis"), Encours(5, "Encours"), Mannuel(6, "Mannuel"),
-	Annuler(7, "Annuler") ,Payes(8, "payes"),EnCirculation(9, "Encirculation")
+	Annuler(7, "Annuler") ,Payes(8, "payes"),EnCirculation(9, "Encirculation"), Encirculation(10, "Encirculation")
 	;
 	String valeur;
 	int id;

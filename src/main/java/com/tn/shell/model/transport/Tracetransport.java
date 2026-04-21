@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Tracetransport")
+@Table(name="tracetransport")
 public class Tracetransport {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

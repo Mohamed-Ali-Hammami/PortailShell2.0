@@ -174,15 +174,93 @@ table:focus {
 .shell-logout-link {
 	display: inline-flex;
 	align-items: center;
-	gap: 8px;
+	justify-content: center;
+	gap: 10px;
+	min-height: 34px;
+	padding: 6px 14px;
+	border: 1px solid rgba(120, 32, 0, 0.18);
+	border-radius: 999px;
+	background: linear-gradient(180deg, rgba(255, 244, 188, 0.98), rgba(255, 229, 136, 0.94));
+	box-shadow: 0 6px 14px rgba(82, 37, 4, 0.14);
 	color: #b41100;
 	font-size: 12px;
 	font-weight: bold;
+	line-height: 1;
 	text-decoration: none;
+	white-space: nowrap;
+	transition: filter 0.16s ease, box-shadow 0.16s ease;
+}
+
+.shell-logout-link:hover,
+.shell-logout-link:focus {
+	filter: brightness(1.03);
+	box-shadow: 0 8px 16px rgba(82, 37, 4, 0.18);
+	text-decoration: none;
+	outline: none;
+}
+
+.shell-logout-link > span {
+	display: inline-flex;
+	align-items: center;
+}
+
+.shell-logout-link .ui-icon,
+.shell-logout-link .ui-icon-power {
+	font-size: 14px;
 }
 
 .shell-logout-link img {
 	display: block;
+	width: 16px;
+	height: 16px;
+	object-fit: contain;
+	flex: 0 0 16px;
+}
+
+.gestat-shell-fragment .cahiercredit-client-block {
+	margin-bottom: 18px;
+}
+
+.gestat-shell-fragment .cahiercredit-client-table {
+	width: 100%;
+}
+
+.gestat-shell-fragment .cahiercredit-pagebreak {
+	display: none;
+}
+
+@media print {
+	.gestat-shell-fragment .cahiercredit-print .ui-datatable {
+		border: 1px solid black;
+	}
+
+	.gestat-shell-fragment .cahiercredit-print .ui-datatable .ui-datatable-header {
+		border-bottom: 0 none;
+	}
+
+	.gestat-shell-fragment .cahiercredit-print .ui-datatable-header {
+		background: #fff !important;
+		border: 1px solid black;
+	}
+
+	.gestat-shell-fragment .cahiercredit-print .ui-datatable thead th {
+		background: #fff !important;
+		color: #000 !important;
+		border: 1px solid black;
+	}
+
+	.gestat-shell-fragment .cahiercredit-print .ui-datatable tbody tr {
+		border: 1px solid black;
+	}
+
+	.gestat-shell-fragment .cahiercredit-print .ui-datatable tbody th {
+		border: 1px solid black;
+	}
+
+	.gestat-shell-fragment .cahiercredit-pagebreak {
+		display: block;
+		page-break-before: always;
+	}
 }
 
 @media (max-width: 960px) {

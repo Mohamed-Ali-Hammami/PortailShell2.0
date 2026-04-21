@@ -32,6 +32,8 @@ public class Clientgestat {
 	 
 	 
 	private double chiffreaffaire=0;
+	@Column(name = "solde_initial")
+	private double soldeInitial = 0;
 	@Transient
 	private String chiffreaffaires;
 	private double reste;
@@ -181,6 +183,14 @@ public class Clientgestat {
 
 	public void setTransactionclients(List<TransactionCredit> transactionclients) {
 		this.transactionclients = transactionclients;
+	}
+
+	public double getSoldeInitial() {
+		return soldeInitial;
+	}
+
+	public void setSoldeInitial(double soldeInitial) {
+		this.soldeInitial = soldeInitial;
 	}
 
 	 

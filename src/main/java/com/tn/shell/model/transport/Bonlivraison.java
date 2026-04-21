@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "Bonlivraison")
+@Table(name = "bonlivraison")
 public class Bonlivraison {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

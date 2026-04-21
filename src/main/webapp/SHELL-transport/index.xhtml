@@ -10,6 +10,7 @@
 		<ui:include src="/SHELL-transport/ModuleNav.xhtml" />
 	</ui:define>
 	<ui:define name="content">
+		<f:event type="preRenderView" listener="#{TransportViewInitBean.init}" />
 		<c:choose>
 			<c:when test="#{param.view eq 'administrercompte'}">
 				<ui:include src="/SHELL-transport/fragments/administrercompte.xhtml" />
@@ -26,13 +27,14 @@
 			<c:when test="#{param.view eq 'ajouterfamilledepense'}">
 				<ui:include src="/SHELL-transport/fragments/ajouterfamilledepense.xhtml" />
 			</c:when>
-			<c:when test="#{param.view eq 'ajouterproduit'}">
-				<ui:include src="/SHELL-transport/fragments/ajouterproduit.xhtml" />
-			</c:when>
 			<c:when test="#{param.view eq 'ajoutervhecule'}">
 				<ui:include src="/SHELL-transport/fragments/ajoutervhecule.xhtml" />
 			</c:when>
+			<c:when test="#{param.view eq 'ajouterproduit'}">
+				<ui:include src="/SHELL-transport/fragments/ajouterproduit.xhtml" />
+			</c:when>
 			<c:when test="#{param.view eq 'bondelivraisonnonfacturee'}">
+				<h:outputText value="#{FactureBean.listbls()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/bondelivraisonnonfacturee.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'bonlivraison'}">
@@ -45,30 +47,39 @@
 				<ui:include src="/SHELL-transport/fragments/courbe.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'depensecamion'}">
+				<h:outputText value="#{RapportBean.totaldepense()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/depensecamion.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatBl'}">
+				<h:outputText value="#{EtattransportBean.getetatLivraisons()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/etatBl.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatChauffeur'}">
+				<h:outputText value="#{EtattransportBean.getetatChauffeurs()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/etatChauffeur.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatChauffeurs'}">
+				<h:outputText value="#{EtattransportBean.getetatLivraisons3()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/etatChauffeurs.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatClient'}">
+				<h:outputText value="#{EtattransportBean.getetatclient()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/etatClient.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatDepenses'}">
+				<h:outputText value="#{EtattransportBean.getetatDepenses()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/etatDepenses.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatProduits'}">
+				<h:outputText value="#{EtattransportBean.getetatProduits()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/etatProduits.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatVehicules'}">
+				<h:outputText value="#{EtattransportBean.getetatVehecules()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/etatVehicules.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatventes'}">
+				<h:outputText value="#{EtattransportBean.getetats()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/etatventes.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'facture'}">
@@ -99,12 +110,14 @@
 				<ui:include src="/SHELL-transport/fragments/facturepassager.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'facturepassagers'}">
+				<h:outputText value="#{FactureBean.getAllPasager()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/facturepassagers.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'facturetransport'}">
 				<ui:include src="/SHELL-transport/fragments/facturetransport.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'facturetransports'}">
+				<h:outputText value="#{FactureBean.getAllTransport()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/facturetransports.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'gerersociete'}">
@@ -114,24 +127,31 @@
 				<ui:include src="/SHELL-transport/fragments/imprimeretatventes.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'listechauffeur'}">
+				<h:outputText value="#{ChauffeurBean.getchauffeur()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/listechauffeur.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'listeclient'}">
+				<h:outputText value="#{ClientBean.getclient()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/listeclient.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'listedepense'}">
+				<h:outputText value="#{FamilledepensetransportBean.getdepense()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/listedepense.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'listefacture'}">
+				<h:outputText value="#{FactureBean.listFacture()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/listefacture.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'listeproduit'}">
+				<h:outputText value="#{ProduitBean.getallProduit()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/listeproduit.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'listetypedep'}">
+				<h:outputText value="#{FamilledepensetransportBean.getfamilledepense()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/listetypedep.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'listevhecule'}">
+				<h:outputText value="#{VheculeBean.getvhecule()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/listevhecule.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'modifierFacture'}">
@@ -144,6 +164,7 @@
 				<ui:include src="/SHELL-transport/fragments/pochainedate.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'rapportcamion'}">
+				<h:outputText value="#{FamilledepensetransportBean.rapportcamion()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/rapportcamion.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'reaffichefacture'}">
@@ -159,9 +180,11 @@
 				<ui:include src="/SHELL-transport/fragments/reaffichefacturepass.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'rendementcarburant'}">
+				<h:outputText value="#{RapportcarburantBean.ventecarburant()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/rendementcarburant.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'rendementchauffeur'}">
+				<h:outputText value="#{RapportBean.rendementchauffeur()}" style="display:none" />
 				<ui:include src="/SHELL-transport/fragments/rendementchauffeur.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'test'}">

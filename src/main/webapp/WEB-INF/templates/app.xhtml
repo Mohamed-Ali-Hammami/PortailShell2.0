@@ -29,6 +29,27 @@
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript">
+			//<![CDATA[
+			(function preserveQueryParamsOnForms() {
+				var query = window.location.search;
+				if (!query) {
+					return;
+				}
+				var forms = document.getElementsByTagName("form");
+				for (var i = 0; i < forms.length; i++) {
+					var form = forms[i];
+					if (!form || !form.action) {
+						continue;
+					}
+					if (form.action.indexOf("?") !== -1) {
+						continue;
+					}
+					form.action = form.action + query;
+				}
+			})();
+			//]]>
+		</script>
 	</h:body>
 	</html>
 </ui:composition>

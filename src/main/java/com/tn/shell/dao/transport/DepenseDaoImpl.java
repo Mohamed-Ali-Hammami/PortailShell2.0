@@ -20,7 +20,7 @@ import com.tn.shell.model.transport.*;
 public class DepenseDaoImpl implements DepenseDAO {
 	@PersistenceContext
 	private EntityManager em;
-
+	private static final String ACTIVE_STATUS_SQL = "(f.statut is null or trim(f.statut) = '' or lower(trim(f.statut)) = 'actif')";
 	@Transactional
 	public void save(Depense depense) {
 		em.persist(depense);
@@ -29,10 +29,23 @@ public class DepenseDaoImpl implements DepenseDAO {
 
 	@Transactional
 	public List<Depense> getAll() {
-		List<Depense> result = em
-				.createQuery("SELECT a FROM Depense a where a.statut = :statut  order by a.id Desc", Depense.class)
-				.setParameter("statut", Statut.ACTIF).getResultList();
-		return result;
+		try {
+			List<Depense> result = em.createQuery("SELECT a FROM Depense a where a.statut = :statut  order by a.id Desc", Depense.class)
+					.setParameter("statut", Statut.ACTIF).getResultList();
+			if (result != null && !result.isEmpty()) {
+				return result;
+			}
+		} catch (RuntimeException ex) {
+		}
+		List<Object[]> rows = em.createNativeQuery(
+				"SELECT d.id,d.date,d.dates,d.libelle,d.montant,d.statut,d.vheculeid,d.familledepenseid,"
+						+ "v.matricule,f.libelle "
+						+ "FROM depense d "
+						+ "LEFT JOIN vhecule v ON v.id = d.vheculeid "
+						+ "LEFT JOIN familledepensetransport f ON f.id = d.familledepenseid "
+						+ "WHERE " + ACTIVE_STATUS_SQL + " ORDER BY CAST(d.id AS UNSIGNED) DESC")
+				.getResultList();
+		return mapRows(rows);
 	}
 	@Transactional
 	public Depense getdepensebyid(Integer id,String libelle,String lib,String dates) {
@@ -49,10 +62,18 @@ public class DepenseDaoImpl implements DepenseDAO {
 	}
 	@Transactional
 	public List<Depense> getdepensebydates(String dates){
-		List<Depense> result = em
-				.createQuery("SELECT a FROM Depense a where a.statut = :statut  and a.dates = :d", Depense.class)
-				.setParameter("statut", Statut.ACTIF).setParameter("d", dates).getResultList();
-		if(result.size()>0)return result; else return new ArrayList<Depense>();
+		try {
+			List<Depense> result = em
+					.createQuery("SELECT a FROM Depense a where a.statut = :statut  and a.dates = :d", Depense.class)
+					.setParameter("statut", Statut.ACTIF).setParameter("d", dates).getResultList();
+			if(result.size()>0)return result; else return new ArrayList<Depense>();
+		} catch (RuntimeException ex) {
+			return em.createNativeQuery(
+					"SELECT * FROM depense WHERE " + ACTIVE_STATUS_SQL + " AND dates = :d ORDER BY id DESC",
+					Depense.class)
+					.setParameter("d", dates)
+					.getResultList();
+		}
 	}
 	@Transactional
 	public double getdepenseautrebyvehicule(Vhecule v,Date d1,Date d2) {
@@ -154,14 +175,50 @@ public class DepenseDaoImpl implements DepenseDAO {
 	}
 	
 	public List<Depense> getdepensebetweendate(Date d1,Date d2){
-		List<Depense> result = em
-				.createQuery("SELECT  c FROM Depense c where c.statut = :statut and c.date BETWEEN :d1 and :d2", Depense.class)
-				.setParameter("statut", Statut.ACTIF)
-				.setParameter("d1", d1)
-				.setParameter("d2", d2)
-				.getResultList();
-		
-		return result;
+		try {
+			return em
+					.createQuery("SELECT  c FROM Depense c where c.statut = :statut and c.date BETWEEN :d1 and :d2", Depense.class)
+					.setParameter("statut", Statut.ACTIF)
+					.setParameter("d1", d1)
+					.setParameter("d2", d2)
+					.getResultList();
+		} catch (RuntimeException ex) {
+			List<Object[]> rows = em.createNativeQuery(
+					"SELECT d.id,d.date,d.dates,d.libelle,d.montant,d.statut,d.vheculeid,d.familledepenseid,"
+							+ "v.matricule,f.libelle "
+							+ "FROM depense d "
+							+ "LEFT JOIN vhecule v ON v.id = d.vheculeid "
+							+ "LEFT JOIN familledepensetransport f ON f.id = d.familledepenseid "
+							+ "WHERE " + ACTIVE_STATUS_SQL + " AND d.date BETWEEN :d1 AND :d2 "
+							+ "ORDER BY CAST(d.id AS UNSIGNED) DESC")
+					.setParameter("d1", d1)
+					.setParameter("d2", d2)
+					.getResultList();
+			return mapRows(rows);
+		}
+	}
+
+	private List<Depense> mapRows(List<Object[]> rows) {
+		List<Depense> depenses = new ArrayList<Depense>();
+		for (Object[] row : rows) {
+			Depense depense = new Depense();
+			depense.setId(TransportTsvMapper.asInteger(row[0]));
+			depense.setDate(TransportTsvMapper.asDate(row[1]));
+			depense.setDates(TransportTsvMapper.asString(row[2]));
+			depense.setLibelle(TransportTsvMapper.asString(row[3]));
+			depense.setMontant(TransportTsvMapper.asDouble(row[4]));
+			depense.setStatut(TransportTsvMapper.asStatut(row[5]));
+			Vhecule vhecule = new Vhecule();
+			vhecule.setId(TransportTsvMapper.asInteger(row[6]));
+			vhecule.setMatricule(TransportTsvMapper.asString(row[8]));
+			depense.setVhecule(vhecule);
+			Familledepensetransport famille = new Familledepensetransport();
+			famille.setId(TransportTsvMapper.asInteger(row[7]));
+			famille.setLibelle(TransportTsvMapper.asString(row[9]));
+			depense.setFamilledepense(famille);
+			depenses.add(depense);
+		}
+		return depenses;
 	}
 }
 

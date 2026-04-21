@@ -31,6 +31,7 @@ public class Caisse {
 	private String pompiste2;
 	private String remarques;
 	private String dates;
+	private double virement = 0;
 	@Transient
 	private String totalAchatcarburant;
     
@@ -816,6 +817,14 @@ public class Caisse {
 
 	public void setTotalAchatcarburant(String totalAchatcarburant) {
 		this.totalAchatcarburant = totalAchatcarburant;
+	}
+
+	public double getVirement() {
+		return virement;
+	}
+
+	public void setVirement(double virement) {
+		this.virement = virement;
 	}
 
 	 

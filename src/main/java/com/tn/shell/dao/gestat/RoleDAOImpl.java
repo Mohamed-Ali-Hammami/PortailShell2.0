@@ -27,11 +27,12 @@ public class RoleDAOImpl implements RoleDAO {
         return Rolees;
     	 
     }
-    @Transactional
+	@Transactional
 	public List<Role> getRoles() {
     	 List list = em.createQuery("SELECT r from Role r",Role.class).getResultList();
 	        return list;
 	}
+	@Transactional
 	public void save(Role r) {
 		em.persist(r);
 		

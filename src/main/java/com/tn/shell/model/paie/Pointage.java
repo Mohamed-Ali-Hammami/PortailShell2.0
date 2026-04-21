@@ -23,6 +23,7 @@ public class Pointage {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private double nb_jour;
+	private double nb_jour_ferrier = 0;
 	private Integer annee;
 	private Integer mois;
 	@Transient
@@ -93,6 +94,14 @@ public class Pointage {
 
 	public void setNb_absence(double nb_absence) {
 		this.nb_absence = nb_absence;
+	}
+
+	public double getNb_jour_ferrier() {
+		return nb_jour_ferrier;
+	}
+
+	public void setNb_jour_ferrier(double nb_jour_ferrier) {
+		this.nb_jour_ferrier = nb_jour_ferrier;
 	}
 	
 	

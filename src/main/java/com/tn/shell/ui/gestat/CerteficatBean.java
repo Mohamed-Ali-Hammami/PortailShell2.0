@@ -113,8 +113,26 @@ public class CerteficatBean {
 		 
 		
 	 }
+
+	private void ensureCertificats() {
+		if (certif1 == null) {
+			certif1 = new Certificat();
+		}
+		if (certif2 == null) {
+			certif2 = new Certificat();
+		}
+		if (certif3 == null) {
+			certif3 = new Certificat();
+		}
+		if (certif4 == null) {
+			certif4 = new Certificat();
+		}
+		if (certif5 == null) {
+			certif5 = new Certificat();
+		}
+	}
 	public void certificat1(AjaxBehaviorEvent event){
-		 
+		ensureCertificats();
 		certif1.setDate(new Date());
 		certif1.setMontantbrut(honoraire);
 		certif1.setRetenue((double) 15*honoraire/100);
@@ -123,7 +141,7 @@ public class CerteficatBean {
 	}
 	
 	public void certificat2(AjaxBehaviorEvent event){
-		
+		ensureCertificats();
 		  
 		certif2.setDate(new Date());
 		certif2.setMontantbrut(montantjeton);
@@ -133,7 +151,7 @@ public class CerteficatBean {
 	}
 	
 	public void certificat3(AjaxBehaviorEvent event){
-		 
+		ensureCertificats();
 		certif3.setDate(new Date());
 		certif3.setMontantbrut(montantretenuHor);
 		certif3.setRetenue((double) 5*montantretenuHor/100);
@@ -142,7 +160,7 @@ public class CerteficatBean {
 	}
 	
 	public void certificat4(AjaxBehaviorEvent event){
-		 
+		ensureCertificats();
 		certif4.setDate(new Date());
 		certif4.setMontantbrut(montantbrut);
 		certif4.setRetenue((double) 1*montantbrut/100);
@@ -152,7 +170,7 @@ public class CerteficatBean {
 	}
 	
 	public void certificat5(AjaxBehaviorEvent event){
-		 
+		ensureCertificats();
 		certif5.setDate(new Date());
 		certif5.setMontantbrut(montantbrut2);
 		certif5.setRetenue((double) 2.5*montantbrut2/100);
@@ -212,11 +230,7 @@ public class CerteficatBean {
 			listfournisseurs.add(four.getNom());
 		}
 		}
-		 certif1=new Certificat();
-		 certif2=new Certificat();
-		 certif3=new Certificat();
-		 certif4=new Certificat();
-		 certif5=new Certificat();
+		 ensureCertificats();
 		 
 		return SUCCESS;
 	}
@@ -385,30 +399,35 @@ public class CerteficatBean {
 	}
 	 
 	public Certificat getCertif1() {
+		ensureCertificats();
 		return certif1;
 	}
 	public void setCertif1(Certificat certif1) {
 		this.certif1 = certif1;
 	}
 	public Certificat getCertif2() {
+		ensureCertificats();
 		return certif2;
 	}
 	public void setCertif2(Certificat certif2) {
 		this.certif2 = certif2;
 	}
 	public Certificat getCertif3() {
+		ensureCertificats();
 		return certif3;
 	}
 	public void setCertif3(Certificat certif3) {
 		this.certif3 = certif3;
 	}
 	public Certificat getCertif4() {
+		ensureCertificats();
 		return certif4;
 	}
 	public void setCertif4(Certificat certif4) {
 		this.certif4 = certif4;
 	}
 	public String getTotal1() {
+		ensureCertificats();
 		DecimalFormat df=new DecimalFormat("#,###.000");		 
 		total1=df.format(certif1.getMontantbrut()+certif2.getMontantbrut()+certif3.getMontantbrut()+certif4.getMontantbrut()+certif5.getMontantbrut());
 		return total1;
@@ -417,6 +436,7 @@ public class CerteficatBean {
 		this.total1 = total1;
 	}
 	public String getTotal2() {
+		ensureCertificats();
 		DecimalFormat df=new DecimalFormat("#,###.000");	
 		total2=df.format(certif1.getRetenue()+certif2.getRetenue()+certif3.getRetenue()+certif4.getRetenue()+certif5.getRetenue());
 		return total2;
@@ -425,6 +445,7 @@ public class CerteficatBean {
 		this.total2 = total2;
 	}
 	public String getTotal3() {
+		ensureCertificats();
 		DecimalFormat df=new DecimalFormat("#,###.000");	
 		total3=df.format(certif1.getMontant()+certif2.getMontant()+certif3.getMontant()+certif4.getMontant()+certif5.getMontant());
 		return total3;
@@ -530,6 +551,7 @@ public class CerteficatBean {
 		this.montantbruts2 = montantbruts2;
 	}
 	public Certificat getCertif5() {
+		ensureCertificats();
 		return certif5;
 	}
 	public void setCertif5(Certificat certif5) {

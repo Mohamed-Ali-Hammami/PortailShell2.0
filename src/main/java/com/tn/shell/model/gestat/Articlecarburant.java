@@ -28,6 +28,7 @@ public class Articlecarburant {
 	private double quantite;
 	@Transient
 	private String quantites;
+	@Transient
 	private double remise;
 	private double achat;
 	private double vente;

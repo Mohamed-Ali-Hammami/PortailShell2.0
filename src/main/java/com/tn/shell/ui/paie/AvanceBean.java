@@ -115,7 +115,10 @@ public class AvanceBean {
 		refreshAvancesForCurrentPeriod();
 		return SUCCESS;
 	}
-	 private Integer getMoisbyString(String moi) {
+	private Integer getMoisbyString(String moi) {
+			if (moi == null || moi.trim().isEmpty()) {
+				return resolveDefaultAvanceMonth();
+			}
 			Integer m = 0;
 			if (moi.equals("Janvier"))
 				m = 1;
@@ -268,6 +271,9 @@ public class AvanceBean {
 	 
 	 
 	private String getMoisbyIntger(Integer moi){
+		if (moi == null) {
+			return "";
+		}
 		String m="";
 		if(moi==1) m="Janvier";
 		else if(moi==2) m="Fevrier";

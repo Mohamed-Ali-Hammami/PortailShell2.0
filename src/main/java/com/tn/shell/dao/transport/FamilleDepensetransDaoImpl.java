@@ -1,5 +1,6 @@
 package com.tn.shell.dao.transport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -14,6 +15,7 @@ import com.tn.shell.model.transport.*;
 public class  FamilleDepensetransDaoImpl implements FamilleDepensetransDAO {
 	@PersistenceContext
 	 private EntityManager em;
+	private static final String ACTIVE_STATUS_SQL = "(f.statut is null or trim(f.statut) = '' or lower(trim(f.statut)) = 'actif')";
 	 
 	 @Transactional
 	public void save(Familledepensetransport familledepense) {
@@ -22,8 +24,30 @@ public class  FamilleDepensetransDaoImpl implements FamilleDepensetransDAO {
 	}
 @Transactional
 	public List<Familledepensetransport> getAll() {
-	List<Familledepensetransport> result = em.createQuery("SELECT a FROM Familledepensetransport a order by a.id Desc", Familledepensetransport.class).getResultList();
-    return result;
+		try {
+			List<Familledepensetransport> result = em.createQuery(
+					"SELECT a FROM Familledepensetransport a where a.statut = :statut order by a.id Desc",
+					Familledepensetransport.class)
+					.setParameter("statut", Statut.ACTIF)
+					.getResultList();
+			if (result != null && !result.isEmpty()) {
+				return result;
+			}
+		} catch (RuntimeException ex) {
+		}
+		List<Object[]> rows = em.createNativeQuery(
+				"SELECT id,libelle,statut FROM familledepensetransport WHERE " + ACTIVE_STATUS_SQL
+						+ " ORDER BY CAST(id AS UNSIGNED) DESC")
+				.getResultList();
+		List<Familledepensetransport> familles = new ArrayList<Familledepensetransport>();
+		for (Object[] row : rows) {
+			Familledepensetransport famille = new Familledepensetransport();
+			famille.setId(TransportTsvMapper.asInteger(row[0]));
+			famille.setLibelle(TransportTsvMapper.asString(row[1]));
+			famille.setStatut(TransportTsvMapper.asStatut(row[2]));
+			familles.add(famille);
+		}
+		return familles;
 	}
 
 public Familledepensetransport getFamilebyeibelle(String libelle){

@@ -16,6 +16,7 @@ public class LigneCommandepassDaoImpl implements LigneCommandepassdao {
 	
 	 @PersistenceContext
 	 private EntityManager em;
+	 private static final String ACTIVE_STATUS_SQL = "(lp.statut is null or trim(lp.statut) = '' or lower(trim(lp.statut)) = 'actif')";
 	 
 	 @Transactional
 	public void save(Lignecommandepass c) {
@@ -24,18 +25,25 @@ public class LigneCommandepassDaoImpl implements LigneCommandepassdao {
 	}
 	 @Transactional
 	 public List<Lignecommandepass> getLcbyBL(Bonlivraison bl){
-		 List<Lignecommandepass> result = em.createQuery("SELECT c FROM Lignecommandepass c where c.statut = :statut and c.bl.numero = :numero and c.bl.statut = :statut2", Lignecommandepass.class)
-				 .setParameter("statut", Statut.ACTIF)
-				 .setParameter("numero", bl.getNumero())
-				 .setParameter("statut2", Statut.ACTIF)
-				  
-				 .getResultList();
-		 return result;
+		 try {
+			 return em.createQuery(
+					 "SELECT c FROM Lignecommandepass c where c.statut = :statut and c.facturepassager.numero = :numero",
+					 Lignecommandepass.class)
+					 .setParameter("statut", Statut.ACTIF)
+					 .setParameter("numero", bl.getNumero())
+					 .getResultList();
+		 } catch (RuntimeException ex) {
+			 return em.createNativeQuery(
+					 "SELECT * FROM lignecommandepass lp WHERE " + ACTIVE_STATUS_SQL + " AND lp.facturepassagerid = :numero ORDER BY lp.id DESC",
+					 Lignecommandepass.class)
+					 .setParameter("numero", bl.getNumero())
+					 .getResultList();
+		 }
 	 }
 	 @Transactional
 	 public Lignecommandepass getLignecommandebyproduit(Integer p ,Facture f) {
 		 List<Lignecommandepass> result = em.createQuery("SELECT c FROM Lignecommandepass c where c.statut = :statut "
-		 		+ "and c.produit.id = :id and c.facture.numero = :numero", Lignecommandepass.class)
+		 		+ "and c.produit.id = :id and c.facturepassager.numero = :numero", Lignecommandepass.class)
 				 .setParameter("statut", Statut.ACTIF)
 				 .setParameter("id", p ) 
 				 .setParameter("numero", f.getNumero()).getResultList();
@@ -50,13 +58,27 @@ public class LigneCommandepassDaoImpl implements LigneCommandepassdao {
 	 }
 	 @Transactional
 	 public List<Lignecommandepass> getLcbyf(Facturepassager bl){
-		 List<Lignecommandepass> result = em.createQuery("SELECT c FROM Lignecommandepass c where c.statut = :statut and c.facturepassager.numero = :numero", Lignecommandepass.class).setParameter("statut", Statut.ACTIF).setParameter("numero", bl.getNumero()).getResultList();
-		 return result;
+		 try {
+			 return em.createQuery("SELECT c FROM Lignecommandepass c where c.statut = :statut and c.facturepassager.numero = :numero", Lignecommandepass.class)
+					 .setParameter("statut", Statut.ACTIF).setParameter("numero", bl.getNumero()).getResultList();
+		 } catch (RuntimeException ex) {
+			 return em.createNativeQuery(
+					 "SELECT * FROM lignecommandepass lp WHERE " + ACTIVE_STATUS_SQL + " AND lp.facturepassagerid = :numero ORDER BY lp.id DESC",
+					 Lignecommandepass.class)
+					 .setParameter("numero", bl.getNumero())
+					 .getResultList();
+		 }
 	 }
 	 @Transactional	 
 	 public List<Lignecommandepass> getAll(){
-		 List<Lignecommandepass> result = em.createQuery("SELECT c FROM Lignecommandepass c where c.statut = :statut", Lignecommandepass.class).setParameter("statut", Statut.ACTIF).getResultList();
-		 return result;
+		 try {
+			 return em.createQuery("SELECT c FROM Lignecommandepass c where c.statut = :statut", Lignecommandepass.class).setParameter("statut", Statut.ACTIF).getResultList();
+		 } catch (RuntimeException ex) {
+			 return em.createNativeQuery(
+					 "SELECT * FROM lignecommandepass lp WHERE " + ACTIVE_STATUS_SQL + " ORDER BY lp.id DESC",
+					 Lignecommandepass.class)
+					 .getResultList();
+		 }
 	 }
 	 @Transactional
 	public void update(Lignecommandepass c) {

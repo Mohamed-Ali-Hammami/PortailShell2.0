@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -35,6 +37,7 @@ public class EmployeeBean {
 	private static final long serialVersionUID = 1L;
 	private static final String SUCCESS = "success";
 	private static final String ERROR = "error";
+	private static final Logger LOG = Logger.getLogger(EmployeeBean.class.getName());
 
 	@ManagedProperty(value = "#{ServiceAvancegestat}")
 	ServiceAvancegestat serviceAvance;
@@ -63,6 +66,7 @@ public class EmployeeBean {
 
 	
 	public String cahieremployee() {
+		LOG.log(Level.INFO, "Gestat.EmployeeBean#cahieremployee start serviceEmployeesNull={0}", serviceEmployees == null);
 		listEmp2 = new ArrayList<Employee>();
 		listEmp2 = serviceEmployees.getAll();
 		Employee e1=new Employee();
@@ -81,6 +85,7 @@ public class EmployeeBean {
 		for(int i=0;i<=30;i++){
 			listcredits.add(""+(i+1));
 		}
+		LOG.log(Level.INFO, "Gestat.EmployeeBean#cahieremployee loaded listEmp2={0}", listEmp2 == null ? -1 : listEmp2.size());
 		return SUCCESS;
 	}
 	
@@ -158,6 +163,7 @@ public class EmployeeBean {
 
 	public String getAllEmployee() {
 		 
+		LOG.log(Level.INFO, "Gestat.EmployeeBean#getAllEmployee start serviceEmployeeNull={0}", serviceEmployee == null);
 		listEmp = new ArrayList<Employeegestat>();
 		listEmp = serviceEmployee.getAll();
 
@@ -167,6 +173,7 @@ public class EmployeeBean {
 		adresse = null;
 		tel=null; 
 		salaire_journalier = 0;
+		LOG.log(Level.INFO, "Gestat.EmployeeBean#getAllEmployee loaded listEmp={0}", listEmp == null ? -1 : listEmp.size());
 		return SUCCESS;
 	}
 
@@ -269,6 +276,7 @@ public class EmployeeBean {
 	}
 
 	public List<Employeegestat> getListEmp() {
+		LOG.log(Level.INFO, "Gestat.EmployeeBean#getListEmp getter size={0}", listEmp == null ? -1 : listEmp.size());
 		return listEmp;
 	}
 

@@ -162,22 +162,22 @@ public class LigneIndexDaoImpl implements LigneindexDAO {
     @Override
     @Transactional
     public double getmaxcode(Pompe p, Caisse c) {
-        Double result = em.createQuery(
+        Number result = em.createQuery(
                 "SELECT MAX(c.id) FROM Ligneindex c WHERE c.statut = :statut AND c.pompe.id = :p AND c.caisse.id = :c",
-                Double.class)
+                Number.class)
                 .setParameter("statut", Statut.ACTIF)
                 .setParameter("p", p.getId())
                 .setParameter("c", c.getId())
                 .getSingleResult();
 
-        return result != null ? result : 0;
+        return result != null ? result.doubleValue() : 0;
     }
                                     
 @Override
     @Transactional
     public Ligneindex getmaxcode() {
-        Double maxId = em.createQuery(
-                "SELECT MAX(b.id) FROM Ligneindex b WHERE b.statut = :statut", Double.class)
+        Number maxId = em.createQuery(
+                "SELECT MAX(b.id) FROM Ligneindex b WHERE b.statut = :statut", Number.class)
                 .setParameter("statut", Statut.ACTIF)
                 .getSingleResult();
         

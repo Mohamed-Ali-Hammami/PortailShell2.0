@@ -16,6 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
  
 
 @Entity
@@ -55,10 +58,12 @@ public class Lignealimentation implements Comparable<Object>{
 	 
 	@ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "produitsid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Produit produit; 
 	
 	@ManyToOne(cascade = { CascadeType.MERGE ,CascadeType.DETACH,CascadeType.REFRESH} )
 	@JoinColumn(name = "achatid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Achat achat; 
 	
 	  

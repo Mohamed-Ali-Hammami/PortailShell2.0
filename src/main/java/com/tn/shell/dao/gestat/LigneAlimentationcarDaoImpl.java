@@ -31,7 +31,11 @@ public class LigneAlimentationcarDaoImpl implements LigneAlimentaioncardao {
 	 }
 	 @Transactional	 
 	 public List<Lignealimentationcar> getAll(){
-		 List<Lignealimentationcar> result = em.createQuery("SELECT c FROM Lignealimentationcar c where c.statut = :statut GROUP by c.articlecarburant.nom", Lignealimentationcar.class).setParameter("statut", Statut.ACTIF).getResultList();
+		 List<Lignealimentationcar> result = em.createQuery(
+				 "SELECT c FROM Lignealimentationcar c where c.statut = :statut order by c.date desc, c.id desc",
+				 Lignealimentationcar.class)
+				 .setParameter("statut", Statut.ACTIF)
+				 .getResultList();
 		 return result;
 	 }
 	/* @Transactional	 

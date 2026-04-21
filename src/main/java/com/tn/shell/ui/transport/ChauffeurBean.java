@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -32,6 +34,7 @@ public class ChauffeurBean {
 	private static final long serialVersionUID = 1L;
 	private static final String SUCCESS = "success";
 	private static final String ERROR = "error";	
+	private static final Logger LOG = Logger.getLogger(ChauffeurBean.class.getName());
 	 
 
 	@ManagedProperty(value="#{ServiceChauffeur}") 
@@ -140,6 +143,7 @@ public class ChauffeurBean {
 
 		listchauffeur=new ArrayList<Chauffeur>();
 		listchauffeur = serviceChauffeur.getAll();
+		LOG.log(Level.INFO, "Transport.ChauffeurBean#getchauffeur loaded {0} chauffeurs", listchauffeur == null ? 0 : listchauffeur.size());
 		return SUCCESS;
 		
 	}
@@ -151,7 +155,7 @@ public class ChauffeurBean {
 		
 		return SUCCESS;
 	}
-		public String savechauffeur() {
+	public String savechauffeur() {
 			//client = serviceClient.Findbymf(matriculefiscal);
 		//	if (client == null) {			 
 				chauffeur = new Chauffeur();
@@ -160,6 +164,7 @@ public class ChauffeurBean {
 				serviceChauffeur.save(chauffeur);
 				listchauffeur = new ArrayList<Chauffeur>();
 				listchauffeur = serviceChauffeur.getAll();
+				LOG.log(Level.INFO, "Transport.ChauffeurBean#savechauffeur saved nom={0}, total now={1}", new Object[] { nom, listchauffeur == null ? 0 : listchauffeur.size() });
 								 
 				return SUCCESS;
 		//	} else {
@@ -175,8 +180,10 @@ public class ChauffeurBean {
 	public String updateChauffeur(Chauffeur chauffeur) {
         try {
             getServiceChauffeur().update(chauffeur);
+            LOG.log(Level.INFO, "Transport.ChauffeurBean#updateChauffeur updated id={0}, nom={1}", new Object[] { chauffeur.getId(), chauffeur.getNompenom() });
             return SUCCESS;       
         } catch (DataAccessException e) {
+        	LOG.log(Level.SEVERE, "Transport.ChauffeurBean#updateChauffeur failed for id=" + (chauffeur == null ? null : chauffeur.getId()), e);
         }    
         return ERROR;
     } 
@@ -233,6 +240,7 @@ public class ChauffeurBean {
 		serviceChauffeur.delete(chauffeur2);
 		listchauffeur = new ArrayList<Chauffeur>();
 		listchauffeur = serviceChauffeur.getAll();
+		LOG.log(Level.INFO, "Transport.ChauffeurBean#deletechauffeur deactivated id={0}, total active now={1}", new Object[] { chauffeur2 == null ? null : chauffeur2.getId(), listchauffeur == null ? 0 : listchauffeur.size() });
 		return SUCCESS;
 	}
 	
@@ -530,6 +538,9 @@ public class ChauffeurBean {
 
 
 	public List<Chauffeur> getListchauffeur() {
+		if ((listchauffeur == null || listchauffeur.isEmpty()) && serviceChauffeur != null) {
+			listchauffeur = serviceChauffeur.getAll();
+		}
 		return listchauffeur;
 	}
 

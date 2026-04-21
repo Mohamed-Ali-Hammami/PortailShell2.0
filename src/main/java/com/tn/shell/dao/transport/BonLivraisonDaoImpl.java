@@ -16,7 +16,7 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 
 	@PersistenceContext
 	private EntityManager em;
-
+	private static final String ACTIVE_STATUS_SQL = "(b.statut is null or trim(b.statut) = '' or lower(trim(b.statut)) = 'actif')";
 	@Transactional
 	public void save(Bonlivraison c) {
 		SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
@@ -27,12 +27,19 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 
 	@Transactional
 	public Bonlivraison getMaxbl() {
-		List<Bonlivraison> result = em
-				.createQuery("SELECT a FROM Bonlivraison a  where a.statut = :statut and a.numero=(select MAX(b.numero) from Bonlivraison b)",
-						Bonlivraison.class)
-				.setParameter("statut", Statut.ACTIF)
-
-				.getResultList();
+		List<Bonlivraison> result;
+		try {
+			result = em
+					.createQuery("SELECT a FROM Bonlivraison a  where a.statut = :statut and a.numero=(select MAX(b.numero) from Bonlivraison b)",
+							Bonlivraison.class)
+					.setParameter("statut", Statut.ACTIF)
+					.getResultList();
+		} catch (RuntimeException ex) {
+			result = em.createNativeQuery(
+					"SELECT * FROM bonlivraison b WHERE " + ACTIVE_STATUS_SQL + " ORDER BY b.numero DESC LIMIT 1",
+					Bonlivraison.class)
+					.getResultList();
+		}
 		if (result.size() > 0) {
 			return result.get(0);
 		} else {
@@ -108,8 +115,8 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 				// TODO Auto-generated catch block
 			}
 		
-		if (BonlivraisonListem.size() > 0) {
-			for (Bonlivraison b : BonlivraisonListem) {
+		if (l.size() > 0) {
+			for (Bonlivraison b : l) {
 				chiffre = chiffre + b.getTransport();
 			}
 		} else {
@@ -154,19 +161,34 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 
 	@Transactional
 	public List<Bonlivraison> getBLbyfacture(Facture f) {
+		if (f == null || f.getBl() == null || f.getBl().getNumero() == null) {
+			return new ArrayList<Bonlivraison>();
+		}
 		List<Bonlivraison> result = em
-				.createQuery("SELECT b FROM Bonlivraison b  where b.statut = :statut  and b.facture.numero = :numero  ",
+				.createQuery("SELECT b FROM Bonlivraison b where b.statut = :statut and b.numero = :numero",
 						Bonlivraison.class)
-				.setParameter("statut", Statut.ACTIF).setParameter("numero", f.getNumero()).getResultList();
+				.setParameter("statut", Statut.ACTIF).setParameter("numero", f.getBl().getNumero()).getResultList();
 		return result;
 	}
 
 	@Transactional
 	public List<Bonlivraison> getAll() {
-		List<Bonlivraison> result = em
-				.createQuery("SELECT b FROM Bonlivraison b  where b.statut = :statut  ", Bonlivraison.class)
-				.setParameter("statut", Statut.ACTIF).getResultList();
-		return result;
+		try {
+			return em
+					.createQuery("SELECT b FROM Bonlivraison b  where b.statut = :statut  ", Bonlivraison.class)
+					.setParameter("statut", Statut.ACTIF).getResultList();
+		} catch (RuntimeException ex) {
+			List<Object[]> rows = em.createNativeQuery(
+					"SELECT b.numero,b.code,b.codes,b.date,b.heure,b.montant,b.statut,b.totaltva,b.transport,"
+							+ "b.chauffeurid,b.clientid,b.vheculeid,b.dates,b.status,c.nom,v.matricule,h.nompenom "
+							+ "FROM bonlivraison b "
+							+ "LEFT JOIN client c ON c.code = b.clientid "
+							+ "LEFT JOIN vhecule v ON v.id = b.vheculeid "
+							+ "LEFT JOIN chauffeur h ON h.id = b.chauffeurid "
+							+ "WHERE " + ACTIVE_STATUS_SQL + " ORDER BY CAST(b.numero AS UNSIGNED) DESC")
+					.getResultList();
+			return mapRows(rows);
+		}
 	}
 
 	@Transactional
@@ -191,10 +213,24 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 	}
 
 	public List<Bonlivraison> getBLbystatuts(Status s) {
-
-		List<Bonlivraison> BonlivraisonListem = em.createQuery(
-				"SELECT u FROM  Bonlivraison u where u.status = :status and u.statut = :statut order by u.client.nom Asc",
-				Bonlivraison.class).setParameter("status", s).setParameter("statut", Statut.ACTIF).getResultList();
+		List<Bonlivraison> BonlivraisonListem;
+		try {
+			BonlivraisonListem = em.createQuery(
+					"SELECT u FROM  Bonlivraison u where u.status = :status and u.statut = :statut order by u.client.nom Asc",
+					Bonlivraison.class).setParameter("status", s).setParameter("statut", Statut.ACTIF).getResultList();
+		} catch (RuntimeException ex) {
+			List<Object[]> rows = em.createNativeQuery(
+					"SELECT b.numero,b.code,b.codes,b.date,b.heure,b.montant,b.statut,b.totaltva,b.transport,"
+							+ "b.chauffeurid,b.clientid,b.vheculeid,b.dates,b.status,c.nom,v.matricule,h.nompenom "
+							+ "FROM bonlivraison b "
+							+ "LEFT JOIN client c ON c.code = b.clientid "
+							+ "LEFT JOIN vhecule v ON v.id = b.vheculeid "
+							+ "LEFT JOIN chauffeur h ON h.id = b.chauffeurid "
+							+ "WHERE " + ACTIVE_STATUS_SQL + " AND " + statusFilterSql(s)
+							+ " ORDER BY CAST(b.numero AS UNSIGNED) DESC")
+					.getResultList();
+			BonlivraisonListem = mapRows(rows);
+		}
 
 		if (BonlivraisonListem.size() > 0) {
 		} else {
@@ -254,15 +290,78 @@ public class BonLivraisonDaoImpl implements Bonlivraisondao {
 	}
 
 	public List<Bonlivraison> getBLNonAffectee() {
-		List<Bonlivraison> BonlivraisonListem = em.createQuery(
-				"SELECT u FROM  Bonlivraison u where u.status = :status and u.statut = :statut and u.affectee = :affectee",
-				Bonlivraison.class).setParameter("affectee", false).setParameter("statut", Statut.ACTIF)
-				.getResultList();
+		List<Bonlivraison> BonlivraisonListem;
+		try {
+			BonlivraisonListem = em.createQuery(
+					"SELECT u FROM  Bonlivraison u where u.status = :status and u.statut = :statut and u.affectee = :affectee",
+					Bonlivraison.class).setParameter("status", Status.NonFacturee).setParameter("affectee", false).setParameter("statut", Statut.ACTIF)
+					.getResultList();
+		} catch (RuntimeException ex) {
+			BonlivraisonListem = em.createNativeQuery(
+					"SELECT * FROM bonlivraison b WHERE " + ACTIVE_STATUS_SQL
+							+ " AND " + statusFilterSql(Status.NonFacturee)
+							+ " AND (b.affectee = 0 OR b.affectee = '0' OR lower(trim(COALESCE(b.affectee,''))) = 'false') ORDER BY b.numero DESC",
+					Bonlivraison.class)
+					.getResultList();
+		}
 
 		if (BonlivraisonListem.size() > 0) {
 		} else {
 		}
 		return BonlivraisonListem;
+	}
+
+	private List<Bonlivraison> mapRows(List<Object[]> rows) {
+		List<Bonlivraison> result = new ArrayList<Bonlivraison>();
+		for (Object[] row : rows) {
+			Bonlivraison bl = new Bonlivraison();
+			bl.setNumero(TransportTsvMapper.asInteger(row[0]));
+			bl.setCode(TransportTsvMapper.asInteger(row[1]));
+			bl.setCodes(TransportTsvMapper.asString(row[2]));
+			bl.setDate(TransportTsvMapper.asDate(row[3]));
+			bl.setHeure(TransportTsvMapper.asString(row[4]));
+			bl.setMontant(TransportTsvMapper.asDouble(row[5]));
+			bl.setStatut(TransportTsvMapper.asStatut(row[6]));
+			bl.setTotaltva(TransportTsvMapper.asDouble(row[7]));
+			bl.setTransport(TransportTsvMapper.asDouble(row[8]));
+			bl.setStatus(TransportTsvMapper.asStatus(row[13]));
+
+			Client client = new Client();
+			client.setCode(TransportTsvMapper.asInteger(row[10]));
+			client.setNom(TransportTsvMapper.asString(row[14]));
+			bl.setClient(client);
+
+			Vhecule vhecule = new Vhecule();
+			vhecule.setId(TransportTsvMapper.asInteger(row[11]));
+			vhecule.setMatricule(TransportTsvMapper.asString(row[15]));
+			bl.setVhecule(vhecule.getId() == null ? null : vhecule);
+
+			Chauffeur chauffeur = new Chauffeur();
+			chauffeur.setId(TransportTsvMapper.asInteger(row[9]));
+			chauffeur.setNompenom(TransportTsvMapper.asString(row[16]));
+			bl.setChauffeur(chauffeur.getId() == null ? null : chauffeur);
+			result.add(bl);
+		}
+		return result;
+	}
+
+	private String statusFilterSql(Status s) {
+		if (s == null) {
+			return "1=1";
+		}
+		if (Status.NonFacturee.equals(s)) {
+			return "(b.status is null or trim(b.status) = '' or lower(trim(b.status)) in ('nonfacturee','nonfacture'))";
+		}
+		if (Status.Facturee.equals(s)) {
+			return "lower(trim(b.status)) in ('facturee','facture')";
+		}
+		if (Status.Payee.equals(s)) {
+			return "lower(trim(b.status)) in ('payee','paye')";
+		}
+		if (Status.NonPayee.equals(s)) {
+			return "lower(trim(b.status)) in ('nonpayee','nonpaye')";
+		}
+		return "1=1";
 	}
 }
 

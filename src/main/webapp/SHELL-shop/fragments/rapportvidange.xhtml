@@ -68,7 +68,7 @@
                         }
                    </style>
 						
-						 <p:dataTable var="sale" value="#{RapportLavage.listvidange}" rowStyleClass="#{sale.dates == 'Total' - 'old':null}" >
+						 <p:dataTable var="sale" value="#{RapportLavage.listvidange}" rowStyleClass="#{sale.dates == 'Total' ? 'old' : null}" >
        
  
         <p:columnGroup type="header">

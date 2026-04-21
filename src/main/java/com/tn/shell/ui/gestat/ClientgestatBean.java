@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -45,6 +47,7 @@ public class ClientgestatBean {
 	private static final long serialVersionUID = 1L;
 	private static final String SUCCESS = "success";
 	private static final String ERROR = "error";
+	private static final Logger LOG = Logger.getLogger(ClientgestatBean.class.getName());
 
 	@ManagedProperty(value = "#{ServiceClientgestat}")
 	ServiceClientgestat serviceClientgestat;
@@ -329,6 +332,7 @@ public class ClientgestatBean {
 	}
 
 	public String getclient() {
+		LOG.log(Level.INFO, "Gestat.ClientgestatBean#getclient start serviceClientgestatNull={0}", serviceClientgestat == null);
 		DecimalFormat df = new DecimalFormat("#,###.000");
 		totalant = 0;
 		total = 0;
@@ -345,6 +349,9 @@ public class ClientgestatBean {
 				totalant = totalant + c.getReste();
 		totals = df.format(total);
 		totalants = df.format(totalant);
+		LOG.log(Level.INFO,
+				"Gestat.ClientgestatBean#getclient done depassement={0} avance={1} totalDep={2} totalAv={3}",
+				new Object[] { listclient == null ? -1 : listclient.size(), listclient2 == null ? -1 : listclient2.size(), totals, totalants });
 		return SUCCESS;
 	}
 

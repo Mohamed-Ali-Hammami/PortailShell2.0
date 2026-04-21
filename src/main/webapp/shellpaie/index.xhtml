@@ -18,63 +18,75 @@
 				<ui:include src="/shellpaie/fragments/home.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'employees'}">
+				<h:outputText value="#{PaieBean.getAllEmployee()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/listemplyee.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'avances'}">
+				<h:outputText value="#{AvanceBean.getAllavance()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/gestion_des_avances.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'pointage'}">
+				<h:outputText value="#{PretBean.Pointage()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/pointage.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'paie-declaree'}">
+				<h:outputText value="#{PaisBeans.getAllPai()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/paie.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'paie-non-declaree'}">
+				<h:outputText value="#{PaisBeans.getAllPai2()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/paieNondeclaree.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'fiche-paie'}">
+				<h:outputText value="#{PaisBeans.etat()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/fiche_de_paie.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'gestion-elements'}">
+				<h:outputText value="#{PaieBean.allGestions()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/gestion_des_elements_de_la_paie.xhtml" />
 			</c:when>
-			<c:when test="#{param.view eq 'edition'}">
-				<ui:include src="/shellpaie/fragments/edition.xhtml" />
-			</c:when>
-			<c:when test="#{param.view eq 'historique'}">
-				<ui:include src="/shellpaie/fragments/historique.xhtml" />
-			</c:when>
 			<c:when test="#{param.view eq 'journal-declare'}">
+				<h:outputText value="#{PaisBeans.journal()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/journal.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'journal-non-declare'}">
+				<h:outputText value="#{PaisBeans.journalNondeclare()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/journalNondeclaree.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'journal-total'}">
+				<h:outputText value="#{PaisBeans.journaltotal()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/journaltotal.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'ordre-virement'}">
+				<h:outputText value="#{PaisBeans.virement()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/ordre_virement.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'administration'}">
+				<h:outputText value="#{PaieBean.tableauSalaires()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/categorie.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'conge-pointage'}">
+				<h:outputText value="#{CongeBean.Pointageconge()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/pointageconge.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'conge-etat'}">
+				<h:outputText value="#{CongeBean.etatPointage()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/etatconge.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'conge-journal'}">
+				<h:outputText value="#{CongeBean.journalconge()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/journalconge.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'prime-note'}">
+				<h:outputText value="#{NoteBean.note()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/note_annuaire.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'prime-etat'}">
+				<h:outputText value="#{NoteBean.etatprime()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/etatprime.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'prime-journal'}">
+				<h:outputText value="#{NoteBean.journalprime()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/journalprime.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'EtatPresence'}">
@@ -84,12 +96,15 @@
 				<ui:include src="/shellpaie/fragments/ajouter_element_de_la_paie.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'categorie'}">
+				<h:outputText value="#{PaieBean.tableauSalaires()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/categorie.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'edition'}">
+				<h:outputText value="#{PaisBeans.journal()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/edition.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etat_avance'}">
+				<h:outputText value="#{PaisBeans.initializeEtatAvance()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/etat_avance.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'etatannuel'}">
@@ -111,15 +126,18 @@
 				<ui:include src="/shellpaie/fragments/fiche_de_paieemployee.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'gestion_des_avances'}">
+				<h:outputText value="#{AvanceBean.getAllavance()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/gestion_des_avances.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'gestion_des_elements_de_la_paie'}">
+				<h:outputText value="#{PaieBean.allGestions()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/gestion_des_elements_de_la_paie.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'gestion_des_prets'}">
 				<ui:include src="/shellpaie/fragments/gestion_des_prets.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'historique'}">
+				<h:outputText value="#{PaisBeans.historique_empl()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/historique.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'historique_employee'}">
@@ -132,9 +150,11 @@
 				<ui:include src="/shellpaie/fragments/impressionphotos.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'journal'}">
+				<h:outputText value="#{PaisBeans.journal()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/journal.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'journalNondeclaree'}">
+				<h:outputText value="#{PaisBeans.journalNondeclare()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/journalNondeclaree.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'journalNondeclaree2'}">
@@ -150,9 +170,11 @@
 				<ui:include src="/shellpaie/fragments/journalrappel.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'journaltotal'}">
+				<h:outputText value="#{PaisBeans.journaltotal()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/journaltotal.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'listemplyee'}">
+				<h:outputText value="#{PaieBean.getAllEmployee()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/listemplyee.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'modifierEmployee'}">
@@ -171,36 +193,43 @@
 				<ui:include src="/shellpaie/fragments/note_employee.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'nouveauEmployee'}">
+				<h:outputText value="#{PaieBean.nouvemployee()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/nouveauEmployee.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'nouvelPret'}">
+				<h:outputText value="#{PretBean.nouveauPret()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/nouvelPret.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'nouvelleAvance'}">
+				<h:outputText value="#{AvanceBean.nouvelleAvance()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/nouvelleAvance.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'ordre_virement'}">
+				<h:outputText value="#{PaisBeans.virement()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/ordre_virement.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'paie'}">
+				<h:outputText value="#{PaisBeans.getAllPai()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/paie.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'paieNondeclaree'}">
+				<h:outputText value="#{PaisBeans.getAllPai2()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/paieNondeclaree.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'paieNondeclareeRendement'}">
+				<h:outputText value="#{PaisBeans.getAllPai3()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/paieNondeclareeRendement.xhtml" />
 			</c:when>
-			<c:when test="#{param.view eq 'pointage'}">
-				<ui:include src="/shellpaie/fragments/pointage.xhtml" />
-			</c:when>
 			<c:when test="#{param.view eq 'pointageconge'}">
+				<h:outputText value="#{CongeBean.Pointageconge()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/pointageconge.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'pointageemployee'}">
+				<h:outputText value="#{PaieBean.pointageemployee()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/pointageemployee.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'rappel'}">
+				<h:outputText value="#{RappelBean.accesRappel()}" style="display:none" />
 				<ui:include src="/shellpaie/fragments/rappel.xhtml" />
 			</c:when>
 			<c:when test="#{param.view eq 'test'}">

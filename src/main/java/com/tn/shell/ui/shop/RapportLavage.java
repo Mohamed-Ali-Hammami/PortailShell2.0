@@ -3,6 +3,7 @@ package com.tn.shell.ui.shop;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -57,6 +58,12 @@ public class RapportLavage {
 	 }
 	 
 	 public String getrapportvidange() {
+		 if (date1 == null) {
+			 date1 = new Date();
+		 }
+		 if (date2 == null) {
+			 date2 = new Date();
+		 }
 		 DecimalFormat df=new DecimalFormat("0.000");
 			DecimalFormat dfs=new DecimalFormat("0");
 			mois=getMoisbyIntger(date1.getMonth()+1);
@@ -65,16 +72,21 @@ public class RapportLavage {
 			 double t1=0;double t2=0; 
 			 double r1=0;double r2=0; 
 				List<String> ld = new ArrayList<String>();
-				listlavage=new ArrayList<Lavage>();
+				listvidange=new ArrayList<Vidange>();
 				SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
-				for (int i = date1.getDate(); i <= date2.getDate(); i++) {
-					Date d = new Date();
-					d.setDate(i);
-					d.setMonth(date1.getMonth());
-					d.setYear(date1.getYear());
-					String ds = sf.format(d);
-					ld.add(ds);
-					}
+				Calendar cursor = Calendar.getInstance();
+				cursor.setTime(date1);
+				Calendar end = Calendar.getInstance();
+				end.setTime(date2);
+				if (cursor.after(end)) {
+					Calendar temp = cursor;
+					cursor = end;
+					end = temp;
+				}
+				while (!cursor.after(end)) {
+					ld.add(sf.format(cursor.getTime()));
+					cursor.add(Calendar.DATE, 1);
+				}
 				for(String s:ld) {
 
 					//List<Lignevente> listv=new ArrayList<Lignevente>();
@@ -129,6 +141,12 @@ public class RapportLavage {
 		 return SUCCESS;
 	 }
 	public String getrapportlavage() {
+		if (date1 == null) {
+			date1 = new Date();
+		}
+		if (date2 == null) {
+			date2 = new Date();
+		}
 		DecimalFormat df=new DecimalFormat("0.000");
 		DecimalFormat dfs=new DecimalFormat("0");
 		mois=getMoisbyIntger(date1.getMonth()+1);
@@ -140,14 +158,18 @@ public class RapportLavage {
 		List<String> ld = new ArrayList<String>();
 		listlavage=new ArrayList<Lavage>();
 		SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
-		for (int i = date1.getDate(); i <= date2.getDate(); i++) {
-			Date d = new Date();
-			d.setDate(i);
-			d.setMonth(date1.getMonth());
-			d.setYear(date1.getYear());
-			String ds = sf.format(d);
-			ld.add(ds);
-
+		Calendar cursor = Calendar.getInstance();
+		cursor.setTime(date1);
+		Calendar end = Calendar.getInstance();
+		end.setTime(date2);
+		if (cursor.after(end)) {
+			Calendar temp = cursor;
+			cursor = end;
+			end = temp;
+		}
+		while (!cursor.after(end)) {
+			ld.add(sf.format(cursor.getTime()));
+			cursor.add(Calendar.DATE, 1);
 		}
 		for (String s : ld) {
 			//List<Lignevente> listv=new ArrayList<Lignevente>();
@@ -274,6 +296,11 @@ public class RapportLavage {
 	}
 
 	public List<Lavage> getListlavage() {
+		if (listlavage == null) {
+			date1 = new Date();
+			date2 = new Date();
+			getrapportlavage();
+		}
 		return listlavage;
 	}
 
@@ -298,6 +325,11 @@ public class RapportLavage {
 	}
 
 	public List<Vidange> getListvidange() {
+		if (listvidange == null) {
+			date1 = new Date();
+			date2 = new Date();
+			getrapportvidange();
+		}
 		return listvidange;
 	}
 

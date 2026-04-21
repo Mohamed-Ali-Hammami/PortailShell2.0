@@ -7,7 +7,7 @@ import javax.persistence.*;
  
 
 @Entity
-@Table(name="Vhecule")
+@Table(name="vhecule")
  
 public class Vhecule  {
 
@@ -25,6 +25,10 @@ private Integer id;
 		private Statut statut= Statut.ACTIF;
 	 @Embedded
 	 private Paramettrevehicule paramettrevehicule;
+	 private int kilomtrageactuel = 0;
+	 private int lastkilometrage = 0;
+	 private int newkilometrage = 0;
+	 private int difkilometrage = 0;
 	// lien one to many avec bl
 		@OneToMany(mappedBy = "vhecule", cascade = { CascadeType.MERGE,
 				CascadeType.REMOVE, CascadeType.REFRESH })
@@ -114,6 +118,38 @@ private Integer id;
 	}
 	public void setSalchauf(double salchauf) {
 		this.salchauf = salchauf;
+	}
+
+	public int getKilomtrageactuel() {
+		return kilomtrageactuel;
+	}
+
+	public void setKilomtrageactuel(int kilomtrageactuel) {
+		this.kilomtrageactuel = kilomtrageactuel;
+	}
+
+	public int getLastkilometrage() {
+		return lastkilometrage;
+	}
+
+	public void setLastkilometrage(int lastkilometrage) {
+		this.lastkilometrage = lastkilometrage;
+	}
+
+	public int getNewkilometrage() {
+		return newkilometrage;
+	}
+
+	public void setNewkilometrage(int newkilometrage) {
+		this.newkilometrage = newkilometrage;
+	}
+
+	public int getDifkilometrage() {
+		return difkilometrage;
+	}
+
+	public void setDifkilometrage(int difkilometrage) {
+		this.difkilometrage = difkilometrage;
 	}
 	  
 	  

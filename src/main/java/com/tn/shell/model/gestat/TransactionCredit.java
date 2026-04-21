@@ -44,6 +44,8 @@ private String vhecule;
 private String pistolet;
 private String prix;
 private String tel;
+private double pourcentage = 0;
+private double trajet = 0;
 private double pris;
 private double totalttac;
 private boolean affecte=false;
@@ -212,6 +214,18 @@ public Facture getFacture() {
 public void setFacture(Facture facture) {
 	this.facture = facture;
 } 
+public double getPourcentage() {
+	return pourcentage;
+}
+public void setPourcentage(double pourcentage) {
+	this.pourcentage = pourcentage;
+}
+public double getTrajet() {
+	return trajet;
+}
+public void setTrajet(double trajet) {
+	this.trajet = trajet;
+}
 
 
 

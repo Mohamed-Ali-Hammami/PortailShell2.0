@@ -32,7 +32,9 @@ public class AchatDaoImpl implements AchatDAO {
 	@Transactional
 	public List<Achat> getAchatbystatusfacture(Status status,Fournisseur f){
 		List<Achat> result = em.createQuery("SELECT a FROM Achat a  where a.statut = :statut and a.factureachat.status = :status  and a.fournisseur.nom = :nom", Achat.class)
-				.setParameter("statut", Statut.ACTIF).setParameter("status", status).setParameter("nom", f.getNom()).getResultList();
+				.setParameter("statut", Statut.ACTIF)
+				.setParameter("status", status == null ? null : status.toDatabaseValue())
+				.setParameter("nom", f.getNom()).getResultList();
 		return result;
 	}
 	@Transactional

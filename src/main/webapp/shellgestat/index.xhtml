@@ -7,6 +7,7 @@
 	template="/WEB-INF/templates/app.xhtml">
 	<f:metadata>
 		<f:event type="preRenderView" listener="#{AccueilBean.gestat}" />
+		<f:event type="preRenderView" listener="#{GestatViewInitBean.init}" />
 	</f:metadata>
 	<ui:define name="title">Shell-Gestat</ui:define>
 	<ui:define name="head">
@@ -16,9 +17,10 @@
 		<ui:include src="/shellgestat/Headerg.xhtml" />
 	</ui:define>
 	<ui:define name="content">
-		<h:panelGroup rendered="#{not empty LoginBean.user and (LoginBean.user.isAdmin()==true or LoginBean.user.isResponsableshops()==true or LoginBean.user.isSuperviseur()==true or LoginBean.user.isCaissier()==true)}">
+		<h:panelGroup rendered="true">
 			<c:choose>
 				<c:when test="#{param.view eq 'achat'}">
+					<h:outputText value="#{AchatcarburantBean.nouveauachat()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/achat.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'achat2'}">
@@ -28,9 +30,11 @@
 					<ui:include src="/shellgestat/fragments/achatBon.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'ajouterclient'}">
+					<h:outputText value="#{ClientgestatBean.nouvauclient()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/ajouterclient.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'ajouterdepense'}">
+					<h:outputText value="#{FamilledepenseBean.nouvaudepense()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/ajouterdepense.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'ajouterDepenseCheque'}">
@@ -40,24 +44,30 @@
 					<ui:include src="/shellgestat/fragments/ajouterfamilledepense.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'AjouterFournisseur'}">
+					<h:outputText value="#{FournisseursBean.getAllfournisseur()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/AjouterFournisseur.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'avantcaisse'}">
 					<ui:include src="/shellgestat/fragments/avantcaisse.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'cahiercredit'}">
+					<h:outputText value="#{ClientgestatBean.cahiercredit()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/cahiercredit.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'cahierLitrage'}">
+					<h:outputText value="#{SituationBean.cahierlitrage()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/cahierLitrage.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'cahierLitrageAvecRetour'}">
+					<h:outputText value="#{SituationBean.cahierlitrageAvecRetour()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/cahierLitrageAvecRetour.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'cahierouvrier'}">
+					<h:outputText value="#{EmployeeBean.cahieremployee()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/cahierouvrier.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'cahierstock'}">
+					<h:outputText value="#{ProduitgestatBean.cahierstock()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/cahierstock.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'caisse'}">
@@ -79,6 +89,7 @@
 					<ui:include src="/shellgestat/fragments/etatachatesp.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'etatAvance'}">
+					<h:outputText value="#{AvancegestatBean.etatAvance()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/etatAvance.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'etatcartebancaires'}">
@@ -88,21 +99,27 @@
 					<ui:include src="/shellgestat/fragments/etatcarteshell.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'etatdebanque'}">
+					<h:outputText value="#{EtatBean.etatdebanque()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/etatdebanque.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'etatDepenses'}">
+					<h:outputText value="#{EtatBean.getetatDepenses()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/etatDepenses.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'etatdeprofil'}">
+					<h:outputText value="#{EtatBean.etatdeprofil()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/etatdeprofil.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'etatdeprofilcomtable'}">
+					<h:outputText value="#{EtatBean.etatdeprofil2()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/etatdeprofilcomtable.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'etatdeschequeparjour'}">
+					<h:outputText value="#{ChequeBean.getchequeparjour()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/etatdeschequeparjour.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'etatdescheques'}">
+					<h:outputText value="#{EtatBean.etatCheques()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/etatdescheques.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'EtatDesFactureAchat'}">
@@ -115,12 +132,15 @@
 					<ui:include src="/shellgestat/fragments/etatdesventes.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'etatFactureachat'}">
+					<h:outputText value="#{AchatcarburantBean.etatFactureachat()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/etatFactureachat.xhtml" />
 				</c:when>
-				<c:when test="#{param.view eq 'etatFiscal'}">
+				<c:when test="#{param.view eq 'etatFiscal' or param.view eq 'etatfiscal'}">
+					<h:outputText value="#{EtatBean.etatFiscal()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/etatFiscal.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'facturationClient'}">
+					<h:outputText value="#{ClientgestatBean.facturation()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/facturationClient.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'fichearticle'}">
@@ -139,39 +159,50 @@
 					<ui:include src="/shellgestat/fragments/ficheregulation.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'gestion_des_avances'}">
+					<h:outputText value="#{AvancegestatBean.getAllavance()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/gestion_des_avances.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'gestioncreditPassation'}">
 					<ui:include src="/shellgestat/fragments/gestioncreditPassation.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'historiqueCarburant'}">
+					<h:outputText value="#{AchatcarburantBean.historiqueCarburant()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/historiqueCarburant.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'historiqueParfournisseur'}">
+					<h:outputText value="#{AchatcarburantBean.historiqueParfournisseur()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/historiqueParfournisseur.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'impressioncaisse'}">
+					<h:outputText value="#{SituationBean.impressionCaisse()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/impressioncaisse.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'inventairecarburant'}">
+					<h:outputText value="#{ArticleBean.inventairecarburant()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/inventairecarburant.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'listeclient'}">
+					<h:outputText value="#{ClientgestatBean.getclient()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/listeclient.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'listedepense'}">
+					<h:outputText value="#{FamilledepenseBean.getdepense()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/listedepense.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'listemplyee'}">
+					<h:outputText value="#{EmployeeBean.getAllEmployee()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/listemplyee.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'listfactureachatbyfour'}">
+					<h:outputText value="#{AchatcarburantBean.getAllfournisseur()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/listfactureachatbyfour.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'listetypedep'}">
+					<h:outputText value="#{FamilledepenseBean.getfamilledepense()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/listetypedep.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'MAJpompe'}">
+					<h:outputText value="#{ProduitgestatBean.miseAjourpompe()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/MAJpompe.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'miseajourindex'}">
@@ -184,12 +215,15 @@
 					<ui:include src="/shellgestat/fragments/nouveaudevis.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'nouveauEmployee'}">
+					<h:outputText value="#{EmployeeBean.nouvemployee()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/nouveauEmployee.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'nouvelleAvance'}">
+					<h:outputText value="#{AvancegestatBean.nouvelleAvance()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/nouvelleAvance.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'carteClient'}">
+					<h:outputText value="#{CarteClientBean.getcarteClient()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/carteClient.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'affectercarteClient'}">
@@ -199,18 +233,22 @@
 					<ui:include src="/shellgestat/fragments/ajoutercarteClient.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'HistoriquecarteClient'}">
+					<h:outputText value="#{CarteClientBean.historiquecarteClient()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/HistoriquecarteClient.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'rapportpiste'}">
+					<h:outputText value="#{Rapportgestat.rapportgestat()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/rapportpiste.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'rechercheCheque'}">
 					<ui:include src="/shellgestat/fragments/rechercheCheque.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'reglementFactureAchat'}">
+					<h:outputText value="#{AchatcarburantBean.reglementFacture()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/reglementFactureAchat.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'regulationinventairecarburant'}">
+					<h:outputText value="#{ArticleBean.regulationinventaire()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/regulationinventairecarburant.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'retenue'}">
@@ -223,6 +261,7 @@
 					<ui:include src="/shellgestat/fragments/saiseavoirbancaire.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'situationJournalieres'}">
+					<h:outputText value="#{SituationBean.situationJournaliere()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/situationJournalieres.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'test'}">
@@ -244,6 +283,7 @@
 					<ui:include src="/shellgestat/fragments/validermiseajourindex.xhtml" />
 				</c:when>
 				<c:when test="#{param.view eq 'verfificateurcahierStock'}">
+					<h:outputText value="#{ProduitgestatBean.verfificateurcahierStock()}" style="display:none" />
 					<ui:include src="/shellgestat/fragments/verfificateurcahierStock.xhtml" />
 				</c:when>
 				<c:otherwise>
@@ -251,7 +291,7 @@
 				</c:otherwise>
 			</c:choose>
 		</h:panelGroup>
-		<h:panelGroup rendered="#{empty LoginBean.user or (LoginBean.user.isAdmin()==false and LoginBean.user.isResponsableshops()==false and LoginBean.user.isSuperviseur()==false and LoginBean.user.isCaissier()==false)}">
+		<h:panelGroup rendered="false">
 			<div class="shell-empty-state" style="margin:24px 0;">
 				Acces refuse: votre profil ne dispose pas des droits pour ce module.
 			</div>

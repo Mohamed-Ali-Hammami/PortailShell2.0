@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -30,6 +32,7 @@ public class ClientBean {
 	private static final long serialVersionUID = 1L;
 	private static final String SUCCESS = "success";
 	private static final String ERROR = "error";
+	private static final Logger LOG = Logger.getLogger(ClientBean.class.getName());
 
 	 
 
@@ -54,6 +57,7 @@ public class ClientBean {
 	public String getclient() {
 		listclient=new ArrayList<Client>();
 		listclient = serviceClient.getAll();
+		LOG.log(Level.INFO, "Transport.ClientBean#getclient loaded {0} clients", listclient == null ? 0 : listclient.size());
 		/*for(Client c:listclient){
 			//c.setCompteur(serviceBonLivraison.getnbBLparclient(c.getCode()));
 			//c.setChiffreaffaire(serviceBonLivraison.getchiifreaffaireparclient(c.getCode()));
@@ -87,6 +91,7 @@ public String nouvauclient(){
 			serviceClient.save(client);
 			listclient = new ArrayList<Client>();
 			listclient = serviceClient.getAll();
+			LOG.log(Level.INFO, "Transport.ClientBean#saveclient saved client nom={0}, total now={1}", new Object[] { nom, listclient == null ? 0 : listclient.size() });
 			matriculefiscal = null;
 			nom = null;
 			address = null;			
@@ -98,8 +103,10 @@ public String nouvauclient(){
 	public String updateClient(Client client) {
 		try {
 			getServiceClient().update(client);
+			LOG.log(Level.INFO, "Transport.ClientBean#updateClient updated code={0}, nom={1}", new Object[] { client.getCode(), client.getNom() });
 			return SUCCESS;
 		} catch (DataAccessException e) {
+			LOG.log(Level.SEVERE, "Transport.ClientBean#updateClient failed for code=" + (client == null ? null : client.getCode()), e);
 		}
 		return ERROR;
 	}
@@ -121,6 +128,7 @@ public String nouvauclient(){
 		serviceClient.delete(client2);
 		listclient = new ArrayList<Client>();
 		listclient = serviceClient.getAll();
+		LOG.log(Level.INFO, "Transport.ClientBean#deleteclient deactivated code={0}, total active now={1}", new Object[] { client2 == null ? null : client2.getCode(), listclient == null ? 0 : listclient.size() });
 		return SUCCESS;
 	}
 
@@ -161,6 +169,9 @@ public String nouvauclient(){
 	}
 
 	public List<Client> getListclient() {
+		if ((listclient == null || listclient.isEmpty()) && serviceClient != null) {
+			listclient = serviceClient.getAll();
+		}
 		return listclient;
 	}
 

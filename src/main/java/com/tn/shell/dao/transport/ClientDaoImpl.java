@@ -14,6 +14,7 @@ import com.tn.shell.model.transport.*;
 public class ClientDaoImpl implements ClientDao {
 	@PersistenceContext
 	 private EntityManager em;
+	private static final String ACTIVE_STATUS_SQL = "(f.statut is null or trim(f.statut) = '' or lower(trim(f.statut)) = 'actif')";
 	 
 	 @Transactional
 	public void save(Client client) {
@@ -23,18 +24,41 @@ public class ClientDaoImpl implements ClientDao {
 	 @Transactional
 	 public List<String> getAllnom(){
 		 List<String> l=new ArrayList<String>();
-		 List<Client> result = em.createQuery("SELECT c  FROM Client c where c.statut = :statut ", Client.class)
-					.setParameter("statut", Statut.ACTIF) 
-					.getResultList();
+		 List<Client> result = getAll();
 		if(result!=null) for(Client c:result) l.add(c.getNom());
 		    return l  ;
 	 }
-	 @Transactional
+	@Transactional
 	public List<Client> getAll() {
-		List<Client> result = em.createQuery("SELECT c FROM Client c where c.statut = :statut ", Client.class)
-				.setParameter("statut", Statut.ACTIF)
+		try {
+			List<Client> result = em.createQuery("SELECT c FROM Client c where c.statut = :statut ", Client.class)
+					.setParameter("statut", Statut.ACTIF)
+					.getResultList();
+			if (result != null && !result.isEmpty()) {
+				return result;
+			}
+		} catch (RuntimeException ex) {
+		}
+		List<Object[]> rows = em.createNativeQuery(
+				"SELECT code,mf,tel,adresse,compteur,ca,nom,nbre,transport,statut "
+						+ "FROM client WHERE " + ACTIVE_STATUS_SQL + " ORDER BY CAST(code AS UNSIGNED) DESC")
 				.getResultList();
-	    return result;
+		List<Client> clients = new ArrayList<Client>();
+		for (Object[] row : rows) {
+			Client client = new Client();
+			client.setCode(TransportTsvMapper.asInteger(row[0]));
+			client.setMf(TransportTsvMapper.asString(row[1]));
+			client.setTel(TransportTsvMapper.asString(row[2]));
+			client.setAdresse(TransportTsvMapper.asString(row[3]));
+			client.setCompteur(TransportTsvMapper.asInteger(row[4]));
+			client.setCa(TransportTsvMapper.asString(row[5]));
+			client.setNom(TransportTsvMapper.asString(row[6]));
+			client.setNbre(TransportTsvMapper.asString(row[7]));
+			client.setTransport(TransportTsvMapper.asDouble(row[8]));
+			client.setStatut(TransportTsvMapper.asStatut(row[9]));
+			clients.add(client);
+		}
+		return clients;
 	}
 	 @Transactional
 	public Client Findbynom(String nom) {

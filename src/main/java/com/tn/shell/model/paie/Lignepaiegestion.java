@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 @Entity
 @Table(name = "lignepaiegestion")
 public class Lignepaiegestion {
@@ -33,6 +36,7 @@ public class Lignepaiegestion {
 		private String totalaffichers;
      @ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "paieid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Paie paie; 
  
 	@ManyToOne(cascade = { CascadeType.MERGE })

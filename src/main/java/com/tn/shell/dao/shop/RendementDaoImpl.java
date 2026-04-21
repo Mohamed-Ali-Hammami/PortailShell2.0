@@ -115,25 +115,35 @@ public class RendementDaoImpl implements rendementDAO {
 	}
 
 		
-		public double getnbvBydate2(String d1,Poste poste,TypeLavage typelavage) { 	Query q = em.createNativeQuery(
-				"SELECT SUM(a.nbvoiture+a.nbsemi) from Rendement a  where a.statut ='ACTIF'   and a.dates = '"
-						+ d1 +  "' and a.poste = '" +poste+"'and a.typelavage = '"+typelavage+"'"); 
+		public double getnbvBydate2(String d1,Poste poste,TypeLavage typelavage) {
+		Query q = em.createQuery(
+				"SELECT SUM(a.nbvoiture+a.nbsemi) from Rendement a "
+						+ "where a.statut = :statut and a.dates = :d1 and a.poste = :poste and a.typelavage = :typelavage");
 		try {
-			Double result = (Double) q.getSingleResult();
-
-			return result;
+			Number result = (Number) q
+					.setParameter("statut", Statut.ACTIF)
+					.setParameter("d1", d1)
+					.setParameter("poste", poste)
+					.setParameter("typelavage", typelavage)
+					.getSingleResult();
+			return result == null ? 0 : result.doubleValue();
 		} catch (Exception e2) {
 			return 0;
 		}
 	}
 		
-		public double getmontantvBydate2(String d1,Poste poste,TypeLavage typelavage) { 	Query q = em.createNativeQuery(
-				"SELECT SUM(a.montantv+montants) from Rendement a  where a.statut ='ACTIF'   and a.dates = '"
-						+ d1+  "' and a.poste = '" +poste+"' and a.typelavage = '"+typelavage+"'"); 
+		public double getmontantvBydate2(String d1,Poste poste,TypeLavage typelavage) {
+		Query q = em.createQuery(
+				"SELECT SUM(a.montantv+a.montants) from Rendement a "
+						+ "where a.statut = :statut and a.dates = :d1 and a.poste = :poste and a.typelavage = :typelavage");
 		try {
-			Double result = (Double) q.getSingleResult();
-
-			return result;
+			Number result = (Number) q
+					.setParameter("statut", Statut.ACTIF)
+					.setParameter("d1", d1)
+					.setParameter("poste", poste)
+					.setParameter("typelavage", typelavage)
+					.getSingleResult();
+			return result == null ? 0 : result.doubleValue();
 		} catch (Exception e2) {
 			return 0;
 		}

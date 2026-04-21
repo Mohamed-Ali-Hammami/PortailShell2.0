@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -32,6 +34,7 @@ public class FamilledepenseBean {
 	private static final long serialVersionUID = 1L;
 	private static final String SUCCESS = "success";
 	private static final String ERROR = "error";
+	private static final Logger LOG = Logger.getLogger(FamilledepenseBean.class.getName());
 
 	@ManagedProperty(value = "#{ServiceFamilleDepensegestat}")
 	ServiceFamilleDepensegestat serviceFamilledepense;
@@ -63,12 +66,17 @@ public class FamilledepenseBean {
 	private String matricule;
 
 	public String getfamilledepense() {
+		LOG.log(Level.INFO, "Gestat.FamilledepenseBean#getfamilledepense start serviceNull={0}", serviceFamilledepense == null);
 		listfamilledepense = new ArrayList<Familledepensegestat>();
 		listfamilledepense = serviceFamilledepense.getAll();
+		LOG.log(Level.INFO, "Gestat.FamilledepenseBean#getfamilledepense loaded {0} familles",
+				listfamilledepense == null ? -1 : listfamilledepense.size());
 		return SUCCESS;
 	}
 
 	public String getdepense() {
+		LOG.log(Level.INFO, "Gestat.FamilledepenseBean#getdepense start serviceDepenseNull={0} serviceFamilleNull={1}",
+				new Object[] { serviceDepense == null, serviceFamilledepense == null });
 		List<Familledepensegestat> l = new ArrayList<Familledepensegestat>();
 		listesdepenses = new ArrayList<String>();
 		l = serviceFamilledepense.getAll();
@@ -78,6 +86,8 @@ public class FamilledepenseBean {
 
 		listdepense = new ArrayList<Depensegestat>();
 		listdepense = serviceDepense.getAll();
+		LOG.log(Level.INFO, "Gestat.FamilledepenseBean#getdepense loaded depenses={0}, familles={1}",
+				new Object[] { listdepense == null ? -1 : listdepense.size(), l == null ? -1 : l.size() });
 		return SUCCESS;
 	}
 
@@ -291,6 +301,8 @@ public class FamilledepenseBean {
 	}
 
 	public List<Familledepensegestat> getListfamilledepense() {
+		LOG.log(Level.INFO, "Gestat.FamilledepenseBean#getListfamilledepense getter size={0}",
+				listfamilledepense == null ? -1 : listfamilledepense.size());
 		return listfamilledepense;
 	}
 

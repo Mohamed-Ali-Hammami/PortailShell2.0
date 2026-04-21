@@ -37,7 +37,7 @@ public class AvancegestatDaoImpl implements AvancegestatDAO {
 
     @Transactional
     public List<Avancegestat> getAll() {
-        List<Avancegestat> result = em.createQuery("SELECT a FROM Avancegestat a  where a.statut = :statut", Avancegestat.class)
+        List<Avancegestat> result = em.createQuery("SELECT a FROM Avancegestat a JOIN a.employee e where a.statut = :statut", Avancegestat.class)
                 .setParameter("statut", Statut.ACTIF)
                 .getResultList();
         if (result.isEmpty()) {
@@ -47,21 +47,21 @@ public class AvancegestatDaoImpl implements AvancegestatDAO {
 
     @Transactional
     public List<Avancegestat> getAvancebyCaisse(Caisse c) {
-        return em.createQuery("SELECT a FROM Avancegestat a where a.statut = :statut   and a.caisse.id = :caiise and a.montant_avance != 0 order by a.employee.matricule", Avancegestat.class)
+        return em.createQuery("SELECT a FROM Avancegestat a JOIN a.employee e where a.statut = :statut and a.caisse.id = :caiise and a.montant_avance != 0 order by e.matricule", Avancegestat.class)
                 .setParameter("statut", Statut.ACTIF)
                 .setParameter("caiise", c.getId())
                 .getResultList();
     }
 
     public List<Avancegestat> getAvancebDate(String date) {
-        return em.createQuery("SELECT a FROM Avancegestat a where a.statut = :statut  and a.montant_avance != 0  and a.dates= :caiise order by a.employee.matricule", Avancegestat.class)
+        return em.createQuery("SELECT a FROM Avancegestat a JOIN a.employee e where a.statut = :statut and a.montant_avance != 0 and a.dates= :caiise order by e.matricule", Avancegestat.class)
                 .setParameter("statut", Statut.ACTIF)
                 .setParameter("caiise", date)
                 .getResultList();
     }
 
     public List<Avancegestat> getAvancebDateandemployee(String date, Employee e) {
-        return em.createQuery("SELECT a FROM Avancegestat a where a.statut = :statut   and a.dates= :caiise and a.employee.matricule = :mat ", Avancegestat.class)
+        return em.createQuery("SELECT a FROM Avancegestat a JOIN a.employee emp where a.statut = :statut and a.dates= :caiise and emp.matricule = :mat ", Avancegestat.class)
                 .setParameter("statut", Statut.ACTIF)
                 .setParameter("caiise", date)
                 .setParameter("mat", e.getMatricule())
@@ -70,7 +70,7 @@ public class AvancegestatDaoImpl implements AvancegestatDAO {
 
     @Transactional
     public List<Avancegestat> getAvancesByEmployeebetweendate(Employee e, Date date1, Date date2) {
-        return em.createQuery("SELECT a FROM Avancegestat a  where a.statut = :statut and a.employee.matricule = :matricule and a.date between  :d1 and :d2", Avancegestat.class)
+        return em.createQuery("SELECT a FROM Avancegestat a JOIN a.employee emp where a.statut = :statut and emp.matricule = :matricule and a.date between :d1 and :d2", Avancegestat.class)
                 .setParameter("statut", Statut.ACTIF)
                 .setParameter("matricule", e.getMatricule())
                 .setParameter("d1", date1)
@@ -80,7 +80,7 @@ public class AvancegestatDaoImpl implements AvancegestatDAO {
 
     @Transactional
     public List<Avancegestat> getAvancesBybetweendate(Date date1, Date date2) {
-        return em.createQuery("SELECT a FROM Avancegestat a  where a.statut = :statut  and  a.date between  :d1 and :d2", Avancegestat.class)
+        return em.createQuery("SELECT a FROM Avancegestat a JOIN a.employee e where a.statut = :statut and a.date between :d1 and :d2", Avancegestat.class)
                 .setParameter("statut", Statut.ACTIF)
                 .setParameter("d1", date1)
                 .setParameter("d2", date2)
@@ -89,7 +89,7 @@ public class AvancegestatDaoImpl implements AvancegestatDAO {
 
     @Transactional
     public List<Avancegestat> getAvancesByEmployee(Employee e, Integer annee, Integer mois) {
-        return em.createQuery("SELECT a FROM Avancegestat a  where a.statut = :statut and a.employee.matricule = :matricule and a.annee = :annee and a.mois = :mois", Avancegestat.class)
+        return em.createQuery("SELECT a FROM Avancegestat a JOIN a.employee emp where a.statut = :statut and emp.matricule = :matricule and a.annee = :annee and a.mois = :mois", Avancegestat.class)
                 .setParameter("statut", Statut.ACTIF)
                 .setParameter("matricule", e.getMatricule())
                 .setParameter("annee", annee)
@@ -122,7 +122,7 @@ public class AvancegestatDaoImpl implements AvancegestatDAO {
 
     @Transactional
     public Avancegestat getavancebyid(Integer id) {
-        List<Avancegestat> result = em.createQuery("SELECT a FROM Avancegestat a where a.statut = :statut   and a.id = :caiise", Avancegestat.class)
+        List<Avancegestat> result = em.createQuery("SELECT a FROM Avancegestat a JOIN a.employee e where a.statut = :statut and a.id = :caiise", Avancegestat.class)
                 .setParameter("statut", Statut.ACTIF)
                 .setParameter("caiise", id)
                 .getResultList();
@@ -133,7 +133,7 @@ public class AvancegestatDaoImpl implements AvancegestatDAO {
     }
 
     public List<Avancegestat> getAvancebDate(Date date1, Date date2, Employee e) {
-        List<Avancegestat> result = em.createQuery("SELECT u FROM  Avancegestat u where u.date between :d1 and :d2 and u.employee.matricule = :mat and u.montant_avance !=0", Avancegestat.class)
+        List<Avancegestat> result = em.createQuery("SELECT u FROM Avancegestat u JOIN u.employee emp where u.date between :d1 and :d2 and emp.matricule = :mat and u.montant_avance != 0", Avancegestat.class)
                 .setParameter("d1", date1)
                 .setParameter("d2", date2)
                 .setParameter("mat", e.getMatricule())

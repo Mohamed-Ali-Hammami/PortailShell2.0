@@ -17,6 +17,7 @@ import com.tn.shell.model.transport.*;
 public class VheculeDaoImpl implements VheculeDao {
 	@PersistenceContext
 	private EntityManager em;
+	private static final String ACTIVE_STATUS_SQL = "(f.statut is null or trim(f.statut) = '' or lower(trim(f.statut)) = 'actif')";
 
 	@Transactional
 	public void save(Vhecule Vhecule) {
@@ -27,9 +28,7 @@ public class VheculeDaoImpl implements VheculeDao {
 	@Transactional
 	public List<String> getAllnom() {
 		List<String> l = new ArrayList<String>();
-		List<Vhecule> result = em
-				.createQuery("SELECT  c FROM Vhecule c where c.statut = :statut ", Vhecule.class)
-				.setParameter("statut", Statut.ACTIF).getResultList();
+		List<Vhecule> result = getAll();
 		if (result != null)
 			for (Vhecule c : result)
 				l.add(c.getMatricule());
@@ -38,9 +37,28 @@ public class VheculeDaoImpl implements VheculeDao {
 
 	@Transactional
 	public List<Vhecule> getAll() {
-		List<Vhecule> result = em.createQuery("SELECT c FROM Vhecule c  where c.statut = :statut", Vhecule.class)
-				.setParameter("statut", Statut.ACTIF).getResultList();
-		return result;
+		try {
+			List<Vhecule> result = em.createQuery("SELECT c FROM Vhecule c  where c.statut = :statut", Vhecule.class)
+					.setParameter("statut", Statut.ACTIF).getResultList();
+			if (result != null && !result.isEmpty()) {
+				return result;
+			}
+		} catch (RuntimeException ex) {
+		}
+		List<Object[]> rows = em.createNativeQuery(
+				"SELECT id,matricule,numserie,statut FROM vhecule WHERE " + ACTIVE_STATUS_SQL
+						+ " ORDER BY CAST(id AS UNSIGNED) DESC")
+				.getResultList();
+		List<Vhecule> vhecules = new ArrayList<Vhecule>();
+		for (Object[] row : rows) {
+			Vhecule vhecule = new Vhecule();
+			vhecule.setId(TransportTsvMapper.asInteger(row[0]));
+			vhecule.setMatricule(TransportTsvMapper.asString(row[1]));
+			vhecule.setNumserie(TransportTsvMapper.asString(row[2]));
+			vhecule.setStatut(TransportTsvMapper.asStatut(row[3]));
+			vhecules.add(vhecule);
+		}
+		return vhecules;
 	}
 
 	@Transactional

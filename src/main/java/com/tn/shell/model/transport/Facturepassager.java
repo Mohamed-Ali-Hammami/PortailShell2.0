@@ -21,8 +21,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Type;
+
 @Entity
-@Table(name = "Facturepassager")
+@Table(name = "facturepassager")
 public class Facturepassager {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)	 
@@ -64,7 +66,7 @@ public class Facturepassager {
 	private String timbress;
 	 
 	@Enumerated(EnumType.STRING)
-    private Status status ;
+	private Status status;
 	@Enumerated(EnumType.STRING)
 	private Statut statut= Statut.ACTIF;
 	

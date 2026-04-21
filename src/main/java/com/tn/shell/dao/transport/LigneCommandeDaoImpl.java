@@ -19,6 +19,7 @@ public class LigneCommandeDaoImpl implements LigneCommandedao {
 	
 	 @PersistenceContext
 	 private EntityManager em;
+	 private static final String ACTIVE_STATUS_SQL = "(lc.statut is null or trim(lc.statut) = '' or lower(trim(lc.statut)) = 'actif')";
 	 
 	 @Transactional
 	public void save(Lignecommande c) {
@@ -27,13 +28,19 @@ public class LigneCommandeDaoImpl implements LigneCommandedao {
 	}
 	 @Transactional
 	 public List<Lignecommande> getLcbyBL(Bonlivraison bl){
-		 List<Lignecommande> result = em.createQuery("SELECT c FROM Lignecommande c where c.statut = :statut and c.bl.numero = :numero and c.bl.statut = :statut2", Lignecommande.class)
-				 .setParameter("statut", Statut.ACTIF)
-				 .setParameter("numero", bl.getNumero())
-				 .setParameter("statut2", Statut.ACTIF)
-				  
-				 .getResultList();
-		 return result;
+		 try {
+			 return em.createQuery("SELECT c FROM Lignecommande c where c.statut = :statut and c.bl.numero = :numero and c.bl.statut = :statut2", Lignecommande.class)
+					 .setParameter("statut", Statut.ACTIF)
+					 .setParameter("numero", bl.getNumero())
+					 .setParameter("statut2", Statut.ACTIF)
+					 .getResultList();
+		 } catch (RuntimeException ex) {
+			 return em.createNativeQuery(
+					 "SELECT * FROM lignecommande lc WHERE " + ACTIVE_STATUS_SQL + " AND lc.bonlivraisonid = :numero ORDER BY lc.id DESC",
+					 Lignecommande.class)
+					 .setParameter("numero", bl.getNumero())
+					 .getResultList();
+		 }
 	 }
 	 @Transactional
 	 public Lignecommande getLignecommandebyproduit(Integer p ,Facture f) {
@@ -53,13 +60,33 @@ public class LigneCommandeDaoImpl implements LigneCommandedao {
 	 }
 	 @Transactional
 	 public List<Lignecommande> getLcbyf(Facture bl){
-		 List<Lignecommande> result = em.createQuery("SELECT c FROM Lignecommande c where c.statut = :statut and c.bl.numero = :numero", Lignecommande.class).setParameter("statut", Statut.ACTIF).setParameter("numero", bl.getBl().getNumero()).getResultList();
-		 return result;
+		 try {
+			 return em.createQuery("SELECT c FROM Lignecommande c where c.statut = :statut and c.bl.numero = :numero", Lignecommande.class)
+					 .setParameter("statut", Statut.ACTIF)
+					 .setParameter("numero", bl.getBl().getNumero())
+					 .getResultList();
+		 } catch (RuntimeException ex) {
+			 if (bl == null || bl.getBl() == null || bl.getBl().getNumero() == null) {
+				 return java.util.Collections.emptyList();
+			 }
+			 return em.createNativeQuery(
+					 "SELECT * FROM lignecommande lc WHERE " + ACTIVE_STATUS_SQL + " AND lc.bonlivraisonid = :numero ORDER BY lc.id DESC",
+					 Lignecommande.class)
+					 .setParameter("numero", bl.getBl().getNumero())
+					 .getResultList();
+		 }
 	 }
 	 @Transactional	 
 	 public List<Lignecommande> getAll(){
-		 List<Lignecommande> result = em.createQuery("SELECT c FROM Lignecommande c where c.statut = :statut", Lignecommande.class).setParameter("statut", Statut.ACTIF).getResultList();
-		 return result;
+		 try {
+			 return em.createQuery("SELECT c FROM Lignecommande c where c.statut = :statut", Lignecommande.class)
+					 .setParameter("statut", Statut.ACTIF).getResultList();
+		 } catch (RuntimeException ex) {
+			 return em.createNativeQuery(
+					 "SELECT * FROM lignecommande lc WHERE " + ACTIVE_STATUS_SQL + " ORDER BY lc.id DESC",
+					 Lignecommande.class)
+					 .getResultList();
+		 }
 	 }
 	 @Transactional
 	public void update(Lignecommande c) {

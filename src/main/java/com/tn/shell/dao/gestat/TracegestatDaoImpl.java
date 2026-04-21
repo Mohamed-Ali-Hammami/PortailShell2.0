@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tn.shell.model.gestat.Tracegestat;
@@ -15,7 +16,7 @@ public class TracegestatDaoImpl implements TracegestatDAO {
 	@PersistenceContext
 	 private EntityManager em;
 	 
-	 @Transactional
+	 @Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void save(Tracegestat trace) {
 		em.persist(trace);
 		

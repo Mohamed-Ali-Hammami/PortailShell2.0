@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "Depense")
+@Table(name = "depense")
 public class Depense {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

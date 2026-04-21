@@ -103,6 +103,7 @@ public class Rendement  implements Comparable<Object>, Serializable {
 	private Integer kmArrivee;
 	private Integer kmParHuile;
 	private Integer kmProchain;
+	private boolean rappel = false;
 	public Integer getId() {
 		return id;
 	}
@@ -401,6 +402,14 @@ public class Rendement  implements Comparable<Object>, Serializable {
 
 	public void setKmProchain(Integer kmProchain) {
 		this.kmProchain = kmProchain;
+	}
+
+	public boolean isRappel() {
+		return rappel;
+	}
+
+	public void setRappel(boolean rappel) {
+		this.rappel = rappel;
 	}
 
 	public String getChefpiste() {

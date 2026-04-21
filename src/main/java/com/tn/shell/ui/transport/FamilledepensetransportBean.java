@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -32,6 +34,7 @@ public class FamilledepensetransportBean {
 	private static final long serialVersionUID = 1L;
 	private static final String SUCCESS = "success";
 	private static final String ERROR = "error";
+	private static final Logger LOG = Logger.getLogger(FamilledepensetransportBean.class.getName());
 
 	
 	@ManagedProperty(value = "#{ServiceFamilleDepense}")
@@ -47,6 +50,10 @@ public class FamilledepensetransportBean {
 	UserService userService;
 	@ManagedProperty(value = "#{ServiceTracetransport}")
 	ServiceTracetransport serviceTrace;
+	@ManagedProperty(value = "#{ServiceChauffeur}")
+	ServiceChauffeur serviceChauffeur;
+	@ManagedProperty(value = "#{ServiceBonLivraison}")
+	ServiceBonLivraison serviceBonLivraison;
 
  
 	/*
@@ -153,9 +160,72 @@ public class FamilledepensetransportBean {
 		}
 		return SUCCESS;
 	}*/
+	public String rapportcamion() {
+		if (date1 == null) {
+			date1 = new Date();
+		}
+		if (date2 == null) {
+			date2 = new Date();
+		}
+		listdepense = new ArrayList<Depense>();
+		listesvhecule = serviceVehecule != null ? serviceVehecule.getAll() : new ArrayList<Vhecule>();
+		if (listesvhecule == null) {
+			listesvhecule = new ArrayList<Vhecule>();
+		}
+		listcarburant = new ArrayList<Rapportcamion>();
+		totalcarburant = 0;
+		totalautrecarburant = 0;
+		totalsalaire = 0;
+		totaldepense = 0;
+		totaltransport = 0;
+		totaldf = 0;
+		return SUCCESS;
+	}
+
+	public String calculrapportcamion() {
+		if (date1 == null) {
+			date1 = new Date();
+		}
+		if (date2 == null) {
+			date2 = new Date();
+		}
+		if (listesvhecule == null || listesvhecule.isEmpty()) {
+			listesvhecule = serviceVehecule != null ? serviceVehecule.getAll() : new ArrayList<Vhecule>();
+		}
+		listcarburant = new ArrayList<Rapportcamion>();
+		totalcarburant = 0;
+		totalautrecarburant = 0;
+		totalsalaire = 0;
+		totaldepense = 0;
+		totaltransport = 0;
+		totaldf = 0;
+		if (listesvhecule == null) {
+			return SUCCESS;
+		}
+		for (Vhecule v : listesvhecule) {
+			Rapportcamion r = new Rapportcamion();
+			r.setMatricule(v.getMatricule());
+			r.setDepensecarburant(serviceDepense == null ? 0 : serviceDepense.getdepensebyvehicule(v, date1, date2));
+			r.setAutredepense(serviceDepense == null ? 0 : serviceDepense.getdepenseautrebyvehicule(v, date1, date2));
+			r.setChauffeur("");
+			r.setSalairchauffeur(0);
+			r.setTotaldepense(r.getDepensecarburant() + r.getAutredepense() + r.getSalairchauffeur());
+			r.setTotaltransport(serviceBonLivraison == null ? 0 : serviceBonLivraison.gettotaltransport(v, date1, date2));
+			r.setDf(r.getTotaltransport() - r.getTotaldepense());
+			listcarburant.add(r);
+			totalcarburant = totalcarburant + r.getDepensecarburant();
+			totalautrecarburant = totalautrecarburant + r.getAutredepense();
+			totalsalaire = totalsalaire + r.getSalairchauffeur();
+			totaldepense = totaldepense + r.getTotaldepense();
+			totaltransport = totaltransport + r.getTotaltransport();
+			totaldf = totaldf + r.getDf();
+		}
+		return SUCCESS;
+	}
 	public String getfamilledepense() {
 		listfamilledepense = new ArrayList<Familledepensetransport>();
 		listfamilledepense = serviceFamilledepense.getAll();
+		LOG.log(Level.INFO, "Transport.FamilledepensetransportBean#getfamilledepense loaded {0} familles", listfamilledepense == null ? 0 : listfamilledepense.size());
 		return SUCCESS;
 	}
 
@@ -174,6 +244,9 @@ public class FamilledepensetransportBean {
 			listesvhecules.add(v.getMatricule());
 		listdepense = new ArrayList<Depense>();
 		listdepense = serviceDepense.getAll();
+		LOG.log(Level.INFO, "Transport.FamilledepensetransportBean#getdepense loaded depenses={0}, familles={1}, vehicules={2}",
+				new Object[] { listdepense == null ? 0 : listdepense.size(), listesdepenses == null ? 0 : listesdepenses.size(),
+						listesvhecules == null ? 0 : listesvhecules.size() });
 		return SUCCESS;
 	}
 
@@ -222,6 +295,8 @@ public class FamilledepensetransportBean {
 		serviceDepense.save(depense);
 		listdepense = new ArrayList<Depense>();
 		listdepense = serviceDepense.getAll();
+		LOG.log(Level.INFO, "Transport.FamilledepensetransportBean#savedepense saved libelle={0}, vehicule={1}, total now={2}",
+				new Object[] { libelle, matricule, listdepense == null ? 0 : listdepense.size() });
 		Utilisateur user=userService.getCurrentUser();
 	       Tracetransport t=new Tracetransport();
 	       t.setAction(user.getNom() +"a ajouter une depense  de la vhecule"+matricule+" a "+new Date());
@@ -234,6 +309,8 @@ public class FamilledepensetransportBean {
 	public String updateDepense(Depense depense) {
 		try {
 			getServiceDepense().update(depense);
+			LOG.log(Level.INFO, "Transport.FamilledepensetransportBean#updateDepense updated id={0}, libelle={1}",
+					new Object[] { depense == null ? null : depense.getId(), depense == null ? null : depense.getLibelle() });
 			
 			Utilisateur user=userService.getCurrentUser();
 		       Tracetransport t=new Tracetransport();
@@ -242,6 +319,7 @@ public class FamilledepensetransportBean {
 		        serviceTrace.save(t);
 			return SUCCESS;
 		} catch (DataAccessException e) {
+			LOG.log(Level.SEVERE, "Transport.FamilledepensetransportBean#updateDepense failed for id=" + (depense == null ? null : depense.getId()), e);
 		}
 		return ERROR;
 	}
@@ -291,6 +369,8 @@ public class FamilledepensetransportBean {
 		serviceDepense.delete(depense2);
 		listdepense = new ArrayList<Depense>();
 		listdepense = serviceDepense.getAll();
+		LOG.log(Level.INFO, "Transport.FamilledepensetransportBean#deletedepense deactivated id={0}, total active now={1}",
+				new Object[] { depense2 == null ? null : depense2.getId(), listdepense == null ? 0 : listdepense.size() });
 		
 		Utilisateur user=userService.getCurrentUser();
 	       Tracetransport t=new Tracetransport();
@@ -365,6 +445,9 @@ public class FamilledepensetransportBean {
 	}
 
 	public List<Depense> getListdepense() {
+		if ((listdepense == null || listdepense.isEmpty()) && serviceDepense != null) {
+			listdepense = serviceDepense.getAll();
+		}
 		return listdepense;
 	}
 
@@ -413,6 +496,9 @@ public class FamilledepensetransportBean {
 	}
 
 	public List<Familledepensetransport> getListfamilledepense() {
+		if ((listfamilledepense == null || listfamilledepense.isEmpty()) && serviceFamilledepense != null) {
+			listfamilledepense = serviceFamilledepense.getAll();
+		}
 		return listfamilledepense;
 	}
 
@@ -429,6 +515,15 @@ public class FamilledepensetransportBean {
 	}
 
 	public List<String> getListesdepenses() {
+		if ((listesdepenses == null || listesdepenses.isEmpty()) && serviceFamilledepense != null) {
+			List<Familledepensetransport> familles = serviceFamilledepense.getAll();
+			listesdepenses = new ArrayList<String>();
+			if (familles != null) {
+				for (Familledepensetransport d : familles) {
+					listesdepenses.add(d.getLibelle());
+				}
+			}
+		}
 		return listesdepenses;
 	}
 
@@ -461,6 +556,15 @@ public class FamilledepensetransportBean {
 	}
 
 	public List<String> getListesvhecules() {
+		if ((listesvhecules == null || listesvhecules.isEmpty()) && serviceVehecule != null) {
+			List<Vhecule> vehicules = serviceVehecule.getAll();
+			listesvhecules = new ArrayList<String>();
+			if (vehicules != null) {
+				for (Vhecule v : vehicules) {
+					listesvhecules.add(v.getMatricule());
+				}
+			}
+		}
 		return listesvhecules;
 	}
 
@@ -527,24 +631,24 @@ public class FamilledepensetransportBean {
 	public void setTotaldepenses(String totaldepenses) {
 		this.totaldepenses = totaldepenses;
 	}
-	/*public ServiceBonLivraison getServiceBonLivraison() {
+	public ServiceBonLivraison getServiceBonLivraison() {
 		return serviceBonLivraison;
 	}
 	public void setServiceBonLivraison(ServiceBonLivraison serviceBonLivraison) {
 		this.serviceBonLivraison = serviceBonLivraison;
-	}*/
+	}
 	public List<Rapportcamion> getListcarburant() {
 		return listcarburant;
 	}
 	public void setListcarburant(List<Rapportcamion> listcarburant) {
 		this.listcarburant = listcarburant;
 	}
-	/*public ServiceChauffeur getServiceChauffeur() {
+	public ServiceChauffeur getServiceChauffeur() {
 		return serviceChauffeur;
 	}
 	public void setServiceChauffeur(ServiceChauffeur serviceChauffeur) {
 		this.serviceChauffeur = serviceChauffeur;
-	}*/
+	}
 	public double getTotalcarburant() {
 		return totalcarburant;
 	}

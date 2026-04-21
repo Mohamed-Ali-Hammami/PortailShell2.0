@@ -3,61 +3,67 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<div class="shell-module-layout">
-		<p:growl id="msgs" showDetail="true" />
+	<h:panelGroup layout="block" styleClass="shell-module-layout gestat-shell-fragment">
+		<h:panelGroup layout="block"
+			style="min-height:900px; margin:0 20px; padding:24px; background-image:url('#{request.contextPath}/2.png'); background-size:cover; background-repeat:no-repeat;">
+			<h:panelGroup layout="block"
+				style="min-height:900px; margin:0 30px; padding:24px; background:rgba(255,255,255,0.92);">
+				<p:growl id="msgs" showDetail="true" />
 
-		<p:panel id="basic" styleClass="shell-home-panel">
-			<h:form id="f">
-				<h:panelGroup rendered="#{not empty AccueilBean.listemployee}">
-					<div class="shell-audio-hint">Alerte contrat detectee</div>
-					<audio autoplay="autoplay" id="audioID">
-						<source src="AlarmeLS.wav" type="audio/mp3" />
-					</audio>
-				</h:panelGroup>
+				<p:panel id="basic">
+					<h:form id="f">
+						<h:panelGroup rendered="#{not empty AccueilBean.listemployee}">
+							<div class="shell-audio-hint">Alerte contrat detectee</div>
+							<audio autoplay="autoplay" id="audioID">
+								<source src="AlarmeLS.wav" type="audio/mp3" />
+							</audio>
+						</h:panelGroup>
 
-				<div class="shell-page-tools">
-					<p:commandButton title="imprimer" value="Imprimer" styleClass="shell-action-button">
-						<p:printer target="imprimer" />
-					</p:commandButton>
-				</div>
-
-				<p:outputPanel id="imprimer">
-					<h2 class="shell-page-title">Contrats arrivant a echeance</h2>
-					<p class="shell-page-subtitle">Liste des employes dont le contrat de travail est termine ou proche de l'etre.</p>
-
-					<h:panelGroup rendered="#{empty AccueilBean.listemployee}">
-						<div class="shell-empty-state">
-							Aucun employe en fin de contrat a afficher.
+						<div class="shell-page-tools">
+							<p:commandButton title="imprimer" value="Imprimer" styleClass="shell-action-button">
+								<p:printer target="imprimer" />
+							</p:commandButton>
 						</div>
-					</h:panelGroup>
 
-					<p:dataTable id="article"
-						var="p"
-						value="#{AccueilBean.listemployee}"
-						widgetVar="ArticleTable"
-						styleClass="shell-home-table"
-						emptyMessage="Aucun employe en fin de contrat">
-						<p:column>
-							<f:facet name="header">
-								<h:outputText value="Matricule" />
-							</f:facet>
-							<h:outputText value="#{p.code}" id="code" />
-						</p:column>
-						<p:column>
-							<f:facet name="header">
-								<h:outputText value="Nom" />
-							</f:facet>
-							<h:outputText value="#{p.nom}" id="nom" />
-						</p:column>
-						<p:column>
-							<f:facet name="header">
-								<h:outputText value="Date de contrat" />
-							</f:facet>
-							<h:outputText value="#{p.datecontrat}" id="quantitestock" />
-						</p:column>
-					</p:dataTable>
-				</p:outputPanel>
-			</h:form>
-		</p:panel>
-	</div>
+						<p:outputPanel id="imprimer">
+							<h2 class="shell-page-title">Contrats arrivant a echeance</h2>
+							<p class="shell-page-subtitle">Liste des employes dont le contrat de travail est termine ou proche de l'etre.</p>
+
+							<h:panelGroup rendered="#{empty AccueilBean.listemployee}">
+								<div class="shell-empty-state">
+									Aucun employe en fin de contrat a afficher.
+								</div>
+							</h:panelGroup>
+
+							<p:dataTable id="article"
+								var="p"
+								value="#{AccueilBean.listemployee}"
+								widgetVar="ArticleTable"
+								styleClass="shell-home-table"
+								emptyMessage="Aucun employe en fin de contrat">
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Matricule" />
+									</f:facet>
+									<h:outputText value="#{p.code}" id="code" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Nom" />
+									</f:facet>
+									<h:outputText value="#{p.nom}" id="nom" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Date de contrat" />
+									</f:facet>
+									<h:outputText value="#{p.datecontrat}" id="quantitestock" />
+								</p:column>
+							</p:dataTable>
+						</p:outputPanel>
+					</h:form>
+				</p:panel>
+			</h:panelGroup>
+		</h:panelGroup>
+	</h:panelGroup>
 </ui:composition>

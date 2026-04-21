@@ -17,7 +17,7 @@ import javax.persistence.Transient;
 import com.tn.shell.model.shop.Produit;
 
 @Entity
-@Table(name = "Lignecommandepass")
+@Table(name = "lignecommandepass")
 public class Lignecommandepass {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

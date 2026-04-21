@@ -1,0 +1,38 @@
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for Shell:PortailShellRR21:war:0.0.1-SNAPSHOT
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.springframework:spring-context:jar -> duplicate declaration of version 4.1.6.RELEASE @ line 147, column 15
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: com.sun.faces:jsf-impl:jar -> duplicate declaration of version 2.1.6 @ line 217, column 15
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: javax.el:javax.el-api:jar -> duplicate declaration of version 2.2.1 @ line 246, column 15
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: com.itextpdf:itextpdf:jar -> duplicate declaration of version 5.4.0 @ line 351, column 15
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: com.itextpdf.tool:xmlworker:jar -> duplicate declaration of version 1.2.1 @ line 356, column 15
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.apache.poi:poi:jar -> duplicate declaration of version 3.9 @ line 361, column 15
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: commons-logging:commons-logging:jar -> version 1.2 vs 1.0.4 @ line 368, column 15
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] 
+[INFO] -----------------------< Shell:PortailShellRR21 >-----------------------
+[INFO] Building PortailShellRR21 Maven Webapp 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] >>> tomcat7:2.2:run (default-cli) > process-classes @ PortailShellRR21 >>>
+[WARNING] The artifact mysql:mysql-connector-java:jar:8.0.33 has been relocated to com.mysql:mysql-connector-j:jar:8.0.33: MySQL Connector/J artifacts moved to reverse-DNS compliant Maven 2+ coordinates.
+[INFO] 
+[INFO] --- resources:3.4.0:resources (default-resources) @ PortailShellRR21 ---
+[INFO] Copying 9 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ PortailShellRR21 ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] <<< tomcat7:2.2:run (default-cli) < process-classes @ PortailShellRR21 <<<
+[INFO] 
+[WARNING] The artifact mysql:mysql-connector-java:jar:8.0.33 has been relocated to com.mysql:mysql-connector-j:jar:8.0.33: MySQL Connector/J artifacts moved to reverse-DNS compliant Maven 2+ coordinates.
+[INFO] 
+[INFO] --- tomcat7:2.2:run (default-cli) @ PortailShellRR21 ---
+[INFO] Démarrage du war sur http://localhost:8080/
+[INFO] Utilisation de la configuration existante du serveur Tomcat sur D:\Data\Projets\PortailShellRR21\target\tomcat
+[INFO] create webapp with contextPath: 

@@ -53,8 +53,7 @@ public class Factureachat {
 	private String totalttcs;
  
 	
-	@Enumerated(EnumType.STRING)
-    private Status status ;
+    private String status;
 	@Enumerated(EnumType.STRING)
 	private Statut statut= Statut.ACTIF;
 	
@@ -84,10 +83,10 @@ public class Factureachat {
 		this.achats = achats;
 	}
 	public Status getStatus() {
-		return status;
+		return Status.fromValue(status);
 	}
 	public void setStatus(Status status) {
-		this.status = status;
+		this.status = status == null ? null : status.toDatabaseValue();
 	}
 	public Statut getStatut() {
 		return statut;

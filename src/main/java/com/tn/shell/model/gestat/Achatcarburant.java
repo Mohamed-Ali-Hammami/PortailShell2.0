@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import com.tn.shell.model.shop.Fournisseur;
 
@@ -36,12 +40,14 @@ public class Achatcarburant {
 	@Enumerated(EnumType.STRING)
 	private Statut statut= Statut.ACTIF;
 	
-	@ManyToOne(cascade = { CascadeType.MERGE })
+	@ManyToOne(cascade = { CascadeType.MERGE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "factureachatid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Factureachatcarburant factureachat;
 	
 	@ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "fournisseurid")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Fournisseur fournisseur;
 	
 	  

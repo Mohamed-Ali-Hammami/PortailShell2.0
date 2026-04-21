@@ -4,9 +4,16 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.el.MethodExpression;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -18,6 +25,10 @@ import javax.faces.event.AjaxBehaviorEvent;
 import com.tn.shell.model.paie.Employee;
 import com.tn.shell.model.paie.Status;
 import com.tn.shell.model.shop.*;
+import com.tn.shell.ui.gestat.ClientgestatBean;
+import com.tn.shell.ui.gestat.EmployeeBean;
+import com.tn.shell.ui.gestat.ProduitgestatBean;
+import com.tn.shell.ui.gestat.SituationBean;
 import com.tn.shell.ui.common.UiDateDefaults;
 import com.tn.shell.service.paie.ServiceEmployee;
 import com.tn.shell.service.shop.ServiceLigneAlimentation;
@@ -31,6 +42,8 @@ public class Accueil {
 	private static final long serialVersionUID = 1L;
 	private static final String SUCCESS = "success";
 	private static final String ERROR = "error";
+	private static final Logger LOG = Logger.getLogger(Accueil.class.getName());
+	private static final Map<String, String[]> GESTAT_VIEW_BOOTSTRAP = buildGestatViewBootstrap();
 	private Date date1;
 	private Date date2;
 	
@@ -69,7 +82,119 @@ public class Accueil {
 		if (employees != null) {
 			listemployee = employees;
 		}
+		bootstrapGestatViews(facesContext);
 		return SUCCESS;
+	}
+
+	private void bootstrapGestatViews(FacesContext facesContext) {
+		if (facesContext == null) {
+			return;
+		}
+		String view = facesContext.getExternalContext().getRequestParameterMap().get("view");
+		if (view == null || view.trim().isEmpty()) {
+			return;
+		}
+
+		String[] expressions = GESTAT_VIEW_BOOTSTRAP.get(view);
+		if (expressions == null) {
+			expressions = GESTAT_VIEW_BOOTSTRAP.get(view.toLowerCase(Locale.ROOT));
+		}
+		if (expressions == null || expressions.length == 0) {
+			return;
+		}
+
+		for (String expression : expressions) {
+			invokeViewBootstrap(facesContext, view, expression);
+		}
+	}
+
+	private void invokeViewBootstrap(FacesContext facesContext, String view, String expression) {
+		if (expression == null || expression.trim().isEmpty()) {
+			return;
+		}
+		String beanExpression = resolveBeanExpression(expression);
+		if (beanExpression != null) {
+			Object bean = null;
+			try {
+				bean = facesContext.getApplication().evaluateExpressionGet(facesContext, beanExpression, Object.class);
+			} catch (Exception ex) {
+				LOG.log(Level.FINE, "Gestat bootstrap bean resolution failed for " + beanExpression, ex);
+			}
+			if (bean == null) {
+				return;
+			}
+		}
+		try {
+			MethodExpression methodExpression = facesContext.getApplication().getExpressionFactory()
+					.createMethodExpression(facesContext.getELContext(), expression, Object.class, new Class<?>[0]);
+			methodExpression.invoke(facesContext.getELContext(), null);
+			LOG.log(Level.INFO, "AccueilBean.gestat bootstrap view={0} expression={1}", new Object[] { view, expression });
+		} catch (Exception ex) {
+			LOG.log(Level.WARNING, "AccueilBean.gestat bootstrap failed for view=" + view + " expression=" + expression, ex);
+		}
+	}
+
+	private String resolveBeanExpression(String methodExpression) {
+		int start = methodExpression.indexOf("#{");
+		int dot = methodExpression.indexOf('.');
+		if (start != 0 || dot < 0) {
+			return null;
+		}
+		return methodExpression.substring(0, dot) + "}";
+	}
+
+	private static Map<String, String[]> buildGestatViewBootstrap() {
+		Map<String, String[]> mappings = new LinkedHashMap<String, String[]>();
+		mappings.put("AjouterFournisseur",
+				new String[] { "#{FournisseursBean.getAllfournisseur}", "#{FournisseurBean.getAllfournisseur}" });
+		mappings.put("achat", new String[] { "#{AchatcarburantBean.nouveauachat}" });
+		mappings.put("ajouterclient", new String[] { "#{ClientgestatBean.nouvauclient}" });
+		mappings.put("ajouterdepense", new String[] { "#{FamilledepenseBean.nouvaudepense}" });
+		mappings.put("ajouterDepenseCheque", new String[] { "#{DepenseChequeBean.getDepenseCheque}" });
+		mappings.put("ajouterfamilledepense", new String[] { "#{FamilledepenseBean.nouvaufamilledepense}" });
+		mappings.put("cahiercredit", new String[] { "#{ClientgestatBean.cahiercredit}" });
+		mappings.put("cahierstock", new String[] { "#{ProduitgestatBean.cahierstock}" });
+		mappings.put("cahierouvrier", new String[] { "#{EmployeeBean.cahieremployee}" });
+		mappings.put("cahierLitrage", new String[] { "#{SituationBean.cahierlitrage}" });
+		mappings.put("cahierLitrageAvecRetour", new String[] { "#{SituationBean.cahierlitrageAvecRetour}" });
+		mappings.put("situationJournalieres", new String[] { "#{SituationBean.situationJournaliere}" });
+		mappings.put("impressioncaisse", new String[] { "#{SituationBean.impressionCaisse}" });
+		mappings.put("listeclient", new String[] { "#{ClientgestatBean.getclient}" });
+		mappings.put("listedepense", new String[] { "#{FamilledepenseBean.getdepense}" });
+		mappings.put("listemplyee", new String[] { "#{EmployeeBean.getAllEmployee}" });
+		mappings.put("listetypedep", new String[] { "#{FamilledepenseBean.getfamilledepense}" });
+		mappings.put("listfactureachatbyfour", new String[] { "#{AchatcarburantBean.getAllfournisseur}" });
+		mappings.put("carteClient", new String[] { "#{CarteClientBean.getcarteClient}" });
+		mappings.put("HistoriquecarteClient", new String[] { "#{CarteClientBean.historiquecarteClient}" });
+		mappings.put("historiqueCarburant", new String[] { "#{AchatcarburantBean.historiqueCarburant}" });
+		mappings.put("historiqueParfournisseur", new String[] { "#{AchatcarburantBean.historiqueParfournisseur}" });
+		mappings.put("gestion_des_avances", new String[] { "#{AvancegestatBean.getAllavance}" });
+		mappings.put("nouvelleAvance", new String[] { "#{AvancegestatBean.nouvelleAvance}" });
+		mappings.put("etatAvance", new String[] { "#{AvancegestatBean.etatAvance}" });
+		mappings.put("etatFiscal", new String[] { "#{EtatBean.etatFiscal}" });
+		mappings.put("etatfiscal", new String[] { "#{EtatBean.etatFiscal}" });
+		mappings.put("etatdeprofil", new String[] { "#{EtatBean.etatdeprofil}" });
+		mappings.put("etatdeprofilcomtable", new String[] { "#{EtatBean.etatdeprofil2}" });
+		mappings.put("etatdebanque", new String[] { "#{EtatBean.etatdebanque}" });
+		mappings.put("etatDepenses", new String[] { "#{EtatBean.getetatDepenses}" });
+		mappings.put("etatdescheques", new String[] { "#{EtatBean.etatCheques}" });
+		mappings.put("etatdeschequeparjour", new String[] { "#{ChequeBean.getchequeparjour}" });
+		mappings.put("reglementFactureAchat", new String[] { "#{AchatcarburantBean.reglementFacture}" });
+		mappings.put("EtatDesFactureAchat2", new String[] { "#{AchatcarburantBean.etatFactureachat}" });
+		mappings.put("etatFactureachat", new String[] { "#{AchatcarburantBean.etatFactureachat}" });
+		mappings.put("rapportpiste", new String[] { "#{Rapportgestat.rapportgestat}" });
+		mappings.put("inventairecarburant", new String[] { "#{ArticleBean.inventairecarburant}" });
+		mappings.put("regulationinventairecarburant", new String[] { "#{ArticleBean.regulationinventaire}" });
+		mappings.put("ficheregulation", new String[] { "#{ArticleBean.regulationinventaire}" });
+		mappings.put("facturationClient", new String[] { "#{ClientgestatBean.facturation}" });
+		mappings.put("gestioncreditPassation", new String[] { "#{CreditPassationBean.accesPassation}" });
+		mappings.put("caisse", new String[] { "#{CaisseBeans.caisse}" });
+		mappings.put("avantcaisse", new String[] { "#{CaisseBeans.avantCaisse}" });
+		mappings.put("miseajourindex", new String[] { "#{CaisseBeans.miseajourindex}" });
+		mappings.put("Modificationcaisse", new String[] { "#{CaisseBeans.avantCaisse}" });
+		mappings.put("MAJpompe", new String[] { "#{ProduitgestatBean.miseAjourpompe}" });
+		mappings.put("verfificateurcahierStock", new String[] { "#{ProduitgestatBean.verfificateurcahierStock}" });
+		return Collections.unmodifiableMap(mappings);
 	}
 	
 	public String paie() {
